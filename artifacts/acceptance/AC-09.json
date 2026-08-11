@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-09",
+  "verdict": "pass",
+  "summary": "Authored fixture export and interaction performance checks passed.",
+  "blockers": [],
+  "seed": {
+    "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
+    "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
+  },
+  "sourceEvidence": [
+    {
+      "path": "docs/ac-09-performance-evidence.md",
+      "sha256": "sha256:a6e1411098968f213794a78183daac1357281a84dec22055e6b91695d3000fb8"
+    },
+    {
+      "path": "provenance/seed-evidence-sources.json",
+      "sha256": "sha256:20146b6cc506b5e8f5355fb0dd1cdce15229f1c93161aea52eff35ef4aa6202f"
+    },
+    {
+      "path": "output/ac-09/final-current.pVyHYM/performance-receipt.json",
+      "sha256": "sha256:c70db60bbdbfce3eefafec4e0c2a8c548d710fe54abae5fc591d646fd8c35787"
+    },
+    {
+      "path": "Resources/Performance/performance-profile-1.0.0.json",
+      "sha256": "sha256:8fe858c46901af2888169d4afbda71f2d9b92100d804fafe329ce6c10ac9dc39"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "artifacts/performance/environment.json",
+      "sha256": "sha256:90bb1705deea545cfb70a66fce3bbcadfc2e350385e29ca5f7db1591613f5ee8"
+    },
+    {
+      "path": "artifacts/performance/results.json",
+      "sha256": "sha256:b8889dd0314352dfaa00a8aa5eaa6f314cf28c77a2be14b5128a86ae63ce9bae"
+    }
+  ],
+  "evaluation": {
+    "criterion": "AC-09",
+    "verdict": "pass",
+    "summary": "Authored fixture export and interaction performance checks passed.",
+    "blockers": [],
+    "checks": [
+      {
+        "id": "performance.environment",
+        "passed": true,
+        "detail": "recorded Apple Silicon arm64 environment"
+      },
+      {
+        "id": "performance.profile",
+        "passed": true,
+        "detail": "frozen profile identity"
+      },
+      {
+        "id": "performance.fixtures",
+        "passed": true,
+        "detail": "separate authored 100-page and 50 MB fixtures"
+      },
+      {
+        "id": "performance.coverage",
+        "passed": true,
+        "detail": "exactly two fixtures by four formats"
+      },
+      {
+        "id": "performance.exports",
+        "passed": true,
+        "detail": "all artifact-derived exports meet the 30-second and authored-content contract"
+      },
+      {
+        "id": "performance.interaction",
+        "passed": true,
+        "detail": "responsiveness, progress, and cancellation thresholds"
+      },
+      {
+        "id": "performance.package-identity",
+        "passed": true,
+        "detail": "benchmark binds exact packaged executable and engines"
+      },
+      {
+        "id": "performance.visible-ui",
+        "passed": true,
+        "detail": "visible AppKit progress and real cancel button were observed"
+      },
+      {
+        "id": "evidence.identity",
+        "passed": true,
+        "detail": "11 evidence identities verified"
+      }
+    ]
+  }
+}

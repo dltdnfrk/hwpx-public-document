@@ -1,0 +1,724 @@
+{
+  "schemaVersion": 1,
+  "scenarios": [
+    {
+      "result": {
+        "cleanupState": "clean",
+        "flatteningConsent": [
+          "docx",
+          "markdown"
+        ],
+        "items": [
+          {
+            "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+            "destinationFile": "생활안전-계획.docx",
+            "diagnosticCode": "",
+            "diagnosticMessage": "",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "docx",
+            "itemID": "document-ac06-a-docx",
+            "progressCompleted": 4,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-계획.docx",
+              "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "published"
+          },
+          {
+            "destinationFile": "생활안전-계획.md",
+            "diagnosticCode": "user-cancelled",
+            "diagnosticMessage": "사용자가 내보내기를 취소했습니다.",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "markdown",
+            "itemID": "document-ac06-a-markdown",
+            "progressCompleted": 1,
+            "progressTotal": 4,
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "cancelled"
+          },
+          {
+            "destinationFile": "시설점검-보고.docx",
+            "diagnosticCode": "user-cancelled",
+            "diagnosticMessage": "사용자가 내보내기를 취소했습니다.",
+            "documentDisplayName": "시설점검 보고",
+            "documentID": "document-ac06-b",
+            "format": "docx",
+            "itemID": "document-ac06-b-docx",
+            "progressCompleted": 1,
+            "progressTotal": 4,
+            "snapshotHash": "sha256:1c3db12ac1f5b3afbee42a04b74294b711b02f7fe4e3d312ea571d17cd8aed7c",
+            "snapshotRevisionID": "revision-ac06-b",
+            "state": "cancelled"
+          },
+          {
+            "destinationFile": "시설점검-보고.md",
+            "diagnosticCode": "user-cancelled",
+            "diagnosticMessage": "사용자가 내보내기를 취소했습니다.",
+            "documentDisplayName": "시설점검 보고",
+            "documentID": "document-ac06-b",
+            "format": "markdown",
+            "itemID": "document-ac06-b-markdown",
+            "progressCompleted": 1,
+            "progressTotal": 4,
+            "snapshotHash": "sha256:1c3db12ac1f5b3afbee42a04b74294b711b02f7fe4e3d312ea571d17cd8aed7c",
+            "snapshotRevisionID": "revision-ac06-b",
+            "state": "cancelled"
+          }
+        ],
+        "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/cancel-after-first/.public-document-studio-exports/batch-ac06-cancelled/manifest.json",
+        "operationID": "batch-ac06-cancelled",
+        "schemaVersion": 2,
+        "selectedFormats": [
+          "docx",
+          "markdown"
+        ],
+        "state": "cancelled"
+      },
+      "evidence": {
+        "path": "output/ac-06/final-current.2vQamI/cancel-after-first/.public-document-studio-exports/batch-ac06-cancelled/manifest.json",
+        "sha256": "sha256:08529d9b8ed680b593e97807f1cdbe30c7b3f86e1abbcda5142e7b057781d71d"
+      }
+    },
+    {
+      "result": {
+        "cleanupState": "clean",
+        "flatteningConsent": [
+          "docx"
+        ],
+        "items": [
+          {
+            "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+            "destinationFile": "생활안전-계획.docx",
+            "diagnosticCode": "user-cancelled",
+            "diagnosticMessage": "사용자가 내보내기를 취소했습니다.",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "docx",
+            "itemID": "document-ac06-a-docx",
+            "progressCompleted": 3,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-계획.docx",
+              "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "cancelled"
+          }
+        ],
+        "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/cancel-before-publication/.public-document-studio-exports/batch-ac06-cancel-before-publication/manifest.json",
+        "operationID": "batch-ac06-cancel-before-publication",
+        "schemaVersion": 2,
+        "selectedFormats": [
+          "docx"
+        ],
+        "state": "cancelled"
+      },
+      "evidence": {
+        "path": "output/ac-06/final-current.2vQamI/cancel-before-publication/.public-document-studio-exports/batch-ac06-cancel-before-publication/manifest.json",
+        "sha256": "sha256:bfe395e1ac866d9223fe2c2795a631b841ecc2c41a22bbb7453a45775993d126"
+      }
+    },
+    {
+      "result": {
+        "cleanupState": "clean",
+        "flatteningConsent": [
+          "docx"
+        ],
+        "items": [
+          {
+            "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+            "destinationFile": "생활안전-계획.docx",
+            "diagnosticCode": "publication-artifact-missing",
+            "diagnosticMessage": "게시 대상의 일반 파일을 찾을 수 없습니다.",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "docx",
+            "itemID": "document-ac06-a-docx",
+            "progressCompleted": 3,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-계획.docx",
+              "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "failed"
+          }
+        ],
+        "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-crashed/manifest.json",
+        "operationID": "batch-ac06-crashed",
+        "schemaVersion": 2,
+        "selectedFormats": [
+          "docx"
+        ],
+        "state": "interrupted"
+      },
+      "evidence": {
+        "path": "output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-crashed/manifest.json",
+        "sha256": "sha256:d33a3d3329eb0b6e8417fdc8ad6dbd7734df32d3847d7b5f4bed8c326e9785a9"
+      }
+    },
+    {
+      "result": {
+        "cleanupState": "clean",
+        "flatteningConsent": [],
+        "items": [
+          {
+            "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+            "destinationFile": "생활안전-계획.docx",
+            "diagnosticCode": "",
+            "diagnosticMessage": "",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "docx",
+            "itemID": "document-ac06-a-docx",
+            "progressCompleted": 4,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-계획.docx",
+              "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "published"
+          }
+        ],
+        "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-retry-after-crash/manifest.json",
+        "operationID": "batch-ac06-retry-after-crash",
+        "retryOfOperationID": "batch-ac06-crashed",
+        "schemaVersion": 2,
+        "selectedFormats": [
+          "docx"
+        ],
+        "state": "completed"
+      },
+      "evidence": {
+        "path": "output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-retry-after-crash/manifest.json",
+        "sha256": "sha256:4ddd363b45e0a5779965c5fcad2d556800797dd427a1db61d00146300f9d12fc"
+      }
+    },
+    {
+      "result": {
+        "cleanupState": "clean",
+        "flatteningConsent": [
+          "docx"
+        ],
+        "items": [
+          {
+            "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+            "destinationFile": "생활안전-계획.docx",
+            "diagnosticCode": "disk-full",
+            "diagnosticMessage": "The file couldn’t be saved because there isn’t enough space.",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "docx",
+            "itemID": "document-ac06-a-docx",
+            "progressCompleted": 3,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-계획.docx",
+              "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "failed"
+          }
+        ],
+        "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/disk-full-and-retry/.public-document-studio-exports/batch-ac06-disk-full/manifest.json",
+        "operationID": "batch-ac06-disk-full",
+        "schemaVersion": 2,
+        "selectedFormats": [
+          "docx"
+        ],
+        "state": "completed-with-errors"
+      },
+      "evidence": {
+        "path": "output/ac-06/final-current.2vQamI/disk-full-and-retry/.public-document-studio-exports/batch-ac06-disk-full/manifest.json",
+        "sha256": "sha256:61e5ce39037e2193d2c2f1d3a115edb0e9411fbc3edc2a721876d5e3f4b8d5bb"
+      }
+    },
+    {
+      "result": {
+        "cleanupState": "clean",
+        "flatteningConsent": [],
+        "items": [
+          {
+            "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+            "destinationFile": "생활안전-계획.docx",
+            "diagnosticCode": "",
+            "diagnosticMessage": "",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "docx",
+            "itemID": "document-ac06-a-docx",
+            "progressCompleted": 4,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-계획.docx",
+              "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "published"
+          }
+        ],
+        "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/disk-full-and-retry/.public-document-studio-exports/batch-ac06-retry-after-disk-full/manifest.json",
+        "operationID": "batch-ac06-retry-after-disk-full",
+        "retryOfOperationID": "batch-ac06-disk-full",
+        "schemaVersion": 2,
+        "selectedFormats": [
+          "docx"
+        ],
+        "state": "completed"
+      },
+      "evidence": {
+        "path": "output/ac-06/final-current.2vQamI/disk-full-and-retry/.public-document-studio-exports/batch-ac06-retry-after-disk-full/manifest.json",
+        "sha256": "sha256:f7de341b62b5227788c3028b24b9007074340ed0c78ef57b0e12496d4cb3cac0"
+      }
+    },
+    {
+      "result": {
+        "cleanupState": "clean",
+        "destinationIntegrity": {
+          "afterByteCount": 24,
+          "afterSHA256": "sha256:d59d467d0b393af6904bbc5742949a7bf1479020a5eeecfd5e65bcacbba6e634",
+          "beforeByteCount": 24,
+          "beforeSHA256": "sha256:d59d467d0b393af6904bbc5742949a7bf1479020a5eeecfd5e65bcacbba6e634",
+          "destinationFile": "생활안전-계획.docx",
+          "existingBytesPreserved": true
+        },
+        "flatteningConsent": [
+          "docx",
+          "markdown"
+        ],
+        "items": [
+          {
+            "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+            "destinationFile": "생활안전-계획.docx",
+            "diagnosticCode": "destination-exists",
+            "diagnosticMessage": "기존 파일은 자동으로 덮어쓰지 않습니다: 생활안전-계획.docx",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "docx",
+            "itemID": "document-ac06-a-docx",
+            "progressCompleted": 3,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-계획.docx",
+              "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "failed"
+          },
+          {
+            "artifactHash": "sha256:1697326b2d6759fe826b3ad5d243e5d1ce60d9381ba901b376cf4e4d6168284f",
+            "destinationFile": "생활안전-계획.md",
+            "diagnosticCode": "",
+            "diagnosticMessage": "",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "markdown",
+            "itemID": "document-ac06-a-markdown",
+            "progressCompleted": 4,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-계획.md",
+              "expectedArtifactHash": "sha256:1697326b2d6759fe826b3ad5d243e5d1ce60d9381ba901b376cf4e4d6168284f"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "published"
+          }
+        ],
+        "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/existing-destination/.public-document-studio-exports/batch-ac06-existing/manifest.json",
+        "operationID": "batch-ac06-existing",
+        "schemaVersion": 2,
+        "selectedFormats": [
+          "docx",
+          "markdown"
+        ],
+        "state": "completed-with-errors"
+      },
+      "evidence": {
+        "path": "output/ac-06/final-current.2vQamI/existing-destination/.public-document-studio-exports/batch-ac06-existing/manifest.json",
+        "sha256": "sha256:f06df0ea033d6149812ddc2cc736c9ad565b4a94e9ba69b503727b9128917a32"
+      }
+    },
+    {
+      "result": {
+        "cleanupState": "clean",
+        "flatteningConsent": [
+          "docx",
+          "markdown"
+        ],
+        "items": [
+          {
+            "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+            "destinationFile": "생활안전-계획.docx",
+            "diagnosticCode": "",
+            "diagnosticMessage": "",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "docx",
+            "itemID": "document-ac06-a-docx",
+            "progressCompleted": 4,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-계획.docx",
+              "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "published"
+          },
+          {
+            "artifactHash": "sha256:1697326b2d6759fe826b3ad5d243e5d1ce60d9381ba901b376cf4e4d6168284f",
+            "destinationFile": "생활안전-계획.md",
+            "diagnosticCode": "",
+            "diagnosticMessage": "",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "markdown",
+            "itemID": "document-ac06-a-markdown",
+            "progressCompleted": 4,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-계획.md",
+              "expectedArtifactHash": "sha256:1697326b2d6759fe826b3ad5d243e5d1ce60d9381ba901b376cf4e4d6168284f"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "published"
+          },
+          {
+            "destinationFile": "시설점검-보고.docx",
+            "diagnosticCode": "injected-process-failure",
+            "diagnosticMessage": "하위 프로세스 실패",
+            "documentDisplayName": "시설점검 보고",
+            "documentID": "document-ac06-b",
+            "format": "docx",
+            "itemID": "document-ac06-b-docx",
+            "progressCompleted": 2,
+            "progressTotal": 4,
+            "snapshotHash": "sha256:1c3db12ac1f5b3afbee42a04b74294b711b02f7fe4e3d312ea571d17cd8aed7c",
+            "snapshotRevisionID": "revision-ac06-b",
+            "state": "failed"
+          },
+          {
+            "artifactHash": "sha256:4180c049b27d4c4115c21c9d7bcb26dd810b0133a00729f84b6827c3deec59c3",
+            "destinationFile": "시설점검-보고.md",
+            "diagnosticCode": "",
+            "diagnosticMessage": "",
+            "documentDisplayName": "시설점검 보고",
+            "documentID": "document-ac06-b",
+            "format": "markdown",
+            "itemID": "document-ac06-b-markdown",
+            "progressCompleted": 4,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "시설점검-보고.md",
+              "expectedArtifactHash": "sha256:4180c049b27d4c4115c21c9d7bcb26dd810b0133a00729f84b6827c3deec59c3"
+            },
+            "snapshotHash": "sha256:1c3db12ac1f5b3afbee42a04b74294b711b02f7fe4e3d312ea571d17cd8aed7c",
+            "snapshotRevisionID": "revision-ac06-b",
+            "state": "published"
+          }
+        ],
+        "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/partial-failure/.public-document-studio-exports/batch-ac06-partial/manifest.json",
+        "operationID": "batch-ac06-partial",
+        "schemaVersion": 2,
+        "selectedFormats": [
+          "docx",
+          "markdown"
+        ],
+        "state": "completed-with-errors"
+      },
+      "evidence": {
+        "path": "output/ac-06/final-current.2vQamI/partial-failure/.public-document-studio-exports/batch-ac06-partial/manifest.json",
+        "sha256": "sha256:84510dce1bee506293d8b69579d82c9efaef9274994321f7572c55e9a7808463"
+      }
+    }
+  ],
+  "recovery": {
+    "hashMismatchRecovered": {
+      "cleanupState": "clean",
+      "flatteningConsent": [
+        "docx"
+      ],
+      "items": [
+        {
+          "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+          "destinationFile": "생활안전-해시불일치.docx",
+          "diagnosticCode": "publication-artifact-hash-mismatch",
+          "diagnosticMessage": "게시 대상 해시가 검증된 산출물과 일치하지 않습니다.",
+          "documentDisplayName": "생활안전 계획",
+          "documentID": "document-ac06-a",
+          "format": "docx",
+          "itemID": "document-ac06-a-docx",
+          "progressCompleted": 3,
+          "progressTotal": 4,
+          "publicationIntent": {
+            "destinationFile": "생활안전-해시불일치.docx",
+            "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+          },
+          "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+          "snapshotRevisionID": "revision-ac06-a",
+          "state": "failed"
+        }
+      ],
+      "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-hash-mismatch/manifest.json",
+      "operationID": "batch-ac06-hash-mismatch",
+      "schemaVersion": 2,
+      "selectedFormats": [
+        "docx"
+      ],
+      "state": "interrupted"
+    },
+    "legacyV1Recovered": {
+      "cleanupState": "clean",
+      "flatteningConsent": [],
+      "items": [
+        {
+          "artifactHash": "sha256:d4e9590b061e43579f56b083e38bc26872620fd97001a71359de2de99c3aa1f9",
+          "destinationFile": "legacy-missing.docx",
+          "diagnosticCode": "publication-artifact-missing",
+          "diagnosticMessage": "게시 대상의 일반 파일을 찾을 수 없습니다.",
+          "documentID": "document-ac06-a",
+          "format": "docx",
+          "itemID": "batch-ac06-legacy-v1-docx",
+          "progressCompleted": 3,
+          "progressTotal": 4,
+          "snapshotHash": "sha256:d4e9590b061e43579f56b083e38bc26872620fd97001a71359de2de99c3aa1f9",
+          "snapshotRevisionID": "revision-ac06-a",
+          "state": "failed"
+        }
+      ],
+      "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-legacy-v1/manifest.json",
+      "operationID": "batch-ac06-legacy-v1",
+      "schemaVersion": 1,
+      "selectedFormats": [
+        "docx"
+      ],
+      "state": "interrupted"
+    },
+    "manifestlessManifestExists": false,
+    "manifestlessOperationExists": true,
+    "manifestlessOperationID": "batch-ac06-pre-manifest",
+    "nonRegularRecovered": {
+      "cleanupState": "clean",
+      "flatteningConsent": [
+        "docx"
+      ],
+      "items": [
+        {
+          "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+          "destinationFile": "생활안전-심볼릭.docx",
+          "diagnosticCode": "publication-artifact-missing",
+          "diagnosticMessage": "게시 대상의 일반 파일을 찾을 수 없습니다.",
+          "documentDisplayName": "생활안전 계획",
+          "documentID": "document-ac06-a",
+          "format": "docx",
+          "itemID": "document-ac06-a-docx",
+          "progressCompleted": 3,
+          "progressTotal": 4,
+          "publicationIntent": {
+            "destinationFile": "생활안전-심볼릭.docx",
+            "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+          },
+          "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+          "snapshotRevisionID": "revision-ac06-a",
+          "state": "failed"
+        }
+      ],
+      "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-non-regular/manifest.json",
+      "operationID": "batch-ac06-non-regular",
+      "schemaVersion": 2,
+      "selectedFormats": [
+        "docx"
+      ],
+      "state": "interrupted"
+    },
+    "pathEscapeRecovered": {
+      "cleanupState": "clean",
+      "flatteningConsent": [],
+      "items": [
+        {
+          "artifactHash": "sha256:84f962a48409da04f85a8cc01e576bbb7a0181547a3d94ec5245304ec4feb05b",
+          "destinationFile": "../ac06-outside.docx",
+          "diagnosticCode": "publication-path-invalid",
+          "diagnosticMessage": "게시 대상 경로가 내보내기 폴더를 벗어납니다.",
+          "documentDisplayName": "생활안전 계획",
+          "documentID": "document-ac06-a",
+          "format": "docx",
+          "itemID": "batch-ac06-path-escape-docx",
+          "progressCompleted": 3,
+          "progressTotal": 4,
+          "publicationIntent": {
+            "destinationFile": "../ac06-outside.docx",
+            "expectedArtifactHash": "sha256:84f962a48409da04f85a8cc01e576bbb7a0181547a3d94ec5245304ec4feb05b"
+          },
+          "snapshotHash": "sha256:84f962a48409da04f85a8cc01e576bbb7a0181547a3d94ec5245304ec4feb05b",
+          "snapshotRevisionID": "revision-ac06-a",
+          "state": "failed"
+        }
+      ],
+      "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-path-escape/manifest.json",
+      "operationID": "batch-ac06-path-escape",
+      "schemaVersion": 2,
+      "selectedFormats": [
+        "docx"
+      ],
+      "state": "interrupted"
+    },
+    "reconciledAfterMove": {
+      "cleanupState": "clean",
+      "flatteningConsent": [
+        "docx"
+      ],
+      "items": [
+        {
+          "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+          "destinationFile": "생활안전-사후이동.docx",
+          "diagnosticCode": "reconciled-after-publication-move",
+          "diagnosticMessage": "이동 완료 산출물을 예상 해시로 복구했습니다.",
+          "documentDisplayName": "생활안전 계획",
+          "documentID": "document-ac06-a",
+          "format": "docx",
+          "itemID": "document-ac06-a-docx",
+          "progressCompleted": 4,
+          "progressTotal": 4,
+          "publicationIntent": {
+            "destinationFile": "생활안전-사후이동.docx",
+            "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+          },
+          "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+          "snapshotRevisionID": "revision-ac06-a",
+          "state": "published"
+        }
+      ],
+      "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-crash-after-move/manifest.json",
+      "operationID": "batch-ac06-crash-after-move",
+      "schemaVersion": 2,
+      "selectedFormats": [
+        "docx"
+      ],
+      "state": "completed"
+    },
+    "recovered": {
+      "cleanupState": "clean",
+      "flatteningConsent": [
+        "docx"
+      ],
+      "items": [
+        {
+          "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+          "destinationFile": "생활안전-계획.docx",
+          "diagnosticCode": "publication-artifact-missing",
+          "diagnosticMessage": "게시 대상의 일반 파일을 찾을 수 없습니다.",
+          "documentDisplayName": "생활안전 계획",
+          "documentID": "document-ac06-a",
+          "format": "docx",
+          "itemID": "document-ac06-a-docx",
+          "progressCompleted": 3,
+          "progressTotal": 4,
+          "publicationIntent": {
+            "destinationFile": "생활안전-계획.docx",
+            "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+          },
+          "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+          "snapshotRevisionID": "revision-ac06-a",
+          "state": "failed"
+        }
+      ],
+      "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-crashed/manifest.json",
+      "operationID": "batch-ac06-crashed",
+      "schemaVersion": 2,
+      "selectedFormats": [
+        "docx"
+      ],
+      "state": "interrupted"
+    },
+    "retry": {
+      "cleanupState": "clean",
+      "flatteningConsent": [],
+      "items": [
+        {
+          "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+          "destinationFile": "생활안전-계획.docx",
+          "diagnosticCode": "",
+          "diagnosticMessage": "",
+          "documentDisplayName": "생활안전 계획",
+          "documentID": "document-ac06-a",
+          "format": "docx",
+          "itemID": "document-ac06-a-docx",
+          "progressCompleted": 4,
+          "progressTotal": 4,
+          "publicationIntent": {
+            "destinationFile": "생활안전-계획.docx",
+            "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+          },
+          "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+          "snapshotRevisionID": "revision-ac06-a",
+          "state": "published"
+        }
+      ],
+      "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-retry-after-crash/manifest.json",
+      "operationID": "batch-ac06-retry-after-crash",
+      "retryOfOperationID": "batch-ac06-crashed",
+      "schemaVersion": 2,
+      "selectedFormats": [
+        "docx"
+      ],
+      "state": "completed"
+    },
+    "root": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry",
+    "startupRecovered": [
+      {
+        "cleanupState": "clean",
+        "flatteningConsent": [
+          "docx"
+        ],
+        "items": [
+          {
+            "artifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+            "destinationFile": "생활안전-시작복구.docx",
+            "diagnosticCode": "publication-artifact-missing",
+            "diagnosticMessage": "게시 대상의 일반 파일을 찾을 수 없습니다.",
+            "documentDisplayName": "생활안전 계획",
+            "documentID": "document-ac06-a",
+            "format": "docx",
+            "itemID": "document-ac06-a-docx",
+            "progressCompleted": 3,
+            "progressTotal": 4,
+            "publicationIntent": {
+              "destinationFile": "생활안전-시작복구.docx",
+              "expectedArtifactHash": "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+            },
+            "snapshotHash": "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+            "snapshotRevisionID": "revision-ac06-a",
+            "state": "failed"
+          }
+        ],
+        "manifestPath": "/Users/hyunjun/Documents/MUNI/hwpx-public-document/output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-startup-recoverable/manifest.json",
+        "operationID": "batch-ac06-startup-recoverable",
+        "schemaVersion": 2,
+        "selectedFormats": [
+          "docx"
+        ],
+        "state": "interrupted"
+      }
+    ]
+  },
+  "recoveryEvidence": {
+    "path": "output/ac-06/final-current.2vQamI/crash-and-retry/recovery-receipt.json",
+    "sha256": "sha256:a9d6a32d2ec821acaf61945980dfb4bcdcf72912e5faa9c21e5305a9dfeea8bd"
+  }
+}

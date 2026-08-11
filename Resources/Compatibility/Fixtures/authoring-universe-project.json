@@ -1,0 +1,135 @@
+{
+  "aiProposalHistory": [],
+  "assets": [],
+  "consentGrants": [],
+  "currentRevisionID": "revision-ac07-universe",
+  "documentID": "document-ac07-universe",
+  "elements": [
+    {
+      "contentHTML": "<span>생활안전과 · 2026. 8. 9.</span>",
+      "elementID": "element-metadata",
+      "evidenceIDs": [],
+      "inlineIDs": [],
+      "kind": "metadata",
+      "order": 0,
+      "styleID": "style-body",
+      "text": "생활안전과 · 2026. 8. 9."
+    },
+    {
+      "contentHTML": "<span>작성 기능 호환성 표본</span>",
+      "elementID": "element-heading",
+      "evidenceIDs": [],
+      "inlineIDs": [],
+      "kind": "heading",
+      "order": 1,
+      "styleID": "style-heading",
+      "text": "작성 기능 호환성 표본"
+    },
+    {
+      "contentHTML": "<strong data-inline-id=\"inline-strong\"><em data-inline-id=\"inline-emphasis\"><u data-inline-id=\"inline-underline\">굵게 기울임 밑줄</u></em></strong> <font data-inline-id=\"inline-font\" face=\"Apple SD Gothic Neo\" size=\"12\">글꼴</font><span class=\"keep-phrase\" data-inline-id=\"inline-keep\">문구 묶음</span>",
+      "elementID": "element-rich-paragraph",
+      "evidenceIDs": [],
+      "inlineIDs": ["inline-strong", "inline-emphasis", "inline-underline", "inline-font", "inline-keep"],
+      "kind": "paragraph",
+      "order": 2,
+      "styleID": "style-body",
+      "text": "굵게 기울임 밑줄 글꼴 문구 묶음"
+    },
+    {
+      "contentHTML": "<ul><li><strong data-inline-id=\"inline-list-strong\">첫 번째 항목</strong></li><li>두 번째 항목</li></ul>",
+      "elementID": "element-unordered-list",
+      "evidenceIDs": [],
+      "inlineIDs": ["inline-list-strong"],
+      "kind": "list-item",
+      "order": 3,
+      "styleID": "style-body",
+      "text": "첫 번째 항목 두 번째 항목"
+    },
+    {
+      "contentHTML": "<table><tbody><tr><th><strong data-inline-id=\"inline-table-strong\">항목</strong></th><th>내용</th></tr><tr><td>기간</td><td>2026. 9. ~ 12.</td></tr></tbody></table>",
+      "elementID": "element-table",
+      "evidenceIDs": [],
+      "inlineIDs": ["inline-table-strong"],
+      "kind": "table",
+      "order": 4,
+      "styleID": "style-table",
+      "text": "항목 내용 기간 2026. 9. ~ 12."
+    },
+    {
+      "contentHTML": "<table><tbody><tr><th>담당</th><th>팀장</th><th>과장</th></tr><tr><td>김○○</td><td></td><td></td></tr></tbody></table>",
+      "elementID": "element-approval",
+      "evidenceIDs": [],
+      "inlineIDs": [],
+      "kind": "approval-grid",
+      "order": 5,
+      "styleID": "style-table",
+      "text": "담당 팀장 과장 김○○"
+    },
+    {
+      "contentHTML": "<strong data-inline-id=\"inline-review-strong\">[확인 필요] 근거 확인</strong>",
+      "elementID": "element-review",
+      "evidenceIDs": [],
+      "inlineIDs": ["inline-review-strong"],
+      "kind": "review-marker",
+      "order": 6,
+      "styleID": "style-review",
+      "text": "[확인 필요] 근거 확인"
+    },
+    {
+      "contentHTML": "<span data-inline-id=\"inline-formula\">안전지수 = 조치완료 / 점검대상</span>",
+      "elementID": "element-formula",
+      "evidenceIDs": [],
+      "inlineIDs": ["inline-formula"],
+      "kind": "formula",
+      "order": 7,
+      "styleID": "style-body",
+      "text": "안전지수 = 조치완료 / 점검대상"
+    }
+  ],
+  "evidenceLinks": [],
+  "history": [
+    {
+      "createdAt": "2026-08-09T00:00:00Z",
+      "eventID": "history-ac07-universe",
+      "kind": "created",
+      "revisionID": "revision-ac07-universe"
+    }
+  ],
+  "locale": "ko-KR",
+  "providerConfigurations": [],
+  "redoRevisionIDs": [],
+  "revisions": [
+    {
+      "createdAt": "2026-08-09T00:00:00Z",
+      "elementIDs": [
+        "element-metadata",
+        "element-heading",
+        "element-rich-paragraph",
+        "element-unordered-list",
+        "element-table",
+        "element-approval",
+        "element-review",
+        "element-formula"
+      ],
+      "parentRevisionID": null,
+      "revisionID": "revision-ac07-universe",
+      "snapshotElements": [],
+      "summary": "AC-07 frozen authoring universe fixture"
+    }
+  ],
+  "schemaVersion": 1,
+  "styles": [
+    {"name": "제목", "properties": {"font": "Apple SD Gothic Neo"}, "styleID": "style-heading"},
+    {"name": "본문", "properties": {"font": "Apple SD Gothic Neo"}, "styleID": "style-body"},
+    {"name": "표", "properties": {"font": "Apple SD Gothic Neo"}, "styleID": "style-table"},
+    {"name": "확인 필요", "properties": {"font": "Apple SD Gothic Neo"}, "styleID": "style-review"}
+  ],
+  "templateBinding": {
+    "checklistResults": {"호환성 표본": true},
+    "publishingAuthority": "Public Document Studio QA",
+    "requiredSections": ["작성 기능 호환성 표본"],
+    "templateID": "compatibility-universe",
+    "version": "1.0.0"
+  },
+  "title": "작성 기능 호환성 표본"
+}

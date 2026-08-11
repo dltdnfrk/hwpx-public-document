@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-07",
+  "verdict": "blocked",
+  "summary": "Frozen-corpus structural, semantic, visual, and client checks passed. Required external observations remain blocked.",
+  "blockers": [
+    "No official Hancom macOS HWP/HWPX client is installed or registered in the searched application roots, so no official HWPX reopen or extension-warning claim is made.",
+    "No official Hancom macOS HWP/HWPX client is installed or registered in the searched application roots, so no official HWP reopen or extension-warning claim is made.",
+    "The console is unlocked, but two pre-existing user-owned Polaris processes and an unavailable Computer Use pipe prevent a clean attributable HWPX reopen observation; no process was terminated and no warning-free open claim is inferred.",
+    "The console is unlocked, but two pre-existing user-owned Polaris processes and an unavailable Computer Use pipe prevent a clean attributable HWP reopen observation; no process was terminated and no warning-free open claim is inferred.",
+    "With the console unlocked, Microsoft Word 16.111.3 reported one open document but the exact pristine DOCX open Apple event still timed out after 30 seconds; input bytes were preserved and no warning-count claim is inferred.",
+    "The deterministic Markdown rendering candidate passed local CommonMark and visual integrity checks but has no independent authority approval receipt."
+  ],
+  "seed": {
+    "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
+    "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
+  },
+  "sourceEvidence": [
+    {
+      "path": "docs/ac-07-compatibility-evidence.md",
+      "sha256": "sha256:b4b0711c6b22c874e65c67b2a848e3142ba84bb93f24d29c2b01257d7982c444"
+    },
+    {
+      "path": "provenance/seed-evidence-sources.json",
+      "sha256": "sha256:20146b6cc506b5e8f5355fb0dd1cdce15229f1c93161aea52eff35ef4aa6202f"
+    },
+    {
+      "path": "output/ac-07/final-current.Z61edu/compatibility/compatibility-receipt.json",
+      "sha256": "sha256:338061a65be102c28c028e3ea99115db4b152ca6d04da9d0da5008408eef958b"
+    },
+    {
+      "path": "output/ac-07/final-current.Z61edu/observed-receipt.json",
+      "sha256": "sha256:1a9603addbe19353b4e20cf3971599bc28cf5cdf0a89677e45d5d53b91bb1f0e"
+    },
+    {
+      "path": "output/ac-07/final-current.Z61edu/observations-clean/observations.json",
+      "sha256": "sha256:98d3ece2126b10983d4e80bc089beb20e56161db51ed7c321ee254f9157238ec"
+    },
+    {
+      "path": "output/ac-07/final-current.Z61edu/observations-clean/external-evidence-index-current.json",
+      "sha256": "sha256:5e02f6248d8e2aece2a1f080d3235aed65e0bda8fe5fe2ee323fdbc19d47fb04"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "artifacts/compatibility/corpus-manifest.json",
+      "sha256": "sha256:b881eae0b690f812069b557badfb336612c7a40fcf8b6ee04714ff5ea9b54793"
+    },
+    {
+      "path": "artifacts/compatibility/observations.jsonl",
+      "sha256": "sha256:24dc27159f3624ab9414c2c123a0ce910df09695a4b84f782cdfb05eba6b51bb"
+    },
+    {
+      "path": "artifacts/compatibility/verdict-summary.json",
+      "sha256": "sha256:94fc4bdf1bd25f6907a322e311dc632cca8c789b4ea907fed30a0deec65af9d8"
+    }
+  ],
+  "evaluation": {
+    "criterion": "AC-07",
+    "verdict": "blocked",
+    "summary": "Frozen-corpus structural, semantic, visual, and client checks passed. Required external observations remain blocked.",
+    "blockers": [
+      "No official Hancom macOS HWP/HWPX client is installed or registered in the searched application roots, so no official HWPX reopen or extension-warning claim is made.",
+      "No official Hancom macOS HWP/HWPX client is installed or registered in the searched application roots, so no official HWP reopen or extension-warning claim is made.",
+      "The console is unlocked, but two pre-existing user-owned Polaris processes and an unavailable Computer Use pipe prevent a clean attributable HWPX reopen observation; no process was terminated and no warning-free open claim is inferred.",
+      "The console is unlocked, but two pre-existing user-owned Polaris processes and an unavailable Computer Use pipe prevent a clean attributable HWP reopen observation; no process was terminated and no warning-free open claim is inferred.",
+      "With the console unlocked, Microsoft Word 16.111.3 reported one open document but the exact pristine DOCX open Apple event still timed out after 30 seconds; input bytes were preserved and no warning-count claim is inferred.",
+      "The deterministic Markdown rendering candidate passed local CommonMark and visual integrity checks but has no independent authority approval receipt."
+    ],
+    "checks": [
+      {
+        "id": "compatibility.corpus",
+        "passed": true,
+        "detail": "frozen two-fixture four-format corpus"
+      },
+      {
+        "id": "compatibility.dispositions",
+        "passed": true,
+        "detail": "every fixture-format pair has an evidence-derived disposition"
+      },
+      {
+        "id": "compatibility.artifact-coverage",
+        "passed": true,
+        "detail": "artifact set exactly matches validated dispositions"
+      },
+      {
+        "id": "compatibility.artifacts",
+        "passed": true,
+        "detail": "artifacts bind bytes and nested artifact-derived validation facts"
+      },
+      {
+        "id": "compatibility.blockers",
+        "passed": true,
+        "detail": "all external blockers are evidence-bound structured records"
+      },
+      {
+        "id": "compatibility.visual-failures",
+        "passed": true,
+        "detail": "no raw visual assertion failed"
+      },
+      {
+        "id": "compatibility.visual-coverage",
+        "passed": true,
+        "detail": "missing raw visual observations have exact structured blockers"
+      },
+      {
+        "id": "compatibility.client-failures",
+        "passed": true,
+        "detail": "no raw client assertion failed"
+      },
+      {
+        "id": "compatibility.client-coverage",
+        "passed": true,
+        "detail": "missing raw client observations have exact structured blockers"
+      },
+      {
+        "id": "evidence.identity",
+        "passed": true,
+        "detail": "21 evidence identities verified"
+      }
+    ]
+  }
+}

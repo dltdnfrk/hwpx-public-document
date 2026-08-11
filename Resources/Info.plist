@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleDisplayName</key>
-    <string>공공문서</string>
+    <string>공공문서 작성기</string>
     <key>CFBundleExecutable</key>
     <string>PublicDocumentApp</string>
     <key>CFBundleIdentifier</key>
     <string>com.muni.public-document</string>
     <key>CFBundleName</key>
-    <string>PublicDocumentApp</string>
+    <string>Public Document Studio</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -17,6 +17,12 @@
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>LSMinimumSystemVersion</key>
-    <string>13.0</string>
+    <string>14.0</string>
+    <key>LSArchitecturePriority</key>
+    <array>
+        <string>arm64</string>
+    </array>
+    <key>NSHighResolutionCapable</key>
+    <true/>
 </dict>
 </plist>

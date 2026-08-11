@@ -1,6 +1,15 @@
 .build/
+.build.quarantined-*/
 __pycache__/
 tests/__pycache__/
 *.pyc
 .debug-journal.md
+.debug-journal 2.md
 .ouroboros_eval_artifact.md
+.omo/
+.playwright-cli/
+.playwright-mcp/
+dist/
+output/
+test-results/
+graphify-out/

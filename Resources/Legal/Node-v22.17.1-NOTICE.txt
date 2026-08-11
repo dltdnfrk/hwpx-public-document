@@ -1,0 +1,5 @@
+Node.js v22.17.1
+SPDX-License-Identifier: MIT
+Source: https://github.com/nodejs/node/tree/v22.17.1
+License: https://github.com/nodejs/node/blob/v22.17.1/LICENSE
+Bundled binary source: /usr/local/bin/node (arm64 slice only)

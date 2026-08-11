@@ -1,0 +1,88 @@
+{
+  "cleanupState" : "clean",
+  "flatteningConsent" : [
+    "docx",
+    "markdown"
+  ],
+  "items" : [
+    {
+      "artifactHash" : "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d",
+      "destinationFile" : "생활안전-계획.docx",
+      "diagnosticCode" : "",
+      "diagnosticMessage" : "",
+      "documentDisplayName" : "생활안전 계획",
+      "documentID" : "document-ac06-a",
+      "format" : "docx",
+      "itemID" : "document-ac06-a-docx",
+      "progressCompleted" : 4,
+      "progressTotal" : 4,
+      "publicationIntent" : {
+        "destinationFile" : "생활안전-계획.docx",
+        "expectedArtifactHash" : "sha256:da373e3e60a7911fd3b0fb62523ceeeb607ea41de097a820b9885669ac5a5c2d"
+      },
+      "snapshotHash" : "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+      "snapshotRevisionID" : "revision-ac06-a",
+      "state" : "published"
+    },
+    {
+      "artifactHash" : "sha256:1697326b2d6759fe826b3ad5d243e5d1ce60d9381ba901b376cf4e4d6168284f",
+      "destinationFile" : "생활안전-계획.md",
+      "diagnosticCode" : "",
+      "diagnosticMessage" : "",
+      "documentDisplayName" : "생활안전 계획",
+      "documentID" : "document-ac06-a",
+      "format" : "markdown",
+      "itemID" : "document-ac06-a-markdown",
+      "progressCompleted" : 4,
+      "progressTotal" : 4,
+      "publicationIntent" : {
+        "destinationFile" : "생활안전-계획.md",
+        "expectedArtifactHash" : "sha256:1697326b2d6759fe826b3ad5d243e5d1ce60d9381ba901b376cf4e4d6168284f"
+      },
+      "snapshotHash" : "sha256:3b3225e7bca345158c868f8b6cd87f05244cff2bea65db2ae7ec5eaa2ab25041",
+      "snapshotRevisionID" : "revision-ac06-a",
+      "state" : "published"
+    },
+    {
+      "destinationFile" : "시설점검-보고.docx",
+      "diagnosticCode" : "injected-process-failure",
+      "diagnosticMessage" : "하위 프로세스 실패",
+      "documentDisplayName" : "시설점검 보고",
+      "documentID" : "document-ac06-b",
+      "format" : "docx",
+      "itemID" : "document-ac06-b-docx",
+      "progressCompleted" : 2,
+      "progressTotal" : 4,
+      "snapshotHash" : "sha256:1c3db12ac1f5b3afbee42a04b74294b711b02f7fe4e3d312ea571d17cd8aed7c",
+      "snapshotRevisionID" : "revision-ac06-b",
+      "state" : "failed"
+    },
+    {
+      "artifactHash" : "sha256:4180c049b27d4c4115c21c9d7bcb26dd810b0133a00729f84b6827c3deec59c3",
+      "destinationFile" : "시설점검-보고.md",
+      "diagnosticCode" : "",
+      "diagnosticMessage" : "",
+      "documentDisplayName" : "시설점검 보고",
+      "documentID" : "document-ac06-b",
+      "format" : "markdown",
+      "itemID" : "document-ac06-b-markdown",
+      "progressCompleted" : 4,
+      "progressTotal" : 4,
+      "publicationIntent" : {
+        "destinationFile" : "시설점검-보고.md",
+        "expectedArtifactHash" : "sha256:4180c049b27d4c4115c21c9d7bcb26dd810b0133a00729f84b6827c3deec59c3"
+      },
+      "snapshotHash" : "sha256:1c3db12ac1f5b3afbee42a04b74294b711b02f7fe4e3d312ea571d17cd8aed7c",
+      "snapshotRevisionID" : "revision-ac06-b",
+      "state" : "published"
+    }
+  ],
+  "manifestPath" : "\/Users\/hyunjun\/Documents\/MUNI\/hwpx-public-document\/output\/ac-06\/final-current.2vQamI\/partial-failure\/.public-document-studio-exports\/batch-ac06-partial\/manifest.json",
+  "operationID" : "batch-ac06-partial",
+  "schemaVersion" : 2,
+  "selectedFormats" : [
+    "docx",
+    "markdown"
+  ],
+  "state" : "completed-with-errors"
+}

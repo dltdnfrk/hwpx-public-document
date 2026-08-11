@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "envelope": {
+    "keyID": "studio-template-root-2026",
+    "payload": "eyJjYXRhbG9nSUQiOiJwdWJsaWMtZG9jdW1lbnQtdGVtcGxhdGVzIiwiZW50cmllcyI6W3siY2hlY2tsaXN0IjpbIuuqqeyggeqzvCDrjIDsg4EiLCLstpTsp4Qg6re86rGwIiwi64u064u5IOu2gOyEnCIsIuyLnO2WiSDsnbzsoJUiLCLshozsmpQg7JiI7IKwIiwi6rKw7J6s7ISgIl0sImNvbnRlbnRIYXNoIjoic2hhMjU2OjdmN2FlMzc4ZDJkM2QzYzYxYjk5MDgyNjBkYzAxMmQ3MDM0N2NjYmU2MmI4YjNmMGY2MmJiODIwZWExN2IzNTIiLCJkb2N1bWVudFR5cGUiOiLstpTsp4Tqs4Ttmo3shJwiLCJlZmZlY3RpdmVEYXRlIjoiMjAyNi0wOC0wMSIsIm9mZmljaWFsUnVsZXMiOlt7ImZpZWxkIjoidGl0bGUiLCJwcmVjZWRlbmNlIjoxMDAsInJlcXVpcmVkVmFsdWUiOiLquLDqtIAg6rO17IudIOygnOuqqeydhCDsgqzsmqntlZjshLjsmpQiLCJzb3VyY2UiOiLqs7Xqs7XrrLjshJwg7J6R7ISxIOyngOy5qCDsoJw07KGwIn1dLCJwdWJsaXNoaW5nQXV0aG9yaXR5Ijoi6riw6rSAIO2RnOykgCIsInJlcXVpcmVkU2VjdGlvbnMiOlsi6rCc7JqUIiwi7LaU7KeEIOuwsOqyvSIsIuyEuOu2gCDstpTsp4Tqs4Ttmo0iLCLsmIjsgrAg67CPIOydvOyglSIsIuqygO2GoCDrsI8g6rKw7J6sIl0sInNvdXJjZSI6IuqzteqzteusuOyEnCDsnpHshLHquLAg6riw67O4IOy5tO2DiOuhnOq3uCIsInRlbXBsYXRlSUQiOiJwdWJsaWMtcGxhbiIsInZlcnNpb24iOiIzLjIifV0sInB1Ymxpc2hlZEF0IjoiMjAyNi0wOC0wMVQwMDowMDowMFoiLCJ2ZXJzaW9uIjoiMjAyNi4wOC4xIn0=",
+    "signature": "Y+dIVxkmFweZfuv4xr9f+mhrb/a9W2epjm/yKAwf64IScCpw2KbpjRa7Je1mKrMqGdTyvNoYnIofwsGN+A6DBg=="
+  },
+  "sourceEvidence": [
+    {
+      "path": "Resources/Templates/catalog-envelope.json",
+      "sha256": "sha256:6868f0b9d8ceb2949e3e94cb0ac8ab138288eabb5635d52b34fda73bc4eed6b0"
+    }
+  ]
+}

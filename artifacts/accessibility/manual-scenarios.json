@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "verificationReceipt": {
+    "schemaVersion": 1,
+    "recordedAt": "2026-08-11T07:04:55Z",
+    "testedSourceSHA256": {
+      "Resources/Studio/index.html": "3f749a0abdae414db0b9841f064b885941cb270dfa0748e4148a4ee6c3b1af41",
+      "Resources/Studio/styles.css": "b905fba51298ac582eb2103dea6a0163d493cccc1f12613c662716f679c831d7",
+      "Resources/Studio/app.js": "05a0b8c8a86d8c1f6d266b3b9120037f75e93910744e25fa4341816435a1a339",
+      "Resources/GenOffice/public-document-genoffice.js": "fe576951798bc85eaba443f0ff3e30eccbcc8ead21b1f1932f540c4d0f3ddc7d",
+      "tests/ac08-browser-qa.spec.js": "d9acb104ef7043cc117f0d1e94c372568e854a97f3e90408daaa20ef089f8324",
+      "tests/test_ac08_accessibility.py": "b8d15174d541a9e602da1ba17cba6d46c2989cf0a131b9747f50a26ab1ec273b",
+      "DESIGN.md": "59752824f6d27ac8bf045d07c9de8ca1da96b6051c2266a89efb56ceef295ceb"
+    },
+    "freshness": {
+      "sourceHashesMatchedBeforeAndAfterBrowserRun": true,
+      "browserReceiptRecordedAt": "2026-08-11T07:03:36.991Z",
+      "finalReceiptRecordedAt": "2026-08-11T07:04:55Z"
+    },
+    "browserTests": {
+      "passed": 6,
+      "failed": 0
+    },
+    "commands": [
+      {
+        "command": "AC08_PACKAGED_APP=output/final-package.q4oDhH/PublicDocument.app playwright test tests/ac08-browser-qa.spec.js --workers=1",
+        "exitCode": 0,
+        "result": "6/6 passed"
+      },
+      {
+        "command": "python3 -m pytest -q tests/test_ac08_accessibility.py",
+        "exitCode": 0,
+        "result": "4/4 passed"
+      },
+      {
+        "command": "visual-qa.mjs image-diff genoffice-comparison-current/studio-1280.png ac08-final-current/studio-1280.png",
+        "exitCode": 0,
+        "result": "100/100 similarity; dimensions and alpha valid"
+      },
+      {
+        "command": "visual-qa.mjs image-diff genoffice-comparison-current/studio-920.png ac08-final-current/studio-920.png",
+        "exitCode": 0,
+        "result": "99/100 similarity; dimensions and alpha valid"
+      }
+    ]
+  },
+  "browserReceipt": {
+    "schemaVersion": 1,
+    "recordedAt": "2026-08-11T07:03:36.991Z",
+    "target": {
+      "url": "http://127.0.0.1:4173/Resources/Studio/",
+      "servedRoot": "Resources/Studio",
+      "evidenceRoot": "output/playwright/ac08-final-current.TT6Err",
+      "viewports": [
+        "375x720",
+        "768x720",
+        "920x640",
+        "1280x820"
+      ],
+      "axeStates": [
+        "genoffice-editor",
+        "main-editor",
+        "ai-consent",
+        "ai-proposal-review",
+        "single-export-loss-consent",
+        "single-export-result",
+        "batch-export-progress",
+        "project-inspection"
+      ]
+    },
+    "runtime": {
+      "node": "v22.17.1",
+      "chrome": "151.0.7922.108",
+      "playwright": "1.55.0",
+      "axePlaywright": "4.10.2"
+    },
+    "testedSourceSHA256": {
+      "index.html": "3f749a0abdae414db0b9841f064b885941cb270dfa0748e4148a4ee6c3b1af41",
+      "styles.css": "b905fba51298ac582eb2103dea6a0163d493cccc1f12613c662716f679c831d7",
+      "app.js": "05a0b8c8a86d8c1f6d266b3b9120037f75e93910744e25fa4341816435a1a339"
+    },
+    "packagedStudioSHA256": {
+      "index.html": "3f749a0abdae414db0b9841f064b885941cb270dfa0748e4148a4ee6c3b1af41",
+      "styles.css": "b905fba51298ac582eb2103dea6a0163d493cccc1f12613c662716f679c831d7",
+      "app.js": "05a0b8c8a86d8c1f6d266b3b9120037f75e93910744e25fa4341816435a1a339"
+    },
+    "packagedStudioMatchesTestedSource": {
+      "index.html": true,
+      "styles.css": true,
+      "app.js": true
+    },
+    "observedPreFinalPackage": {
+      "executable": "output/final-package.q4oDhH/PublicDocument.app/Contents/MacOS/PublicDocumentApp",
+      "sha256": "9250dd1a43e1ccb430084f811325403ab080a447376f7c1675376066fddfb514",
+      "status": "AC08_PACKAGED_APP_BROWSER_TARGET"
+    }
+  },
+  "voiceOver": {
+    "schemaVersion": 1,
+    "recordedAt": "2026-08-11T07:04:55Z",
+    "status": "PASS",
+    "console": {
+      "screenLocked": false,
+      "sessionOnConsole": true
+    },
+    "environment": {
+      "macOS": "26.5.2",
+      "build": "25F84",
+      "architecture": "arm64",
+      "assistiveTechnology": "VoiceOver"
+    },
+    "browserTarget": {
+      "app": "output/final-package.q4oDhH/PublicDocument.app",
+      "executableSHA256": "sha256:9250dd1a43e1ccb430084f811325403ab080a447376f7c1675376066fddfb514",
+      "accessibilityElementCount": 127,
+      "sourceSHA256": {
+        "index.html": "3f749a0abdae414db0b9841f064b885941cb270dfa0748e4148a4ee6c3b1af41",
+        "styles.css": "b905fba51298ac582eb2103dea6a0163d493cccc1f12613c662716f679c831d7",
+        "app.js": "05a0b8c8a86d8c1f6d266b3b9120037f75e93910744e25fa4341816435a1a339"
+      }
+    },
+    "journeys": [
+      {
+        "name": "guided-authoring",
+        "status": "PASS",
+        "observation": "The document outline moved focus to the GenOffice document entry area and exposed headings, body text, tables, and review markers."
+      },
+      {
+        "name": "AI-proposal-review",
+        "status": "PASS",
+        "observation": "The AI proposal dialog exposed provider, endpoint, scope, guided operations, free request, review, and close controls without applying a proposal."
+      },
+      {
+        "name": "AI-consent",
+        "status": "PASS",
+        "observation": "The per-document/provider/endpoint/operation/scope consent checkbox changed from 0 to 1 and was reset to 0 before closing; no request was transmitted."
+      },
+      {
+        "name": "official-rule-and-template-guidance",
+        "status": "PASS",
+        "observation": "The signed template state and the official title rule expanded with source, field, precedence, and required value."
+      },
+      {
+        "name": "loss-resolution",
+        "status": "PASS",
+        "observation": "The safe-export dialog exposed format selection, per-export visual-flattening consent, and the semantic-loss/non-overwrite explanation."
+      },
+      {
+        "name": "single-export",
+        "status": "PASS",
+        "observation": "HWPX, HWP, DOCX, and Markdown choices and the selected-format export action were reachable; the dialog was cancelled before invoking a destination picker."
+      },
+      {
+        "name": "batch-export",
+        "status": "PASS",
+        "observation": "The batch-export checkbox changed from 0 to 1, returned to 0, and the dialog closed with focusable controls intact."
+      }
+    ],
+    "cleanup": {
+      "aiConsentReset": true,
+      "batchSelectionReset": true,
+      "voiceOverReturnedToOff": true,
+      "finalAppWindowClosed": true
+    }
+  },
+  "keyboard": {
+    "schemaVersion": 1,
+    "journeys": [
+      {
+        "name": "guided-authoring",
+        "status": "PASS",
+        "criticalActivationInputSource": "keyboard"
+      },
+      {
+        "name": "AI-proposal-review",
+        "status": "PASS",
+        "criticalActivationInputSource": "keyboard"
+      },
+      {
+        "name": "AI-consent",
+        "status": "PASS",
+        "criticalActivationInputSource": "keyboard"
+      },
+      {
+        "name": "official-rule-and-template-guidance",
+        "status": "PASS",
+        "criticalActivationInputSource": "keyboard"
+      },
+      {
+        "name": "loss-resolution",
+        "status": "PASS",
+        "criticalActivationInputSource": "keyboard"
+      },
+      {
+        "name": "single-export",
+        "status": "PASS",
+        "criticalActivationInputSource": "keyboard"
+      },
+      {
+        "name": "batch-export",
+        "status": "PASS",
+        "criticalActivationInputSource": "keyboard"
+      }
+    ],
+    "programmaticStates": {
+      "outlineCurrent": {
+        "attribute": "aria-current",
+        "passed": true
+      },
+      "formatToggles": {
+        "attribute": "aria-pressed",
+        "commands": [
+          "bold",
+          "italic",
+          "underline"
+        ],
+        "onAndOffObserved": true,
+        "passed": true
+      }
+    },
+    "focusTransitions": {
+      "aiProposalApproved": {
+        "target": "제안 요청",
+        "activeElementMatched": true
+      },
+      "aiProposalRejected": {
+        "target": "제안 요청",
+        "activeElementMatched": true
+      }
+    },
+    "inlineIdentity": {
+      "saveExportReopenExact": true
+    },
+    "testSource": {
+      "path": "tests/ac08-browser-qa.spec.js",
+      "sha256": "d9acb104ef7043cc117f0d1e94c372568e854a97f3e90408daaa20ef089f8324"
+    }
+  },
+  "sourceEvidence": [
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/verification-receipt.json",
+      "sha256": "sha256:2417d2b6c5e72a33cd3ae03b084240ef56fa05a59adf60e463616871eac20847"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/browser-receipt.json",
+      "sha256": "sha256:d1eb7ecac0206a3c0be24b970bf1ae2491644059220d0c23cee28e3055c97eee"
+    },
+    {
+      "path": "output/ac-08/final-current.X33X34/voiceover-receipt.json",
+      "sha256": "sha256:457ccb87bb797b626e734600b7f16aa82ffa0a938ffaec61ea3e49cabf61f849"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/keyboard-receipt.json",
+      "sha256": "sha256:de36e19e81744904a6259e5842e38b339bd37111fb0e25eee80f639751c9e714"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/axe-states.json",
+      "sha256": "sha256:3d44ae44268c4fae70b5c05b43abe035aa99371d2d97e563c5cb3b5ea58b56b3"
+    }
+  ]
+}

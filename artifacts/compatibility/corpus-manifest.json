@@ -1,0 +1,63 @@
+{
+  "corpusVersion": "1.0.0",
+  "manifestVersion": "1.0.0",
+  "status": "frozen",
+  "approvedAt": "2026-08-09T00:00:00+09:00",
+  "approver": "Public Document Studio QA Authority",
+  "requiredFonts": [
+    "Apple SD Gothic Neo Regular"
+  ],
+  "fixtures": [
+    {
+      "id": "basic-client-interoperability",
+      "projectPath": "Fixtures/basic-text-project.json",
+      "projectHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "capabilities": [
+        "heading",
+        "paragraph",
+        "review-marker",
+        "strong"
+      ],
+      "formats": [
+        "hwpx",
+        "hwp",
+        "docx",
+        "markdown"
+      ]
+    },
+    {
+      "id": "authoring-universe",
+      "projectPath": "Fixtures/authoring-universe-project.json",
+      "projectHash": "sha256:da4cac83207b2ca76f98cb49aff0a571996dc7495d2fa595de845444d5adfb3d",
+      "capabilities": [
+        "metadata",
+        "heading",
+        "paragraph",
+        "table",
+        "review-marker",
+        "approval-grid",
+        "formula",
+        "strong",
+        "emphasis",
+        "underline",
+        "font-face",
+        "font-size",
+        "keep-together",
+        "list-item",
+        "unordered-list"
+      ],
+      "formats": [
+        "hwpx",
+        "hwp",
+        "docx",
+        "markdown"
+      ]
+    }
+  ],
+  "visualTolerances": {
+    "pageCountDelta": 0,
+    "missingTextElements": 0,
+    "unexpectedBlankPages": 0,
+    "minimumTextBoundsCoverage": 1.0
+  }
+}

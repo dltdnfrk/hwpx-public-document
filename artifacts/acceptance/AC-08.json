@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-08",
+  "verdict": "pass",
+  "summary": "Current browser, keyboard, axe, visual, and VoiceOver journey checks passed.",
+  "blockers": [],
+  "seed": {
+    "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
+    "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
+  },
+  "sourceEvidence": [
+    {
+      "path": "docs/ac-08-accessibility-evidence.md",
+      "sha256": "sha256:c43d99d5029609416420d129f09cf2d002d34c3ac743e71e579b507c0657b012"
+    },
+    {
+      "path": "provenance/seed-evidence-sources.json",
+      "sha256": "sha256:20146b6cc506b5e8f5355fb0dd1cdce15229f1c93161aea52eff35ef4aa6202f"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/verification-receipt.json",
+      "sha256": "sha256:2417d2b6c5e72a33cd3ae03b084240ef56fa05a59adf60e463616871eac20847"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/browser-receipt.json",
+      "sha256": "sha256:d1eb7ecac0206a3c0be24b970bf1ae2491644059220d0c23cee28e3055c97eee"
+    },
+    {
+      "path": "output/ac-08/final-current.X33X34/voiceover-receipt.json",
+      "sha256": "sha256:457ccb87bb797b626e734600b7f16aa82ffa0a938ffaec61ea3e49cabf61f849"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/keyboard-receipt.json",
+      "sha256": "sha256:de36e19e81744904a6259e5842e38b339bd37111fb0e25eee80f639751c9e714"
+    },
+    {
+      "path": "output/ac-08/genoffice-comparison-current.93tW9R/reference-comparison.json",
+      "sha256": "sha256:248754207023c234282cbb41c0e31c1b3f4c66518cf1cb761e98e03635a19a2a"
+    },
+    {
+      "path": "output/ac-08/genoffice-reference-final.3i47bl/reference-receipt.json",
+      "sha256": "sha256:cf9ac34599ae01dbe4d7b525ec642b6ab43f6d4c56ea9122d33344f9d2fa2975"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/axe-states.json",
+      "sha256": "sha256:3d44ae44268c4fae70b5c05b43abe035aa99371d2d97e563c5cb3b5ea58b56b3"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/diff-current-build-1280.json",
+      "sha256": "sha256:ed302272406a99d4eee80a2191c2f2365fa9ba43b262ad35fa20b18a9cf90fa7"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/diff-current-build-920.json",
+      "sha256": "sha256:3bb28b01a1a079ac335d621f18e764f5ba4cbec194acc50fc779f7af9ef9e504"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/visual-pass-a.md",
+      "sha256": "sha256:41d6089b72a994757aa33079fe1bf870819d3d4eb4fd4f586c6b0f5b18597709"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/visual-pass-b.md",
+      "sha256": "sha256:13b8f52cca75534feb618820e485b353048d482b99d7cc84c1033f823147e829"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "artifacts/accessibility/automated-results.json",
+      "sha256": "sha256:3d44ae44268c4fae70b5c05b43abe035aa99371d2d97e563c5cb3b5ea58b56b3"
+    },
+    {
+      "path": "artifacts/accessibility/manual-scenarios.json",
+      "sha256": "sha256:006ca3189cb6927722aaa8f7e53fa041733fba473e5399d08e0663bb2c3b57d2"
+    },
+    {
+      "path": "artifacts/ui/reference-comparison.json",
+      "sha256": "sha256:6fbf8ad536778e43c54f07e69275116c5e758175c96f28ae9487830a60d3748b"
+    }
+  ],
+  "evaluation": {
+    "criterion": "AC-08",
+    "verdict": "pass",
+    "summary": "Current browser, keyboard, axe, visual, and VoiceOver journey checks passed.",
+    "blockers": [],
+    "checks": [
+      {
+        "id": "accessibility.browser",
+        "passed": true,
+        "detail": "browser, keyboard, source-contract, and visual commands exited successfully"
+      },
+      {
+        "id": "accessibility.freshness",
+        "passed": true,
+        "detail": "browser evidence binds current Studio source"
+      },
+      {
+        "id": "accessibility.axe",
+        "passed": true,
+        "detail": "all required live states have zero axe violations"
+      },
+      {
+        "id": "accessibility.visual",
+        "passed": true,
+        "detail": "approved-size visual comparisons meet threshold"
+      },
+      {
+        "id": "accessibility.keyboard-evidence",
+        "passed": true,
+        "detail": "all seven journeys record keyboard critical activation"
+      },
+      {
+        "id": "accessibility.programmatic-states",
+        "passed": true,
+        "detail": "outline and formatting states are programmatically exposed"
+      },
+      {
+        "id": "accessibility.focus-restoration",
+        "passed": true,
+        "detail": "AI approval and rejection restore focus"
+      },
+      {
+        "id": "accessibility.reference-lineage",
+        "passed": true,
+        "detail": "semantic comparison uses the distinct pinned GenOffice Docs lineage"
+      },
+      {
+        "id": "accessibility.voiceover-contract",
+        "passed": true,
+        "detail": "all seven VoiceOver journeys are represented"
+      },
+      {
+        "id": "evidence.identity",
+        "passed": true,
+        "detail": "13 evidence identities verified"
+      },
+      {
+        "id": "accessibility.voiceover-failures",
+        "passed": true,
+        "detail": "no executed VoiceOver journey failed"
+      }
+    ]
+  }
+}

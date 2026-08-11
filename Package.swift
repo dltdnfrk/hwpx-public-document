@@ -3,11 +3,17 @@ import PackageDescription
 
 let package = Package(
     name: "PublicDocumentApp",
-    platforms: [.macOS(.v13)],
+    platforms: [.macOS(.v14)],
     products: [
         .executable(name: "PublicDocumentApp", targets: ["PublicDocumentApp"]),
     ],
     targets: [
-        .executableTarget(name: "PublicDocumentApp"),
+        .executableTarget(
+            name: "PublicDocumentApp",
+            linkerSettings: [
+                .linkedFramework("Security"),
+                .linkedFramework("WebKit"),
+            ]
+        ),
     ]
 )

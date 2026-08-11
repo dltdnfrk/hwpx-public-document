@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-01",
+  "verdict": "pass",
+  "recordedAt": "2026-08-11T06:55:29Z",
+  "evidenceRoot": "output/ac-01/final-current.FvKE8S",
+  "architecture": "arm64",
+  "codesignVerification": "pass",
+  "appBinaryPath": "output/ac-01/final-current.FvKE8S/artifacts/PublicDocumentApp",
+  "appBinaryHash": "sha256:9250dd1a43e1ccb430084f811325403ab080a447376f7c1675376066fddfb514",
+  "rhwpBinaryPath": "output/ac-01/final-current.FvKE8S/artifacts/rhwp",
+  "rhwpBinaryHash": "sha256:a9fc072e61aa1cbf56fbd00943c4e4a33dd49aa7f6122f7b36e16ff476f7677b",
+  "node": {
+    "version": "22.17.1",
+    "architecture": "arm64",
+    "binaryHash": "sha256:5c8cd3ab2559b530fceca01776064c56687619475a7ffc339178524af6cdaa25",
+    "systemLibrariesOnly": true
+  },
+  "genoffice": {
+    "integrationMode": "pinned-adapter-runtime-fork",
+    "directPackageRuntimeLinkage": true,
+    "upstreamRuntimeFilesBundled": true,
+    "upstreamRepository": "https://github.com/genspark-ai/genoffice.git",
+    "upstreamCommit": "d8305ff2dc152593a1ec5639d77e6860c6a512bd",
+    "upstreamLicense": "Apache-2.0",
+    "runtimeManifestHash": "sha256:887f312020752ad23bf92efaf9207e7c4e5af2eca449b9a747f53ca3087ac00a",
+    "browserBundleHash": "sha256:fe576951798bc85eaba443f0ff3e30eccbcc8ead21b1f1932f540c4d0f3ddc7d",
+    "runtimeInputLockHash": "sha256:9ee393c6897d713afc1016cb49c6ca5d04297e2544785404b68bbebc2a946f91",
+    "portManifestHash": "sha256:4e7318636a746a2b2af4bd5e6e1b2e23113afa08c4b39760210843a06c4735f5",
+    "upstreamLockHash": "sha256:81f3936487e9b3e0c0f71a832d1b104e6f133db641428a1643da6b43aab4125e",
+    "inputCount": 201,
+    "javascriptPackageCount": 42,
+    "outputCount": 9,
+    "runtimeOffline": true
+  },
+  "rhwp": {
+    "upstreamRepository": "https://github.com/edwardkim/rhwp.git",
+    "upstreamCommit": "2dced7bfe10c6597cead634264c7c1781c01f1e7",
+    "upstreamLicense": "MIT",
+    "bundledBinaryHash": "sha256:a9fc072e61aa1cbf56fbd00943c4e4a33dd49aa7f6122f7b36e16ff476f7677b"
+  },
+  "sbom": {
+    "hash": "sha256:48733531c3243d5e8ffc136288a1ae6664e6458d50ca9bc4380fc647e247d033",
+    "verdict": "pass"
+  },
+  "checks": {
+    "strictCodesignVerified": true,
+    "packagedRuntimeHashesMatched": true,
+    "forbiddenRuntimeSurfaceScan": "pass",
+    "externalNetworkRequestsObserved": 0,
+    "browserTestsPassed": 6,
+    "axeViolations": 0,
+    "voiceOverJourneysPassed": 7
+  },
+  "sourceEvidence": [
+    {
+      "path": "output/ac-01/final-current.FvKE8S/foundation-runtime.json",
+      "sha256": "sha256:a3ea05b7433d7ff9c06bc68682551a2f387677cc784f5933a4f96302b8d3b532"
+    },
+    {
+      "path": "output/ac-01/final-current.FvKE8S/artifacts/PublicDocumentApp",
+      "sha256": "sha256:9250dd1a43e1ccb430084f811325403ab080a447376f7c1675376066fddfb514"
+    },
+    {
+      "path": "output/ac-01/final-current.FvKE8S/artifacts/rhwp",
+      "sha256": "sha256:a9fc072e61aa1cbf56fbd00943c4e4a33dd49aa7f6122f7b36e16ff476f7677b"
+    },
+    {
+      "path": "Resources/Studio/index.html",
+      "sha256": "sha256:3f749a0abdae414db0b9841f064b885941cb270dfa0748e4148a4ee6c3b1af41"
+    },
+    {
+      "path": "Resources/Studio/styles.css",
+      "sha256": "sha256:b905fba51298ac582eb2103dea6a0163d493cccc1f12613c662716f679c831d7"
+    },
+    {
+      "path": "Resources/Studio/app.js",
+      "sha256": "sha256:05a0b8c8a86d8c1f6d266b3b9120037f75e93910744e25fa4341816435a1a339"
+    },
+    {
+      "path": "provenance/genoffice-docs-port.json",
+      "sha256": "sha256:4e7318636a746a2b2af4bd5e6e1b2e23113afa08c4b39760210843a06c4735f5"
+    },
+    {
+      "path": "Resources/GenOffice/runtime-manifest.json",
+      "sha256": "sha256:887f312020752ad23bf92efaf9207e7c4e5af2eca449b9a747f53ca3087ac00a"
+    },
+    {
+      "path": "GenOfficeFork/runtime-input-lock.json",
+      "sha256": "sha256:9ee393c6897d713afc1016cb49c6ca5d04297e2544785404b68bbebc2a946f91"
+    }
+  ]
+}

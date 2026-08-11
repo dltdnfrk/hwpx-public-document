@@ -1,0 +1,29 @@
+{
+  "profileVersion": "1.0.0",
+  "requiredArchitecture": "arm64",
+  "fixtures": {
+    "100-page": {
+      "minimumPageCount": 100,
+      "elementCount": 2041
+    },
+    "50-mb": {
+      "minimumSnapshotBytes": 52428800,
+      "minimumAuthoredUTF8Bytes": 52428800,
+      "elementChunkBytes": 2097152
+    }
+  },
+  "formats": [
+    "hwpx",
+    "hwp",
+    "docx",
+    "markdown"
+  ],
+  "thresholds": {
+    "exportSeconds": 30.0,
+    "mainThreadHeartbeatMilliseconds": 100.0,
+    "firstProgressMilliseconds": 250.0,
+    "progressGapMilliseconds": 5000.0,
+    "cancellationRequestMilliseconds": 100.0,
+    "cancellationCompletionMilliseconds": 1000.0
+  }
+}

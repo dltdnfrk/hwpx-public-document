@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://muni.local/public-document-project.schema.json",
+  "title": "Public Document Studio project",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "documentID",
+    "title",
+    "locale",
+    "currentRevisionID",
+    "elements",
+    "assets",
+    "styles",
+    "templateBinding",
+    "evidenceLinks",
+    "revisions",
+    "history",
+    "aiProposalHistory",
+    "providerConfigurations",
+    "consentGrants",
+    "redoRevisionIDs"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "documentID": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string"
+    },
+    "locale": {
+      "type": "string"
+    },
+    "currentRevisionID": {
+      "type": "string",
+      "minLength": 1
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "elementID",
+          "kind",
+          "order",
+          "text"
+        ]
+      }
+    },
+    "assets": {
+      "type": "array"
+    },
+    "styles": {
+      "type": "array"
+    },
+    "templateBinding": {
+      "type": "object"
+    },
+    "evidenceLinks": {
+      "type": "array"
+    },
+    "revisions": {
+      "type": "array"
+    },
+    "history": {
+      "type": "array"
+    },
+    "aiProposalHistory": {
+      "type": "array"
+    },
+    "providerConfigurations": {
+      "type": "array"
+    },
+    "consentGrants": {
+      "type": "array"
+    },
+    "redoRevisionIDs": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": false,
+  "observedExample": {
+    "path": "output/ac-02/final-current.PUpQaw/project-store/project.json",
+    "sha256": "sha256:e59150e7e8fe70327679495d3f3e35c81081f2b283055d11a2f3d569343d21cf"
+  }
+}

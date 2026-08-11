@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; media-src 'none'; base-uri 'none'; form-action 'none'">
+    <title>공공문서 작성기 / Public Document Studio</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="studio-shell">
+      <header class="titlebar" aria-label="문서 제목 표시줄">
+        <div class="traffic-space" aria-hidden="true"></div>
+        <div class="brand-lockup">
+          <span class="brand-mark" aria-hidden="true">문</span>
+          <span>공공문서 작성기</span>
+          <span class="brand-en">Public Document Studio</span>
+        </div>
+        <label class="document-title">
+          <span class="sr-only">문서 제목</span>
+          <input value="2026년 생활안전 추진계획" aria-label="문서 제목">
+        </label>
+        <div class="title-actions" aria-label="프로젝트 작업">
+          <button type="button" data-project-action="new">새 문서</button>
+          <button type="button" data-project-action="save">저장</button>
+          <button type="button" data-project-action="reopen">다시 열기</button>
+          <button type="button" data-project-action="recover">복구</button>
+          <button type="button" data-project-action="inspect">프로젝트 검사</button>
+          <button type="button" data-action="open-export">내보내기</button>
+        </div>
+      </header>
+
+      <section class="ribbon-region" aria-label="편집 도구">
+        <nav class="ribbon-tabs" aria-label="편집 리본">
+          <div class="ribbon-tablist" role="tablist" aria-label="편집 리본 탭">
+            <button class="ribbon-tab active" role="tab" type="button" data-tab="home" aria-selected="true" aria-controls="home-tools">홈</button>
+            <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">삽입</button>
+            <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">표</button>
+            <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">레이아웃</button>
+            <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">검토</button>
+            <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">보기</button>
+          </div>
+          <span class="ribbon-spacer"></span>
+          <button class="outline-toggle" type="button" data-action="outline" aria-pressed="true">문서 구조</button>
+        </nav>
+
+        <div class="ribbon" id="home-tools" role="tabpanel" aria-label="홈 도구">
+        <div class="tool-group">
+          <button class="tool large" type="button" data-command="undo"><span class="tool-icon">↶</span>실행 취소</button>
+          <button class="tool large" type="button" data-command="redo"><span class="tool-icon">↷</span>다시 실행</button>
+        </div>
+        <div class="tool-group text-controls">
+          <label>글꼴<select data-format="fontName" aria-label="글꼴"><option value="Apple SD Gothic Neo">본고딕</option><option value="serif">바탕</option></select></label>
+          <label>크기<select data-format="fontSize" aria-label="글자 크기"><option value="10">10</option><option value="11" selected>11</option><option value="12">12</option><option value="14">14</option></select></label>
+          <button class="icon-button" type="button" data-command="bold" aria-label="굵게" aria-pressed="false"><strong>가</strong></button>
+          <button class="icon-button" type="button" data-command="italic" aria-label="기울임" aria-pressed="false"><em>가</em></button>
+          <button class="icon-button" type="button" data-command="underline" aria-label="밑줄" aria-pressed="false"><u>가</u></button>
+        </div>
+        <div class="tool-group">
+          <button class="icon-button" type="button" data-command="justifyLeft" aria-label="왼쪽 맞춤">≡</button>
+          <button class="icon-button" type="button" data-command="justifyCenter" aria-label="가운데 맞춤">≡</button>
+          <button class="icon-button" type="button" data-command="insertUnorderedList" aria-label="글머리 기호">•≡</button>
+          <span class="group-label">단락</span>
+        </div>
+        <div class="tool-group workflow-tools">
+          <button class="tool" type="button" data-action="check"><span class="tool-icon">✓</span>필수항목 점검</button>
+          <button class="tool" type="button" data-action="marker"><span class="tool-icon">!</span>확인 필요</button>
+          <button class="tool" type="button" data-action="open-ai"><span class="tool-icon">AI</span>AI 제안</button>
+          <span class="group-label">공공문서</span>
+        </div>
+        </div>
+      </section>
+
+      <main class="workspace">
+        <aside class="outline-panel" aria-label="문서 구조">
+          <div class="panel-heading">
+            <div><span class="eyebrow">기관 표준</span><h2>추진계획서</h2></div>
+            <span class="version-badge">v3.2</span>
+          </div>
+          <section class="template-governance" aria-labelledby="template-governance-heading">
+            <div class="template-state">
+              <h2 id="template-governance-heading">템플릿 신뢰 상태</h2>
+              <span class="trusted-badge">서명 확인됨</span>
+            </div>
+            <p class="pinned-template">문서 고정 <strong>public-plan v3.2</strong></p>
+            <p class="catalog-version">신뢰 카탈로그를 불러오는 중</p>
+            <ul class="catalog-entries" aria-label="사용 가능한 신뢰 템플릿"></ul>
+            <div class="template-actions">
+              <button type="button" data-template-action="update-template">업데이트 파일 선택</button>
+              <button type="button" data-template-action="rollback-template" disabled>이전 버전 복원</button>
+            </div>
+            <details class="official-rules">
+              <summary>공식 규칙 우선 적용</summary>
+              <ul></ul>
+            </details>
+          </section>
+          <ol class="outline-list" aria-label="문서 구조">
+            <li class="complete active"><button type="button" data-section="summary" aria-label="1. 개요" aria-current="location"><span>1</span>개요</button></li>
+            <li><button type="button" data-section="background" aria-label="2. 추진 배경"><span>2</span>추진 배경</button></li>
+            <li><button type="button" data-section="plan" aria-label="3. 세부 추진계획"><span>3</span>세부 추진계획</button></li>
+            <li><button type="button" data-section="budget" aria-label="4. 예산 및 일정"><span>4</span>예산 및 일정</button></li>
+            <li><button type="button" data-section="review" aria-label="5. 검토 및 결재"><span>5</span>검토 및 결재</button></li>
+          </ol>
+          <section class="checklist" aria-labelledby="checklist-heading">
+            <div class="checklist-title"><h2 id="checklist-heading">작성 점검</h2><strong>4 / 6</strong></div>
+            <div class="progress-track" role="progressbar" aria-label="작성 점검" aria-valuemin="0" aria-valuemax="6" aria-valuenow="4"><span></span></div>
+            <ul>
+              <li class="done">목적과 대상</li><li class="done">추진 근거</li><li class="done">담당 부서</li>
+              <li class="done">시행 일정</li><li>소요 예산</li><li>결재선</li>
+            </ul>
+          </section>
+        </aside>
+
+        <section class="canvas" aria-label="문서 편집 영역" tabindex="0" aria-describedby="canvas-keyboard-help">
+          <span class="sr-only" id="canvas-keyboard-help">스크롤 가능한 문서 편집 영역입니다. 탭 키를 한 번 더 누르면 공공문서 본문을 편집할 수 있습니다.</span>
+          <public-document-genoffice-editor class="genoffice-editor" aria-label="공공문서 본문" tabindex="0" hide-navigation></public-document-genoffice-editor>
+          <article class="page" id="static-editor-fallback" hidden aria-hidden="true">
+            <div class="document-kicker" data-element-id="element-kicker" data-element-kind="metadata" data-style-id="style-metadata">생활안전과 · 2026. 8. 9.</div>
+            <h1 data-element-id="element-title" data-element-kind="heading" data-style-id="style-title">2026년 생활안전 추진계획</h1>
+            <div class="approval-grid" contenteditable="false" aria-label="결재선" data-element-id="element-approval" data-element-kind="approval-grid" data-style-id="style-approval">
+              <span>담당</span><span>팀장</span><span>과장</span><b>김○○</b><b></b><b></b>
+            </div>
+            <h2 id="summary" data-element-id="element-summary-heading" data-element-kind="heading" data-style-id="style-section-heading">1. 개요</h2>
+            <p data-element-id="element-summary-body" data-element-kind="paragraph" data-style-id="style-body">지역 생활안전 취약요인을 사전에 점검하고, 기관별 대응체계를 정비하여 <span class="keep-phrase">시민이 체감하는 안전 수준을 높이고자&nbsp;함.</span></p>
+            <table data-element-id="element-summary-table" data-element-kind="table" data-style-id="style-table"><tbody>
+              <tr><th>추진 기간</th><td>2026. 9. ~ 2026. 12.</td></tr>
+              <tr><th>담당 부서</th><td>생활안전과 안전기획팀</td></tr>
+              <tr><th>추진 대상</th><td>관내 공공시설 및 다중이용시설</td></tr>
+            </tbody></table>
+            <h2 id="background" data-element-id="element-background-heading" data-element-kind="heading" data-style-id="style-section-heading">2. 추진 배경</h2>
+            <p data-element-id="element-background-body" data-element-kind="paragraph" data-style-id="style-body" data-evidence-ids="evidence-safety-statistics">계절별 안전사고 유형과 지역 신고 자료를 바탕으로 우선 점검 대상을 선정하고, 현장 조치 결과를 동일한 기준으로 관리할 필요가 있음.</p>
+            <div class="review-required" contenteditable="false" data-element-id="element-evidence-marker" data-element-kind="review-marker" data-style-id="style-review"><strong>[확인 필요]</strong> <span>최근 3년 사고 건수의 출처와 기준일을 입력하세요.</span></div>
+            <h2 id="plan" data-element-id="element-plan-heading" data-element-kind="heading" data-style-id="style-section-heading">3. 세부 추진계획</h2>
+            <p data-element-id="element-plan-body" data-element-kind="paragraph" data-style-id="style-body">부서별 점검반을 편성하고 시설별 체크리스트에 따라 현장 점검을 실시한다. 보완이 필요한 사항은 담당 기관과 조치기한을 명시하여 관리한다.</p>
+            <h2 id="budget" data-element-id="element-budget-heading" data-element-kind="heading" data-style-id="style-section-heading">4. 예산 및 일정</h2>
+            <p data-element-id="element-budget-body" data-element-kind="paragraph" data-style-id="style-body">[확인 필요] 세부 일정과 소요 예산을 담당 부서 검토 후 입력한다.</p>
+            <h2 id="review" data-element-id="element-review-heading" data-element-kind="heading" data-style-id="style-section-heading">5. 검토 및 결재</h2>
+            <p data-element-id="element-review-body" data-element-kind="paragraph" data-style-id="style-body">[확인 필요] 기관 결재 규정에 따른 검토자와 최종 결재자를 지정한다.</p>
+          </article>
+        </section>
+      </main>
+
+      <footer class="statusbar" aria-label="문서 상태">
+        <span class="status-message" role="status">오프라인 작업공간</span>
+        <span>1쪽 / 1쪽</span><span>한국어</span>
+        <label class="zoom-control">보기 배율 <input type="range" min="70" max="130" value="100" aria-label="보기 배율"><output>100%</output></label>
+      </footer>
+    </div>
+    <dialog class="project-inspector" aria-labelledby="project-inspector-title" aria-describedby="project-inspector-description">
+      <div class="inspector-heading"><h2 id="project-inspector-title">프로젝트 검사</h2><button type="button" data-action="close-inspector" aria-label="프로젝트 검사 닫기">×</button></div>
+      <dl></dl>
+      <p id="project-inspector-description">편집 원본은 앱 프로젝트이며 내보낸 파일은 파생 결과입니다.</p>
+    </dialog>
+    <dialog class="project-inspector export-result" aria-labelledby="export-result-title" aria-describedby="export-summary">
+      <div class="inspector-heading"><h2 id="export-result-title">내보내기 결과</h2><button type="button" data-action="close-export-result" aria-label="내보내기 결과 닫기">×</button></div>
+      <p class="export-summary" id="export-summary" role="status"></p>
+      <ul class="export-results" aria-label="게시된 파일"></ul>
+      <section class="loss-report" aria-labelledby="loss-report-title">
+        <h3 id="loss-report-title">손실 보고서</h3>
+        <ul></ul>
+      </section>
+    </dialog>
+    <dialog class="project-inspector export-setup" aria-labelledby="export-setup-title" aria-describedby="export-setup-description">
+      <div class="inspector-heading"><h2 id="export-setup-title">안전한 내보내기</h2><button type="button" data-action="close-export-setup" aria-label="내보내기 닫기">×</button></div>
+      <fieldset class="export-options">
+        <legend>내보낼 형식</legend>
+        <label><input type="checkbox" name="export-format" value="hwpx" checked> HWPX</label>
+        <label><input type="checkbox" name="export-format" value="hwp"> HWP</label>
+        <label><input type="checkbox" name="export-format" value="docx" checked> DOCX</label>
+        <label><input type="checkbox" name="export-format" value="markdown"> Markdown</label>
+        <label class="flattening-consent"><input type="checkbox" data-export-consent> 내보내기별 시각 변환 동의</label>
+        <label class="batch-export-option"><input type="checkbox" data-batch-export> 여러 문서 일괄 내보내기</label>
+      </fieldset>
+      <p id="export-setup-description">형식별 손실을 먼저 검사하며, 의미 손실 형식은 차단합니다. 기존 파일은 덮어쓰지 않습니다.</p>
+      <div class="export-actions"><button type="button" data-action="close-export-setup">취소</button><button type="button" data-action="export">선택 형식 내보내기</button></div>
+    </dialog>
+    <dialog class="project-inspector batch-export-progress" aria-labelledby="batch-export-progress-title" aria-describedby="batch-export-summary">
+      <div class="inspector-heading"><h2 id="batch-export-progress-title">일괄 내보내기 진행</h2><button type="button" data-action="close-batch-export-progress" aria-label="일괄 내보내기 진행 닫기">×</button></div>
+      <p class="batch-export-summary" id="batch-export-summary" role="status">내보내기를 준비하고 있습니다.</p>
+      <progress value="0" max="1" aria-label="문서별 형식 내보내기 진행률"></progress>
+      <ul class="batch-export-items" aria-label="문서별 형식 상태"></ul>
+      <div class="export-actions"><button type="button" data-action="retry-batch-export" hidden>새 작업으로 다시 시도</button><button type="button" data-action="cancel-batch-export">일괄 내보내기 취소</button></div>
+    </dialog>
+    <dialog class="project-inspector ai-workspace" aria-labelledby="ai-workspace-title" aria-describedby="ai-workspace-description">
+      <div class="inspector-heading"><h2 id="ai-workspace-title">AI 제안 검토</h2><button type="button" data-action="close-ai" aria-label="AI 제안 검토 닫기">×</button></div>
+      <p id="ai-workspace-description">AI는 문서를 직접 바꾸지 않습니다. 선택한 범위와 작업에 대한 명령 제안을 받은 뒤 변경 전·후를 검토하세요.</p>
+      <div class="ai-provider-grid">
+        <label>제공자<select data-ai-provider><option value="openai">OpenAI</option><option value="anthropic">Anthropic</option><option value="gemini">Gemini</option><option value="openai-compatible">OpenAI 호환 엔드포인트</option></select></label>
+        <label>엔드포인트 식별자<input data-ai-endpoint value="https://api.openai.com/v1"></label>
+        <label>전송 범위<select data-ai-payload-scope><option value="selected-elements">선택 요소만</option><option value="evidence-and-claims">근거와 연결 주장</option><option value="whole-document">문서 전체</option></select></label>
+        <label>제공자 자격 증명<input type="password" data-ai-secret autocomplete="off" placeholder="macOS 키체인에만 저장"></label>
+      </div>
+      <fieldset class="ai-guided-operations"><legend>안내형 작업</legend>
+        <button type="button" data-ai-operation="source-grounded-draft" aria-pressed="true">근거 기반 초안</button>
+        <button type="button" data-ai-operation="template-completion">템플릿 완성</button>
+        <button type="button" data-ai-operation="missing-data-marking">누락 정보 표시</button>
+        <button type="button" data-ai-operation="summarize">요약</button>
+        <button type="button" data-ai-operation="rewrite">다시 쓰기</button>
+        <button type="button" data-ai-operation="translate">번역</button>
+        <button type="button" data-ai-operation="public-language-correction">공공언어 교정</button>
+        <button type="button" data-ai-operation="style-correction">문체 교정</button>
+        <button type="button" data-ai-operation="table-change">표 변경</button>
+        <button type="button" data-ai-operation="evidence-claim-check">근거·주장 점검</button>
+      </fieldset>
+      <label class="ai-free-form-label">자유 요청<textarea data-ai-free-form rows="3" placeholder="문서에 직접 적용되지 않는 제안을 요청합니다."></textarea></label>
+      <label class="ai-consent"><input type="checkbox" data-ai-consent> 이 문서·제공자·엔드포인트·작업·전송 범위에 한해 전송에 동의합니다.</label>
+      <div class="ai-request-actions"><button type="button" data-ai-configure>자격 증명 저장</button><button type="button" data-ai-request>제안 요청</button><button type="button" data-ai-revoke>동의 철회</button></div>
+      <section data-ai-proposal-review hidden aria-labelledby="ai-proposal-title" aria-live="polite">
+        <h3 id="ai-proposal-title">적용 전 변경 검토</h3>
+        <p class="ai-base-revision"></p>
+        <ul data-ai-diff aria-label="AI 제안 변경 전후"></ul>
+        <div class="ai-request-actions"><button type="button" data-ai-approve-selected>선택한 변경 승인</button><button type="button" data-ai-reject>제안 거절</button></div>
+      </section>
+    </dialog>
+    <script src="../GenOffice/public-document-genoffice.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

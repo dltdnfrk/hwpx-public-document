@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "version": "22.17.1",
+  "sourcePath": "/usr/local/bin/node",
+  "sourceSha256": "7ede1e8c98a2b2bb5965aff3c070ede061fc9e2a6a0b16774646487f94fe4541",
+  "arm64Sha256": "5c8cd3ab2559b530fceca01776064c56687619475a7ffc339178524af6cdaa25",
+  "licenseSha256": "1ae62e2015784ba438db7b04ebd33f3c4ff3efdb824c111c4ececd99945fd52d"
+}

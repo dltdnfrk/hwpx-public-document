@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "result": {
+    "authoritativeTitle": "기관 공식 제목을 사용하세요",
+    "bootstrappedCatalogVersion": "2026.08.1",
+    "conflictWarning": "공식 규칙 충돌: 제출 제목 '템플릿 제안 제목' 대신 공식 규칙(우선순위 100)의 필수 제목을 적용했습니다: '기관 공식 제목을 사용하세요'.",
+    "exportBoundProjectTitle": "# 기관 공식 제목을 사용하세요",
+    "exportSnapshotUsedRuleRevision": true,
+    "failedUpdatePreservedLastTrusted": true,
+    "highestAppliedPrecedence": 100,
+    "immutableRevisionCreated": true,
+    "lowerPrecedenceCouldNotOverride": true,
+    "officialRuleHistoryRecorded": true,
+    "officialRuleTitleElementEnforced": true,
+    "offlineReloadCatalogVersion": "2026.09.1",
+    "pinnedTemplateVersionAfterUpdate": "3.2",
+    "pinnedTemplateVersionBeforeUpdate": "3.2",
+    "repeatedEnforcementWasIdempotent": true,
+    "rollbackCatalogVersion": "2026.08.1",
+    "signatureRejected": true,
+    "unsupportedOfficialFieldRejected": true,
+    "updatedCatalogEntryCount": 2,
+    "updatedCatalogVersion": "2026.09.1"
+  },
+  "sourceEvidence": [
+    {
+      "path": "output/ac-03/final-current.ncO8Pn/receipt.json",
+      "sha256": "sha256:1dae415364187b213949e04be724e56fc52957b0d12d3c62f3ce7741f2cbe98a"
+    }
+  ]
+}

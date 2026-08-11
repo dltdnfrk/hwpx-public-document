@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/genspark-ai/genoffice.git",
+  "commit": "d8305ff2dc152593a1ec5639d77e6860c6a512bd",
+  "files": [
+    { "path": "LICENSE", "sha256": "68e32334df324ef4fc79fad3a26487e5abac36055a484bb6c8d7ecf9d8350885" },
+    { "path": "package-lock.json", "sha256": "ac600430f369f5584a4ac3ecf96dc9019dd26e66c3652902f969aa512baa04f3" },
+    { "path": "apps/docs/src/renderer/components/NavPane.tsx", "sha256": "2feb9209f9a92e7f54a71930d11502e4e3fbae3bc32a218b1903b0af6f4a03c7" },
+    { "path": "apps/docs/src/renderer/editor/extensions.ts", "sha256": "a37a7ef7578be57006f96e5cc664af92919d875d9f2ddd169a94b423ee1850de" },
+    { "path": "apps/docs/src/renderer/editor/headings.ts", "sha256": "584990a2c970c416415d2f0db886b34ee74bd22624eedf52bc8cbc888aeace11" },
+    { "path": "packages/docx-engine/src/index.ts", "sha256": "707d99e0ca80ba0ed2ed0752dfe90b9e5597d82023fb48eb4c3161d2350106ab" },
+    { "path": "packages/ui/src/icons.tsx", "sha256": "c49d60d0e9fcfdb6adf7ee727758ab537f5a34f8d7f989e4e472b2aa33a53d04" }
+  ]
+}

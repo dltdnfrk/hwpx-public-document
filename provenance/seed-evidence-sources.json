@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "criteria": {
+    "AC-01": {
+      "foundationRuntimeReceipt": "output/ac-01/final-current.FvKE8S/foundation-runtime.json",
+      "appBinary": "output/ac-01/final-current.FvKE8S/artifacts/PublicDocumentApp",
+      "rhwpBinary": "output/ac-01/final-current.FvKE8S/artifacts/rhwp"
+    },
+    "AC-02": {
+      "projectSample": "output/ac-02/final-current.PUpQaw/project-store/project.json",
+      "projectStoreReceipt": "output/ac-02/final-current.PUpQaw/project-store-receipt.json",
+      "migrationReceipt": "output/ac-02/final-current.PUpQaw/project-migration-receipt.json",
+      "windowLifecycleReceipt": "output/ac-02/final-current.PUpQaw/window-lifecycle-receipt.json"
+    },
+    "AC-03": {
+      "templateCatalogReceipt": "output/ac-03/final-current.ncO8Pn/receipt.json"
+    },
+    "AC-04": {
+      "aiGovernanceReceipt": "output/ac-04/final-current.k6PEnn/receipt.json"
+    },
+    "AC-05": {
+      "hwpFamilyReceipt": "output/ac-05/final-current.G3DeQN/basic-hwp-family/stdout-receipt.json",
+      "nestedReceipt": "output/ac-05/final-current.G3DeQN/all-consented/stdout-receipt.json",
+      "scenarioReceipts": [
+        "output/ac-05/final-current.G3DeQN/authoring-universe/stdout-receipt.json",
+        "output/ac-05/final-current.G3DeQN/visual-unconsented/stdout-receipt.json"
+      ]
+    },
+    "AC-06": {
+      "scenarioManifests": [
+        "output/ac-06/final-current.2vQamI/cancel-after-first/.public-document-studio-exports/batch-ac06-cancelled/manifest.json",
+        "output/ac-06/final-current.2vQamI/cancel-before-publication/.public-document-studio-exports/batch-ac06-cancel-before-publication/manifest.json",
+        "output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-crashed/manifest.json",
+        "output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-retry-after-crash/manifest.json",
+        "output/ac-06/final-current.2vQamI/disk-full-and-retry/.public-document-studio-exports/batch-ac06-disk-full/manifest.json",
+        "output/ac-06/final-current.2vQamI/disk-full-and-retry/.public-document-studio-exports/batch-ac06-retry-after-disk-full/manifest.json",
+        "output/ac-06/final-current.2vQamI/existing-destination/.public-document-studio-exports/batch-ac06-existing/manifest.json",
+        "output/ac-06/final-current.2vQamI/partial-failure/.public-document-studio-exports/batch-ac06-partial/manifest.json"
+      ],
+      "finalManifest": "output/ac-06/final-current.2vQamI/partial-failure/.public-document-studio-exports/batch-ac06-partial/manifest.json",
+      "recoveryReceipt": "output/ac-06/final-current.2vQamI/crash-and-retry/recovery-receipt.json",
+      "recoveryArtifactRoot": "output/ac-06/final-current.2vQamI/recovery-artifacts"
+    },
+    "AC-07": {
+      "artifactRoot": "output/ac-07/final-current.Z61edu/compatibility",
+      "observationRoot": "output/ac-07/final-current.Z61edu/observations-clean",
+      "clientObservations": "output/ac-07/final-current.Z61edu/observations-clean/observations.json",
+      "compatibilityReceipt": "output/ac-07/final-current.Z61edu/compatibility/compatibility-receipt.json",
+      "externalEvidenceIndex": "output/ac-07/final-current.Z61edu/observations-clean/external-evidence-index-current.json",
+      "observedReceipt": "output/ac-07/final-current.Z61edu/observed-receipt.json"
+    },
+    "AC-08": {
+      "axeResults": "output/playwright/ac08-final-current.TT6Err/axe-states.json",
+      "browserReceipt": "output/playwright/ac08-final-current.TT6Err/browser-receipt.json",
+      "diff1280": "output/playwright/ac08-final-current.TT6Err/diff-current-build-1280.json",
+      "diff920": "output/playwright/ac08-final-current.TT6Err/diff-current-build-920.json",
+      "verificationReceipt": "output/playwright/ac08-final-current.TT6Err/verification-receipt.json",
+      "voiceOverReceipt": "output/ac-08/final-current.X33X34/voiceover-receipt.json",
+      "keyboardReceipt": "output/playwright/ac08-final-current.TT6Err/keyboard-receipt.json",
+      "pinnedReferenceReceipt": "output/ac-08/genoffice-comparison-current.93tW9R/reference-comparison.json",
+      "pinnedReferenceSourceReceipt": "output/ac-08/genoffice-reference-final.3i47bl/reference-receipt.json",
+      "visualReviews": [
+        "output/playwright/ac08-final-current.TT6Err/visual-pass-a.md",
+        "output/playwright/ac08-final-current.TT6Err/visual-pass-b.md"
+      ]
+    },
+    "AC-09": {
+      "artifactRoot": "output/ac-09/final-current.pVyHYM",
+      "performanceReceipt": "output/ac-09/final-current.pVyHYM/performance-receipt.json",
+      "packagedApp": "output/ac-09/final-current.pVyHYM/packaged-app-identity"
+    },
+    "AC-10": {
+      "archive": "output/ac-10/PublicDocumentStudio-0.1.0-final-20260811T074153Z.zip",
+      "archiveVerification": "output/ac-10/PublicDocumentStudio-0.1.0-final-20260811T074153Z.verification.json",
+      "releaseManifest": "output/ac-10/final-functional-20260811T074033Z/Evidence/release-manifest.json",
+      "sha256Inventory": "output/ac-10/PublicDocumentStudio-0.1.0-final-20260811T074153Z.SHA256SUMS"
+    }
+  }
+}

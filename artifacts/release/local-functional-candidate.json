@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "product": "공공문서 작성기 / Public Document Studio",
+  "version": "0.1.0",
+  "releaseManifest": {
+    "path": "output/ac-10/final-functional-20260811T074033Z/Evidence/release-manifest.json",
+    "sha256": "sha256:06b27e559b97f366bc86480393301a119e38fa675dd4164a51bdc2ffef0661da"
+  },
+  "archiveVerification": {
+    "schemaVersion": 2,
+    "archive": {
+      "file": "PublicDocumentStudio-0.1.0-final-20260811T074153Z.zip",
+      "format": "zip",
+      "sha256": "89f179c291bbec84a154c7d5382eef451dfcca32c9a3526fadb84b08725aea73",
+      "sizeBytes": 94726107
+    },
+    "bundle": {
+      "sha256Inventory": {
+        "file": "PublicDocumentStudio-0.1.0-final-20260811T074153Z.SHA256SUMS",
+        "sha256": "5c6db8c14fa4173520300a015a8a2d74c509110de491827b73ebe16ce49500ef",
+        "fileCount": 258
+      }
+    },
+    "evidence": {
+      "root": "Evidence",
+      "manifestResolution": "pass",
+      "internalInventoryRecheck": "pass"
+    },
+    "app": {
+      "bundleIdentifier": "com.muni.public-document",
+      "bundleName": "Public Document Studio",
+      "shortVersion": "0.1.0",
+      "bundleVersion": "1",
+      "architecture": "arm64",
+      "codesignVerification": "pass",
+      "infoPlist": {
+        "path": "Contents/Info.plist",
+        "sha256": "88e128cf12321a50b517ec1507b8cb25edc13c8c6cb5b6a387c8f0a3ea186840"
+      },
+      "executable": {
+        "path": "Contents/MacOS/PublicDocumentApp",
+        "sha256": "9250dd1a43e1ccb430084f811325403ab080a447376f7c1675376066fddfb514"
+      },
+      "sha256Inventory": {
+        "file": "PublicDocumentStudio-0.1.0-final-20260811T074153Z.SHA256SUMS",
+        "sha256": "5c6db8c14fa4173520300a015a8a2d74c509110de491827b73ebe16ce49500ef",
+        "fileCount": 258
+      },
+      "resourceTrees": [
+        {
+          "path": "Contents/Resources/Capabilities",
+          "fileCount": 2,
+          "treeSha256": "d6ce365494b98231f89a23365875f131adb199f0c104ad96ec0264598fefdb2e"
+        },
+        {
+          "path": "Contents/Resources/Compatibility",
+          "fileCount": 3,
+          "treeSha256": "914818f1c84aa0bf12ff02a7115a5b0fadc9cb8f1113b46ba9f5815fdf259cb9"
+        },
+        {
+          "path": "Contents/Resources/Engines",
+          "fileCount": 2,
+          "treeSha256": "aa39984cbe5954e42762b0fb4a7c7a5b271956b189140b62331afc1aa3f2ff6d"
+        },
+        {
+          "path": "Contents/Resources/GenOffice",
+          "fileCount": 9,
+          "treeSha256": "c9377579c334ca84ff0d6bb61dc21056c8fde18578a989d56818a639ecab7812"
+        },
+        {
+          "path": "Contents/Resources/Legal",
+          "fileCount": 12,
+          "treeSha256": "74c06967142e2abfe22b41f533490a41beebec7ac90452f1dd45656026530c1d"
+        },
+        {
+          "path": "Contents/Resources/Performance",
+          "fileCount": 1,
+          "treeSha256": "b6bcb59ae0f2c009377c1d9ba7d29fdb1ecbcb8cf926bea6786d44c333d52f57"
+        },
+        {
+          "path": "Contents/Resources/Provenance",
+          "fileCount": 6,
+          "treeSha256": "a1e835219691c7d5d33cc17b7e1a4022910791bd7f1c1bc4a355bbe162345444"
+        },
+        {
+          "path": "Contents/Resources/Studio",
+          "fileCount": 3,
+          "treeSha256": "61939cb567e86fe52c09c9c5dd8f66155e55c1227e2bcb589952a2135a5772e2"
+        },
+        {
+          "path": "Contents/Resources/Templates",
+          "fileCount": 1,
+          "treeSha256": "997d474f8e7a1a3cd2c2241c3084022175ed2fa08288184057f5f4269aa6a151"
+        }
+      ],
+      "provenanceArtifacts": [
+        {
+          "path": "Contents/Resources/Provenance/genoffice-docs-port.json",
+          "sha256": "4e7318636a746a2b2af4bd5e6e1b2e23113afa08c4b39760210843a06c4735f5"
+        },
+        {
+          "path": "Contents/Resources/Provenance/genoffice-node-runtime-lock.json",
+          "sha256": "18c95dc70ff877dc189d1e176f9cf7f8ee543aeb97d50d3290ca0092a2d56f95"
+        },
+        {
+          "path": "Contents/Resources/Provenance/genoffice-runtime-input-lock.json",
+          "sha256": "9ee393c6897d713afc1016cb49c6ca5d04297e2544785404b68bbebc2a946f91"
+        },
+        {
+          "path": "Contents/Resources/Provenance/rhwp-dependency-lock.json",
+          "sha256": "75d4a9bdd1a388bb68a101ec77969a4ff8d0f9275a05578fb3c95a7b9c873887"
+        },
+        {
+          "path": "Contents/Resources/Provenance/sbom.spdx.json",
+          "sha256": "48733531c3243d5e8ffc136288a1ae6664e6458d50ca9bc4380fc647e247d033"
+        },
+        {
+          "path": "Contents/Resources/Provenance/upstream-lock.json",
+          "sha256": "81f3936487e9b3e0c0f71a832d1b104e6f133db641428a1643da6b43aab4125e"
+        }
+      ],
+      "engineArtifacts": [
+        {
+          "path": "Contents/Resources/Engines/node",
+          "sha256": "5c8cd3ab2559b530fceca01776064c56687619475a7ffc339178524af6cdaa25"
+        },
+        {
+          "path": "Contents/Resources/Engines/rhwp",
+          "sha256": "a9fc072e61aa1cbf56fbd00943c4e4a33dd49aa7f6122f7b36e16ff476f7677b"
+        }
+      ]
+    },
+    "verification": {
+      "freshTemporaryExtraction": true,
+      "archiveExtendedAttributes": "excluded",
+      "extractedInventoryComparison": "pass",
+      "sha256InventoryRecheck": "pass"
+    }
+  },
+  "archive": {
+    "path": "output/ac-10/PublicDocumentStudio-0.1.0-final-20260811T074153Z.zip",
+    "sha256": "sha256:89f179c291bbec84a154c7d5382eef451dfcca32c9a3526fadb84b08725aea73",
+    "byteCount": 94726107,
+    "evidence": {
+      "path": "output/ac-10/PublicDocumentStudio-0.1.0-final-20260811T074153Z.zip",
+      "sha256": "sha256:89f179c291bbec84a154c7d5382eef451dfcca32c9a3526fadb84b08725aea73"
+    }
+  },
+  "sourceEvidence": [
+    {
+      "path": "output/ac-10/PublicDocumentStudio-0.1.0-final-20260811T074153Z.verification.json",
+      "sha256": "sha256:fd72f93c784c7b04af48abec101f6e44b456de6d649ada5545989776528f7db2"
+    }
+  ]
+}

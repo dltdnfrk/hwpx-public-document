@@ -1,0 +1,42 @@
+[
+  {
+    "state": "genoffice-editor",
+    "url": "http://127.0.0.1:4173/Resources/Studio/",
+    "violations": []
+  },
+  {
+    "state": "main-editor",
+    "url": "http://127.0.0.1:4173/Resources/Studio/",
+    "violations": []
+  },
+  {
+    "state": "project-inspection",
+    "url": "http://127.0.0.1:4173/Resources/Studio/",
+    "violations": []
+  },
+  {
+    "state": "ai-consent",
+    "url": "http://127.0.0.1:4173/Resources/Studio/",
+    "violations": []
+  },
+  {
+    "state": "ai-proposal-review",
+    "url": "http://127.0.0.1:4173/Resources/Studio/",
+    "violations": []
+  },
+  {
+    "state": "single-export-loss-consent",
+    "url": "http://127.0.0.1:4173/Resources/Studio/",
+    "violations": []
+  },
+  {
+    "state": "single-export-result",
+    "url": "http://127.0.0.1:4173/Resources/Studio/",
+    "violations": []
+  },
+  {
+    "state": "batch-export-progress",
+    "url": "http://127.0.0.1:4173/Resources/Studio/",
+    "violations": []
+  }
+]

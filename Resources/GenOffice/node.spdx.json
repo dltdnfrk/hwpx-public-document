@@ -1,0 +1,25 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "node-v22.17.1-arm64",
+  "documentNamespace": "https://public-document-studio.local/spdx/node/5c8cd3ab2559b530fceca01776064c56687619475a7ffc339178524af6cdaa25",
+  "creationInfo": {
+    "created": "1980-01-01T00:00:00Z",
+    "creators": [
+      "Tool: build-genoffice-runtime.mjs"
+    ]
+  },
+  "packages": [
+    {
+      "name": "Node.js",
+      "SPDXID": "SPDXRef-Package-Node",
+      "versionInfo": "22.17.1",
+      "downloadLocation": "https://nodejs.org/download/release/v22.17.1/",
+      "filesAnalyzed": false,
+      "licenseDeclared": "MIT",
+      "licenseConcluded": "MIT",
+      "copyrightText": "Copyright Node.js contributors"
+    }
+  ]
+}

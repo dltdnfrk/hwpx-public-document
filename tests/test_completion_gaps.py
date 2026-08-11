@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from dataclasses import replace
 from pathlib import Path
 import zipfile
 
@@ -15,15 +14,15 @@ from public_document import (
     DuplicateWriteError,
     Evidence,
     GuidedAnswers,
-    PageLimitExceededError,
     ProviderCapabilities,
     ProviderKind,
     ProviderRegistry,
     ProviderRequest,
     ProviderResponse,
     build_policy_plan_draft,
-    export_hwpx,
     build_beta_draft,
+    complete_manual_draft,
+    export_hwpx,
 )
 
 
@@ -91,11 +90,20 @@ def test_operation_id_cannot_write_two_destinations(tmp_path: Path) -> None:
         export_hwpx(draft, tmp_path / "second.hwpx", operation_id="gap-duplicate-write")
 
 
-def test_page_limit_is_enforced_at_export_boundary(tmp_path: Path) -> None:
-    draft = replace(build_policy_plan_draft(_answers(), ()), page_count=6)
+def test_export_has_no_fixed_page_limit(tmp_path: Path) -> None:
+    answers = _answers(background="장문 내보내기 검증 " * 2_000)
 
-    with pytest.raises(PageLimitExceededError):
-        export_hwpx(draft, tmp_path / "too-long.hwpx", operation_id="gap-page-limit")
+    result = complete_manual_draft(
+        answers,
+        (),
+        tmp_path / "large.hwpx",
+        operation_id="gap-no-page-limit",
+    )
+
+    assert result.draft.page_count > 5
+    assert result.hwpx_validation.is_valid
+    assert result.hwp_export.available
+    assert (tmp_path / "large.hwp").read_bytes().startswith(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1")
 
 
 def test_title_and_table_corrections_update_the_serialized_document(tmp_path: Path) -> None:

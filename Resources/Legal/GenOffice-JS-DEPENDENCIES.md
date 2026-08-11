@@ -1,0 +1,44 @@
+# GenOffice runtime JavaScript dependencies
+
+- @genoffice/docx-engine 0.1.0 — Apache-2.0
+- @genoffice/ui 0.1.0 — Apache-2.0
+- @nodable/entities 3.0.0 — MIT
+- @tiptap/core 3.28.0 — MIT
+- @tiptap/extensions 3.28.0 — MIT
+- @tiptap/pm 3.28.0 — MIT
+- anynum 1.0.1 — MIT
+- core-util-is 1.0.3 — MIT
+- fast-xml-builder 1.3.0 — MIT
+- fast-xml-parser 5.10.1 — MIT
+- immediate 3.0.6 — MIT
+- inherits 2.0.4 — ISC
+- is-unsafe 2.0.0 — MIT
+- isarray 1.0.0 — MIT
+- jszip 3.10.1 — (MIT OR GPL-3.0-or-later)
+- lie 3.3.0 — MIT
+- orderedmap 2.1.1 — MIT
+- pako 1.0.11 — (MIT AND Zlib)
+- path-expression-matcher 1.6.2 — MIT
+- process-nextick-args 2.0.1 — MIT
+- prosemirror-commands 1.7.1 — MIT
+- prosemirror-dropcursor 1.8.3 — MIT
+- prosemirror-gapcursor 1.4.1 — MIT
+- prosemirror-history 1.5.0 — MIT
+- prosemirror-keymap 1.2.3 — MIT
+- prosemirror-model 1.25.11 — MIT
+- prosemirror-schema-list 1.5.1 — MIT
+- prosemirror-state 1.4.4 — MIT
+- prosemirror-tables 1.8.5 — MIT
+- prosemirror-transform 1.12.0 — MIT
+- prosemirror-view 1.42.1 — MIT
+- react 19.2.7 — MIT
+- react-dom 19.2.7 — MIT
+- readable-stream 2.3.8 — MIT
+- rope-sequence 1.3.4 — MIT
+- safe-buffer 5.1.2 — MIT
+- scheduler 0.27.0 — MIT
+- string_decoder 1.1.1 — MIT
+- strnum 2.4.1 — MIT
+- util-deprecate 1.0.2 — MIT
+- w3c-keyname 2.2.8 — MIT
+- xml-naming 0.3.0 — MIT

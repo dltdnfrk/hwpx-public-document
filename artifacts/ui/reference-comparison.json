@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "comparisons": [
+    {
+      "command": "image-diff",
+      "dimensionsMatch": true,
+      "reference": {
+        "width": 1280,
+        "height": 820
+      },
+      "actual": {
+        "width": 1280,
+        "height": 820
+      },
+      "totalPixels": 1049600,
+      "diffPixels": 3189,
+      "diffRatio": 0.003,
+      "similarityScore": 100,
+      "alphaChannelIntact": true,
+      "hotspots": [
+        {
+          "gridX": 0,
+          "gridY": 7,
+          "x": 0,
+          "y": 717,
+          "width": 160,
+          "height": 103,
+          "diffRatio": 0.0708
+        },
+        {
+          "gridX": 1,
+          "gridY": 7,
+          "x": 160,
+          "y": 717,
+          "width": 160,
+          "height": 103,
+          "diffRatio": 0.0468
+        },
+        {
+          "gridX": 6,
+          "gridY": 0,
+          "x": 960,
+          "y": 0,
+          "width": 160,
+          "height": 102,
+          "diffRatio": 0.0426
+        },
+        {
+          "gridX": 5,
+          "gridY": 0,
+          "x": 800,
+          "y": 0,
+          "width": 160,
+          "height": 102,
+          "diffRatio": 0.0343
+        },
+        {
+          "gridX": 7,
+          "gridY": 0,
+          "x": 1120,
+          "y": 0,
+          "width": 160,
+          "height": 102,
+          "diffRatio": 0.0002
+        }
+      ],
+      "summary": "100/100 similarity; 3189/1049600 pixels differ; 5 hotspot region(s)."
+    },
+    {
+      "command": "image-diff",
+      "dimensionsMatch": true,
+      "reference": {
+        "width": 920,
+        "height": 640
+      },
+      "actual": {
+        "width": 920,
+        "height": 640
+      },
+      "totalPixels": 588800,
+      "diffPixels": 3184,
+      "diffRatio": 0.0054,
+      "similarityScore": 99,
+      "alphaChannelIntact": true,
+      "hotspots": [
+        {
+          "gridX": 5,
+          "gridY": 0,
+          "x": 575,
+          "y": 0,
+          "width": 115,
+          "height": 80,
+          "diffRatio": 0.1375
+        },
+        {
+          "gridX": 1,
+          "gridY": 7,
+          "x": 115,
+          "y": 560,
+          "width": 115,
+          "height": 80,
+          "diffRatio": 0.0885
+        },
+        {
+          "gridX": 0,
+          "gridY": 7,
+          "x": 0,
+          "y": 560,
+          "width": 115,
+          "height": 80,
+          "diffRatio": 0.0837
+        },
+        {
+          "gridX": 2,
+          "gridY": 7,
+          "x": 230,
+          "y": 560,
+          "width": 115,
+          "height": 80,
+          "diffRatio": 0.0364
+        }
+      ],
+      "summary": "99/100 similarity; 3184/588800 pixels differ; 4 hotspot region(s)."
+    }
+  ],
+  "pinnedReference": {
+    "schemaVersion": 1,
+    "lineage": "pinned-genoffice-docs-fidelity-v1",
+    "referenceSetHash": "sha256:77cac70c3de33012b8535f20c232fda87a4a5092e89cfbdf87ee08f5b34f54bc",
+    "comparisons": {
+      "desktop": {
+        "coverage": 1,
+        "verticalOrderAgreement": 1,
+        "illegalOverlapCount": 0,
+        "metrics": {
+          "chromeBottomDelta": 0.0006,
+          "navigationWidthDelta": 0.0219,
+          "documentCenterDelta": 0.0044,
+          "statusHeightDelta": 0.0049
+        },
+        "thresholds": {
+          "chromeBottomDelta": 0.03,
+          "navigationWidthDelta": 0.08,
+          "documentCenterDelta": 0.08,
+          "statusHeightDelta": 0.02,
+          "rawPixelEquivalence": false
+        },
+        "passed": true
+      },
+      "responsive": {
+        "coverage": 1,
+        "outlineHidden": true,
+        "paperWidth": 794,
+        "noOverlayObstruction": true,
+        "passed": true
+      }
+    },
+    "passed": true,
+    "sha256": "41c63e229c4d57e46f9f69318d8b9ac9e00cb522aaec1813315c21f69b9c2b4c"
+  },
+  "referenceSource": {
+    "schemaVersion": 1,
+    "lineage": "pinned-genoffice-docs-fidelity-v1",
+    "upstream": {
+      "repository": "https://github.com/genspark-ai/genoffice.git",
+      "commit": "d8305ff2dc152593a1ec5639d77e6860c6a512bd",
+      "tree": "41cccf8c72120f971fca4f37fe257ffc4b1d8b99"
+    },
+    "immutableInput": {
+      "clean": true,
+      "docx": {
+        "path": "output/ac-07/final-release-bound.rNZOkU/compatibility/basic-client-interoperability/ac05-fixture.docx",
+        "sha256": "sha256:ae2cb6d9e6d1d556e210bbecd5e0c430559f9b806eea95d24a0b461974847628"
+      }
+    },
+    "runtime": {
+      "surface": "Electron Docs",
+      "offline": true,
+      "externalRequests": [],
+      "accountRequiredForCapture": false,
+      "gensparkProviderEnabledInUpstream": true,
+      "referenceProviderSurfaceExcluded": true
+    },
+    "captures": [
+      {
+        "viewport": {
+          "width": 1280,
+          "height": 820
+        },
+        "regions": {
+          "commandTabs": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 35.5
+          },
+          "commandChrome": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 116.5
+          },
+          "workspace": {
+            "x": 0,
+            "y": 116.5,
+            "width": 1280,
+            "height": 703.5
+          },
+          "navigation": {
+            "x": 47.85,
+            "y": 116.5,
+            "width": 232,
+            "height": 679.5
+          },
+          "canvas": {
+            "x": 43.08,
+            "y": 116.5,
+            "width": 1236.92,
+            "height": 679.5
+          },
+          "document": {
+            "x": 378.83,
+            "y": 142.5,
+            "width": 793.73,
+            "height": 1122.53
+          },
+          "status": {
+            "x": 36.91,
+            "y": 796,
+            "width": 1243.09,
+            "height": 24
+          }
+        },
+        "screenshot": "genoffice-docs-1280.png"
+      },
+      {
+        "viewport": {
+          "width": 920,
+          "height": 640
+        },
+        "regions": {
+          "commandTabs": {
+            "x": 0,
+            "y": 0,
+            "width": 920,
+            "height": 35.5
+          },
+          "commandChrome": {
+            "x": 0,
+            "y": 0,
+            "width": 920,
+            "height": 116.5
+          },
+          "workspace": {
+            "x": 0,
+            "y": 116.5,
+            "width": 920,
+            "height": 523.5
+          },
+          "canvas": {
+            "x": 34,
+            "y": 116.5,
+            "width": 886,
+            "height": 499.5
+          },
+          "document": {
+            "x": 80.13,
+            "y": 142.5,
+            "width": 793.73,
+            "height": 1122.53
+          },
+          "status": {
+            "x": 34,
+            "y": 616,
+            "width": 886,
+            "height": 24
+          }
+        },
+        "screenshot": "genoffice-docs-920.png"
+      }
+    ],
+    "referenceSetHash": "sha256:77cac70c3de33012b8535f20c232fda87a4a5092e89cfbdf87ee08f5b34f54bc"
+  },
+  "independentReviews": [
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/visual-pass-a.md",
+      "sha256": "sha256:41d6089b72a994757aa33079fe1bf870819d3d4eb4fd4f586c6b0f5b18597709"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/visual-pass-b.md",
+      "sha256": "sha256:13b8f52cca75534feb618820e485b353048d482b99d7cc84c1033f823147e829"
+    }
+  ],
+  "sourceEvidence": [
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/diff-current-build-1280.json",
+      "sha256": "sha256:ed302272406a99d4eee80a2191c2f2365fa9ba43b262ad35fa20b18a9cf90fa7"
+    },
+    {
+      "path": "output/playwright/ac08-final-current.TT6Err/diff-current-build-920.json",
+      "sha256": "sha256:3bb28b01a1a079ac335d621f18e764f5ba4cbec194acc50fc779f7af9ef9e504"
+    },
+    {
+      "path": "output/ac-08/genoffice-comparison-current.93tW9R/reference-comparison.json",
+      "sha256": "sha256:248754207023c234282cbb41c0e31c1b3f4c66518cf1cb761e98e03635a19a2a"
+    },
+    {
+      "path": "output/ac-08/genoffice-reference-final.3i47bl/reference-receipt.json",
+      "sha256": "sha256:cf9ac34599ae01dbe4d7b525ec642b6ab43f6d4c56ea9122d33344f9d2fa2975"
+    }
+  ]
+}

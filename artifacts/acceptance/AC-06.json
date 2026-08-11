@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-06",
+  "verdict": "pass",
+  "summary": "Batch isolation, cancellation, recovery, non-overwrite, and cleanup checks passed.",
+  "blockers": [],
+  "seed": {
+    "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
+    "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
+  },
+  "sourceEvidence": [
+    {
+      "path": "docs/ac-06-batch-export-evidence.md",
+      "sha256": "sha256:2ad2448d00800de4fa7b376df65e5501a93da5f6e59f543c4fab393c12a8541a"
+    },
+    {
+      "path": "provenance/seed-evidence-sources.json",
+      "sha256": "sha256:20146b6cc506b5e8f5355fb0dd1cdce15229f1c93161aea52eff35ef4aa6202f"
+    },
+    {
+      "path": "output/ac-06/final-current.2vQamI/cancel-after-first/.public-document-studio-exports/batch-ac06-cancelled/manifest.json",
+      "sha256": "sha256:08529d9b8ed680b593e97807f1cdbe30c7b3f86e1abbcda5142e7b057781d71d"
+    },
+    {
+      "path": "output/ac-06/final-current.2vQamI/cancel-before-publication/.public-document-studio-exports/batch-ac06-cancel-before-publication/manifest.json",
+      "sha256": "sha256:bfe395e1ac866d9223fe2c2795a631b841ecc2c41a22bbb7453a45775993d126"
+    },
+    {
+      "path": "output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-crashed/manifest.json",
+      "sha256": "sha256:d33a3d3329eb0b6e8417fdc8ad6dbd7734df32d3847d7b5f4bed8c326e9785a9"
+    },
+    {
+      "path": "output/ac-06/final-current.2vQamI/crash-and-retry/.public-document-studio-exports/batch-ac06-retry-after-crash/manifest.json",
+      "sha256": "sha256:4ddd363b45e0a5779965c5fcad2d556800797dd427a1db61d00146300f9d12fc"
+    },
+    {
+      "path": "output/ac-06/final-current.2vQamI/disk-full-and-retry/.public-document-studio-exports/batch-ac06-disk-full/manifest.json",
+      "sha256": "sha256:61e5ce39037e2193d2c2f1d3a115edb0e9411fbc3edc2a721876d5e3f4b8d5bb"
+    },
+    {
+      "path": "output/ac-06/final-current.2vQamI/disk-full-and-retry/.public-document-studio-exports/batch-ac06-retry-after-disk-full/manifest.json",
+      "sha256": "sha256:f7de341b62b5227788c3028b24b9007074340ed0c78ef57b0e12496d4cb3cac0"
+    },
+    {
+      "path": "output/ac-06/final-current.2vQamI/existing-destination/.public-document-studio-exports/batch-ac06-existing/manifest.json",
+      "sha256": "sha256:f06df0ea033d6149812ddc2cc736c9ad565b4a94e9ba69b503727b9128917a32"
+    },
+    {
+      "path": "output/ac-06/final-current.2vQamI/partial-failure/.public-document-studio-exports/batch-ac06-partial/manifest.json",
+      "sha256": "sha256:84510dce1bee506293d8b69579d82c9efaef9274994321f7572c55e9a7808463"
+    },
+    {
+      "path": "output/ac-06/final-current.2vQamI/partial-failure/.public-document-studio-exports/batch-ac06-partial/manifest.json",
+      "sha256": "sha256:84510dce1bee506293d8b69579d82c9efaef9274994321f7572c55e9a7808463"
+    },
+    {
+      "path": "output/ac-06/final-current.2vQamI/crash-and-retry/recovery-receipt.json",
+      "sha256": "sha256:a9d6a32d2ec821acaf61945980dfb4bcdcf72912e5faa9c21e5305a9dfeea8bd"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "artifacts/export/batch-lifecycle-evidence.json",
+      "sha256": "sha256:5d9cae9a9d344779120a9b33b63acd998295049188d8101aefbd366b9a605805"
+    },
+    {
+      "path": "artifacts/export/batch-result-manifest.json",
+      "sha256": "sha256:84510dce1bee506293d8b69579d82c9efaef9274994321f7572c55e9a7808463"
+    }
+  ],
+  "evaluation": {
+    "criterion": "AC-06",
+    "verdict": "pass",
+    "summary": "Batch isolation, cancellation, recovery, non-overwrite, and cleanup checks passed.",
+    "blockers": [],
+    "checks": [
+      {
+        "id": "batch.scenarios",
+        "passed": true,
+        "detail": "all partial, cancellation, non-overwrite, crash, disk-full, and retry scenarios"
+      },
+      {
+        "id": "batch.cleanup",
+        "passed": true,
+        "detail": "all temporary cleanup states are clean"
+      },
+      {
+        "id": "batch.no-unvalidated-publication",
+        "passed": true,
+        "detail": "published items bind exact validated artifact hashes"
+      },
+      {
+        "id": "batch.partial-isolation",
+        "passed": true,
+        "detail": "sibling successes survive partial failure"
+      },
+      {
+        "id": "batch.non-overwrite",
+        "passed": true,
+        "detail": "existing destination bytes remain unchanged"
+      },
+      {
+        "id": "batch.retry-lineage",
+        "passed": true,
+        "detail": "retry uses a new operation ID"
+      },
+      {
+        "id": "batch.post-move-reconciliation",
+        "passed": true,
+        "detail": "post-move crash is reconciled only from exact intended bytes"
+      },
+      {
+        "id": "batch.pre-manifest-isolation",
+        "passed": true,
+        "detail": "manifestless operation is isolated"
+      },
+      {
+        "id": "batch.startup-recovery-isolation",
+        "passed": true,
+        "detail": "startup recovery continues past a manifestless sibling"
+      },
+      {
+        "id": "evidence.identity",
+        "passed": true,
+        "detail": "9 evidence identities verified"
+      }
+    ]
+  }
+}

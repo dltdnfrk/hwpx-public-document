@@ -60,7 +60,7 @@ def test_policy_planning_flow_builds_reviewable_draft_with_evidence() -> None:
     draft = build_policy_plan_draft(_answers(), (evidence,))
 
     assert draft.title == "폭염 취약계층 보호 계획"
-    assert draft.page_count <= 5
+    assert draft.page_count >= 1
     assert draft.critical_omissions == ()
     assert any("25곳" in claim.text for claim in draft.claims)
     assert draft.claims[0].evidence_ids == ("ev-001",)
@@ -173,9 +173,16 @@ def test_manual_workflow_finishes_without_any_provider(tmp_path: Path) -> None:
     assert result.draft.validation.status == "reviewable"
     assert result.hwpx_validation.is_valid
     assert result.output_path.exists()
+    assert result.hwp_export == HWPExportOutcome(
+        True,
+        tmp_path / "manual.hwp",
+        None,
+        None,
+    )
+    assert (tmp_path / "manual.hwp").read_bytes().startswith(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1")
 
 
-def test_optional_hwp_unavailability_keeps_canonical_hwpx_and_reports_diagnostic(tmp_path: Path) -> None:
+def test_required_hwp_unavailability_keeps_hwpx_and_reports_diagnostic(tmp_path: Path) -> None:
     class UnavailableAdapter:
         def export(self, hwpx_path: Path, destination: Path) -> Path:
             del hwpx_path, destination
@@ -185,9 +192,8 @@ def test_optional_hwp_unavailability_keeps_canonical_hwpx_and_reports_diagnostic
         _answers(),
         (Evidence("ev-001", "점검자료", "p.2", "동주민센터 25곳에서 점검한다."),),
         tmp_path / "canonical.hwpx",
-        operation_id="optional-hwp-unavailable",
+        operation_id="required-hwp-unavailable",
         hwp_adapter=UnavailableAdapter(),
-        hwp_destination=tmp_path / "finished.hwp",
     )
 
     assert result.output_path.exists()
@@ -195,13 +201,13 @@ def test_optional_hwp_unavailability_keeps_canonical_hwpx_and_reports_diagnostic
     assert result.hwp_export == HWPExportOutcome(
         False,
         None,
-        "선택적 HWP 내보내기를 사용할 수 없습니다.",
+        "HWP 내보내기가 차단되었습니다.",
         "local HWP adapter is unavailable",
     )
-    assert not (tmp_path / "finished.hwp").exists()
+    assert not (tmp_path / "canonical.hwp").exists()
 
 
-def test_hwp_compatibility_failure_keeps_original_hwpx_and_reports_diagnostic(tmp_path: Path) -> None:
+def test_hwp_compatibility_failure_keeps_hwpx_and_reports_diagnostic(tmp_path: Path) -> None:
     class IncompatibleAdapter:
         def export(self, hwpx_path: Path, destination: Path) -> Path:
             del hwpx_path, destination
@@ -211,7 +217,7 @@ def test_hwp_compatibility_failure_keeps_original_hwpx_and_reports_diagnostic(tm
         _answers(),
         (Evidence("ev-001", "점검자료", "p.2", "동주민센터 25곳에서 점검한다."),),
         tmp_path / "canonical.hwpx",
-        operation_id="optional-hwp-incompatible",
+        operation_id="required-hwp-incompatible",
         hwp_adapter=IncompatibleAdapter(),
         hwp_destination=tmp_path / "finished.hwp",
     )
@@ -220,7 +226,7 @@ def test_hwp_compatibility_failure_keeps_original_hwpx_and_reports_diagnostic(tm
     assert result.hwpx_validation.is_valid
     assert result.hwp_export.available is False
     assert result.hwp_export.output_path is None
-    assert result.hwp_export.warning == "선택적 HWP 내보내기를 사용할 수 없습니다."
+    assert result.hwp_export.warning == "HWP 내보내기가 차단되었습니다."
     assert result.hwp_export.diagnostic == "compatibility test failed: unsupported table preset"
 
 

@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-04",
+  "verdict": "pass",
+  "summary": "Offline provider, consent, scoped proposal, diff, and revision checks passed.",
+  "blockers": [],
+  "seed": {
+    "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
+    "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
+  },
+  "sourceEvidence": [
+    {
+      "path": "docs/ac-04-ai-governance-evidence.md",
+      "sha256": "sha256:56d5816a985ffdc393a389d6b566574dc432a0db5c0b231cddc44bb5570b2926"
+    },
+    {
+      "path": "provenance/seed-evidence-sources.json",
+      "sha256": "sha256:20146b6cc506b5e8f5355fb0dd1cdce15229f1c93161aea52eff35ef4aa6202f"
+    },
+    {
+      "path": "output/ac-04/final-current.k6PEnn/receipt.json",
+      "sha256": "sha256:45967a3ca6f31e693bcac32c993b151f0f1573af99a874ac6bb401df7b202669"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "artifacts/privacy/provider-boundary-evidence.json",
+      "sha256": "sha256:e5fa605cecb8dbf2c89f5dfed29f3e8e8b8d7c869cd2fb987537f28f047e62dc"
+    },
+    {
+      "path": "artifacts/ai/proposal-lifecycle-evidence.json",
+      "sha256": "sha256:e5fa605cecb8dbf2c89f5dfed29f3e8e8b8d7c869cd2fb987537f28f047e62dc"
+    }
+  ],
+  "evaluation": {
+    "criterion": "AC-04",
+    "verdict": "pass",
+    "summary": "Offline provider, consent, scoped proposal, diff, and revision checks passed.",
+    "blockers": [],
+    "checks": [
+      {
+        "id": "providers.approved-set",
+        "passed": true,
+        "detail": "only approved existing providers"
+      },
+      {
+        "id": "providers.offlineEditingAndExportAvailable",
+        "passed": true,
+        "detail": "offlineEditingAndExportAvailable must be true"
+      },
+      {
+        "id": "providers.localAdapterUnavailableWithoutFallback",
+        "passed": true,
+        "detail": "localAdapterUnavailableWithoutFallback must be true"
+      },
+      {
+        "id": "providers.allConsentBindingsRequired",
+        "passed": true,
+        "detail": "allConsentBindingsRequired must be true"
+      },
+      {
+        "id": "providers.forbiddenDataAbsentFromPersistence",
+        "passed": true,
+        "detail": "forbiddenDataAbsentFromPersistence must be true"
+      },
+      {
+        "id": "providers.secureProviderTransportBehavior",
+        "passed": true,
+        "detail": "secureProviderTransportBehavior must be true"
+      },
+      {
+        "id": "providers.brandedEndpointAllowlistEnforced",
+        "passed": true,
+        "detail": "brandedEndpointAllowlistEnforced must be true"
+      },
+      {
+        "id": "providers.endpointValidationPrecedesPersistence",
+        "passed": true,
+        "detail": "endpointValidationPrecedesPersistence must be true"
+      },
+      {
+        "id": "providers.consentRebindingRequired",
+        "passed": true,
+        "detail": "consentRebindingRequired must be true"
+      },
+      {
+        "id": "proposal.proposalDidNotMutateDocument",
+        "passed": true,
+        "detail": "proposalDidNotMutateDocument must be true"
+      },
+      {
+        "id": "proposal.diffsExposeStableTargets",
+        "passed": true,
+        "detail": "diffsExposeStableTargets must be true"
+      },
+      {
+        "id": "proposal.staleProposalRejected",
+        "passed": true,
+        "detail": "staleProposalRejected must be true"
+      },
+      {
+        "id": "proposal.wholeApprovalAppliedAtomically",
+        "passed": true,
+        "detail": "wholeApprovalAppliedAtomically must be true"
+      },
+      {
+        "id": "proposal.partialApprovalAppliedAtomically",
+        "passed": true,
+        "detail": "partialApprovalAppliedAtomically must be true"
+      },
+      {
+        "id": "proposal.rejectionPersisted",
+        "passed": true,
+        "detail": "rejectionPersisted must be true"
+      },
+      {
+        "id": "proposal.undoRedoPersistedAcrossRestart",
+        "passed": true,
+        "detail": "undoRedoPersistedAcrossRestart must be true"
+      },
+      {
+        "id": "proposal.revocationBlockedFutureRequest",
+        "passed": true,
+        "detail": "revocationBlockedFutureRequest must be true"
+      },
+      {
+        "id": "proposal.actualScopedTargetIDsEnforced",
+        "passed": true,
+        "detail": "actualScopedTargetIDsEnforced must be true"
+      },
+      {
+        "id": "proposal.operationSpecificCommands.missingDataMarking",
+        "passed": true,
+        "detail": "operationSpecificCommands.missingDataMarking must be true"
+      },
+      {
+        "id": "proposal.operationSpecificCommands.evidenceClaimCheck",
+        "passed": true,
+        "detail": "operationSpecificCommands.evidenceClaimCheck must be true"
+      },
+      {
+        "id": "proposal.operationSpecificCommands.tableCellUpdate",
+        "passed": true,
+        "detail": "operationSpecificCommands.tableCellUpdate must be true"
+      },
+      {
+        "id": "proposal.exactTablePathFailClosed",
+        "passed": true,
+        "detail": "exactTablePathFailClosed must be true"
+      },
+      {
+        "id": "proposal.tableCellOnlyMutation",
+        "passed": true,
+        "detail": "tableCellOnlyMutation must be true"
+      },
+      {
+        "id": "proposal.fullDiffPersisted",
+        "passed": true,
+        "detail": "fullDiffPersisted must be true"
+      },
+      {
+        "id": "evidence.identity",
+        "passed": true,
+        "detail": "2 evidence identities verified"
+      }
+    ]
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-10",
+  "verdict": "blocked",
+  "summary": "Pristine unsigned archive and all nine predecessor checks passed. Required external observations remain blocked.",
+  "blockers": [
+    "AC-07 remains externally blocked."
+  ],
+  "seed": {
+    "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
+    "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
+  },
+  "sourceEvidence": [
+    {
+      "path": "docs/ac-10-functional-release-evidence.md",
+      "sha256": "sha256:858d05f5daac54ca30bbe62db686cf5d092ae3d33a6fe6d29af83b21b3dbd143"
+    },
+    {
+      "path": "provenance/seed-evidence-sources.json",
+      "sha256": "sha256:20146b6cc506b5e8f5355fb0dd1cdce15229f1c93161aea52eff35ef4aa6202f"
+    },
+    {
+      "path": "output/ac-10/final-functional-20260811T074033Z/Evidence/release-manifest.json",
+      "sha256": "sha256:06b27e559b97f366bc86480393301a119e38fa675dd4164a51bdc2ffef0661da"
+    },
+    {
+      "path": "output/ac-10/PublicDocumentStudio-0.1.0-final-20260811T074153Z.verification.json",
+      "sha256": "sha256:fd72f93c784c7b04af48abec101f6e44b456de6d649ada5545989776528f7db2"
+    },
+    {
+      "path": "output/ac-10/PublicDocumentStudio-0.1.0-final-20260811T074153Z.zip",
+      "sha256": "sha256:89f179c291bbec84a154c7d5382eef451dfcca32c9a3526fadb84b08725aea73"
+    },
+    {
+      "path": "output/ac-10/PublicDocumentStudio-0.1.0-final-20260811T074153Z.SHA256SUMS",
+      "sha256": "sha256:5c6db8c14fa4173520300a015a8a2d74c509110de491827b73ebe16ce49500ef"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "artifacts/release/local-functional-candidate.json",
+      "sha256": "sha256:f11fe55aac7426ae544068cae37facc8ba3bb2fdec7a6a12427bedb66bcbd1e5"
+    },
+    {
+      "path": "artifacts/release/evidence-index.json",
+      "sha256": "sha256:6cf56c825a855b31652bc97c8ed024438c5e0cba4e209017a1a88262be55666a"
+    }
+  ],
+  "evaluation": {
+    "criterion": "AC-10",
+    "verdict": "blocked",
+    "summary": "Pristine unsigned archive and all nine predecessor checks passed. Required external observations remain blocked.",
+    "blockers": [
+      "AC-07 remains externally blocked."
+    ],
+    "checks": [
+      {
+        "id": "release.archive",
+        "passed": true,
+        "detail": "canonical candidate is the actual hash- and size-bound ZIP"
+      },
+      {
+        "id": "release.extraction",
+        "passed": true,
+        "detail": "pristine ZIP extraction"
+      },
+      {
+        "id": "release.app-count",
+        "passed": true,
+        "detail": "archive contains exactly one application bundle"
+      },
+      {
+        "id": "release.codesign",
+        "passed": true,
+        "detail": "strict codesign passes after extraction"
+      },
+      {
+        "id": "release.architecture",
+        "passed": true,
+        "detail": "extracted executable is arm64"
+      },
+      {
+        "id": "release.xattrs",
+        "passed": true,
+        "detail": "no forbidden extended attributes"
+      },
+      {
+        "id": "release.inventory",
+        "passed": true,
+        "detail": "sorted unique inventory hashes recomputed from pristine extraction"
+      },
+      {
+        "id": "release.rhwp",
+        "passed": true,
+        "detail": "packaged rhwp matches the approved upstream lock"
+      },
+      {
+        "id": "release.studio",
+        "passed": true,
+        "detail": "packaged Studio hashes match the current verified source"
+      },
+      {
+        "id": "release.genoffice-artifacts",
+        "passed": true,
+        "detail": "packaged runtime manifest and input lock match AC-01 artifacts"
+      },
+      {
+        "id": "release.genoffice-lock",
+        "passed": true,
+        "detail": "packaged runtime lock exactly binds manifest inputs and packages"
+      },
+      {
+        "id": "release.genoffice-outputs",
+        "passed": true,
+        "detail": "packaged GenOffice outputs and Node match exact hashes and sizes"
+      },
+      {
+        "id": "release.genoffice-contract",
+        "passed": true,
+        "detail": "packaged GenOffice runtime contract remains exact"
+      },
+      {
+        "id": "release.genoffice-forbidden-surface",
+        "passed": true,
+        "detail": "packaged runtime bundle scan excludes forbidden surfaces"
+      },
+      {
+        "id": "release.genoffice-node-architecture",
+        "passed": true,
+        "detail": "packaged Node executable is arm64"
+      },
+      {
+        "id": "release.offline-smoke",
+        "passed": true,
+        "detail": "extracted binary produced and validated all four formats without credentials"
+      },
+      {
+        "id": "evidence.identity",
+        "passed": true,
+        "detail": "7 evidence identities verified"
+      }
+    ]
+  }
+}

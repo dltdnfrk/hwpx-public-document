@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "product": "Public Document Studio",
+  "platform": "macOS-arm64",
+  "upstreams": [
+    {
+      "name": "genoffice",
+      "repository": "https://github.com/genspark-ai/genoffice.git",
+      "commit": "d8305ff2dc152593a1ec5639d77e6860c6a512bd",
+      "license": "Apache-2.0",
+      "role": "Pinned source and package runtime for the owned Docs editor and DOCX normalization boundary",
+      "integration_mode": "pinned-adapter-runtime-fork",
+      "port_manifest": "provenance/genoffice-docs-port.json",
+      "port_manifest_sha256": "sha256:4e7318636a746a2b2af4bd5e6e1b2e23113afa08c4b39760210843a06c4735f5",
+      "direct_package_runtime_linkage": true,
+      "upstream_runtime_files_bundled": true,
+      "runtime_manifest": "Resources/GenOffice/runtime-manifest.json",
+      "runtime_input_lock": "GenOfficeFork/runtime-input-lock.json",
+      "browser_bundle": "Resources/GenOffice/public-document-genoffice.js",
+      "docx_cli": "Resources/GenOffice/genoffice-docx-normalize.cjs",
+      "node_engine": "Resources/Engines/node",
+      "local_patchset": {
+        "build_script_sha256": "sha256:a47bf2967ca39a7413e36061e92059d46c3420e4c32b693ffe88164b069af04f",
+        "runtime_manifest_sha256": "sha256:887f312020752ad23bf92efaf9207e7c4e5af2eca449b9a747f53ca3087ac00a",
+        "runtime_input_lock_sha256": "sha256:9ee393c6897d713afc1016cb49c6ca5d04297e2544785404b68bbebc2a946f91",
+        "browser_bundle_sha256": "sha256:fe576951798bc85eaba443f0ff3e30eccbcc8ead21b1f1932f540c4d0f3ddc7d",
+        "docx_cli_sha256": "sha256:43046343861265b0c89490f427cbf00118e42531d7144ff36173b543044170bc",
+        "node_arm64_sha256": "sha256:5c8cd3ab2559b530fceca01776064c56687619475a7ffc339178524af6cdaa25",
+        "javascript_package_count": 42
+      }
+    },
+    {
+      "name": "rhwp",
+      "repository": "https://github.com/edwardkim/rhwp.git",
+      "commit": "2dced7bfe10c6597cead634264c7c1781c01f1e7",
+      "license": "MIT",
+      "role": "Approved HWP and HWPX engine boundary",
+      "local_patchset": {
+        "policy": "The approved commit remains the only source base; compatibility fixes are applied reproducibly inside that boundary.",
+        "build_script": "scripts/build-rhwp-engine.sh",
+        "build_script_sha256": "sha256:c11df142a4b9671bbed1a240bf222c9bc490c4dd98355ddc623e0deb8b6e1a53",
+        "cargo_lock": {
+          "source": "https://raw.githubusercontent.com/edwardkim/rhwp/2dced7bfe10c6597cead634264c7c1781c01f1e7/Cargo.lock",
+          "sha256": "sha256:64ff4041c1874c01c7a901b28df2639082836ced44df392cd37b3227d4772279",
+          "dependency_inventory": "provenance/rhwp-dependency-lock.json",
+          "dependency_inventory_sha256": "sha256:75d4a9bdd1a388bb68a101ec77969a4ff8d0f9275a05578fb3c95a7b9c873887",
+          "package_count": 204
+        },
+        "patched_source_sha256": {
+          "src/document_core/converters/hwpx_to_hwp.rs": "sha256:2ce236705aa981d58434214956cef9b723fd2dee84a301a4ef21acb4a1de2ef3",
+          "src/parser/hwpx/contract_streams.rs": "sha256:daedc635befbcf06486b1c41ec67dfa6510e66f8707b5c41d93b56bfeb45f781",
+          "src/serializer/mini_cfb.rs": "sha256:21cae90a3bf750a9d2dd005b8381d33f15311c88671f8639ad0673b7a10289f5"
+        },
+        "bundled_arm64_binary_sha256": "sha256:a9fc072e61aa1cbf56fbd00943c4e4a33dd49aa7f6122f7b36e16ff476f7677b"
+      }
+    }
+  ],
+  "runtime_scope": {
+    "integration_mode": "pinned-adapter-runtime-fork",
+    "reviewed_upstream_source_scopes": [
+      "apps/docs/src/renderer",
+      "packages/ui/src",
+      "packages/docx-engine/src"
+    ],
+    "shipped_local_port": [
+      "Resources/Studio/index.html",
+      "Resources/Studio/styles.css",
+      "Resources/Studio/app.js",
+      "Sources/PublicDocumentApp/ExportSerializers.swift",
+      "Sources/PublicDocumentApp/ExportValidation.swift"
+    ],
+    "direct_upstream_package_linkage": true,
+    "bundled_upstream_runtime_files": true,
+    "excluded": [
+      "ee",
+      "sheets",
+      "slides",
+      "pdf",
+      "genspark",
+      "apps/shell",
+      "packages/pptx-engine",
+      "packages/pptx-render"
+    ]
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_at": "2026-08-09",
+    "source": "pass",
+    "license": "pass",
+    "visual": "pass",
+    "accessibility": "pass",
+    "privacy": "pass",
+    "format_compatibility": "pass",
+    "evidence": [
+      "DESIGN.md",
+      "Resources/Legal/THIRD_PARTY_NOTICES.md",
+      "docs/ac-01-foundation-evidence.md",
+      "provenance/README.md",
+      "provenance/genoffice-docs-port.json",
+      "provenance/sbom.spdx.json",
+      "tests/test_ac01_app_foundation.py"
+    ]
+  },
+  "update_policy": "A commit change requires all six review verdicts to be re-recorded before packaging."
+}

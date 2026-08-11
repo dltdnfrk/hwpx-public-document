@@ -1,0 +1,47 @@
+{
+  "actualScopedTargetIDsEnforced": true,
+  "allConsentBindingsRequired": true,
+  "approvedProviderKinds": [
+    "anthropic",
+    "gemini",
+    "openai",
+    "openai-compatible"
+  ],
+  "brandedEndpointAllowlistEnforced": true,
+  "consentRebindingRequired": true,
+  "diffsExposeStableTargets": true,
+  "endpointValidationPrecedesPersistence": true,
+  "exactTablePathFailClosed": true,
+  "forbiddenDataAbsentFromPersistence": true,
+  "fullDiffPersisted": true,
+  "implementationSourceSHA256": {
+    "Sources/PublicDocumentApp/AIGovernance.swift": "sha256:8f3562fbc175355f03d829abb071655ba9e8ac643d34e1d08219cf650ba10010",
+    "Sources/PublicDocumentApp/AIGovernanceSelfTest.swift": "sha256:e84c1855ac7058e352c5256d20b21cb9e2a1b4e300c14b95c73be63b291c70d0",
+    "Sources/PublicDocumentApp/AIProviderTransport.swift": "sha256:5f4408748d526fdd9dca67d58c38417cea97e3d63857f6caeff11bfb2ebdc2e0",
+    "Sources/PublicDocumentApp/DocumentProject.swift": "sha256:46e22af4f00e9644b4ed7feae5a95bf19429ad00ae6fe3f790e81005606b7777",
+    "Sources/PublicDocumentApp/main.swift": "sha256:5007900b8077931cfe2ac62d2ca818c4013149ffb45a875dd6e939022817df3f"
+  },
+  "localAdapterUnavailableWithoutFallback": true,
+  "offlineEditingAndExportAvailable": true,
+  "operationSpecificCommands": {
+    "evidenceClaimCheck": true,
+    "missingDataMarking": true,
+    "tableCellUpdate": true
+  },
+  "partialApprovalAppliedAtomically": true,
+  "proposalDidNotMutateDocument": true,
+  "rejectionPersisted": true,
+  "revocationBlockedFutureRequest": true,
+  "secureProviderTransportBehavior": true,
+  "staleProposalRejected": true,
+  "tableCellOnlyMutation": true,
+  "undoRedoPersistedAcrossRestart": true,
+  "wholeApprovalAppliedAtomically": true,
+  "schemaVersion": 1,
+  "sourceEvidence": [
+    {
+      "path": "output/ac-04/final-current.k6PEnn/receipt.json",
+      "sha256": "sha256:45967a3ca6f31e693bcac32c993b151f0f1573af99a874ac6bb401df7b202669"
+    }
+  ]
+}

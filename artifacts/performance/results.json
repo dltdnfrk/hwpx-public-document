@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "exportObservations": [
+    {
+      "artifactByteCount": 27366,
+      "artifactHash": "sha256:c00206ef513aafb2748f5202ea9b354d594c1cc9ef1b1c19e3783bd682026c2d",
+      "artifactRelativePath": "artifacts/100-page/hwpx/ac05-fixture.hwpx",
+      "authoredContentHash": "sha256:0b4a3d567135b6bcc3d5bdf56d726513e0804f87e9d0f1a6ce7157d3a5f9a2d4",
+      "authoredContentValidated": true,
+      "authoredContentValidator": "rhwp-export-text",
+      "authoredUTF8ByteCount": 90574,
+      "durationSeconds": 0.6388164583477192,
+      "fixtureID": "100-page",
+      "format": "hwpx",
+      "operationID": "performance-100-page-hwpx",
+      "passed": true,
+      "renderedPageCount": 100,
+      "semanticValid": true,
+      "snapshotHash": "sha256:d71c2bb3a0f578db9fb5babb66a5a3755bdb53335f0c2c24fb2da0d711830c91",
+      "structuralValid": true,
+      "validator": "rhwp artifact reopen + ordered text verification",
+      "artifactEvidence": {
+        "path": "output/ac-09/final-current.pVyHYM/artifacts/100-page/hwpx/ac05-fixture.hwpx",
+        "sha256": "sha256:c00206ef513aafb2748f5202ea9b354d594c1cc9ef1b1c19e3783bd682026c2d"
+      }
+    },
+    {
+      "artifactByteCount": 22528,
+      "artifactHash": "sha256:02563d83db14a27a7117c2aaaa305c5a66471adf04f4c53ca1f87e8645b7ff51",
+      "artifactRelativePath": "artifacts/100-page/hwp/ac05-fixture.hwp",
+      "authoredContentHash": "sha256:0b4a3d567135b6bcc3d5bdf56d726513e0804f87e9d0f1a6ce7157d3a5f9a2d4",
+      "authoredContentValidated": true,
+      "authoredContentValidator": "rhwp-export-text",
+      "authoredUTF8ByteCount": 90574,
+      "durationSeconds": 0.7550202499842271,
+      "fixtureID": "100-page",
+      "format": "hwp",
+      "operationID": "performance-100-page-hwp",
+      "passed": true,
+      "renderedPageCount": 100,
+      "semanticValid": true,
+      "snapshotHash": "sha256:d71c2bb3a0f578db9fb5babb66a5a3755bdb53335f0c2c24fb2da0d711830c91",
+      "structuralValid": true,
+      "validator": "rhwp artifact reopen + ordered text verification",
+      "artifactEvidence": {
+        "path": "output/ac-09/final-current.pVyHYM/artifacts/100-page/hwp/ac05-fixture.hwp",
+        "sha256": "sha256:02563d83db14a27a7117c2aaaa305c5a66471adf04f4c53ca1f87e8645b7ff51"
+      }
+    },
+    {
+      "artifactByteCount": 801907,
+      "artifactHash": "sha256:67b7a247e5654c85e1f17540d490cdf7be5672c29dc0f2cba52abfe1ab65793f",
+      "artifactRelativePath": "artifacts/100-page/docx/ac05-fixture.docx",
+      "authoredContentHash": "sha256:0b4a3d567135b6bcc3d5bdf56d726513e0804f87e9d0f1a6ce7157d3a5f9a2d4",
+      "authoredContentValidated": true,
+      "authoredContentValidator": "ooxml-word-document",
+      "authoredUTF8ByteCount": 90574,
+      "durationSeconds": 0.3981190833146684,
+      "fixtureID": "100-page",
+      "format": "docx",
+      "operationID": "performance-100-page-docx",
+      "passed": true,
+      "semanticValid": true,
+      "snapshotHash": "sha256:d71c2bb3a0f578db9fb5babb66a5a3755bdb53335f0c2c24fb2da0d711830c91",
+      "structuralValid": true,
+      "validator": "artifact-derived OOXML graph + formula/table/content verification",
+      "artifactEvidence": {
+        "path": "output/ac-09/final-current.pVyHYM/artifacts/100-page/docx/ac05-fixture.docx",
+        "sha256": "sha256:67b7a247e5654c85e1f17540d490cdf7be5672c29dc0f2cba52abfe1ab65793f"
+      }
+    },
+    {
+      "artifactByteCount": 465814,
+      "artifactHash": "sha256:8abf3b03ed78968698d6b0989535a326664602bd67cb83895d76771669a86b7e",
+      "artifactRelativePath": "artifacts/100-page/markdown/ac05-fixture.md",
+      "authoredContentHash": "sha256:0b4a3d567135b6bcc3d5bdf56d726513e0804f87e9d0f1a6ce7157d3a5f9a2d4",
+      "authoredContentValidated": true,
+      "authoredContentValidator": "commonmark-utf8",
+      "authoredUTF8ByteCount": 90574,
+      "durationSeconds": 0.291338375012856,
+      "fixtureID": "100-page",
+      "format": "markdown",
+      "operationID": "performance-100-page-markdown",
+      "passed": true,
+      "semanticValid": true,
+      "snapshotHash": "sha256:d71c2bb3a0f578db9fb5babb66a5a3755bdb53335f0c2c24fb2da0d711830c91",
+      "structuralValid": true,
+      "validator": "artifact-derived CommonMark table + marker-bound content verification",
+      "artifactEvidence": {
+        "path": "output/ac-09/final-current.pVyHYM/artifacts/100-page/markdown/ac05-fixture.md",
+        "sha256": "sha256:8abf3b03ed78968698d6b0989535a326664602bd67cb83895d76771669a86b7e"
+      }
+    },
+    {
+      "artifactByteCount": 415904,
+      "artifactHash": "sha256:e21c4c0af67b42a6415e9adb3563d27ea6e0387cfc59259c0458517c12ea23c5",
+      "artifactRelativePath": "artifacts/50-mb/hwpx/ac05-fixture.hwpx",
+      "authoredContentHash": "sha256:23c8d66c6615048f0417326dceabf87c05006ed006dba776220e6008ea2bcfb3",
+      "authoredContentValidated": true,
+      "authoredContentValidator": "rhwp-export-text",
+      "authoredUTF8ByteCount": 52428800,
+      "durationSeconds": 12.188604000082705,
+      "fixtureID": "50-mb",
+      "format": "hwpx",
+      "operationID": "performance-50-mb-hwpx",
+      "passed": true,
+      "semanticValid": true,
+      "snapshotHash": "sha256:b392d167aafa9e2e803f1cf170cf9cadc604744add329df66f01c1a5d0ee92ed",
+      "structuralValid": true,
+      "validator": "rhwp artifact reopen + ordered text verification",
+      "artifactEvidence": {
+        "path": "output/ac-09/final-current.pVyHYM/artifacts/50-mb/hwpx/ac05-fixture.hwpx",
+        "sha256": "sha256:e21c4c0af67b42a6415e9adb3563d27ea6e0387cfc59259c0458517c12ea23c5"
+      }
+    },
+    {
+      "artifactByteCount": 251392,
+      "artifactHash": "sha256:281d205e14dc9eb81bff9e85cb668cd4dad52dbb48b4c4b271e9a0b1b9c4e49d",
+      "artifactRelativePath": "artifacts/50-mb/hwp/ac05-fixture.hwp",
+      "authoredContentHash": "sha256:23c8d66c6615048f0417326dceabf87c05006ed006dba776220e6008ea2bcfb3",
+      "authoredContentValidated": true,
+      "authoredContentValidator": "rhwp-export-text",
+      "authoredUTF8ByteCount": 52428800,
+      "durationSeconds": 13.652539791655727,
+      "fixtureID": "50-mb",
+      "format": "hwp",
+      "operationID": "performance-50-mb-hwp",
+      "passed": true,
+      "semanticValid": true,
+      "snapshotHash": "sha256:b392d167aafa9e2e803f1cf170cf9cadc604744add329df66f01c1a5d0ee92ed",
+      "structuralValid": true,
+      "validator": "rhwp artifact reopen + ordered text verification",
+      "artifactEvidence": {
+        "path": "output/ac-09/final-current.pVyHYM/artifacts/50-mb/hwp/ac05-fixture.hwp",
+        "sha256": "sha256:281d205e14dc9eb81bff9e85cb668cd4dad52dbb48b4c4b271e9a0b1b9c4e49d"
+      }
+    },
+    {
+      "artifactByteCount": 52442401,
+      "artifactHash": "sha256:cdd66dd2c6dffec3f7cf9a02f7621f94ffe415721cb67e6c03974ac26975fda4",
+      "artifactRelativePath": "artifacts/50-mb/docx/ac05-fixture.docx",
+      "authoredContentHash": "sha256:23c8d66c6615048f0417326dceabf87c05006ed006dba776220e6008ea2bcfb3",
+      "authoredContentValidated": true,
+      "authoredContentValidator": "ooxml-word-document",
+      "authoredUTF8ByteCount": 52428800,
+      "durationSeconds": 4.841018291655928,
+      "fixtureID": "50-mb",
+      "format": "docx",
+      "operationID": "performance-50-mb-docx",
+      "passed": true,
+      "semanticValid": true,
+      "snapshotHash": "sha256:b392d167aafa9e2e803f1cf170cf9cadc604744add329df66f01c1a5d0ee92ed",
+      "structuralValid": true,
+      "validator": "artifact-derived OOXML graph + formula/table/content verification",
+      "artifactEvidence": {
+        "path": "output/ac-09/final-current.pVyHYM/artifacts/50-mb/docx/ac05-fixture.docx",
+        "sha256": "sha256:cdd66dd2c6dffec3f7cf9a02f7621f94ffe415721cb67e6c03974ac26975fda4"
+      }
+    },
+    {
+      "artifactByteCount": 52674025,
+      "artifactHash": "sha256:f3de3fdffbe516b14ad5e1629919835370ed15cec70cb11e4843c82c1ec1b68a",
+      "artifactRelativePath": "artifacts/50-mb/markdown/ac05-fixture.md",
+      "authoredContentHash": "sha256:23c8d66c6615048f0417326dceabf87c05006ed006dba776220e6008ea2bcfb3",
+      "authoredContentValidated": true,
+      "authoredContentValidator": "commonmark-utf8",
+      "authoredUTF8ByteCount": 52428800,
+      "durationSeconds": 23.08742295834236,
+      "fixtureID": "50-mb",
+      "format": "markdown",
+      "operationID": "performance-50-mb-markdown",
+      "passed": true,
+      "semanticValid": true,
+      "snapshotHash": "sha256:b392d167aafa9e2e803f1cf170cf9cadc604744add329df66f01c1a5d0ee92ed",
+      "structuralValid": true,
+      "validator": "artifact-derived CommonMark table + marker-bound content verification",
+      "artifactEvidence": {
+        "path": "output/ac-09/final-current.pVyHYM/artifacts/50-mb/markdown/ac05-fixture.md",
+        "sha256": "sha256:f3de3fdffbe516b14ad5e1629919835370ed15cec70cb11e4843c82c1ec1b68a"
+      }
+    }
+  ],
+  "interactionObservation": {
+    "cancellationCompletionMilliseconds": 102.53141663270071,
+    "cancellationPassed": true,
+    "cancellationRequestMilliseconds": 0.0002500019036233425,
+    "firstProgressMilliseconds": 5.582999961916357,
+    "heartbeatCount": 31,
+    "maximumHeartbeatGapMilliseconds": 10.990833339747041,
+    "maximumProgressGapMilliseconds": 91.39091667020693,
+    "progressEventCount": 14,
+    "progressPassed": true,
+    "responsive": true
+  },
+  "executionIdentity": {
+    "applicationVersion": "0.1.0",
+    "bundleExecutableRelativePath": "Contents/MacOS/PublicDocumentApp",
+    "bundleIdentifier": "com.muni.public-document",
+    "bundleVersion": "1",
+    "executableSHA256": "sha256:9250dd1a43e1ccb430084f811325403ab080a447376f7c1675376066fddfb514",
+    "genOfficeBundleRelativePath": "Contents/Resources/GenOffice/public-document-genoffice.js",
+    "genOfficeBundleSHA256": "sha256:fe576951798bc85eaba443f0ff3e30eccbcc8ead21b1f1932f540c4d0f3ddc7d",
+    "genOfficeRuntimeManifestRelativePath": "Contents/Resources/GenOffice/runtime-manifest.json",
+    "genOfficeRuntimeManifestSHA256": "sha256:887f312020752ad23bf92efaf9207e7c4e5af2eca449b9a747f53ca3087ac00a",
+    "nodeExecutableRelativePath": "Contents/Resources/Engines/node",
+    "nodeExecutableSHA256": "sha256:5c8cd3ab2559b530fceca01776064c56687619475a7ffc339178524af6cdaa25",
+    "rhwpExecutableRelativePath": "Contents/Resources/Engines/rhwp",
+    "rhwpExecutableSHA256": "sha256:a9fc072e61aa1cbf56fbd00943c4e4a33dd49aa7f6122f7b36e16ff476f7677b"
+  },
+  "uiObservation": {
+    "blockReason": null,
+    "cancelActionObservedOnMainThread": true,
+    "cancelButtonActionInvocations": 1,
+    "cancelButtonActionPath": "NSButton.performClick",
+    "cancelButtonClass": "NSButton",
+    "cancelledManifestState": "cancelled",
+    "consoleSessionOnConsole": true,
+    "nsApplicationRunning": true,
+    "observationSurface": "AppKit",
+    "onScreenWindowCount": 1,
+    "progressIndicatorRole": "AXProgressIndicator",
+    "progressIndicatorValueChangesOnMainThread": 14,
+    "progressLabelChangesOnMainThread": 16,
+    "progressObservedMainThreadOnly": true,
+    "screenLocked": false,
+    "status": "pass",
+    "windowIsKey": true,
+    "windowTitle": "AC-09 UI 성능 관찰",
+    "windowVisible": true
+  },
+  "sourceEvidence": [
+    {
+      "path": "output/ac-09/final-current.pVyHYM/performance-receipt.json",
+      "sha256": "sha256:c70db60bbdbfce3eefafec4e0c2a8c548d710fe54abae5fc591d646fd8c35787"
+    }
+  ]
+}

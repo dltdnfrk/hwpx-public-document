@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "product": "공공문서 작성기 / Public Document Studio",
+  "version": "0.1.0",
+  "releaseType": "unsigned-local-functional",
+  "architecture": "arm64",
+  "offlineContract": {
+    "accountRequired": false,
+    "networkRequired": false,
+    "providerCredentialRequired": false
+  },
+  "formats": ["hwpx", "hwp", "docx", "markdown"],
+  "excludedRequirements": [
+    "legacy-doc",
+    "arbitrary-external-document-round-trip",
+    "alternative-hwp-converter",
+    "other-office-products",
+    "developer-id-signing",
+    "notarization",
+    "updater",
+    "dmg",
+    "gatekeeper-distribution"
+  ],
+  "upstreamPins": {
+    "genoffice": "d8305ff2dc152593a1ec5639d77e6860c6a512bd",
+    "rhwp": "2dced7bfe10c6597cead634264c7c1781c01f1e7"
+  },
+  "criteria": [
+    {"criterion": "AC-01", "verdict": "pass", "evidence": "Evidence/AcceptanceCriteria/ac-01-foundation-evidence.md"},
+    {"criterion": "AC-02", "verdict": "pass", "evidence": "Evidence/AcceptanceCriteria/ac-02-project-lifecycle-evidence.md"},
+    {"criterion": "AC-03", "verdict": "pass", "evidence": "Evidence/AcceptanceCriteria/ac-03-guided-template-evidence.md"},
+    {"criterion": "AC-04", "verdict": "pass", "evidence": "Evidence/AcceptanceCriteria/ac-04-ai-governance-evidence.md"},
+    {"criterion": "AC-05", "verdict": "pass", "evidence": "Evidence/AcceptanceCriteria/ac-05-format-export-evidence.md"},
+    {"criterion": "AC-06", "verdict": "pass", "evidence": "Evidence/AcceptanceCriteria/ac-06-batch-export-evidence.md"},
+    {"criterion": "AC-07", "verdict": "blocked", "evidence": "Evidence/AcceptanceCriteria/ac-07-compatibility-evidence.md"},
+    {"criterion": "AC-08", "verdict": "pass", "evidence": "Evidence/AcceptanceCriteria/ac-08-accessibility-evidence.md"},
+    {"criterion": "AC-09", "verdict": "pass", "evidence": "Evidence/AcceptanceCriteria/ac-09-performance-evidence.md"},
+    {"criterion": "AC-10", "verdict": "blocked", "evidence": "Evidence/AcceptanceCriteria/ac-10-functional-release-evidence.md"}
+  ],
+  "functionalSeedVerdict": "external-verification-blocked",
+  "distributionVerdict": "deferred",
+  "compatibilityBoundary": "AC-07 and therefore AC-10 remain blocked until Polaris Office and Microsoft Word can complete clean client sessions, an official Hancom environment is available, and the Markdown rendering baseline is approved."
+}

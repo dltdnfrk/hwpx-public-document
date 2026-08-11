@@ -1,0 +1,1216 @@
+{
+  "schemaVersion": 1,
+  "upstream": {
+    "repository": "https://github.com/genspark-ai/genoffice.git",
+    "commit": "d8305ff2dc152593a1ec5639d77e6860c6a512bd",
+    "license": "Apache-2.0"
+  },
+  "inputs": [
+    {
+      "path": "adapter/GenOfficeFork/browser.tsx",
+      "sha256": "704e0cf23a79aa086b6d5fa5d996d618c60bd4c328ee99d279d518a81f1179c9"
+    },
+    {
+      "path": "adapter/GenOfficeFork/docx-normalize.mjs",
+      "sha256": "8f4b0c8f34aad013132729a4a25b388e6909e80211d095ae15331688250fb4f2"
+    },
+    {
+      "path": "adapter/GenOfficeFork/node-runtime-lock.json",
+      "sha256": "18c95dc70ff877dc189d1e176f9cf7f8ee543aeb97d50d3290ca0092a2d56f95"
+    },
+    {
+      "path": "adapter/GenOfficeFork/project-inline-identity.ts",
+      "sha256": "8049a3e3c80590ffa7f954ab393301187614826cf86d69a02c262694ae28de68"
+    },
+    {
+      "path": "adapter/GenOfficeFork/project-metadata.ts",
+      "sha256": "004936843b05ff807faa868eb3accf0eaa9508c5db13b2a63c3a7d5b39aa51c9"
+    },
+    {
+      "path": "adapter/GenOfficeFork/project-protected.ts",
+      "sha256": "8cbecdafa6a9d653d11621a9d4465aaeb02015d8873b299e788acd4121056888"
+    },
+    {
+      "path": "adapter/GenOfficeFork/safe-locale.tsx",
+      "sha256": "1041b0d357fd48c435bf6e4d3485cf67cd28a949a7c4d18b3500c9129d2a4327"
+    },
+    {
+      "path": "adapter/GenOfficeFork/safe-protected-render.ts",
+      "sha256": "1872f57ebba4939df16139f6ce390daeb77b36a57e88c56528eaa8dc74cf6e27"
+    },
+    {
+      "path": "adapter/GenOfficeFork/safe-set-immediate.ts",
+      "sha256": "57255855c5318d1ed5d03e5171ca20a790056af21371624b1768b46df51191c2"
+    },
+    {
+      "path": "adapter/GenOfficeFork/safe-shape-svg.ts",
+      "sha256": "7cecf7654e3bc14f6b666496cb07ee077c3ad36e02abf269a54fe838be833fcc"
+    },
+    {
+      "path": "adapter/GenOfficeFork/safe-stream.ts",
+      "sha256": "a9b8e298d08694d8396d38657d1af5fe400a3c426bd600e7493a20d589bb2bae"
+    },
+    {
+      "path": "adapter/GenOfficeFork/selection-state.ts",
+      "sha256": "21512e9c979a87ecde53aab031f76ab7a8c6c44cf90c5175f722475d6a76bc25"
+    },
+    {
+      "path": "adapter/GenOfficeFork/upstream-lock.json",
+      "sha256": "d957f6302d756b6f146a1ca7ff096750aacc4f999332ee9ec57e316b7c2255ee"
+    },
+    {
+      "path": "adapter/scripts/build-genoffice-runtime.mjs",
+      "sha256": "a47bf2967ca39a7413e36061e92059d46c3420e4c32b693ffe88164b069af04f"
+    },
+    {
+      "path": "dependencies/node_modules/@nodable/entities/src/EntityDecoder.js",
+      "sha256": "a56cf2bf8174e0adf94970d70e003afcfc3923a53d0cf973f92d374cfe684544"
+    },
+    {
+      "path": "dependencies/node_modules/@nodable/entities/src/EntityEncoder.js",
+      "sha256": "812a2077e073564d6470b8fda8ac0d20ecaaf75ddb1594d55d28acc2da8a1a71"
+    },
+    {
+      "path": "dependencies/node_modules/@nodable/entities/src/all-entities.js",
+      "sha256": "2f1340ab32dce314f41638b7ee6d0368b974e3302983154b815a6d49a6dfb63b"
+    },
+    {
+      "path": "dependencies/node_modules/@nodable/entities/src/entities.js",
+      "sha256": "96ec5d127a4e8cd77bdc678422f0d57c8ff9e37bcec999983da71a7b72ce9a0e"
+    },
+    {
+      "path": "dependencies/node_modules/@nodable/entities/src/entityTries.js",
+      "sha256": "fa2838d141fba0e8ee5bd2197956c3f6b1d23668be2c8841a585614ea7051f99"
+    },
+    {
+      "path": "dependencies/node_modules/@nodable/entities/src/index.js",
+      "sha256": "79a65ddeda08664d00b7b82f5a903ea437de1dff54a02ed469e9cb1067cb568b"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/core/dist/index.js",
+      "sha256": "9640ee5d6e5d15df065ce2b8e282913ae85f4841ad65a9fcd252a473340e41bb"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/extensions/dist/index.js",
+      "sha256": "95c154c51e8d21c0ad4da8d8f5f9b99f6104fa37802ca386de60121ed2ede555"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/commands/index.js",
+      "sha256": "40860ae524447623309d523f6ce672b7fda7d54c6383bba89c573d90d6b28412"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/dropcursor/index.js",
+      "sha256": "3bdacf311f0d8960aaa86a3c8a7b6178364ac760ec1f7d0c3643186f3f41f41f"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/gapcursor/index.js",
+      "sha256": "70fb5842340d4b0793a9699df0931af21b2bcc7bc24f75d7f86981f0c4f4d431"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/history/index.js",
+      "sha256": "a59fbc95c9a59f621fd8dbbe9b2ccdd951097ff4df7607c256c96597a92136ed"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/keymap/index.js",
+      "sha256": "087e3b5338c6f4765a7392ad872ec58b1326508e01c806a7a575873d8b97b9c1"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/model/index.js",
+      "sha256": "5d80d1519537f844b169af375d9b496382490702a81d7957a98f13cda73bacbc"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/schema-list/index.js",
+      "sha256": "dbea092ae32096524a3e6bb33f25dc3a937cd2195d83b245a9bd7c3a926822e1"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/state/index.js",
+      "sha256": "1da27473073068e5eb41cae6ee5c77d12b5eee0ab7f0745542320321dc3afac0"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/tables/index.js",
+      "sha256": "b3d1c92138a3597faab56cfc572217b8d8cb284dd2b1d4ce8290433b155335b3"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/transform/index.js",
+      "sha256": "e2bc7d594da3a22ec572bcdcd9905639b48c0de045576ff0df73a0e7fc6b795c"
+    },
+    {
+      "path": "dependencies/node_modules/@tiptap/pm/dist/view/index.js",
+      "sha256": "1674ae85da9c252490d1c04a4f42c934549d174d41136c5e9f658d0ea6cf4c9b"
+    },
+    {
+      "path": "dependencies/node_modules/anynum/anynum.js",
+      "sha256": "f8c6a9b031489dfc1573e7a669e4860223ddeedc0007db5dbf5878a14249776d"
+    },
+    {
+      "path": "dependencies/node_modules/anynum/digitTable.js",
+      "sha256": "c649d39c53ebe6817c71407de8105b6d8cbc2326867f90d59f49ab02d9271b44"
+    },
+    {
+      "path": "dependencies/node_modules/core-util-is/lib/util.js",
+      "sha256": "7427f16d9bd9185e409baff3e4b1ed6e3d8dfca84d367f4b8b351eb921618652"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-builder/src/fxb.js",
+      "sha256": "79dc0245aea667d54ccac4efab1c1414522ed8155b205ef7f789375d1b197123"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-builder/src/ignoreAttributes.js",
+      "sha256": "40bdf3ab37f544b9f8ea7e474114f489a77ed3247e0be597b9e83e01688e8c80"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-builder/src/orderedJs2Xml.js",
+      "sha256": "134452ded06aa55d722f603e89476faae6021e713871512f00de4f9ac23e4bdb"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-builder/src/util.js",
+      "sha256": "6bbbae10862a8ff1571a3deabc66d4548b89b46c48a8786fb99715e19b0947ac"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/fxp.js",
+      "sha256": "587bee5d27b6dbc99d24f472ea93028659610c3496be7d667e72483483c3f3ba"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/ignoreAttributes.js",
+      "sha256": "40bdf3ab37f544b9f8ea7e474114f489a77ed3247e0be597b9e83e01688e8c80"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/util.js",
+      "sha256": "870ccd88a5d51e35ef8cbc59e7f2a35d31defc87aded9c06023ae57838851901"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/validator.js",
+      "sha256": "5e1616dcda3c68bbcf7002f6c4298d85ec1ecd98ffa68fb3da132da2e78ecf3b"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/xmlbuilder/json2xml.js",
+      "sha256": "bcc5325758b3b940384c7bf2a7132874421989c2561a59dc49c4ef0b88c352dc"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/xmlparser/DocTypeReader.js",
+      "sha256": "6eb1b52bfa2c7eb3e36b6817973defd7be18dbc7ce4b56ca576b1222dd5df4d7"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/xmlparser/OptionsBuilder.js",
+      "sha256": "4f177e43f1ac36dc25b2b6a44970c97918091416bd15722b65ac938256bda687"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/xmlparser/OrderedObjParser.js",
+      "sha256": "94a3cef0f355a9a177661748d24faae32206a5cc382c8601a34dcf005340107b"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/xmlparser/XMLParser.js",
+      "sha256": "286c659a8f940c313077afe8a00c0dc128d4a138edf6d9a4519f29538b58c94f"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/xmlparser/node2json.js",
+      "sha256": "cce0e8a8876bd1d3305a666e70cd556fd1ae57560fbca9f4ff0577d91178a0b1"
+    },
+    {
+      "path": "dependencies/node_modules/fast-xml-parser/src/xmlparser/xmlNode.js",
+      "sha256": "bd675346437237807b4973fd47897e57fa1d556b0d33d987d5c12764c2e7d8e4"
+    },
+    {
+      "path": "dependencies/node_modules/immediate/lib/browser.js",
+      "sha256": "a736ab3e296a0637d040603df55a5943d1f850e51c94f8595965c4875e307512"
+    },
+    {
+      "path": "dependencies/node_modules/immediate/lib/index.js",
+      "sha256": "285c9e2ca232f5d298816680d9f5a29c455daa56356ee3566b556e5dafeb9427"
+    },
+    {
+      "path": "dependencies/node_modules/inherits/inherits.js",
+      "sha256": "bb380f32bef5feb18678f0f45f88073fed5d7a0069a309132cb2080cd553d5c7"
+    },
+    {
+      "path": "dependencies/node_modules/inherits/inherits_browser.js",
+      "sha256": "ad322a7b1dec60f3d2ebda2091816469efb55b567d241cf3cf0fa4c5a4afe500"
+    },
+    {
+      "path": "dependencies/node_modules/is-unsafe/src/contexts/html.js",
+      "sha256": "5f378567e5be461b0850876c91b8f1c8ffdc8d29201d87edd7aa666eecabb9f3"
+    },
+    {
+      "path": "dependencies/node_modules/is-unsafe/src/contexts/log.js",
+      "sha256": "fe1678ab1c98db7387bea6892ec10a90a06a8e2ed01efb1ee577c3d155e4a395"
+    },
+    {
+      "path": "dependencies/node_modules/is-unsafe/src/contexts/nosql.js",
+      "sha256": "e20a132033f105a29db1cfdb3d85bbadbb7206b9a7e3336bcb030a63d66b4ab2"
+    },
+    {
+      "path": "dependencies/node_modules/is-unsafe/src/contexts/redos.js",
+      "sha256": "59ceb09d3fd2402e81ed7e5992245f2b398c7ceeb80141138f4eab5da0244586"
+    },
+    {
+      "path": "dependencies/node_modules/is-unsafe/src/contexts/shell.js",
+      "sha256": "c26834ef2c968e8a4223a89b2d0e5653952bbf6f3eed95e5ba45465e1870eb65"
+    },
+    {
+      "path": "dependencies/node_modules/is-unsafe/src/contexts/sql-strict.js",
+      "sha256": "16d6522ee4ecf4a91c4d29357ebc874844c266f2ae89ef2a92ec2d391f3762e9"
+    },
+    {
+      "path": "dependencies/node_modules/is-unsafe/src/contexts/sql.js",
+      "sha256": "4de8a60302e6ab22ef5607ee88ab6dd6559221fb8620780fb874a1dcf3000d06"
+    },
+    {
+      "path": "dependencies/node_modules/is-unsafe/src/contexts/svg.js",
+      "sha256": "eb9e106e81226ab9547882079e7fd6a9d885d2c71ba78784f7edaa7db61bb941"
+    },
+    {
+      "path": "dependencies/node_modules/is-unsafe/src/contexts/xml.js",
+      "sha256": "497ee51559f8769c47defb7679dd516b5736c22c433bc857a19e8ccd9593c842"
+    },
+    {
+      "path": "dependencies/node_modules/is-unsafe/src/index.js",
+      "sha256": "24f5eb575e633b68771328cc12fa6fde751ecc5f2700a6f52ea325938dc94342"
+    },
+    {
+      "path": "dependencies/node_modules/isarray/index.js",
+      "sha256": "9b8c691372802da788c9c5f4e1ca2f1ed0b88ab8722176c2aea15e38ec86d249"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/base64.js",
+      "sha256": "5df6b73d9ed6c317c67835f3427d860c16fd93acf503eb471fd897167e747fdb"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/compressedObject.js",
+      "sha256": "b91f823d32f39cda4002bc0954993f20ffea6747d42109253b7d6347b4abb31b"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/compressions.js",
+      "sha256": "50e650a7eaf2a54ede299c12dfba30a362c7644e7c00df0d16ab3cf228bb77b0"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/crc32.js",
+      "sha256": "63750f4131b1eabb545a4718c863af860184baf033c76851be282f1c7f5dcba9"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/defaults.js",
+      "sha256": "585eeeb04375fe7bd27e846d8941d26fd435efb36a87fba9ff137fd8b97880a6"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/external.js",
+      "sha256": "982fed36a600668223d1d0ce8c446f87ccd1f82634df18f206b4a2f4096e31c7"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/flate.js",
+      "sha256": "57f1452680cf7af6a9659de398d847dd1e870ea3a601662c498b073c640eb547"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/generate/ZipFileWorker.js",
+      "sha256": "907d84ea582def3954aade073444f398bef6edf1b931084da4a77bb4dc26c1c8"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/generate/index.js",
+      "sha256": "19f13a6ff615464657aa5b8651e669950c633095cea37d3179a51d8c645adb3b"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/index.js",
+      "sha256": "0fdb844fcdd6fd8ce8ced5e20b37cdabb629b4c155a1d3fb5df29c69eeb4f228"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/load.js",
+      "sha256": "7e3181c7669cfc584f29f3060cdf210021ec5c723c36af039fb5433de52d25da"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/nodejs/NodejsStreamInputAdapter.js",
+      "sha256": "dcf35c72168e825d2e634cfa13a289ba8c7a76da0584a39b785611d0d736ddd9"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/nodejs/NodejsStreamOutputAdapter.js",
+      "sha256": "cc88c3a8e6aa74262bd1ecc452ee8f78c48a16a0b6095d2f9df7500320957799"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/nodejsUtils.js",
+      "sha256": "763d0af1cde619da6d9cfbe1ee82e2e32d86349d8abe32613c7481e8143740e1"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/object.js",
+      "sha256": "51f8d689e02f62837edeb449866238cf03df7d779d260d19a683abee27651273"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/readable-stream-browser.js",
+      "sha256": "ed51f0a96964f61d5700b6c681b055dd07e27140f1b719d2fe1c64fd14b506e0"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/reader/ArrayReader.js",
+      "sha256": "bb711509472587e8c88e8e311d5c86bde76528286793afbc6573c1ddd9674814"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/reader/DataReader.js",
+      "sha256": "e8e0b4728ddc6fc3dbe5b449d87b884c4b3be99862bd1edf6a700ecfb3b3b247"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/reader/NodeBufferReader.js",
+      "sha256": "1703f32f1cba687ac630690901848ab07a1b6a06b0e8fbe88a8ae6f5a67da84d"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/reader/StringReader.js",
+      "sha256": "477a2e887eee11a56a50726152327b2a4d75d778f96463933197706e1ce90d59"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/reader/Uint8ArrayReader.js",
+      "sha256": "198816389bc1c62b3ca7c5c6f5fdff1b076f83e5bd74b37ee5b504e6d7e155d9"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/reader/readerFor.js",
+      "sha256": "1eef5a73bba844922812893f9a7e01cfdb54072aae42f7ecf67c41dc925ea9cf"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/signature.js",
+      "sha256": "18e10348490604003a2480aea813a6e90eaaac26c050d559c281618b9aaded56"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/stream/ConvertWorker.js",
+      "sha256": "ae1dc8573bab7e5be4a4cb9958201e3e763cb2f2392a04d9a8dc440d683042f0"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/stream/Crc32Probe.js",
+      "sha256": "8e186e5e0ab42fff35907666a90266420751613c28266e5809b7bfa2d55a3a9a"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/stream/DataLengthProbe.js",
+      "sha256": "638e65360b0fbe1f4e0b2628fd3a1782a4df59c477d454007fa52b1a2587b93f"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/stream/DataWorker.js",
+      "sha256": "8203f14e856d33aa9afc272a576f169b29980e8da0ee0f633e6e5f23cfa48a3e"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/stream/GenericWorker.js",
+      "sha256": "ae76cecd1d728ca41dd6ae0665b258f442da64d9b25ff94785dcb80a501b8be1"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/stream/StreamHelper.js",
+      "sha256": "aebc6518b4871d106e799f90139d55620d02e9413ef2a7b0f953a9cea7bda124"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/support.js",
+      "sha256": "7629a6ef610030595e4c2211249f487e44cfbe4b8299105d64b5491d87fd3a51"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/utf8.js",
+      "sha256": "5bdfe3666fe57640bc791b4d6d2fc00853f4d954596260138bf488054fa9df5a"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/utils.js",
+      "sha256": "c77e896a1e47b44939e9dcdc2e05275fd83c1d69ee252089f9a1f44ba8c5cd1d"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/zipEntries.js",
+      "sha256": "0891a1a82e557c64a51893a5ad70dec76f6b5c91170047ab28617286c96c6ec7"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/zipEntry.js",
+      "sha256": "105b8cec00daa3852f92371b3898d6eab52eeb984113ba8958d09bce701e34df"
+    },
+    {
+      "path": "dependencies/node_modules/jszip/lib/zipObject.js",
+      "sha256": "18871af92fac75d015ba7d4d3105c0746839ab089f78670cb86d76bfa53b1ce6"
+    },
+    {
+      "path": "dependencies/node_modules/lie/lib/browser.js",
+      "sha256": "512e8898e512d2029d12067b8e059a9733fe7e43d0ea98f532522d34582e3e59"
+    },
+    {
+      "path": "dependencies/node_modules/lie/lib/index.js",
+      "sha256": "9408e5a97d3e8a0b14c96aef888e9a1f0b7358fd22c4ee33e9321cc950ade9dc"
+    },
+    {
+      "path": "dependencies/node_modules/orderedmap/dist/index.js",
+      "sha256": "c7cbbd34481992a8cf81dfa8951567ad5a586ab3f69511c92bedbe2241fb8969"
+    },
+    {
+      "path": "dependencies/node_modules/pako/index.js",
+      "sha256": "e7ec4e35d94d01a2e4ee5dca62b8fb08ac7411596edb54b398651f4eb563561d"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/deflate.js",
+      "sha256": "a19a5dee5ac13a5bec54c15629bcd3449a0a7f15410d0ab582c1efc797a01bb0"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/inflate.js",
+      "sha256": "18b7dd3b012a1105f3280737107a5a6f32a97c7036849dba7bd1f1e54cda9f53"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/utils/common.js",
+      "sha256": "6e7878274f7e0f42e7cfb379933b447df3045b9139501f797ed29adf1affde14"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/utils/strings.js",
+      "sha256": "bf827ddd52c2e998196adb640ae1192f7dc49ce5e6e5926e86198feeb94542a8"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/adler32.js",
+      "sha256": "99618eb68a96858148e2dd56f478aa7e4321c434f5f2ee6c57f59c0c568f0596"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/constants.js",
+      "sha256": "e0c4148ed267a27f03aba9f9a34cba4bade2090c0f12905907539e38c842abbc"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/crc32.js",
+      "sha256": "213f85e8b2e52e2cf6f7634897197400f7ddaed587274f160045f0b548ec21da"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/deflate.js",
+      "sha256": "4b9b71ae7f42e506fe1fb134f1c21b944ef2b7ef79667ba1fe59eb963c353d22"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/gzheader.js",
+      "sha256": "8fa0b4995cea477be96b8783a7d6c7cf5fec96765c2108c3bd52e77104bfdbd3"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/inffast.js",
+      "sha256": "b1beb3b55270e8338f23fc397132d179942d5866153ca4e9be264200b00c0d44"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/inflate.js",
+      "sha256": "d31799a23f2ae87f0c52d21241c92278b41d23bb5365b452f2706d41b00c4245"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/inftrees.js",
+      "sha256": "75f75d8ae4a7bed86f90a4a38f70c5d95e807515e9326801f9a073a7f2bf8bc7"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/messages.js",
+      "sha256": "eec5f5d6b8120ada9cd48a3ca0a253c64777906e835477b090e053434d38cf6c"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/trees.js",
+      "sha256": "718adbbf68f4343bf17d61edffd9d0788a96a93e4e191d857459d95257e614cf"
+    },
+    {
+      "path": "dependencies/node_modules/pako/lib/zlib/zstream.js",
+      "sha256": "5fa10c7a59ca99113cf92d1260e56cbd6282e15afa85dc8a0eb8e8d6d2321298"
+    },
+    {
+      "path": "dependencies/node_modules/path-expression-matcher/src/Expression.js",
+      "sha256": "c24531320e7f2a69708fa8127b660bfb0efaa3a26636e6f56209f8cf4e984b9a"
+    },
+    {
+      "path": "dependencies/node_modules/path-expression-matcher/src/ExpressionSet.js",
+      "sha256": "a6250aa83ce7f238614fb7421f31e541c63c415a295e3764687693464918f3c4"
+    },
+    {
+      "path": "dependencies/node_modules/path-expression-matcher/src/Matcher.js",
+      "sha256": "d3b6ddfa1e9a07d6db63939e55106f4df3e8f2e48119c81e372f60f157914d66"
+    },
+    {
+      "path": "dependencies/node_modules/path-expression-matcher/src/index.js",
+      "sha256": "ebbf22c6979f6b2b05c580922e7dd197f4f4a246d504d4c0cc8e64778f12d4ed"
+    },
+    {
+      "path": "dependencies/node_modules/process-nextick-args/index.js",
+      "sha256": "90ba524851f721e8aced79870d6d6a733cd3939b293a83e2d04417812a8ba330"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-commands/dist/index.js",
+      "sha256": "a3bf7dfa5716483744c7b3028a41d358b26c7df63b6807a6657d1b88559a8d4b"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-dropcursor/dist/index.js",
+      "sha256": "7888c7c3c8a5faba07579d41fe02ff015cb9cb37bd64921e62e41b9f88ab113c"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-gapcursor/dist/index.js",
+      "sha256": "83b7d6b40d61ba222126a6500bd9e388218d00ea6138624987394437ca738096"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-history/dist/index.js",
+      "sha256": "73059476d431736eb4addbf964ce5333306a79eef2d8528ff42a9dde7478eb09"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-keymap/dist/index.js",
+      "sha256": "1ee13745be8bedc70790226aaf0b97cb24db71770f42d9dca9bf3583fde9d031"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-model/dist/index.js",
+      "sha256": "17e3009cbc68bbd99a2f7cbce18ba638e6a16eca82cacd62ada13c3f99de86c8"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-schema-list/dist/index.js",
+      "sha256": "7ccc0e35842ac1b15db66861d68bbef724b27f46c0c50d99354d5cec4f8b54fc"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-state/dist/index.js",
+      "sha256": "d4bd4e98520abd0bb0150436d84a3832d856aa59636ea23a59409d35929730a3"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-tables/dist/index.js",
+      "sha256": "86226413762b2b8d88356f83e691a770d7b1d1c3b8de7e2de6bf25d785593cdf"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-transform/dist/index.js",
+      "sha256": "aa514b22a523f5aa9730a6bcd345b9da8b55daa0ec28f5faed2a41be1d98be3b"
+    },
+    {
+      "path": "dependencies/node_modules/prosemirror-view/dist/index.js",
+      "sha256": "e28bad031c7992fc9730d05e185fd85c9eb41d3a9cdc40002af922f20cf22e16"
+    },
+    {
+      "path": "dependencies/node_modules/react-dom/cjs/react-dom-client.production.js",
+      "sha256": "9d2de2ee4a588c5d0b8580ff3467f796b8d9bbc45bdc35b257f7d1380e686c56"
+    },
+    {
+      "path": "dependencies/node_modules/react-dom/cjs/react-dom.production.js",
+      "sha256": "288449d34c12dba9cb0ad3d0470d741a30dfb1a6a5df1cf2df6b4c61207180eb"
+    },
+    {
+      "path": "dependencies/node_modules/react-dom/client.js",
+      "sha256": "00e348ab3d6bc2eef908345d0bc4e008c95bcfecec060dfda5c4967953761396"
+    },
+    {
+      "path": "dependencies/node_modules/react-dom/index.js",
+      "sha256": "ba1a3e33489f868371561777607e3ee5091df0f7ea3f1a10f789d6b86e4c1505"
+    },
+    {
+      "path": "dependencies/node_modules/react/cjs/react-jsx-runtime.production.js",
+      "sha256": "1e46f15002696985e80c61d47aaa30dabb03c954270a690f5f7dfbbacfa9002b"
+    },
+    {
+      "path": "dependencies/node_modules/react/cjs/react.production.js",
+      "sha256": "66fa8fc8149e02f61dd5f26e3d0ea7bd03bac64a52d15601019f50a61260a115"
+    },
+    {
+      "path": "dependencies/node_modules/react/index.js",
+      "sha256": "60caffdecbdc5db3bc4ec4e83df9488345ccb271d07533b9210bf5750918d97e"
+    },
+    {
+      "path": "dependencies/node_modules/react/jsx-runtime.js",
+      "sha256": "b392951a77d0a2e6a6bd017e49d768481ae5b63c4109c6c31f622cf7b2433edc"
+    },
+    {
+      "path": "dependencies/node_modules/readable-stream/lib/_stream_duplex.js",
+      "sha256": "fd17d6a92dd9ba004c85f8e364b2771af10d012a83766437447dbae63879fa6b"
+    },
+    {
+      "path": "dependencies/node_modules/readable-stream/lib/_stream_passthrough.js",
+      "sha256": "bf61450b1ff5f94fea9d46665e931119642034c903e63cc224b4c96472eed4d4"
+    },
+    {
+      "path": "dependencies/node_modules/readable-stream/lib/_stream_readable.js",
+      "sha256": "216e051224eff89a5d5eec76bef25addac078d9ebd2e88bd0a3d73a0e605091d"
+    },
+    {
+      "path": "dependencies/node_modules/readable-stream/lib/_stream_transform.js",
+      "sha256": "56220d9dd58b976f1739bfc85948b267d79772ba23672ff402d13b6b3fcf4e40"
+    },
+    {
+      "path": "dependencies/node_modules/readable-stream/lib/_stream_writable.js",
+      "sha256": "e6359ac652ed97f5f328c586c7a6b8f163782a9ca13da476e609a981c75e0469"
+    },
+    {
+      "path": "dependencies/node_modules/readable-stream/lib/internal/streams/BufferList.js",
+      "sha256": "387991bfee34bbb7938e0c0a3f345c3e5e4c37d5b0cb600e6d432c9995321fa7"
+    },
+    {
+      "path": "dependencies/node_modules/readable-stream/lib/internal/streams/destroy.js",
+      "sha256": "a59f90daec030125875a6028b32f93e2e2bc9fafd703991dbc36244f5cb21176"
+    },
+    {
+      "path": "dependencies/node_modules/readable-stream/lib/internal/streams/stream.js",
+      "sha256": "1e7903927df33aadb3659ecce55266c9c851da65ce6c8b723a60a305c1c5422c"
+    },
+    {
+      "path": "dependencies/node_modules/readable-stream/readable.js",
+      "sha256": "a1efa3fa06393aff652f3529ea1b1bc32134d49eb794b23272fb0ba13d214550"
+    },
+    {
+      "path": "dependencies/node_modules/rope-sequence/dist/index.js",
+      "sha256": "ffe69b2d14402b9048f5df072d1bc95515d4c7f0fdfc9b99749cf6734f2360a2"
+    },
+    {
+      "path": "dependencies/node_modules/safe-buffer/index.js",
+      "sha256": "d58af21cb0518864d0c505742d1af71e5b5e1f142f4c0f27353aa0f431a616d4"
+    },
+    {
+      "path": "dependencies/node_modules/scheduler/cjs/scheduler.production.js",
+      "sha256": "679adff761d31e9426604f80c0e99be44a3e6f4c6834b0218ecf0312a67c171f"
+    },
+    {
+      "path": "dependencies/node_modules/scheduler/index.js",
+      "sha256": "145965504d60007bc25486ab930b0367867dcd5d579ccd343c148d69349a7cfb"
+    },
+    {
+      "path": "dependencies/node_modules/string_decoder/lib/string_decoder.js",
+      "sha256": "f1d36d47b2c579063392c1a68963467f2d4f51a069af09eb068d974c63ee3b37"
+    },
+    {
+      "path": "dependencies/node_modules/strnum/strnum.js",
+      "sha256": "6de8255b1d6a88d67e129cd565c11fc6ae2e90bb78e50489df7a24dd0df75a38"
+    },
+    {
+      "path": "dependencies/node_modules/util-deprecate/node.js",
+      "sha256": "9a86a29fa34a99b861e707345fb1d1e2e55a6c23edb8f992bed57cc607f42d8e"
+    },
+    {
+      "path": "dependencies/node_modules/w3c-keyname/index.js",
+      "sha256": "b649dec4f01c7c5eb05be4641b5b698c6938231ee50b38e17a2f0f822ca3df2e"
+    },
+    {
+      "path": "dependencies/node_modules/xml-naming/src/index.js",
+      "sha256": "1a5d9fd32360e2cec4adbee9e56221fb26def66bb9d122e0b5745cebc963d92e"
+    },
+    {
+      "path": "upstream/LICENSE",
+      "sha256": "68e32334df324ef4fc79fad3a26487e5abac36055a484bb6c8d7ecf9d8350885"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/components/NavPane.tsx",
+      "sha256": "2feb9209f9a92e7f54a71930d11502e4e3fbae3bc32a218b1903b0af6f4a03c7"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/active-editor.ts",
+      "sha256": "edf5ddf9ed73a52639cbc02dbc1ae3647b668626c5ad6cbe73493900ab8c32e8"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/convert.ts",
+      "sha256": "344da5180dcea9344ccdb7795e182d16a7b12366222b10721fe5d3e44a82a465"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/decoration-extensions.ts",
+      "sha256": "0b944db35dc6b8b4e123a5a20c0e0291a4cf6f6e63a91ccdce7dfa4fb2de3f7a"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/direction.ts",
+      "sha256": "a23218bef287d08a9ed64f01ccb483bf0e0e2da3200dbd6ff57a2adfe2334ec9"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/equation.ts",
+      "sha256": "225906ef0a6af2e1b111da7568eeadad0a5344c58794b272d1eee9ee799c5f62"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/extensions.ts",
+      "sha256": "a37a7ef7578be57006f96e5cc664af92919d875d9f2ddd169a94b423ee1850de"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/headings.ts",
+      "sha256": "584990a2c970c416415d2f0db886b34ee74bd22624eedf52bc8cbc888aeace11"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/marks.ts",
+      "sha256": "2c5dccf65e7a17da783a48a00f348913608bf7d716f3fb251d84c67b1724de6b"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/numbering.ts",
+      "sha256": "65bd64dc07ee10b29acd16c1da95c51efca389f3125659024f5c887df2a8914f"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/pagination-gaps.ts",
+      "sha256": "26e5764d052b5e7fc89319ae5800ba41eedc243c42fb07a748033c264c714f8f"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/revisions.ts",
+      "sha256": "70b1e6647d75389bfe7d0bfadee97e45743a32c461a2944deedf1c756a333b73"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/editor/table-sizing.ts",
+      "sha256": "11bf07e33df9eab1df537c8faac383ba89212eda8ab9bf962acac9f0f7eb0b8a"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/font-list.ts",
+      "sha256": "6fdf22e754fa35d29906cbe4eebce58a8e682c1bb0f5d4793736703c78a19432"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/line-metrics.ts",
+      "sha256": "1cc76d9a08cbb1cac490d324df2ce12d66091f2fc48ddbe9cdbe12201411f566"
+    },
+    {
+      "path": "upstream/apps/docs/src/renderer/note-format.ts",
+      "sha256": "394addfaf17b6f3eb66f3a28be31ea8e02104e8f7d1aecca0c856ae3a9016e09"
+    },
+    {
+      "path": "upstream/package-lock.json",
+      "sha256": "ac600430f369f5584a4ac3ecf96dc9019dd26e66c3652902f969aa512baa04f3"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/blank.ts",
+      "sha256": "2465303a194d635a1496a22a3267f25f6ab947bf9fb7328c69c85def58260474"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/chart.ts",
+      "sha256": "0df3b141a96cffda3ae3bfb85ac38597e19b5afc69ef505829c77fd35062fef6"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/generate.ts",
+      "sha256": "067b6ba8f9e01c752fe572fa2be21770a37adf0cb88f23276505fae07597a79b"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/index.ts",
+      "sha256": "707d99e0ca80ba0ed2ed0752dfe90b9e5597d82023fb48eb4c3161d2350106ab"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/ink.ts",
+      "sha256": "d17b27a57c3d30b3462856b6921bc7be0801c1f69686f89633e965936d84109a"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/list-markers.ts",
+      "sha256": "187b0de6427a8c415afe106b53966f73d081deecfc074cb3d2df8aab0f405609"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/math.ts",
+      "sha256": "4d022f70389796db09cd7956657ed140195e58e1490c8b395fb086bce2b2eed0"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/notes.ts",
+      "sha256": "e3423e7491a35a9d3764695bca606142cc1f342aec72ec7c1fc43eed37da6db9"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/parse.ts",
+      "sha256": "22df54a667b55fad40e6bd5be82326d05a05bafb85e02f97278ed35059eeee9f"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/patch.ts",
+      "sha256": "ec2140201a91eaf9f46ddfa2bb99e3d39728ed390a5fd72412ed1a3639065b10"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/protection.ts",
+      "sha256": "9ff9c9233d38dd66dd4ee93ede9bae51ee1f7433310335cec9b061b52fddbfe3"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/scan.ts",
+      "sha256": "51db076b50cc042197b36708a2abd4cbd1b12ff4a223b30c0a53fd160a181b60"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/section.ts",
+      "sha256": "80bfc3ab6cf58065fa5f6c72319d082bf39ff1bbcddeac28c501d4e4574ef98a"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/sources.ts",
+      "sha256": "839d62b2e2b2bf53b1ab264cd91f136c64632d52be7393861959f7496c77b0f6"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/symbol-fonts.ts",
+      "sha256": "0a9221593379a5decea1ec33fdd2bd64e56301a1a81e1f7797d844973ca1086c"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/text-patch.ts",
+      "sha256": "36bf587bca2a21ad81d6c6e0ad6b1ca8919105ec41caa919429c89737bc346d4"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/theme.ts",
+      "sha256": "d12a1871acc64cdae4c6c4c335e5daf5c3bf70df5dfc3da4fb6c76266e1c23ce"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/types.ts",
+      "sha256": "ca96c69c3c76998230c5fada2729908340019f340d3f0b878ed1f8585ac9a0e7"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/watermark.ts",
+      "sha256": "90ac6d8280158b41664e57720d0a40227e1ae9f16385113d0024dea0fccc6a37"
+    },
+    {
+      "path": "upstream/packages/docx-engine/src/xml-utils.ts",
+      "sha256": "5d8408841181b478106a22cb3d81f6f3eef71a8e5956d0e7e538a20cbe0a9d2e"
+    },
+    {
+      "path": "upstream/packages/ui/src/icons.tsx",
+      "sha256": "c49d60d0e9fcfdb6adf7ee727758ab537f5a34f8d7f989e4e472b2aa33a53d04"
+    }
+  ],
+  "inputLock": {
+    "sourcePath": "GenOfficeFork/runtime-input-lock.json",
+    "packagedPath": "Provenance/genoffice-runtime-input-lock.json",
+    "sha256": "9ee393c6897d713afc1016cb49c6ca5d04297e2544785404b68bbebc2a946f91"
+  },
+  "outputs": [
+    {
+      "path": "GenOffice/public-document-genoffice.js",
+      "sha256": "fe576951798bc85eaba443f0ff3e30eccbcc8ead21b1f1932f540c4d0f3ddc7d",
+      "sizeBytes": 784694
+    },
+    {
+      "path": "GenOffice/genoffice-docx-normalize.cjs",
+      "sha256": "43046343861265b0c89490f427cbf00118e42531d7144ff36173b543044170bc",
+      "sizeBytes": 323883
+    },
+    {
+      "path": "GenOffice/node.spdx.json",
+      "sha256": "fad7c04bf8fed662b1537f449969f42eed180f678431e0ce3759da28bc627fa5",
+      "sizeBytes": 749
+    },
+    {
+      "path": "GenOffice/javascript-runtime.spdx.json",
+      "sha256": "0105ac4e6a8bb4b8a710e9ebb31a355e4ba35874e9481c778009655faed4c4a5",
+      "sizeBytes": 18156
+    },
+    {
+      "path": "Legal/GenOffice-LICENSE.txt",
+      "sha256": "68e32334df324ef4fc79fad3a26487e5abac36055a484bb6c8d7ecf9d8350885",
+      "sizeBytes": 11345
+    },
+    {
+      "path": "Legal/GenOffice-JS-DEPENDENCIES.md",
+      "sha256": "1f1a456b43708ecf7162ed753d21b2fa261f6d0e998991c16d6f48bda905a490",
+      "sizeBytes": 1387
+    },
+    {
+      "path": "Legal/GenOffice-JS-THIRD-PARTY-LICENSES.txt",
+      "sha256": "03331096372f5af9a8999cb8a70bedf2e50e51a04185ddb1aac8324d0c49de45",
+      "sizeBytes": 102738
+    },
+    {
+      "path": "Legal/Node-v22.17.1-NOTICE.txt",
+      "sha256": "5dba3c80ee804d83de1fcb7a549d445d24d43ce5d1b2677df8f3968b1e90959e",
+      "sizeBytes": 223
+    },
+    {
+      "path": "Legal/Node-LICENSE.txt",
+      "sha256": "1ae62e2015784ba438db7b04ebd33f3c4ff3efdb824c111c4ececd99945fd52d",
+      "sizeBytes": 142078
+    }
+  ],
+  "packages": [
+    {
+      "name": "@genoffice/docx-engine",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "0a440a189ee6d00bec24f1eca2509fd9368604ccba1cc6e374c84d69b77f546e"
+    },
+    {
+      "name": "@genoffice/ui",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "2d9aba64b00ce1c428a91877c2e1352da6d30410ac28816a070560872b19f11c"
+    },
+    {
+      "name": "@nodable/entities",
+      "version": "3.0.0",
+      "license": "MIT",
+      "author": "Amit Gupta (https://solothought.com)",
+      "packageJsonSha256": "548526ce0e1cad9ffe904fba19067013c9fea336eafd3cd52a337ec44406c9ed"
+    },
+    {
+      "name": "@tiptap/core",
+      "version": "3.28.0",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "b60d534fc4a340f694a7ceefb6f21ec4e45fb8b86840a3cda05ea327d2029bd1"
+    },
+    {
+      "name": "@tiptap/extensions",
+      "version": "3.28.0",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "fa8b199635ef441ca4f795b29187be2fb85c8ca773a0872f2564d1c5f1923a80"
+    },
+    {
+      "name": "@tiptap/pm",
+      "version": "3.28.0",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "dcec9be1ddc2736e4eff1535192388d0a9e0d53f0d8a992e8746d1b1bbac3bd1"
+    },
+    {
+      "name": "anynum",
+      "version": "1.0.1",
+      "license": "MIT",
+      "author": "Amit Gupta (https://solothought.work/)",
+      "packageJsonSha256": "41c5d60f0aa8b5f4133aeff56573a8c4130d4d1c19dc240398ff806b40a4470e"
+    },
+    {
+      "name": "core-util-is",
+      "version": "1.0.3",
+      "license": "MIT",
+      "author": "Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)",
+      "packageJsonSha256": "0067bcd4ef1c86da02a45ad770883b39a9d14aa0b00113071609d5fb3dce0bc0"
+    },
+    {
+      "name": "fast-xml-builder",
+      "version": "1.3.0",
+      "license": "MIT",
+      "author": "Amit Gupta (https://solothought.com)",
+      "packageJsonSha256": "0ebbfd166ef9fb9e4fa343ea6479996eba97371097206dad4527ae672498377f"
+    },
+    {
+      "name": "fast-xml-parser",
+      "version": "5.10.1",
+      "license": "MIT",
+      "author": "Amit Gupta (https://solothought.com)",
+      "packageJsonSha256": "53e4b3e13a35b737af8b966853e7abb83113f9590ee1cc6a0f2a49f6d011e761"
+    },
+    {
+      "name": "immediate",
+      "version": "3.0.6",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "1e40d711ce5348d237f7a2093d1707ca7c34fc56369f6be10c8e2dc9bcae0a96"
+    },
+    {
+      "name": "inherits",
+      "version": "2.0.4",
+      "license": "ISC",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "be645800bc94fd8de29c8ae91690549b316cc437100108aeea7b2f347693cc80"
+    },
+    {
+      "name": "is-unsafe",
+      "version": "2.0.0",
+      "license": "MIT",
+      "author": "Amit Gupta (https://solothought.work/)",
+      "packageJsonSha256": "87eccbe5a7d0f9d21d990690c20cc76b93ffb392178a12695f4be6e1ed4aa23c"
+    },
+    {
+      "name": "isarray",
+      "version": "1.0.0",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "93165ce56e458216c18240cd961a522af5b18e51da06f55d88ac552234455d95"
+    },
+    {
+      "name": "jszip",
+      "version": "3.10.1",
+      "license": "(MIT OR GPL-3.0-or-later)",
+      "author": "Stuart Knightley <stuart@stuartk.com>",
+      "packageJsonSha256": "83569b5b130b5ec27ae281ed80420ad364baf1bf64cb82e6ac8fb891e1b4ec4c"
+    },
+    {
+      "name": "lie",
+      "version": "3.3.0",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "3faafb3b558146534b1849e6d2ed8a9c9c88eff27ef868827d8de17b979cf701"
+    },
+    {
+      "name": "orderedmap",
+      "version": "2.1.1",
+      "license": "MIT",
+      "author": "Marijn Haverbeke <marijn@haverbeke.berlin>",
+      "packageJsonSha256": "282ea598284094608736ed5a75f4e0b48da53b851b62bba22362feac507d5c6c"
+    },
+    {
+      "name": "pako",
+      "version": "1.0.11",
+      "license": "(MIT AND Zlib)",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "0014f350a6834ed6a2d1211e0a2e3aa471cb426edf63379c785f9647ea2b4e01"
+    },
+    {
+      "name": "path-expression-matcher",
+      "version": "1.6.2",
+      "license": "MIT",
+      "author": "Amit Gupta (https://solothought.com)",
+      "packageJsonSha256": "625ca3a27a289160508a79773ddfd7bf678a6401bd96321cac0bc43ebebe01f8"
+    },
+    {
+      "name": "process-nextick-args",
+      "version": "2.0.1",
+      "license": "MIT",
+      "author": "",
+      "packageJsonSha256": "6d6d93d057f39bc3173d53e694b61833fd0ce89c1d669156169136d31a968131"
+    },
+    {
+      "name": "prosemirror-commands",
+      "version": "1.7.1",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "c02fbe3a4b2aa9f9a1ea86aa50ea208b8f898a2619a26eb9d6fde7edd788ba01"
+    },
+    {
+      "name": "prosemirror-dropcursor",
+      "version": "1.8.3",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "dcaf698f370b5fb2f1f63e587f51a6835d6e9d2f1273e35bf2eb78ea5471933b"
+    },
+    {
+      "name": "prosemirror-gapcursor",
+      "version": "1.4.1",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "b064f521f3e40b5382f51617ff79ed81d83365eb2de975221bd5ab26e9088f48"
+    },
+    {
+      "name": "prosemirror-history",
+      "version": "1.5.0",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "934d5e211d998fcaac4be6789bfcb54de2caa9adef1c96c356e166a16815c105"
+    },
+    {
+      "name": "prosemirror-keymap",
+      "version": "1.2.3",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "15652f722a20aa5a7db8a8ae5a1326e56435f6651c67cf8a594c2c826eada761"
+    },
+    {
+      "name": "prosemirror-model",
+      "version": "1.25.11",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "a02b6388308d718ccaa125a0359b615e33119eab8f9b7b7e2475099afabc6af3"
+    },
+    {
+      "name": "prosemirror-schema-list",
+      "version": "1.5.1",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "98d90d8f6748a87c4948f518b14a453f00e9f4e1dd507744786a3e0614953964"
+    },
+    {
+      "name": "prosemirror-state",
+      "version": "1.4.4",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "b40080e3d2ebfaab5a6ee44b3b2cb20761d79cbe514411df8641a8434d2b65ef"
+    },
+    {
+      "name": "prosemirror-tables",
+      "version": "1.8.5",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "ee222f25469969417f95072d6ad5313bd9cfd2431b505e12c6c6eb7688f2e97c"
+    },
+    {
+      "name": "prosemirror-transform",
+      "version": "1.12.0",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "852df48473b416d840a30889fb1a9b9535b00ab6e3518b175abcddba8d87c24b"
+    },
+    {
+      "name": "prosemirror-view",
+      "version": "1.42.1",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "773d5d1c7780db6f1a898a8ae7cb94edb94f5b7f40690f92fd26aeafd36050b3"
+    },
+    {
+      "name": "react",
+      "version": "19.2.7",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "51966ae9c8c377ff592b5d69c980966992101bc6791bf83a1e5c7ad9bcefa7f4"
+    },
+    {
+      "name": "react-dom",
+      "version": "19.2.7",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "447acd72cdb6a966d9db967729e286e7cbb4a09ea61fddd45e12c2a97fd4cfb6"
+    },
+    {
+      "name": "readable-stream",
+      "version": "2.3.8",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "67bde829e31cba3f50c77d14a30fa0f2295223b7ffa07f3b84606a5a79bb97f8"
+    },
+    {
+      "name": "rope-sequence",
+      "version": "1.3.4",
+      "license": "MIT",
+      "author": "Marijn Haverbeke <marijn@haverbeke.berlin>",
+      "packageJsonSha256": "0e378a9dcc447c04e712238d60a1f2ffb878bfc161cbb95ef0a3c34d2a541548"
+    },
+    {
+      "name": "safe-buffer",
+      "version": "5.1.2",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "3d8b6d944be9e931a178914afbb3d6b79bfa199c032872b687bed41ed996c747"
+    },
+    {
+      "name": "scheduler",
+      "version": "0.27.0",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "393bb96b7e481bf50189a1a02c7e0e7f4d01acba5abc6fbe7d214638624462fc"
+    },
+    {
+      "name": "string_decoder",
+      "version": "1.1.1",
+      "license": "MIT",
+      "author": "NOASSERTION",
+      "packageJsonSha256": "e278ca18803862a6d1b6bedc6a3394159ac86e5c4a162614fef006c79dcda3a2"
+    },
+    {
+      "name": "strnum",
+      "version": "2.4.1",
+      "license": "MIT",
+      "author": "Amit Gupta (https://solothought.work/)",
+      "packageJsonSha256": "89eed6c7268cbacff90e83beeefc5ef38113f1050c3f36d6a3fa0b674587287a"
+    },
+    {
+      "name": "util-deprecate",
+      "version": "1.0.2",
+      "license": "MIT",
+      "author": "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io/)",
+      "packageJsonSha256": "7bba467f049074957e693fc06672848b040c38fa071b6eed8690f5fbe090a8b2"
+    },
+    {
+      "name": "w3c-keyname",
+      "version": "2.2.8",
+      "license": "MIT",
+      "author": "Marijn Haverbeke <marijn@haverbeke.berlin>",
+      "packageJsonSha256": "0396c646f74d52c1b0851074ecdb5cabf540af595ceb5e5a5136df2bf3c2f83b"
+    },
+    {
+      "name": "xml-naming",
+      "version": "0.3.0",
+      "license": "MIT",
+      "author": "Amit Gupta (https://solothought.com)",
+      "packageJsonSha256": "e6ff1758837bca3ca6877308c0d51f9e3e47efd07497fa62c8291fd88ab8216f"
+    }
+  ],
+  "buildTool": {
+    "name": "esbuild",
+    "version": "0.25.12",
+    "license": "MIT",
+    "author": "NOASSERTION",
+    "packageJsonSha256": "cb7d5b1fe478f8cbaae566a86031b6fdf5f7d444354f35d1cb3cba9adf6d2935"
+  },
+  "forbiddenScan": {
+    "status": "pass",
+    "caseInsensitive": true,
+    "patterns": [
+      "genspark",
+      "AiPanel",
+      "electron-updater",
+      "non-Docs app/package paths",
+      "fetch(",
+      "WebSocket",
+      "XMLHttpRequest",
+      "sendBeacon",
+      "new Function",
+      "eval("
+    ],
+    "scannedOutputs": [
+      "GenOffice/public-document-genoffice.js",
+      "GenOffice/genoffice-docx-normalize.cjs"
+    ]
+  },
+  "node": {
+    "version": "22.17.1",
+    "sourcePath": "Engines/node",
+    "sourceSha256": "7ede1e8c98a2b2bb5965aff3c070ede061fc9e2a6a0b16774646487f94fe4541",
+    "sha256": "5c8cd3ab2559b530fceca01776064c56687619475a7ffc339178524af6cdaa25",
+    "sizeBytes": 110604016,
+    "architecture": "arm64",
+    "linkedLibraries": [
+      "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+      "/System/Library/Frameworks/Security.framework/Versions/A/Security",
+      "/usr/lib/libc++.1.dylib",
+      "/usr/lib/libSystem.B.dylib"
+    ],
+    "lock": {
+      "sourcePath": "GenOfficeFork/node-runtime-lock.json",
+      "packagedPath": "Provenance/genoffice-node-runtime-lock.json",
+      "sha256": "18c95dc70ff877dc189d1e176f9cf7f8ee543aeb97d50d3290ca0092a2d56f95"
+    }
+  },
+  "runtime": {
+    "browserBundlePath": "GenOffice/public-document-genoffice.js",
+    "docxCliPath": "GenOffice/genoffice-docx-normalize.cjs",
+    "customElementTag": "public-document-genoffice-editor",
+    "readyEvent": "public-document-genoffice-ready",
+    "changeEvent": "public-document-genoffice-change",
+    "offline": true
+  }
+}

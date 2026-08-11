@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-03",
+  "verdict": "pass",
+  "summary": "Signed updates, pinned templates, rollback, and official-rule enforcement checks passed.",
+  "blockers": [],
+  "seed": {
+    "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
+    "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
+  },
+  "sourceEvidence": [
+    {
+      "path": "docs/ac-03-guided-template-evidence.md",
+      "sha256": "sha256:2bf28c61b239f5ed29f942c77fe013be2e68483077798d8daa720eb26044fb37"
+    },
+    {
+      "path": "provenance/seed-evidence-sources.json",
+      "sha256": "sha256:20146b6cc506b5e8f5355fb0dd1cdce15229f1c93161aea52eff35ef4aa6202f"
+    },
+    {
+      "path": "output/ac-03/final-current.ncO8Pn/receipt.json",
+      "sha256": "sha256:1dae415364187b213949e04be724e56fc52957b0d12d3c62f3ce7741f2cbe98a"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "artifacts/templates/catalog-manifest.json",
+      "sha256": "sha256:a10140ffe6e71e5df77cbc58cd07bb72ece5f176f4d1ace23c6c22bd4937250c"
+    },
+    {
+      "path": "artifacts/templates/update-rollback-evidence.json",
+      "sha256": "sha256:080308b9e5f3670124fafed33bb59d5fd91229fa7a9d9bd08fe0f6d5e8320f4e"
+    }
+  ],
+  "evaluation": {
+    "criterion": "AC-03",
+    "verdict": "pass",
+    "summary": "Signed updates, pinned templates, rollback, and official-rule enforcement checks passed.",
+    "blockers": [],
+    "checks": [
+      {
+        "id": "catalog.signed-envelope",
+        "passed": true,
+        "detail": "signed catalog envelope"
+      },
+      {
+        "id": "template.exportSnapshotUsedRuleRevision",
+        "passed": true,
+        "detail": "exportSnapshotUsedRuleRevision must be true"
+      },
+      {
+        "id": "template.failedUpdatePreservedLastTrusted",
+        "passed": true,
+        "detail": "failedUpdatePreservedLastTrusted must be true"
+      },
+      {
+        "id": "template.immutableRevisionCreated",
+        "passed": true,
+        "detail": "immutableRevisionCreated must be true"
+      },
+      {
+        "id": "template.lowerPrecedenceCouldNotOverride",
+        "passed": true,
+        "detail": "lowerPrecedenceCouldNotOverride must be true"
+      },
+      {
+        "id": "template.officialRuleHistoryRecorded",
+        "passed": true,
+        "detail": "officialRuleHistoryRecorded must be true"
+      },
+      {
+        "id": "template.officialRuleTitleElementEnforced",
+        "passed": true,
+        "detail": "officialRuleTitleElementEnforced must be true"
+      },
+      {
+        "id": "template.repeatedEnforcementWasIdempotent",
+        "passed": true,
+        "detail": "repeatedEnforcementWasIdempotent must be true"
+      },
+      {
+        "id": "template.signatureRejected",
+        "passed": true,
+        "detail": "signatureRejected must be true"
+      },
+      {
+        "id": "template.unsupportedOfficialFieldRejected",
+        "passed": true,
+        "detail": "unsupportedOfficialFieldRejected must be true"
+      },
+      {
+        "id": "template.precedence",
+        "passed": true,
+        "detail": "highest official title reaches export"
+      },
+      {
+        "id": "template.pinning",
+        "passed": true,
+        "detail": "pinned document version remains unchanged"
+      },
+      {
+        "id": "template.rollback",
+        "passed": true,
+        "detail": "rollback and offline catalog lineage"
+      },
+      {
+        "id": "evidence.identity",
+        "passed": true,
+        "detail": "2 evidence identities verified"
+      }
+    ]
+  }
+}

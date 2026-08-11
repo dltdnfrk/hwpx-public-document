@@ -1,0 +1,554 @@
+{
+  "corpusVersion": "1.0.0",
+  "manifestVersion": "1.0.0",
+  "requiredClientOperations": {
+    "docx": [
+      "genoffice-docs-reopen",
+      "microsoft-word-reopen"
+    ],
+    "hwp": [
+      "hancom-official-reopen",
+      "polaris-office-reopen"
+    ],
+    "hwpx": [
+      "hancom-official-reopen",
+      "polaris-office-reopen"
+    ],
+    "markdown": [
+      "approved-rendering",
+      "commonmark-validate"
+    ]
+  },
+  "capabilityGaps": {
+    "docx": [
+      "list-item",
+      "unordered-list"
+    ],
+    "hwp": [
+      "approval-grid",
+      "formula",
+      "list-item",
+      "table",
+      "table+rich-inline",
+      "unordered-list"
+    ],
+    "hwpx": [
+      "approval-grid",
+      "formula",
+      "list-item",
+      "table",
+      "table+rich-inline",
+      "unordered-list"
+    ],
+    "markdown": [
+      "formula",
+      "list-item",
+      "unordered-list"
+    ]
+  },
+  "artifacts": [
+    {
+      "artifactHash": "sha256:91c8e7ec16eaf8f14198946d98f32c161854d93098942a739149629269a344b5",
+      "byteCount": 5855,
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "fixtureID": "basic-client-interoperability",
+      "format": "hwpx",
+      "relativePath": "basic-client-interoperability/ac05-fixture.hwpx",
+      "validation": {
+        "evidenceSource": "artifact-derived",
+        "orderedElements": [
+          {
+            "elementID": "element-title",
+            "kind": "heading",
+            "order": 0,
+            "textHash": "sha256:c20acf4e4e7f41ead6f1533ff275a36a0f879e43a25e8c774826d364dabbc66f"
+          },
+          {
+            "elementID": "element-body",
+            "kind": "paragraph",
+            "order": 1,
+            "textHash": "sha256:5512992d7bf06d83fa86d329365beb2694469f1e8024bd23e5b1f2431a66b01c"
+          },
+          {
+            "elementID": "element-review",
+            "kind": "review-marker",
+            "order": 2,
+            "textHash": "sha256:5ed977facdb58e23b559a17487c8cae14876d5cd3ef93df9f064fb62b2931a0f"
+          }
+        ],
+        "semanticValid": true,
+        "structuralValid": true,
+        "validator": "rhwp artifact reopen + ordered text verification"
+      },
+      "artifactEvidence": {
+        "path": "output/ac-07/final-current.Z61edu/compatibility/basic-client-interoperability/ac05-fixture.hwpx",
+        "sha256": "sha256:91c8e7ec16eaf8f14198946d98f32c161854d93098942a739149629269a344b5"
+      }
+    },
+    {
+      "artifactHash": "sha256:763441ce190f02632a9debbef361f09e29cf30be7b006e90da54ed083fac15c9",
+      "byteCount": 6144,
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "fixtureID": "basic-client-interoperability",
+      "format": "hwp",
+      "relativePath": "basic-client-interoperability/ac05-fixture.hwp",
+      "validation": {
+        "evidenceSource": "artifact-derived",
+        "orderedElements": [
+          {
+            "elementID": "element-title",
+            "kind": "heading",
+            "order": 0,
+            "textHash": "sha256:c20acf4e4e7f41ead6f1533ff275a36a0f879e43a25e8c774826d364dabbc66f"
+          },
+          {
+            "elementID": "element-body",
+            "kind": "paragraph",
+            "order": 1,
+            "textHash": "sha256:5512992d7bf06d83fa86d329365beb2694469f1e8024bd23e5b1f2431a66b01c"
+          },
+          {
+            "elementID": "element-review",
+            "kind": "review-marker",
+            "order": 2,
+            "textHash": "sha256:5ed977facdb58e23b559a17487c8cae14876d5cd3ef93df9f064fb62b2931a0f"
+          }
+        ],
+        "semanticValid": true,
+        "structuralValid": true,
+        "validator": "rhwp artifact reopen + ordered text verification"
+      },
+      "artifactEvidence": {
+        "path": "output/ac-07/final-current.Z61edu/compatibility/basic-client-interoperability/ac05-fixture.hwp",
+        "sha256": "sha256:763441ce190f02632a9debbef361f09e29cf30be7b006e90da54ed083fac15c9"
+      }
+    },
+    {
+      "artifactHash": "sha256:ae2cb6d9e6d1d556e210bbecd5e0c430559f9b806eea95d24a0b461974847628",
+      "byteCount": 5795,
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "fixtureID": "basic-client-interoperability",
+      "format": "docx",
+      "relativePath": "basic-client-interoperability/ac05-fixture.docx",
+      "validation": {
+        "evidenceSource": "artifact-derived",
+        "orderedElements": [
+          {
+            "elementID": "element-title",
+            "kind": "heading",
+            "order": 0,
+            "textHash": "sha256:c20acf4e4e7f41ead6f1533ff275a36a0f879e43a25e8c774826d364dabbc66f"
+          },
+          {
+            "elementID": "element-body",
+            "kind": "paragraph",
+            "order": 1,
+            "textHash": "sha256:5512992d7bf06d83fa86d329365beb2694469f1e8024bd23e5b1f2431a66b01c"
+          },
+          {
+            "elementID": "element-review",
+            "kind": "review-marker",
+            "order": 2,
+            "textHash": "sha256:5ed977facdb58e23b559a17487c8cae14876d5cd3ef93df9f064fb62b2931a0f"
+          }
+        ],
+        "semanticValid": true,
+        "structuralValid": true,
+        "validator": "artifact-derived OOXML graph + formula/table/content verification"
+      },
+      "artifactEvidence": {
+        "path": "output/ac-07/final-current.Z61edu/compatibility/basic-client-interoperability/ac05-fixture.docx",
+        "sha256": "sha256:ae2cb6d9e6d1d556e210bbecd5e0c430559f9b806eea95d24a0b461974847628"
+      }
+    },
+    {
+      "artifactHash": "sha256:89f6cc9ce297f6f71c241cd38b3d7a7c6f35666e9b84932291aa1bac91a4b343",
+      "byteCount": 619,
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "fixtureID": "basic-client-interoperability",
+      "format": "markdown",
+      "relativePath": "basic-client-interoperability/ac05-fixture.md",
+      "validation": {
+        "evidenceSource": "artifact-derived",
+        "orderedElements": [
+          {
+            "elementID": "element-title",
+            "kind": "heading",
+            "order": 0,
+            "textHash": "sha256:c20acf4e4e7f41ead6f1533ff275a36a0f879e43a25e8c774826d364dabbc66f"
+          },
+          {
+            "elementID": "element-body",
+            "kind": "paragraph",
+            "order": 1,
+            "textHash": "sha256:5512992d7bf06d83fa86d329365beb2694469f1e8024bd23e5b1f2431a66b01c"
+          },
+          {
+            "elementID": "element-review",
+            "kind": "review-marker",
+            "order": 2,
+            "textHash": "sha256:5ed977facdb58e23b559a17487c8cae14876d5cd3ef93df9f064fb62b2931a0f"
+          }
+        ],
+        "semanticValid": true,
+        "structuralValid": true,
+        "validator": "artifact-derived CommonMark table + marker-bound content verification"
+      },
+      "artifactEvidence": {
+        "path": "output/ac-07/final-current.Z61edu/compatibility/basic-client-interoperability/ac05-fixture.md",
+        "sha256": "sha256:89f6cc9ce297f6f71c241cd38b3d7a7c6f35666e9b84932291aa1bac91a4b343"
+      }
+    }
+  ],
+  "dispositions": [
+    {
+      "capabilityGaps": [],
+      "disposition": "artifact-validated",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "fixtureID": "basic-client-interoperability",
+      "format": "hwpx"
+    },
+    {
+      "capabilityGaps": [],
+      "disposition": "artifact-validated",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "fixtureID": "basic-client-interoperability",
+      "format": "hwp"
+    },
+    {
+      "capabilityGaps": [],
+      "disposition": "artifact-validated",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "fixtureID": "basic-client-interoperability",
+      "format": "docx"
+    },
+    {
+      "capabilityGaps": [],
+      "disposition": "artifact-validated",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "fixtureID": "basic-client-interoperability",
+      "format": "markdown"
+    },
+    {
+      "capabilityGaps": [
+        "approval-grid",
+        "formula",
+        "list-item",
+        "table",
+        "table+rich-inline",
+        "unordered-list"
+      ],
+      "disposition": "semantic-loss-blocked",
+      "fixtureHash": "sha256:da4cac83207b2ca76f98cb49aff0a571996dc7495d2fa595de845444d5adfb3d",
+      "fixtureID": "authoring-universe",
+      "format": "hwpx"
+    },
+    {
+      "capabilityGaps": [
+        "approval-grid",
+        "formula",
+        "list-item",
+        "table",
+        "table+rich-inline",
+        "unordered-list"
+      ],
+      "disposition": "semantic-loss-blocked",
+      "fixtureHash": "sha256:da4cac83207b2ca76f98cb49aff0a571996dc7495d2fa595de845444d5adfb3d",
+      "fixtureID": "authoring-universe",
+      "format": "hwp"
+    },
+    {
+      "capabilityGaps": [
+        "list-item",
+        "unordered-list"
+      ],
+      "disposition": "semantic-loss-blocked",
+      "fixtureHash": "sha256:da4cac83207b2ca76f98cb49aff0a571996dc7495d2fa595de845444d5adfb3d",
+      "fixtureID": "authoring-universe",
+      "format": "docx"
+    },
+    {
+      "capabilityGaps": [
+        "formula",
+        "list-item",
+        "unordered-list"
+      ],
+      "disposition": "semantic-loss-blocked",
+      "fixtureHash": "sha256:da4cac83207b2ca76f98cb49aff0a571996dc7495d2fa595de845444d5adfb3d",
+      "fixtureID": "authoring-universe",
+      "format": "markdown"
+    }
+  ],
+  "visualObservations": [
+    {
+      "observationID": "observation-ac07-rhwp-hwpx-312563b0-9bd4-401f-9b0b-910c487ab52b",
+      "toolID": "edwardkim-rhwp-local-visual-observer",
+      "clientName": "rhwp local layout/render engine",
+      "clientVersion": "0.8.2",
+      "clientBuild": "sha256:a9fc072e61aa1cbf56fbd00943c4e4a33dd49aa7f6122f7b36e16ff476f7677b",
+      "osVersion": "macOS 26.5.2",
+      "osBuild": "25F84",
+      "fonts": [
+        "Apple SD Gothic Neo Bold",
+        "Apple SD Gothic Neo ExtraBold",
+        "Apple SD Gothic Neo Heavy",
+        "Apple SD Gothic Neo Light",
+        "Apple SD Gothic Neo Medium",
+        "Apple SD Gothic Neo Regular",
+        "Apple SD Gothic Neo SemiBold",
+        "Apple SD Gothic Neo Thin",
+        "Apple SD Gothic Neo UltraLight"
+      ],
+      "timestamp": "2026-08-09T20:43:21.534Z",
+      "fixtureID": "basic-client-interoperability",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "format": "hwpx",
+      "artifactHash": "sha256:91c8e7ec16eaf8f14198946d98f32c161854d93098942a739149629269a344b5",
+      "expectedPageCount": 1,
+      "observedPageCount": 1,
+      "missingAuthoredElementIDs": [],
+      "unexpectedBlankPageNumbers": [],
+      "textBoundsCoverage": 1,
+      "evidencePath": "evidence/rhwp/hwpx/evidence-manifest.json",
+      "evidenceHash": "sha256:de8771704a01b7dbfa9950c64c0068fa24e6f2873559555bd2b8d0ac413382a7",
+      "evidence": {
+        "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/rhwp/hwpx/evidence-manifest.json",
+        "sha256": "sha256:de8771704a01b7dbfa9950c64c0068fa24e6f2873559555bd2b8d0ac413382a7"
+      }
+    },
+    {
+      "observationID": "observation-ac07-rhwp-hwp-0e673c04-a227-4512-a761-16e7e611b4a8",
+      "toolID": "edwardkim-rhwp-local-visual-observer",
+      "clientName": "rhwp local layout/render engine",
+      "clientVersion": "0.8.2",
+      "clientBuild": "sha256:a9fc072e61aa1cbf56fbd00943c4e4a33dd49aa7f6122f7b36e16ff476f7677b",
+      "osVersion": "macOS 26.5.2",
+      "osBuild": "25F84",
+      "fonts": [
+        "Apple SD Gothic Neo Bold",
+        "Apple SD Gothic Neo ExtraBold",
+        "Apple SD Gothic Neo Heavy",
+        "Apple SD Gothic Neo Light",
+        "Apple SD Gothic Neo Medium",
+        "Apple SD Gothic Neo Regular",
+        "Apple SD Gothic Neo SemiBold",
+        "Apple SD Gothic Neo Thin",
+        "Apple SD Gothic Neo UltraLight"
+      ],
+      "timestamp": "2026-08-09T20:43:21.493Z",
+      "fixtureID": "basic-client-interoperability",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "format": "hwp",
+      "artifactHash": "sha256:763441ce190f02632a9debbef361f09e29cf30be7b006e90da54ed083fac15c9",
+      "expectedPageCount": 1,
+      "observedPageCount": 1,
+      "missingAuthoredElementIDs": [],
+      "unexpectedBlankPageNumbers": [],
+      "textBoundsCoverage": 1,
+      "evidencePath": "evidence/rhwp/hwp/evidence-manifest.json",
+      "evidenceHash": "sha256:29b0b0e63f69ac68c6a5c0892929212a36392e86e5647f25b2735324ed03335a",
+      "evidence": {
+        "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/rhwp/hwp/evidence-manifest.json",
+        "sha256": "sha256:29b0b0e63f69ac68c6a5c0892929212a36392e86e5647f25b2735324ed03335a"
+      }
+    },
+    {
+      "observationID": "observation-ac07-genoffice-d597a090-62cd-43e6-9f64-bb85dfffa333-visual",
+      "toolID": "genspark-ai-genoffice-pinned-render-observer",
+      "clientName": "GenOffice Docs",
+      "clientVersion": "0.1.0",
+      "clientBuild": "d8305ff2dc152593a1ec5639d77e6860c6a512bd",
+      "osVersion": "macOS 26.5.2",
+      "osBuild": "25F84",
+      "fonts": [
+        "Apple SD Gothic Neo Regular",
+        "Calibri",
+        "Carlito",
+        "Noto Sans CJK SC",
+        "sans-serif"
+      ],
+      "timestamp": "2026-08-09T20:43:29.571Z",
+      "fixtureID": "basic-client-interoperability",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "format": "docx",
+      "artifactHash": "sha256:ae2cb6d9e6d1d556e210bbecd5e0c430559f9b806eea95d24a0b461974847628",
+      "expectedPageCount": 1,
+      "observedPageCount": 1,
+      "missingAuthoredElementIDs": [],
+      "unexpectedBlankPageNumbers": [],
+      "textBoundsCoverage": 1,
+      "evidencePath": "evidence/genoffice/receipt.json",
+      "evidenceHash": "sha256:879146f4e57419daab35432a6b2eb7ce50963ceb8e91b80472e74b0825cbe770",
+      "evidence": {
+        "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/genoffice/receipt.json",
+        "sha256": "sha256:879146f4e57419daab35432a6b2eb7ce50963ceb8e91b80472e74b0825cbe770"
+      }
+    },
+    {
+      "observationID": "visual-commonmark-89f6cc9ce297",
+      "toolID": "pandoc-commonmark-render-observer",
+      "clientName": "Pandoc CommonMark reader and local render candidate",
+      "clientVersion": "3.9.0.2",
+      "clientBuild": "pandoc-3.9.0.2+chrome-151.0.7922.108",
+      "osVersion": "macOS 26.5.2",
+      "osBuild": "25F84",
+      "fonts": [
+        "Apple SD Gothic Neo Regular"
+      ],
+      "timestamp": "2026-08-09T20:43:37.309Z",
+      "fixtureID": "basic-client-interoperability",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "format": "markdown",
+      "artifactHash": "sha256:89f6cc9ce297f6f71c241cd38b3d7a7c6f35666e9b84932291aa1bac91a4b343",
+      "expectedPageCount": 1,
+      "observedPageCount": 1,
+      "missingAuthoredElementIDs": [],
+      "unexpectedBlankPageNumbers": [],
+      "textBoundsCoverage": 1,
+      "evidencePath": "evidence/markdown/receipt.json",
+      "evidenceHash": "sha256:f8f3a18e7f838081895abb6e4d29dff68bc3d60f176c03b984c6d0a9b86bae55",
+      "evidence": {
+        "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/markdown/receipt.json",
+        "sha256": "sha256:f8f3a18e7f838081895abb6e4d29dff68bc3d60f176c03b984c6d0a9b86bae55"
+      }
+    }
+  ],
+  "externalBlockers": [
+    {
+      "blockerID": "blocker-final-release-hancom-hwpx",
+      "verdictClass": "client",
+      "fixtureID": "basic-client-interoperability",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "format": "hwpx",
+      "artifactHash": "sha256:91c8e7ec16eaf8f14198946d98f32c161854d93098942a739149629269a344b5",
+      "operation": "hancom-official-reopen",
+      "code": "required-client-unavailable",
+      "status": "BLOCKED",
+      "observedAt": "2026-08-09T20:45:13Z",
+      "detail": "No official Hancom macOS HWP/HWPX client is installed or registered in the searched application roots, so no official HWPX reopen or extension-warning claim is made.",
+      "evidence": [
+        {
+          "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/environment/hancom-installation-check.json",
+          "sha256": "sha256:f05f756e144b17edd6bcf8fd780a25fee7760e6cdb0c628053bb1997c8174b67"
+        }
+      ]
+    },
+    {
+      "blockerID": "blocker-final-release-hancom-hwp",
+      "verdictClass": "client",
+      "fixtureID": "basic-client-interoperability",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "format": "hwp",
+      "artifactHash": "sha256:763441ce190f02632a9debbef361f09e29cf30be7b006e90da54ed083fac15c9",
+      "operation": "hancom-official-reopen",
+      "code": "required-client-unavailable",
+      "status": "BLOCKED",
+      "observedAt": "2026-08-09T20:45:13Z",
+      "detail": "No official Hancom macOS HWP/HWPX client is installed or registered in the searched application roots, so no official HWP reopen or extension-warning claim is made.",
+      "evidence": [
+        {
+          "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/environment/hancom-installation-check.json",
+          "sha256": "sha256:f05f756e144b17edd6bcf8fd780a25fee7760e6cdb0c628053bb1997c8174b67"
+        }
+      ]
+    },
+    {
+      "blockerID": "blocker-final-release-polaris-hwpx",
+      "verdictClass": "client",
+      "fixtureID": "basic-client-interoperability",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "format": "hwpx",
+      "artifactHash": "sha256:91c8e7ec16eaf8f14198946d98f32c161854d93098942a739149629269a344b5",
+      "operation": "polaris-office-reopen",
+      "code": "client-state-conflict",
+      "status": "BLOCKED",
+      "observedAt": "2026-08-11T07:36:48Z",
+      "detail": "The console is unlocked, but two pre-existing user-owned Polaris processes and an unavailable Computer Use pipe prevent a clean attributable HWPX reopen observation; no process was terminated and no warning-free open claim is inferred.",
+      "evidence": [
+        {
+          "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/polaris/client-check-current.json",
+          "sha256": "sha256:70fe36a5be3b064a77d3b132e648bb7ea5f6ce876a132584ab8c8d2af340d15f"
+        }
+      ]
+    },
+    {
+      "blockerID": "blocker-final-release-polaris-hwp",
+      "verdictClass": "client",
+      "fixtureID": "basic-client-interoperability",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "format": "hwp",
+      "artifactHash": "sha256:763441ce190f02632a9debbef361f09e29cf30be7b006e90da54ed083fac15c9",
+      "operation": "polaris-office-reopen",
+      "code": "client-state-conflict",
+      "status": "BLOCKED",
+      "observedAt": "2026-08-11T07:36:48Z",
+      "detail": "The console is unlocked, but two pre-existing user-owned Polaris processes and an unavailable Computer Use pipe prevent a clean attributable HWP reopen observation; no process was terminated and no warning-free open claim is inferred.",
+      "evidence": [
+        {
+          "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/polaris/client-check-current.json",
+          "sha256": "sha256:70fe36a5be3b064a77d3b132e648bb7ea5f6ce876a132584ab8c8d2af340d15f"
+        }
+      ]
+    },
+    {
+      "blockerID": "blocker-final-release-word-docx",
+      "verdictClass": "client",
+      "fixtureID": "basic-client-interoperability",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "format": "docx",
+      "artifactHash": "sha256:ae2cb6d9e6d1d556e210bbecd5e0c430559f9b806eea95d24a0b461974847628",
+      "operation": "microsoft-word-reopen",
+      "code": "client-automation-timeout",
+      "status": "BLOCKED",
+      "observedAt": "2026-08-11T07:35:19.552Z",
+      "detail": "With the console unlocked, Microsoft Word 16.111.3 reported one open document but the exact pristine DOCX open Apple event still timed out after 30 seconds; input bytes were preserved and no warning-count claim is inferred.",
+      "evidence": [
+        {
+          "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/word/receipt-current.json",
+          "sha256": "sha256:b04b3b96c63acc9e17d9b6cf9410cf3fd684ac5df345f9dd67d2bbb4250bb26a"
+        }
+      ]
+    },
+    {
+      "blockerID": "blocker-final-release-markdown-authority",
+      "verdictClass": "client",
+      "fixtureID": "basic-client-interoperability",
+      "fixtureHash": "sha256:d4f4d8d4fa44db5db7325960c75d628ce780aa50128bddbf31b59a524823e034",
+      "format": "markdown",
+      "artifactHash": "sha256:89f6cc9ce297f6f71c241cd38b3d7a7c6f35666e9b84932291aa1bac91a4b343",
+      "operation": "approved-rendering",
+      "code": "authority-approval-pending",
+      "status": "BLOCKED",
+      "observedAt": "2026-08-09T20:43:37Z",
+      "detail": "The deterministic Markdown rendering candidate passed local CommonMark and visual integrity checks but has no independent authority approval receipt.",
+      "evidence": [
+        {
+          "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/markdown/approved-rendering-blocker.json",
+          "sha256": "sha256:fde568f4705f2599635993b2bd7716fbabf7e112bb5c2dc244dbf857bda7f406"
+        },
+        {
+          "path": "output/ac-07/final-current.Z61edu/observations-clean/evidence/markdown/commonmark-render.png",
+          "sha256": "sha256:01212ecca15ae7d88271a6433575280a49b8160c98282f947879e24cf63b714e"
+        }
+      ]
+    }
+  ],
+  "sourceEvidence": [
+    {
+      "path": "output/ac-07/final-current.Z61edu/compatibility/compatibility-receipt.json",
+      "sha256": "sha256:338061a65be102c28c028e3ea99115db4b152ca6d04da9d0da5008408eef958b"
+    },
+    {
+      "path": "output/ac-07/final-current.Z61edu/observed-receipt.json",
+      "sha256": "sha256:1a9603addbe19353b4e20cf3971599bc28cf5cdf0a89677e45d5d53b91bb1f0e"
+    },
+    {
+      "path": "output/ac-07/final-current.Z61edu/observations-clean/observations.json",
+      "sha256": "sha256:98d3ece2126b10983d4e80bc089beb20e56161db51ed7c321ee254f9157238ec"
+    },
+    {
+      "path": "output/ac-07/final-current.Z61edu/observations-clean/external-evidence-index-current.json",
+      "sha256": "sha256:5e02f6248d8e2aece2a1f080d3235aed65e0bda8fe5fe2ee323fdbc19d47fb04"
+    }
+  ]
+}

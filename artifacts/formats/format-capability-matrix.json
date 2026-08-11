@@ -1,0 +1,23 @@
+{
+  "manifestVersion": "1.0.0",
+  "classifications": ["lossless", "visual-only-flattening", "semantic-loss"],
+  "matrix": [
+    { "capability": "metadata", "hwpx": "visual-only-flattening", "hwp": "visual-only-flattening", "docx": "lossless", "markdown": "lossless" },
+    { "capability": "heading", "hwpx": "visual-only-flattening", "hwp": "visual-only-flattening", "docx": "lossless", "markdown": "lossless" },
+    { "capability": "paragraph", "hwpx": "lossless", "hwp": "lossless", "docx": "lossless", "markdown": "lossless" },
+    { "capability": "table", "hwpx": "semantic-loss", "hwp": "semantic-loss", "docx": "lossless", "markdown": "lossless" },
+    { "capability": "approval-grid", "hwpx": "semantic-loss", "hwp": "semantic-loss", "docx": "lossless", "markdown": "lossless" },
+    { "capability": "review-marker", "hwpx": "visual-only-flattening", "hwp": "visual-only-flattening", "docx": "lossless", "markdown": "lossless" },
+    { "capability": "formula", "hwpx": "semantic-loss", "hwp": "semantic-loss", "docx": "lossless", "markdown": "semantic-loss" },
+    { "capability": "strong", "hwpx": "visual-only-flattening", "hwp": "visual-only-flattening", "docx": "visual-only-flattening", "markdown": "visual-only-flattening" },
+    { "capability": "emphasis", "hwpx": "visual-only-flattening", "hwp": "visual-only-flattening", "docx": "visual-only-flattening", "markdown": "visual-only-flattening" },
+    { "capability": "underline", "hwpx": "visual-only-flattening", "hwp": "visual-only-flattening", "docx": "visual-only-flattening", "markdown": "visual-only-flattening" },
+    { "capability": "font-face", "hwpx": "visual-only-flattening", "hwp": "visual-only-flattening", "docx": "visual-only-flattening", "markdown": "visual-only-flattening" },
+    { "capability": "font-size", "hwpx": "visual-only-flattening", "hwp": "visual-only-flattening", "docx": "visual-only-flattening", "markdown": "visual-only-flattening" },
+    { "capability": "rich-inline", "hwpx": "visual-only-flattening", "hwp": "visual-only-flattening", "docx": "visual-only-flattening", "markdown": "visual-only-flattening" },
+    { "capability": "keep-together", "hwpx": "visual-only-flattening", "hwp": "visual-only-flattening", "docx": "visual-only-flattening", "markdown": "visual-only-flattening" },
+    { "capability": "list-item", "hwpx": "semantic-loss", "hwp": "semantic-loss", "docx": "semantic-loss", "markdown": "semantic-loss" },
+    { "capability": "unordered-list", "hwpx": "semantic-loss", "hwp": "semantic-loss", "docx": "semantic-loss", "markdown": "semantic-loss" },
+    { "capability": "table+rich-inline", "hwpx": "semantic-loss", "hwp": "semantic-loss", "docx": "visual-only-flattening", "markdown": "visual-only-flattening" }
+  ]
+}

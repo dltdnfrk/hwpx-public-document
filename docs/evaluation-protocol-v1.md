@@ -1,12 +1,19 @@
 ---
 protocol_id: public-document-evaluation
 version: "1.0"
-status: approved-for-local-evaluation
+status: superseded
 approver: "Public Document Product Authority"
 approved_at: "2026-08-04T09:00:00+09:00"
+superseded_by: seed_219732b73d5d
+superseded_at: "2026-08-09T08:55:00+09:00"
 ---
 
 # Evaluation Protocol v1
+
+> Historical protocol only. The validated `seed_219732b73d5d.yaml` supersedes
+> the five-page cap, optional-HWP, SwiftUI, idempotent-overwrite, and
+> distribution-gate requirements below. Current evaluation uses AC-01 through
+> AC-10 and the exit conditions in that Seed.
 
 ## Scope
 

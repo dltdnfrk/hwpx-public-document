@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-05",
+  "verdict": "pass",
+  "summary": "Four-format capability, validation, consent, and loss-report checks passed.",
+  "blockers": [],
+  "seed": {
+    "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
+    "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
+  },
+  "sourceEvidence": [
+    {
+      "path": "docs/ac-05-format-export-evidence.md",
+      "sha256": "sha256:52ab9a5dbacc733a17f3c868c00174d43becbbf65e18c8c1a8ef575c88e91f45"
+    },
+    {
+      "path": "provenance/seed-evidence-sources.json",
+      "sha256": "sha256:20146b6cc506b5e8f5355fb0dd1cdce15229f1c93161aea52eff35ef4aa6202f"
+    },
+    {
+      "path": "output/ac-05/final-current.G3DeQN/basic-hwp-family/stdout-receipt.json",
+      "sha256": "sha256:dba96b6350b6882c13ebb10c56ce3b8d48b63f0cc4bf0d6d26dab7faf5303564"
+    },
+    {
+      "path": "output/ac-05/final-current.G3DeQN/all-consented/stdout-receipt.json",
+      "sha256": "sha256:9503ff5254cc786099c66e92eae979d23f9dd377ab27787c021fdda4fc7c857d"
+    },
+    {
+      "path": "output/ac-05/final-current.G3DeQN/authoring-universe/stdout-receipt.json",
+      "sha256": "sha256:01f04c7913450adb154aed819132f1a46ca03ccf662627c7622437a9498baba2"
+    },
+    {
+      "path": "output/ac-05/final-current.G3DeQN/visual-unconsented/stdout-receipt.json",
+      "sha256": "sha256:ee0ebb12498ce927a23afe178e4a7fffcb38d2110c31863276729f61a0674c93"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "artifacts/formats/authoring-capability-manifest.json",
+      "sha256": "sha256:82f5ecb9e7455956e39773537d1c4fabfe1c2e3f04831e25a53ea719b699849a"
+    },
+    {
+      "path": "artifacts/formats/format-capability-matrix.json",
+      "sha256": "sha256:c8cb49c859e902ce6434b167f2b72c757a379a16a6315ab38f8ad6c7caa01e6a"
+    },
+    {
+      "path": "artifacts/formats/loss-reports.jsonl",
+      "sha256": "sha256:1a75e51d2419a72a90f0014e76c0f418076cac23a8da285e0e9025eb0b0e8649"
+    },
+    {
+      "path": "artifacts/formats/export-validation-evidence.json",
+      "sha256": "sha256:c865a60ee42e721dafc240564efa0552487d44d182e3423c42db6cf7d4aa96ee"
+    }
+  ],
+  "evaluation": {
+    "criterion": "AC-05",
+    "verdict": "pass",
+    "summary": "Four-format capability, validation, consent, and loss-report checks passed.",
+    "blockers": [],
+    "checks": [
+      {
+        "id": "capabilities.unique",
+        "passed": true,
+        "detail": "authoring capability IDs are unique"
+      },
+      {
+        "id": "matrix.coverage",
+        "passed": true,
+        "detail": "every capability has four classified mappings"
+      },
+      {
+        "id": "exports.selected-formats",
+        "passed": true,
+        "detail": "all four formats selected across executable receipts"
+      },
+      {
+        "id": "exports.validation",
+        "passed": true,
+        "detail": "published results carry artifact-derived validation"
+      },
+      {
+        "id": "exports.disposition",
+        "passed": true,
+        "detail": "every selected format is published or precisely blocked with one validated result per publication"
+      },
+      {
+        "id": "exports.runtime-failures",
+        "passed": true,
+        "detail": "canonical export receipts contain no runtime failures"
+      },
+      {
+        "id": "losses.precise",
+        "passed": true,
+        "detail": "loss reports bind format, element, path, fallback, and consent"
+      },
+      {
+        "id": "evidence.identity",
+        "passed": true,
+        "detail": "4 evidence identities verified"
+      }
+    ]
+  }
+}

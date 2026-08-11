@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-02",
+  "verdict": "pass",
+  "summary": "Project persistence, recovery, migration, and export-authority checks passed.",
+  "blockers": [],
+  "seed": {
+    "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
+    "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
+  },
+  "sourceEvidence": [
+    {
+      "path": "docs/ac-02-project-lifecycle-evidence.md",
+      "sha256": "sha256:9d87fa6f85294bff3930d26e1996ec8d319bbf977bcabbb5316b38fc1fcfc5e6"
+    },
+    {
+      "path": "provenance/seed-evidence-sources.json",
+      "sha256": "sha256:20146b6cc506b5e8f5355fb0dd1cdce15229f1c93161aea52eff35ef4aa6202f"
+    },
+    {
+      "path": "output/ac-02/final-current.PUpQaw/project-store/project.json",
+      "sha256": "sha256:e59150e7e8fe70327679495d3f3e35c81081f2b283055d11a2f3d569343d21cf"
+    },
+    {
+      "path": "output/ac-02/final-current.PUpQaw/project-store-receipt.json",
+      "sha256": "sha256:2117497b5467224ae06204a5c95267a3ec9cc9cb66d29e737749a9798e9e24ad"
+    },
+    {
+      "path": "output/ac-02/final-current.PUpQaw/project-migration-receipt.json",
+      "sha256": "sha256:238b81c5b654ea1b019f4b4b589967a067a6d75d568808da91c0f010c62e3f65"
+    },
+    {
+      "path": "output/ac-02/final-current.PUpQaw/window-lifecycle-receipt.json",
+      "sha256": "sha256:87c944477c60c21289e521ffca6699819d25c494473dd8e376b6656737b41b40"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "artifacts/document-model/schema.json",
+      "sha256": "sha256:a8942c01b1699ce1c28c6faf5c44fdb3ebd18d4917e7dc978adb73c8c22ade24"
+    },
+    {
+      "path": "artifacts/document-model/recovery-matrix.json",
+      "sha256": "sha256:e4484bfb9f775432def130d88ed42756861c95215fac05877473e8f4ff9b213a"
+    }
+  ],
+  "evaluation": {
+    "criterion": "AC-02",
+    "verdict": "pass",
+    "summary": "Project persistence, recovery, migration, and export-authority checks passed.",
+    "blockers": [],
+    "checks": [
+      {
+        "id": "schema.authoritative-fields",
+        "passed": true,
+        "detail": "all authoritative fields are required"
+      },
+      {
+        "id": "project.assetsPreserved",
+        "passed": true,
+        "detail": "assetsPreserved must be true"
+      },
+      {
+        "id": "project.derivedExportDidNotMutateProject",
+        "passed": true,
+        "detail": "derivedExportDidNotMutateProject must be true"
+      },
+      {
+        "id": "project.evidenceLinksPreserved",
+        "passed": true,
+        "detail": "evidenceLinksPreserved must be true"
+      },
+      {
+        "id": "project.recoveredAutosave",
+        "passed": true,
+        "detail": "recoveredAutosave must be true"
+      },
+      {
+        "id": "project.recoveryFileRemovedAfterCommit",
+        "passed": true,
+        "detail": "recoveryFileRemovedAfterCommit must be true"
+      },
+      {
+        "id": "project.revisionHistoryPreserved",
+        "passed": true,
+        "detail": "revisionHistoryPreserved must be true"
+      },
+      {
+        "id": "project.richStructurePreserved",
+        "passed": true,
+        "detail": "richStructurePreserved must be true"
+      },
+      {
+        "id": "project.stableElementIDs",
+        "passed": true,
+        "detail": "stableElementIDs must be true"
+      },
+      {
+        "id": "project.stylesPreserved",
+        "passed": true,
+        "detail": "stylesPreserved must be true"
+      },
+      {
+        "id": "project.templateBindingPreserved",
+        "passed": true,
+        "detail": "templateBindingPreserved must be true"
+      },
+      {
+        "id": "migration.version",
+        "passed": true,
+        "detail": "legacy migration reaches current schema"
+      },
+      {
+        "id": "migration.identity",
+        "passed": true,
+        "detail": "migration preserves unique IDs and records history"
+      },
+      {
+        "id": "window.visible",
+        "passed": true,
+        "detail": "a visible document window was observed"
+      },
+      {
+        "id": "evidence.identity",
+        "passed": true,
+        "detail": "5 evidence identities verified"
+      }
+    ]
+  }
+}

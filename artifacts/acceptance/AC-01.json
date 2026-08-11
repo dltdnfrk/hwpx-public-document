@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "criterion": "AC-01",
+  "verdict": "pass",
+  "summary": "Pinned owned Docs runtime, provenance, notices, and SBOM checks passed.",
+  "blockers": [],
+  "seed": {
+    "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
+    "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
+  },
+  "sourceEvidence": [
+    {
+      "path": "docs/ac-01-foundation-evidence.md",
+      "sha256": "sha256:69a409e941649dc86e6275541a1ab500da5fd584a66053e427e90af8fdbbc992"
+    },
+    {
+      "path": "provenance/seed-evidence-sources.json",
+      "sha256": "sha256:20146b6cc506b5e8f5355fb0dd1cdce15229f1c93161aea52eff35ef4aa6202f"
+    },
+    {
+      "path": "provenance/upstream-lock.json",
+      "sha256": "sha256:81f3936487e9b3e0c0f71a832d1b104e6f133db641428a1643da6b43aab4125e"
+    },
+    {
+      "path": "provenance/sbom.spdx.json",
+      "sha256": "sha256:48733531c3243d5e8ffc136288a1ae6664e6458d50ca9bc4380fc647e247d033"
+    },
+    {
+      "path": "provenance/genoffice-docs-port.json",
+      "sha256": "sha256:4e7318636a746a2b2af4bd5e6e1b2e23113afa08c4b39760210843a06c4735f5"
+    },
+    {
+      "path": "Resources/GenOffice/runtime-manifest.json",
+      "sha256": "sha256:887f312020752ad23bf92efaf9207e7c4e5af2eca449b9a747f53ca3087ac00a"
+    },
+    {
+      "path": "GenOfficeFork/runtime-input-lock.json",
+      "sha256": "sha256:9ee393c6897d713afc1016cb49c6ca5d04297e2544785404b68bbebc2a946f91"
+    },
+    {
+      "path": "output/ac-01/final-current.FvKE8S/foundation-runtime.json",
+      "sha256": "sha256:a3ea05b7433d7ff9c06bc68682551a2f387677cc784f5933a4f96302b8d3b532"
+    },
+    {
+      "path": "output/ac-01/final-current.FvKE8S/artifacts/PublicDocumentApp",
+      "sha256": "sha256:9250dd1a43e1ccb430084f811325403ab080a447376f7c1675376066fddfb514"
+    },
+    {
+      "path": "output/ac-01/final-current.FvKE8S/artifacts/rhwp",
+      "sha256": "sha256:a9fc072e61aa1cbf56fbd00943c4e4a33dd49aa7f6122f7b36e16ff476f7677b"
+    }
+  ],
+  "contracts": [
+    {
+      "path": "artifacts/provenance/upstream-lock.json",
+      "sha256": "sha256:81f3936487e9b3e0c0f71a832d1b104e6f133db641428a1643da6b43aab4125e"
+    },
+    {
+      "path": "artifacts/provenance/sbom.spdx.json",
+      "sha256": "sha256:48733531c3243d5e8ffc136288a1ae6664e6458d50ca9bc4380fc647e247d033"
+    },
+    {
+      "path": "artifacts/provenance/THIRD_PARTY_NOTICES.md",
+      "sha256": "sha256:e113d1a4c8fd0522a0c0cc3465571f2e2c1e502517be03931488cebe2b369692"
+    },
+    {
+      "path": "artifacts/provenance/genoffice-docs-port.json",
+      "sha256": "sha256:4e7318636a746a2b2af4bd5e6e1b2e23113afa08c4b39760210843a06c4735f5"
+    },
+    {
+      "path": "artifacts/provenance/genoffice-runtime-manifest.json",
+      "sha256": "sha256:887f312020752ad23bf92efaf9207e7c4e5af2eca449b9a747f53ca3087ac00a"
+    },
+    {
+      "path": "artifacts/provenance/genoffice-runtime-input-lock.json",
+      "sha256": "sha256:9ee393c6897d713afc1016cb49c6ca5d04297e2544785404b68bbebc2a946f91"
+    },
+    {
+      "path": "artifacts/provenance/foundation-runtime.json",
+      "sha256": "sha256:7731745ef0ab63b94506e3c730eb0e716000fd5656f5e7b6be759b280a152456"
+    }
+  ],
+  "evaluation": {
+    "criterion": "AC-01",
+    "verdict": "pass",
+    "summary": "Pinned owned Docs runtime, provenance, notices, and SBOM checks passed.",
+    "blockers": [],
+    "checks": [
+      {
+        "id": "pins.genoffice",
+        "passed": true,
+        "detail": "approved GenOffice commit"
+      },
+      {
+        "id": "pins.rhwp",
+        "passed": true,
+        "detail": "approved rhwp commit"
+      },
+      {
+        "id": "pins.genoffice-runtime",
+        "passed": true,
+        "detail": "upstream lock records the pinned bundled GenOffice adapter runtime fork"
+      },
+      {
+        "id": "port.mode",
+        "passed": true,
+        "detail": "pinned adapter runtime fork linkage"
+      },
+      {
+        "id": "runtime-manifest.upstream",
+        "passed": true,
+        "detail": "runtime manifest and port bind the approved upstream"
+      },
+      {
+        "id": "runtime-manifest.input-lock",
+        "passed": true,
+        "detail": "materialized and checked runtime input locks exactly bind manifest inputs and packages"
+      },
+      {
+        "id": "runtime-manifest.inputs",
+        "passed": true,
+        "detail": "safe locked upstream, dependency, and current adapter inputs"
+      },
+      {
+        "id": "runtime-manifest.outputs",
+        "passed": true,
+        "detail": "Resources-relative runtime outputs and Node match exact hashes and sizes"
+      },
+      {
+        "id": "runtime-manifest.contract",
+        "passed": true,
+        "detail": "exact browser, CLI, events, offline, and arm64 Node contract"
+      },
+      {
+        "id": "runtime-manifest.forbidden-surface",
+        "passed": true,
+        "detail": "independent adapter and shipped bundle scan excludes forbidden runtime surfaces"
+      },
+      {
+        "id": "sbom.upstreams",
+        "passed": true,
+        "detail": "SBOM binds both upstreams"
+      },
+      {
+        "id": "sbom.dependencies",
+        "passed": true,
+        "detail": "complete dependency inventory"
+      },
+      {
+        "id": "notices.licenses",
+        "passed": true,
+        "detail": "notices include both licenses"
+      },
+      {
+        "id": "runtime.arm64",
+        "passed": true,
+        "detail": "arm64 runtime"
+      },
+      {
+        "id": "runtime.codesign",
+        "passed": true,
+        "detail": "strict local codesign receipt"
+      },
+      {
+        "id": "runtime.rhwp",
+        "passed": true,
+        "detail": "bundled rhwp identity"
+      },
+      {
+        "id": "runtime.surface",
+        "passed": true,
+        "detail": "owned Studio has no Genspark runtime surface"
+      },
+      {
+        "id": "evidence.identity",
+        "passed": true,
+        "detail": "14 evidence identities verified"
+      }
+    ]
+  }
+}

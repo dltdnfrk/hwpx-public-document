@@ -1,0 +1,30 @@
+{
+  "applicationVersion": "0.1.0",
+  "manifestVersion": "1.0.0",
+  "locale": "ko-KR",
+  "elements": [
+    { "id": "metadata", "kind": "block" },
+    { "id": "heading", "kind": "block" },
+    { "id": "paragraph", "kind": "block" },
+    { "id": "table", "kind": "block", "children": ["table-row", "table-cell"] },
+    { "id": "review-marker", "kind": "block" },
+    { "id": "approval-grid", "kind": "block", "children": ["table-row", "table-cell"] },
+    { "id": "formula", "kind": "block" },
+    { "id": "strong", "kind": "inline" },
+    { "id": "emphasis", "kind": "inline" },
+    { "id": "underline", "kind": "inline" },
+    { "id": "font-face", "kind": "inline" },
+    { "id": "font-size", "kind": "inline" },
+    { "id": "keep-together", "kind": "inline" },
+    { "id": "list-item", "kind": "nested" },
+    { "id": "unordered-list", "kind": "nested", "children": ["list-item", "strong", "emphasis", "underline"] }
+  ],
+  "frozenCombinations": [
+    "paragraph+strong+emphasis+underline",
+    "paragraph+keep-together",
+    "unordered-list+list-item+strong",
+    "table+table-row+table-cell+strong",
+    "approval-grid+table-row+table-cell",
+    "review-marker+strong"
+  ]
+}

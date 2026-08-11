@@ -1,0 +1,10 @@
+{
+  "name": "public-document-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "materialize:seed": "node scripts/materialize-seed-artifacts.mjs",
+    "verify:seed": "node scripts/verify-seed.mjs"
+  }
+}

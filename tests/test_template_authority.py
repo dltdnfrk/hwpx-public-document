@@ -37,7 +37,7 @@ def _answers() -> GuidedAnswers:
     )
 
 
-def test_registered_institution_template_wins_and_rule_conflict_is_warning(tmp_path: Path) -> None:
+def test_current_official_rule_wins_and_template_conflict_is_warning(tmp_path: Path) -> None:
     template = InstitutionTemplate(
         template_id="seoul-plan-v2",
         institution="서울특별시 안전총괄과",
@@ -62,7 +62,7 @@ def test_registered_institution_template_wins_and_rule_conflict_is_warning(tmp_p
         current_rules=rules,
     )
 
-    assert draft.title == "폭염 취약계층 보호 시행계획"
+    assert draft.title == "폭염 취약계층 보호 계획"
     assert draft.sections[1].paragraphs[1].text == "시민 보호를 위한 기관 공동 대응을 시행한다."
     assert len(draft.warnings) == 1
     warning = draft.warnings[0]

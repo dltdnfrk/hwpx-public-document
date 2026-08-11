@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "profileVersion": "1.0.0",
+  "profileHash": "sha256:8fe858c46901af2888169d4afbda71f2d9b92100d804fafe329ce6c10ac9dc39",
+  "profile": {
+    "profileVersion": "1.0.0",
+    "requiredArchitecture": "arm64",
+    "fixtures": {
+      "100-page": {
+        "minimumPageCount": 100,
+        "elementCount": 2041
+      },
+      "50-mb": {
+        "minimumSnapshotBytes": 52428800,
+        "minimumAuthoredUTF8Bytes": 52428800,
+        "elementChunkBytes": 2097152
+      }
+    },
+    "formats": [
+      "hwpx",
+      "hwp",
+      "docx",
+      "markdown"
+    ],
+    "thresholds": {
+      "exportSeconds": 30,
+      "mainThreadHeartbeatMilliseconds": 100,
+      "firstProgressMilliseconds": 250,
+      "progressGapMilliseconds": 5000,
+      "cancellationRequestMilliseconds": 100,
+      "cancellationCompletionMilliseconds": 1000
+    }
+  },
+  "profileEvidence": {
+    "path": "Resources/Performance/performance-profile-1.0.0.json",
+    "sha256": "sha256:8fe858c46901af2888169d4afbda71f2d9b92100d804fafe329ce6c10ac9dc39"
+  },
+  "environment": {
+    "applicationVersion": "0.1.0",
+    "architecture": "arm64",
+    "modelIdentifier": "Mac17,9",
+    "osBuild": "25F84",
+    "osVersion": "Version 26.5.2 (Build 25F84)",
+    "physicalMemoryBytes": 68719476736,
+    "processor": "Apple M5 Pro",
+    "recordedAt": "2026-08-11T07:03:19Z"
+  },
+  "fixtures": [
+    {
+      "authoredContentHash": "sha256:0b4a3d567135b6bcc3d5bdf56d726513e0804f87e9d0f1a6ce7157d3a5f9a2d4",
+      "authoredElementCount": 2041,
+      "authoredUTF8ByteCount": 90574,
+      "authoredUTF8ThresholdPassed": true,
+      "declaredPageCount": 100,
+      "fixtureID": "100-page",
+      "snapshotByteCount": 496011,
+      "snapshotHash": "sha256:d71c2bb3a0f578db9fb5babb66a5a3755bdb53335f0c2c24fb2da0d711830c91",
+      "snapshotThresholdPassed": true
+    },
+    {
+      "authoredContentHash": "sha256:23c8d66c6615048f0417326dceabf87c05006ed006dba776220e6008ea2bcfb3",
+      "authoredElementCount": 25,
+      "authoredUTF8ByteCount": 52428800,
+      "authoredUTF8ThresholdPassed": true,
+      "fixtureID": "50-mb",
+      "snapshotByteCount": 52482975,
+      "snapshotHash": "sha256:b392d167aafa9e2e803f1cf170cf9cadc604744add329df66f01c1a5d0ee92ed",
+      "snapshotThresholdPassed": true
+    }
+  ],
+  "sourceEvidence": [
+    {
+      "path": "output/ac-09/final-current.pVyHYM/performance-receipt.json",
+      "sha256": "sha256:c70db60bbdbfce3eefafec4e0c2a8c548d710fe54abae5fc591d646fd8c35787"
+    }
+  ]
+}

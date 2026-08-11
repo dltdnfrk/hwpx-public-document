@@ -1,0 +1,2532 @@
+{
+  "schemaVersion": 1,
+  "receipts": [
+    {
+      "allAuthoredElementIDsPreserved": true,
+      "blockedFormats": [],
+      "failedFormats": [],
+      "failures": [],
+      "fixtureHash": "sha256:7c010e50e1ae576c939808864d853f1c57831987f3fb5e72e0553e7cb229d2eb",
+      "flatteningConsentFormats": [
+        "hwpx",
+        "hwp"
+      ],
+      "flatteningConsentRecorded": true,
+      "lossReports": [
+        {
+          "capability": "metadata",
+          "classification": "visual-only-flattening",
+          "elementID": "element-kicker",
+          "elementPath": "elements/0/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "metadata",
+          "classification": "visual-only-flattening",
+          "elementID": "element-kicker",
+          "elementPath": "elements/0/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-title",
+          "elementPath": "elements/1/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-title",
+          "elementPath": "elements/1/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-budget-heading",
+          "elementPath": "elements/10/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-budget-heading",
+          "elementPath": "elements/10/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review-heading",
+          "elementPath": "elements/12/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review-heading",
+          "elementPath": "elements/12/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-summary-body",
+          "elementPath": "elements/3/inlines/inline-summary-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-summary-body",
+          "elementPath": "elements/3/inlines/inline-summary-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-background-heading",
+          "elementPath": "elements/5/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-background-heading",
+          "elementPath": "elements/5/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "review-marker",
+          "classification": "visual-only-flattening",
+          "elementID": "element-evidence-marker",
+          "elementPath": "elements/7/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "review-marker",
+          "classification": "visual-only-flattening",
+          "elementID": "element-evidence-marker",
+          "elementPath": "elements/7/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-plan-heading",
+          "elementPath": "elements/8/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-plan-heading",
+          "elementPath": "elements/8/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        }
+      ],
+      "observedCapabilities": [
+        {
+          "capability": "metadata",
+          "elementID": "element-kicker",
+          "elementPath": "elements/0/style"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-title",
+          "elementPath": "elements/1/style"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-summary-body",
+          "elementPath": "elements/3"
+        },
+        {
+          "capability": "keep-together",
+          "elementID": "element-summary-body",
+          "elementPath": "elements/3/inlines/inline-summary-keep"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-background-heading",
+          "elementPath": "elements/5/style"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-background-body",
+          "elementPath": "elements/6"
+        },
+        {
+          "capability": "review-marker",
+          "elementID": "element-evidence-marker",
+          "elementPath": "elements/7/style"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-plan-heading",
+          "elementPath": "elements/8/style"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-plan-body",
+          "elementPath": "elements/9"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-budget-heading",
+          "elementPath": "elements/10/style"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-budget-body",
+          "elementPath": "elements/11"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-review-heading",
+          "elementPath": "elements/12/style"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-review-body",
+          "elementPath": "elements/13"
+        }
+      ],
+      "observedFrozenCombinations": [
+        "paragraph+keep-together"
+      ],
+      "operationID": "operation-ac05-001",
+      "publishedFormats": [
+        "hwpx",
+        "hwp"
+      ],
+      "results": [
+        {
+          "artifactHash": "sha256:b2ae83db3cbe48aa14e77b50333cada312e8062932ab8afa78e56521c60f7990",
+          "byteCount": 6257,
+          "fileName": "ac05-fixture.hwpx",
+          "format": "hwpx",
+          "relativePath": "ac05-fixture.hwpx",
+          "semanticValid": true,
+          "structuralValid": true,
+          "validation": {
+            "evidenceSource": "artifact-derived",
+            "orderedElements": [
+              {
+                "elementID": "element-kicker",
+                "kind": "metadata",
+                "order": 0,
+                "textHash": "sha256:942cd0858cf8b2ba8d341c9e8cf019274ccf392902b32693d19ffacadf68cada"
+              },
+              {
+                "elementID": "element-title",
+                "kind": "heading",
+                "order": 1,
+                "textHash": "sha256:c20acf4e4e7f41ead6f1533ff275a36a0f879e43a25e8c774826d364dabbc66f"
+              },
+              {
+                "elementID": "element-summary-body",
+                "kind": "paragraph",
+                "order": 3,
+                "textHash": "sha256:cd63b18ca05da438b1f2d8c2c6124257edab92e7b39030b05e1cf1ca0ca124c7"
+              },
+              {
+                "elementID": "element-background-heading",
+                "kind": "heading",
+                "order": 5,
+                "textHash": "sha256:b41efe81256a5ed5d7d553eeebe339b3a561e40de46951f8e49c1cc7424e7ff2"
+              },
+              {
+                "elementID": "element-background-body",
+                "kind": "paragraph",
+                "order": 6,
+                "textHash": "sha256:9880bb110524999ee2a26a72931edb1a66e3f83ab5acf56eba17664a7ea91c40"
+              },
+              {
+                "elementID": "element-evidence-marker",
+                "kind": "review-marker",
+                "order": 7,
+                "textHash": "sha256:e70dc1af6decfad2845aa8dd3f94c19f364bd826b816a95c6cf644e12a422df5"
+              },
+              {
+                "elementID": "element-plan-heading",
+                "kind": "heading",
+                "order": 8,
+                "textHash": "sha256:fd76bde09e9b5ff465a289c1be80b3a90845ebdd80f7c4801570b3dfa1ae1b45"
+              },
+              {
+                "elementID": "element-plan-body",
+                "kind": "paragraph",
+                "order": 9,
+                "textHash": "sha256:da21c82fd79ae9095aaffd27911c1159f5cfe61c21d962115aa0c097cef99d58"
+              },
+              {
+                "elementID": "element-budget-heading",
+                "kind": "heading",
+                "order": 10,
+                "textHash": "sha256:700aa5c63f9c34a8c24d97470aadcc883e22ffc3de9ecf4c4d2bf86b3291c8c9"
+              },
+              {
+                "elementID": "element-budget-body",
+                "kind": "paragraph",
+                "order": 11,
+                "textHash": "sha256:11ebcbd1dae49aeefe9c8e4a27e37e2c4af1550b3820ef10e097ec2af0165f7c"
+              },
+              {
+                "elementID": "element-review-heading",
+                "kind": "heading",
+                "order": 12,
+                "textHash": "sha256:c2e340f291ba1abb71ec84e377ba04ecc8f2e134efae0c3af2eedd4b3fcb627f"
+              },
+              {
+                "elementID": "element-review-body",
+                "kind": "paragraph",
+                "order": 13,
+                "textHash": "sha256:23c3d372931bd774f1799b57d76d3c9652c87d02f6d4565fbf7562b6d0e312b0"
+              }
+            ],
+            "semanticValid": true,
+            "structuralValid": true,
+            "validator": "rhwp artifact reopen + ordered text verification"
+          },
+          "validator": "rhwp artifact reopen + ordered text verification"
+        },
+        {
+          "artifactHash": "sha256:d8c73cf4813e5bd2c5e0118e2b2ee886709dd9acd178ea8afa87a46f8c979b51",
+          "byteCount": 6656,
+          "fileName": "ac05-fixture.hwp",
+          "format": "hwp",
+          "relativePath": "ac05-fixture.hwp",
+          "semanticValid": true,
+          "structuralValid": true,
+          "validation": {
+            "evidenceSource": "artifact-derived",
+            "orderedElements": [
+              {
+                "elementID": "element-kicker",
+                "kind": "metadata",
+                "order": 0,
+                "textHash": "sha256:942cd0858cf8b2ba8d341c9e8cf019274ccf392902b32693d19ffacadf68cada"
+              },
+              {
+                "elementID": "element-title",
+                "kind": "heading",
+                "order": 1,
+                "textHash": "sha256:c20acf4e4e7f41ead6f1533ff275a36a0f879e43a25e8c774826d364dabbc66f"
+              },
+              {
+                "elementID": "element-summary-body",
+                "kind": "paragraph",
+                "order": 3,
+                "textHash": "sha256:cd63b18ca05da438b1f2d8c2c6124257edab92e7b39030b05e1cf1ca0ca124c7"
+              },
+              {
+                "elementID": "element-background-heading",
+                "kind": "heading",
+                "order": 5,
+                "textHash": "sha256:b41efe81256a5ed5d7d553eeebe339b3a561e40de46951f8e49c1cc7424e7ff2"
+              },
+              {
+                "elementID": "element-background-body",
+                "kind": "paragraph",
+                "order": 6,
+                "textHash": "sha256:9880bb110524999ee2a26a72931edb1a66e3f83ab5acf56eba17664a7ea91c40"
+              },
+              {
+                "elementID": "element-evidence-marker",
+                "kind": "review-marker",
+                "order": 7,
+                "textHash": "sha256:e70dc1af6decfad2845aa8dd3f94c19f364bd826b816a95c6cf644e12a422df5"
+              },
+              {
+                "elementID": "element-plan-heading",
+                "kind": "heading",
+                "order": 8,
+                "textHash": "sha256:fd76bde09e9b5ff465a289c1be80b3a90845ebdd80f7c4801570b3dfa1ae1b45"
+              },
+              {
+                "elementID": "element-plan-body",
+                "kind": "paragraph",
+                "order": 9,
+                "textHash": "sha256:da21c82fd79ae9095aaffd27911c1159f5cfe61c21d962115aa0c097cef99d58"
+              },
+              {
+                "elementID": "element-budget-heading",
+                "kind": "heading",
+                "order": 10,
+                "textHash": "sha256:700aa5c63f9c34a8c24d97470aadcc883e22ffc3de9ecf4c4d2bf86b3291c8c9"
+              },
+              {
+                "elementID": "element-budget-body",
+                "kind": "paragraph",
+                "order": 11,
+                "textHash": "sha256:11ebcbd1dae49aeefe9c8e4a27e37e2c4af1550b3820ef10e097ec2af0165f7c"
+              },
+              {
+                "elementID": "element-review-heading",
+                "kind": "heading",
+                "order": 12,
+                "textHash": "sha256:c2e340f291ba1abb71ec84e377ba04ecc8f2e134efae0c3af2eedd4b3fcb627f"
+              },
+              {
+                "elementID": "element-review-body",
+                "kind": "paragraph",
+                "order": 13,
+                "textHash": "sha256:23c3d372931bd774f1799b57d76d3c9652c87d02f6d4565fbf7562b6d0e312b0"
+              }
+            ],
+            "semanticValid": true,
+            "structuralValid": true,
+            "validator": "rhwp artifact reopen + ordered text verification"
+          },
+          "validator": "rhwp artifact reopen + ordered text verification"
+        }
+      ],
+      "rhwpCommit": "2dced7bfe10c6597cead634264c7c1781c01f1e7",
+      "selectedFormats": [
+        "hwpx",
+        "hwp"
+      ],
+      "snapshotHash": "sha256:7c010e50e1ae576c939808864d853f1c57831987f3fb5e72e0553e7cb229d2eb",
+      "snapshotRevisionID": "revision-ac05-basic-hwp-family"
+    },
+    {
+      "allAuthoredElementIDsPreserved": true,
+      "blockedFormats": [
+        "hwpx",
+        "hwp"
+      ],
+      "failedFormats": [],
+      "failures": [],
+      "fixtureHash": "sha256:0614a7ff98fd9dad58e187f17ef453c198b7adc055775902e53f8f8979cdb56b",
+      "flatteningConsentFormats": [
+        "hwpx",
+        "hwp",
+        "docx",
+        "markdown"
+      ],
+      "flatteningConsentRecorded": true,
+      "lossReports": [
+        {
+          "capability": "approval-grid",
+          "classification": "semantic-loss",
+          "elementID": "element-approval",
+          "elementPath": "elements/2",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "approval-grid",
+          "classification": "semantic-loss",
+          "elementID": "element-approval",
+          "elementPath": "elements/2",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "table+rich-inline",
+          "classification": "semantic-loss",
+          "elementID": "element-approval",
+          "elementPath": "elements/2/table/rich-inlines/3",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "table+rich-inline",
+          "classification": "semantic-loss",
+          "elementID": "element-approval",
+          "elementPath": "elements/2/table/rich-inlines/3",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "table",
+          "classification": "semantic-loss",
+          "elementID": "element-summary-table",
+          "elementPath": "elements/4",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "table",
+          "classification": "semantic-loss",
+          "elementID": "element-summary-table",
+          "elementPath": "elements/4",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "metadata",
+          "classification": "visual-only-flattening",
+          "elementID": "element-kicker",
+          "elementPath": "elements/0/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "metadata",
+          "classification": "visual-only-flattening",
+          "elementID": "element-kicker",
+          "elementPath": "elements/0/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-title",
+          "elementPath": "elements/1/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-title",
+          "elementPath": "elements/1/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-budget-heading",
+          "elementPath": "elements/10/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-budget-heading",
+          "elementPath": "elements/10/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review-heading",
+          "elementPath": "elements/12/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review-heading",
+          "elementPath": "elements/12/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-approval",
+          "elementPath": "elements/2/table/rich-inlines/3",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-approval",
+          "elementPath": "elements/2/table/rich-inlines/3",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "table+rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-approval",
+          "elementPath": "elements/2/table/rich-inlines/3",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-approval",
+          "elementPath": "elements/2/table/rich-inlines/3",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "table+rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-approval",
+          "elementPath": "elements/2/table/rich-inlines/3",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-approval",
+          "elementPath": "elements/2/table/rich-inlines/3",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-summary-body",
+          "elementPath": "elements/3/inlines/inline-summary-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-summary-body",
+          "elementPath": "elements/3/inlines/inline-summary-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-summary-body",
+          "elementPath": "elements/3/inlines/inline-summary-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-summary-body",
+          "elementPath": "elements/3/inlines/inline-summary-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-background-heading",
+          "elementPath": "elements/5/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-background-heading",
+          "elementPath": "elements/5/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "review-marker",
+          "classification": "visual-only-flattening",
+          "elementID": "element-evidence-marker",
+          "elementPath": "elements/7/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "review-marker",
+          "classification": "visual-only-flattening",
+          "elementID": "element-evidence-marker",
+          "elementPath": "elements/7/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-plan-heading",
+          "elementPath": "elements/8/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-plan-heading",
+          "elementPath": "elements/8/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        }
+      ],
+      "observedCapabilities": [
+        {
+          "capability": "metadata",
+          "elementID": "element-kicker",
+          "elementPath": "elements/0/style"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-title",
+          "elementPath": "elements/1/style"
+        },
+        {
+          "capability": "approval-grid",
+          "elementID": "element-approval",
+          "elementPath": "elements/2"
+        },
+        {
+          "capability": "table+rich-inline",
+          "elementID": "element-approval",
+          "elementPath": "elements/2/table/rich-inlines/3"
+        },
+        {
+          "capability": "strong",
+          "elementID": "element-approval",
+          "elementPath": "elements/2/table/rich-inlines/3"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-summary-body",
+          "elementPath": "elements/3"
+        },
+        {
+          "capability": "keep-together",
+          "elementID": "element-summary-body",
+          "elementPath": "elements/3/inlines/inline-summary-keep"
+        },
+        {
+          "capability": "table",
+          "elementID": "element-summary-table",
+          "elementPath": "elements/4"
+        },
+        {
+          "capability": "table-row",
+          "elementID": "element-summary-table",
+          "elementPath": "elements/4/table/rows/0"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-summary-table",
+          "elementPath": "elements/4/table/rows/0/cells/0"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-summary-table",
+          "elementPath": "elements/4/table/rows/0/cells/1"
+        },
+        {
+          "capability": "table-row",
+          "elementID": "element-summary-table",
+          "elementPath": "elements/4/table/rows/1"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-summary-table",
+          "elementPath": "elements/4/table/rows/1/cells/0"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-summary-table",
+          "elementPath": "elements/4/table/rows/1/cells/1"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-background-heading",
+          "elementPath": "elements/5/style"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-background-body",
+          "elementPath": "elements/6"
+        },
+        {
+          "capability": "review-marker",
+          "elementID": "element-evidence-marker",
+          "elementPath": "elements/7/style"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-plan-heading",
+          "elementPath": "elements/8/style"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-plan-body",
+          "elementPath": "elements/9"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-budget-heading",
+          "elementPath": "elements/10/style"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-budget-body",
+          "elementPath": "elements/11"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-review-heading",
+          "elementPath": "elements/12/style"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-review-body",
+          "elementPath": "elements/13"
+        }
+      ],
+      "observedFrozenCombinations": [
+        "paragraph+keep-together"
+      ],
+      "operationID": "operation-ac05-001",
+      "publishedFormats": [
+        "docx",
+        "markdown"
+      ],
+      "results": [
+        {
+          "artifactHash": "sha256:414b779b8274a55202ed1495afc0b9c69b787198802747ce2921320aecb2f7f3",
+          "byteCount": 11906,
+          "engineIdentity": {
+            "cliSHA256": "sha256:43046343861265b0c89490f427cbf00118e42531d7144ff36173b543044170bc",
+            "engine": "genoffice-docx-normalize",
+            "nodeArchitecture": "arm64",
+            "nodeSHA256": "sha256:5c8cd3ab2559b530fceca01776064c56687619475a7ffc339178524af6cdaa25",
+            "nodeVersion": "22.17.1",
+            "packageName": "@genoffice/docx-engine",
+            "savedAt": "2026-08-09T00:00:00Z",
+            "upstreamCommit": "d8305ff2dc152593a1ec5639d77e6860c6a512bd"
+          },
+          "fileName": "ac05-fixture.docx",
+          "format": "docx",
+          "relativePath": "ac05-fixture.docx",
+          "semanticValid": true,
+          "structuralValid": true,
+          "validation": {
+            "evidenceSource": "artifact-derived",
+            "orderedElements": [
+              {
+                "elementID": "element-kicker",
+                "kind": "metadata",
+                "order": 0,
+                "textHash": "sha256:942cd0858cf8b2ba8d341c9e8cf019274ccf392902b32693d19ffacadf68cada"
+              },
+              {
+                "elementID": "element-title",
+                "kind": "heading",
+                "order": 1,
+                "textHash": "sha256:c20acf4e4e7f41ead6f1533ff275a36a0f879e43a25e8c774826d364dabbc66f"
+              },
+              {
+                "elementID": "element-approval",
+                "kind": "approval-grid",
+                "order": 2,
+                "textHash": "sha256:3c39e69d14b2607298a96752c3813832e6521befc8cc2431ab32755c0c5323c7"
+              },
+              {
+                "elementID": "element-summary-body",
+                "kind": "paragraph",
+                "order": 3,
+                "textHash": "sha256:cd63b18ca05da438b1f2d8c2c6124257edab92e7b39030b05e1cf1ca0ca124c7"
+              },
+              {
+                "elementID": "element-summary-table",
+                "kind": "table",
+                "order": 4,
+                "textHash": "sha256:cac6127c3ac7fa18c0a77945e2e6842a44990ccb9cf702a2c0ce96e30e1f804f"
+              },
+              {
+                "elementID": "element-background-heading",
+                "kind": "heading",
+                "order": 5,
+                "textHash": "sha256:b41efe81256a5ed5d7d553eeebe339b3a561e40de46951f8e49c1cc7424e7ff2"
+              },
+              {
+                "elementID": "element-background-body",
+                "kind": "paragraph",
+                "order": 6,
+                "textHash": "sha256:9880bb110524999ee2a26a72931edb1a66e3f83ab5acf56eba17664a7ea91c40"
+              },
+              {
+                "elementID": "element-evidence-marker",
+                "kind": "review-marker",
+                "order": 7,
+                "textHash": "sha256:e70dc1af6decfad2845aa8dd3f94c19f364bd826b816a95c6cf644e12a422df5"
+              },
+              {
+                "elementID": "element-plan-heading",
+                "kind": "heading",
+                "order": 8,
+                "textHash": "sha256:fd76bde09e9b5ff465a289c1be80b3a90845ebdd80f7c4801570b3dfa1ae1b45"
+              },
+              {
+                "elementID": "element-plan-body",
+                "kind": "paragraph",
+                "order": 9,
+                "textHash": "sha256:da21c82fd79ae9095aaffd27911c1159f5cfe61c21d962115aa0c097cef99d58"
+              },
+              {
+                "elementID": "element-budget-heading",
+                "kind": "heading",
+                "order": 10,
+                "textHash": "sha256:700aa5c63f9c34a8c24d97470aadcc883e22ffc3de9ecf4c4d2bf86b3291c8c9"
+              },
+              {
+                "elementID": "element-budget-body",
+                "kind": "paragraph",
+                "order": 11,
+                "textHash": "sha256:11ebcbd1dae49aeefe9c8e4a27e37e2c4af1550b3820ef10e097ec2af0165f7c"
+              },
+              {
+                "elementID": "element-review-heading",
+                "kind": "heading",
+                "order": 12,
+                "textHash": "sha256:c2e340f291ba1abb71ec84e377ba04ecc8f2e134efae0c3af2eedd4b3fcb627f"
+              },
+              {
+                "elementID": "element-review-body",
+                "kind": "paragraph",
+                "order": 13,
+                "textHash": "sha256:23c3d372931bd774f1799b57d76d3c9652c87d02f6d4565fbf7562b6d0e312b0"
+              }
+            ],
+            "semanticValid": true,
+            "structuralValid": true,
+            "validator": "artifact-derived OOXML graph + formula/table/content verification"
+          },
+          "validator": "artifact-derived OOXML graph + formula/table/content verification"
+        },
+        {
+          "artifactHash": "sha256:c7f176b3cc7abbcdae3dcc4f94941c1c871f9bd745113748d394333116a0a223",
+          "byteCount": 3289,
+          "fileName": "ac05-fixture.md",
+          "format": "markdown",
+          "relativePath": "ac05-fixture.md",
+          "semanticValid": true,
+          "structuralValid": true,
+          "validation": {
+            "evidenceSource": "artifact-derived",
+            "orderedElements": [
+              {
+                "elementID": "element-kicker",
+                "kind": "metadata",
+                "order": 0,
+                "textHash": "sha256:942cd0858cf8b2ba8d341c9e8cf019274ccf392902b32693d19ffacadf68cada"
+              },
+              {
+                "elementID": "element-title",
+                "kind": "heading",
+                "order": 1,
+                "textHash": "sha256:c20acf4e4e7f41ead6f1533ff275a36a0f879e43a25e8c774826d364dabbc66f"
+              },
+              {
+                "elementID": "element-approval",
+                "kind": "approval-grid",
+                "order": 2,
+                "textHash": "sha256:3c39e69d14b2607298a96752c3813832e6521befc8cc2431ab32755c0c5323c7"
+              },
+              {
+                "elementID": "element-summary-body",
+                "kind": "paragraph",
+                "order": 3,
+                "textHash": "sha256:cd63b18ca05da438b1f2d8c2c6124257edab92e7b39030b05e1cf1ca0ca124c7"
+              },
+              {
+                "elementID": "element-summary-table",
+                "kind": "table",
+                "order": 4,
+                "textHash": "sha256:cac6127c3ac7fa18c0a77945e2e6842a44990ccb9cf702a2c0ce96e30e1f804f"
+              },
+              {
+                "elementID": "element-background-heading",
+                "kind": "heading",
+                "order": 5,
+                "textHash": "sha256:b41efe81256a5ed5d7d553eeebe339b3a561e40de46951f8e49c1cc7424e7ff2"
+              },
+              {
+                "elementID": "element-background-body",
+                "kind": "paragraph",
+                "order": 6,
+                "textHash": "sha256:9880bb110524999ee2a26a72931edb1a66e3f83ab5acf56eba17664a7ea91c40"
+              },
+              {
+                "elementID": "element-evidence-marker",
+                "kind": "review-marker",
+                "order": 7,
+                "textHash": "sha256:e70dc1af6decfad2845aa8dd3f94c19f364bd826b816a95c6cf644e12a422df5"
+              },
+              {
+                "elementID": "element-plan-heading",
+                "kind": "heading",
+                "order": 8,
+                "textHash": "sha256:fd76bde09e9b5ff465a289c1be80b3a90845ebdd80f7c4801570b3dfa1ae1b45"
+              },
+              {
+                "elementID": "element-plan-body",
+                "kind": "paragraph",
+                "order": 9,
+                "textHash": "sha256:da21c82fd79ae9095aaffd27911c1159f5cfe61c21d962115aa0c097cef99d58"
+              },
+              {
+                "elementID": "element-budget-heading",
+                "kind": "heading",
+                "order": 10,
+                "textHash": "sha256:700aa5c63f9c34a8c24d97470aadcc883e22ffc3de9ecf4c4d2bf86b3291c8c9"
+              },
+              {
+                "elementID": "element-budget-body",
+                "kind": "paragraph",
+                "order": 11,
+                "textHash": "sha256:11ebcbd1dae49aeefe9c8e4a27e37e2c4af1550b3820ef10e097ec2af0165f7c"
+              },
+              {
+                "elementID": "element-review-heading",
+                "kind": "heading",
+                "order": 12,
+                "textHash": "sha256:c2e340f291ba1abb71ec84e377ba04ecc8f2e134efae0c3af2eedd4b3fcb627f"
+              },
+              {
+                "elementID": "element-review-body",
+                "kind": "paragraph",
+                "order": 13,
+                "textHash": "sha256:23c3d372931bd774f1799b57d76d3c9652c87d02f6d4565fbf7562b6d0e312b0"
+              }
+            ],
+            "semanticValid": true,
+            "structuralValid": true,
+            "validator": "artifact-derived CommonMark table + marker-bound content verification"
+          },
+          "validator": "artifact-derived CommonMark table + marker-bound content verification"
+        }
+      ],
+      "rhwpCommit": "2dced7bfe10c6597cead634264c7c1781c01f1e7",
+      "selectedFormats": [
+        "hwpx",
+        "hwp",
+        "docx",
+        "markdown"
+      ],
+      "snapshotHash": "sha256:0614a7ff98fd9dad58e187f17ef453c198b7adc055775902e53f8f8979cdb56b",
+      "snapshotRevisionID": "revision-ac05-001"
+    },
+    {
+      "allAuthoredElementIDsPreserved": true,
+      "blockedFormats": [
+        "hwpx",
+        "hwp",
+        "docx",
+        "markdown"
+      ],
+      "failedFormats": [],
+      "failures": [],
+      "fixtureHash": "sha256:b3f1003a44f71d9d5f70af1f79cddf67446d45ec2c6e52c36d77a14a645c8918",
+      "flatteningConsentFormats": [
+        "hwpx",
+        "hwp",
+        "docx",
+        "markdown"
+      ],
+      "flatteningConsentRecorded": true,
+      "lossReports": [
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "docx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "markdown",
+          "requiresConsent": false
+        },
+        {
+          "capability": "unordered-list",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "unordered-list",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "unordered-list",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "docx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "unordered-list",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "markdown",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0/items/0",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0/items/0",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0/items/0",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "docx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0/items/0",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "markdown",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0/items/1",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0/items/1",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0/items/1",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "docx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "list-item",
+          "classification": "semantic-loss",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0/items/1",
+          "evidenceSource": "preflight-policy",
+          "fallback": "목록 항목과 계층을 보존하는 어댑터가 준비될 때까지 이 형식을 차단합니다.",
+          "format": "markdown",
+          "requiresConsent": false
+        },
+        {
+          "capability": "table",
+          "classification": "semantic-loss",
+          "elementID": "element-table",
+          "elementPath": "elements/5",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "table",
+          "classification": "semantic-loss",
+          "elementID": "element-table",
+          "elementPath": "elements/5",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "table+rich-inline",
+          "classification": "semantic-loss",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/inlines/inline-table-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "table+rich-inline",
+          "classification": "semantic-loss",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/inlines/inline-table-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "approval-grid",
+          "classification": "semantic-loss",
+          "elementID": "element-approval",
+          "elementPath": "elements/6",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "approval-grid",
+          "classification": "semantic-loss",
+          "elementID": "element-approval",
+          "elementPath": "elements/6",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 이 셀 구조를 아직 보존할 수 없습니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "formula",
+          "classification": "semantic-loss",
+          "elementID": "element-formula",
+          "elementPath": "elements/8",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 앱 수식 의미를 아직 매핑하지 못합니다.",
+          "format": "hwpx",
+          "requiresConsent": false
+        },
+        {
+          "capability": "formula",
+          "classification": "semantic-loss",
+          "elementID": "element-formula",
+          "elementPath": "elements/8",
+          "evidenceSource": "preflight-policy",
+          "fallback": "고정된 rhwp 공공문서 어댑터가 앱 수식 의미를 아직 매핑하지 못합니다.",
+          "format": "hwp",
+          "requiresConsent": false
+        },
+        {
+          "capability": "formula",
+          "classification": "semantic-loss",
+          "elementID": "element-formula",
+          "elementPath": "elements/8",
+          "evidenceSource": "preflight-policy",
+          "fallback": "편집 가능한 수식 의미를 보존하려면 HWPX, HWP 또는 DOCX로 내보내세요.",
+          "format": "markdown",
+          "requiresConsent": false
+        },
+        {
+          "capability": "metadata",
+          "classification": "visual-only-flattening",
+          "elementID": "element-metadata",
+          "elementPath": "elements/0/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "metadata",
+          "classification": "visual-only-flattening",
+          "elementID": "element-metadata",
+          "elementPath": "elements/0/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-heading",
+          "elementPath": "elements/1/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "heading",
+          "classification": "visual-only-flattening",
+          "elementID": "element-heading",
+          "elementPath": "elements/1/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "emphasis",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-emphasis",
+          "evidenceSource": "preflight-policy",
+          "fallback": "기울임 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "emphasis",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-emphasis",
+          "evidenceSource": "preflight-policy",
+          "fallback": "기울임 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "emphasis",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-emphasis",
+          "evidenceSource": "preflight-policy",
+          "fallback": "기울임 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "emphasis",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-emphasis",
+          "evidenceSource": "preflight-policy",
+          "fallback": "기울임 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-face",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글꼴은 대상 형식의 기본 글꼴로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-size",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글자 크기는 대상 형식의 기본 크기로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-face",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글꼴은 대상 형식의 기본 글꼴로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-size",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글자 크기는 대상 형식의 기본 크기로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-face",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글꼴은 대상 형식의 기본 글꼴로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-size",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글자 크기는 대상 형식의 기본 크기로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-face",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글꼴은 대상 형식의 기본 글꼴로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-size",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글자 크기는 대상 형식의 기본 크기로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "underline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-underline",
+          "evidenceSource": "preflight-policy",
+          "fallback": "밑줄 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "underline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-underline",
+          "evidenceSource": "preflight-policy",
+          "fallback": "밑줄 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "underline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-underline",
+          "evidenceSource": "preflight-policy",
+          "fallback": "밑줄 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "underline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-underline",
+          "evidenceSource": "preflight-policy",
+          "fallback": "밑줄 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/inlines/inline-list-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/inlines/inline-list-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/inlines/inline-list-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/inlines/inline-list-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/inlines/inline-list-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/inlines/inline-list-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/inlines/inline-list-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/inlines/inline-list-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/inlines/inline-table-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/inlines/inline-table-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "table+rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/inlines/inline-table-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/inlines/inline-table-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "table+rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/inlines/inline-table-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/inlines/inline-table-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review",
+          "elementPath": "elements/7/inlines/inline-review-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review",
+          "elementPath": "elements/7/inlines/inline-review-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review",
+          "elementPath": "elements/7/inlines/inline-review-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review",
+          "elementPath": "elements/7/inlines/inline-review-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review",
+          "elementPath": "elements/7/inlines/inline-review-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review",
+          "elementPath": "elements/7/inlines/inline-review-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review",
+          "elementPath": "elements/7/inlines/inline-review-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review",
+          "elementPath": "elements/7/inlines/inline-review-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "review-marker",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review",
+          "elementPath": "elements/7/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "review-marker",
+          "classification": "visual-only-flattening",
+          "elementID": "element-review",
+          "elementPath": "elements/7/style",
+          "evidenceSource": "preflight-policy",
+          "fallback": "텍스트는 편집 가능하게 보존하고 앱 전용 시각 스타일은 rhwp 본문 스타일로 변환합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        }
+      ],
+      "observedCapabilities": [
+        {
+          "capability": "metadata",
+          "elementID": "element-metadata",
+          "elementPath": "elements/0/style"
+        },
+        {
+          "capability": "heading",
+          "elementID": "element-heading",
+          "elementPath": "elements/1/style"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2"
+        },
+        {
+          "capability": "rich-inline",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-strong"
+        },
+        {
+          "capability": "strong",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-strong"
+        },
+        {
+          "capability": "emphasis",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-emphasis"
+        },
+        {
+          "capability": "underline",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-underline"
+        },
+        {
+          "capability": "font-face",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-font"
+        },
+        {
+          "capability": "font-size",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-font"
+        },
+        {
+          "capability": "keep-together",
+          "elementID": "element-rich-paragraph",
+          "elementPath": "elements/2/inlines/inline-paragraph-keep"
+        },
+        {
+          "capability": "paragraph",
+          "elementID": "element-plain-paragraph",
+          "elementPath": "elements/3"
+        },
+        {
+          "capability": "list-item",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4"
+        },
+        {
+          "capability": "rich-inline",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/inlines/inline-list-strong"
+        },
+        {
+          "capability": "strong",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/inlines/inline-list-strong"
+        },
+        {
+          "capability": "unordered-list",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0"
+        },
+        {
+          "capability": "list-item",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0/items/0"
+        },
+        {
+          "capability": "list-item",
+          "elementID": "element-unordered-list",
+          "elementPath": "elements/4/lists/0/items/1"
+        },
+        {
+          "capability": "table",
+          "elementID": "element-table",
+          "elementPath": "elements/5"
+        },
+        {
+          "capability": "table+rich-inline",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/inlines/inline-table-strong"
+        },
+        {
+          "capability": "strong",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/inlines/inline-table-strong"
+        },
+        {
+          "capability": "table-row",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/rows/0"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/rows/0/cells/0"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/rows/0/cells/1"
+        },
+        {
+          "capability": "table-row",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/rows/1"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/rows/1/cells/0"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-table",
+          "elementPath": "elements/5/table/rows/1/cells/1"
+        },
+        {
+          "capability": "approval-grid",
+          "elementID": "element-approval",
+          "elementPath": "elements/6"
+        },
+        {
+          "capability": "table-row",
+          "elementID": "element-approval",
+          "elementPath": "elements/6/table/rows/0"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-approval",
+          "elementPath": "elements/6/table/rows/0/cells/0"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-approval",
+          "elementPath": "elements/6/table/rows/0/cells/1"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-approval",
+          "elementPath": "elements/6/table/rows/0/cells/2"
+        },
+        {
+          "capability": "table-row",
+          "elementID": "element-approval",
+          "elementPath": "elements/6/table/rows/1"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-approval",
+          "elementPath": "elements/6/table/rows/1/cells/0"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-approval",
+          "elementPath": "elements/6/table/rows/1/cells/1"
+        },
+        {
+          "capability": "table-cell",
+          "elementID": "element-approval",
+          "elementPath": "elements/6/table/rows/1/cells/2"
+        },
+        {
+          "capability": "review-marker",
+          "elementID": "element-review",
+          "elementPath": "elements/7/style"
+        },
+        {
+          "capability": "rich-inline",
+          "elementID": "element-review",
+          "elementPath": "elements/7/inlines/inline-review-strong"
+        },
+        {
+          "capability": "strong",
+          "elementID": "element-review",
+          "elementPath": "elements/7/inlines/inline-review-strong"
+        },
+        {
+          "capability": "formula",
+          "elementID": "element-formula",
+          "elementPath": "elements/8"
+        }
+      ],
+      "observedFrozenCombinations": [
+        "paragraph+strong+emphasis+underline",
+        "paragraph+keep-together",
+        "unordered-list+list-item+strong",
+        "table+table-row+table-cell+strong",
+        "approval-grid+table-row+table-cell",
+        "review-marker+strong"
+      ],
+      "operationID": "operation-ac05-001",
+      "publishedFormats": [],
+      "results": [],
+      "rhwpCommit": "2dced7bfe10c6597cead634264c7c1781c01f1e7",
+      "selectedFormats": [
+        "hwpx",
+        "hwp",
+        "docx",
+        "markdown"
+      ],
+      "snapshotHash": "sha256:b3f1003a44f71d9d5f70af1f79cddf67446d45ec2c6e52c36d77a14a645c8918",
+      "snapshotRevisionID": "revision-ac05-authoring-universe"
+    },
+    {
+      "allAuthoredElementIDsPreserved": true,
+      "blockedFormats": [
+        "hwpx",
+        "hwp",
+        "docx",
+        "markdown"
+      ],
+      "failedFormats": [],
+      "failures": [],
+      "fixtureHash": "sha256:9c0c3187db1dae3ad2c432f6d58fc66261460c74f686f61b2d6b141f5300ab6b",
+      "flatteningConsentFormats": [],
+      "flatteningConsentRecorded": false,
+      "lossReports": [
+        {
+          "capability": "emphasis",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-emphasis",
+          "evidenceSource": "preflight-policy",
+          "fallback": "기울임 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "emphasis",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-emphasis",
+          "evidenceSource": "preflight-policy",
+          "fallback": "기울임 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "emphasis",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-emphasis",
+          "evidenceSource": "preflight-policy",
+          "fallback": "기울임 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "emphasis",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-emphasis",
+          "evidenceSource": "preflight-policy",
+          "fallback": "기울임 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-face",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글꼴은 대상 형식의 기본 글꼴로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-size",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글자 크기는 대상 형식의 기본 크기로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-face",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글꼴은 대상 형식의 기본 글꼴로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-size",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글자 크기는 대상 형식의 기본 크기로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-face",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글꼴은 대상 형식의 기본 글꼴로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-size",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글자 크기는 대상 형식의 기본 크기로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-face",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글꼴은 대상 형식의 기본 글꼴로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "font-size",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-font",
+          "evidenceSource": "preflight-policy",
+          "fallback": "선택 글자 크기는 대상 형식의 기본 크기로 대체하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "keep-together",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-keep",
+          "evidenceSource": "preflight-policy",
+          "fallback": "문구 묶음 배치는 생략하고 텍스트와 강조를 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "rich-inline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "strong",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-strong",
+          "evidenceSource": "preflight-policy",
+          "fallback": "굵게 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        },
+        {
+          "capability": "underline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-underline",
+          "evidenceSource": "preflight-policy",
+          "fallback": "밑줄 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwpx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "underline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-underline",
+          "evidenceSource": "preflight-policy",
+          "fallback": "밑줄 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "hwp",
+          "requiresConsent": true
+        },
+        {
+          "capability": "underline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-underline",
+          "evidenceSource": "preflight-policy",
+          "fallback": "밑줄 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "docx",
+          "requiresConsent": true
+        },
+        {
+          "capability": "underline",
+          "classification": "visual-only-flattening",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-underline",
+          "evidenceSource": "preflight-policy",
+          "fallback": "밑줄 서식은 일반 텍스트로 변환하고 내용은 편집 가능하게 보존합니다.",
+          "format": "markdown",
+          "requiresConsent": true
+        }
+      ],
+      "observedCapabilities": [
+        {
+          "capability": "paragraph",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0"
+        },
+        {
+          "capability": "rich-inline",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-strong"
+        },
+        {
+          "capability": "strong",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-strong"
+        },
+        {
+          "capability": "emphasis",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-emphasis"
+        },
+        {
+          "capability": "underline",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-underline"
+        },
+        {
+          "capability": "font-face",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-font"
+        },
+        {
+          "capability": "font-size",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-font"
+        },
+        {
+          "capability": "keep-together",
+          "elementID": "element-visual-only",
+          "elementPath": "elements/0/inlines/inline-visual-keep"
+        }
+      ],
+      "observedFrozenCombinations": [
+        "paragraph+strong+emphasis+underline",
+        "paragraph+keep-together"
+      ],
+      "operationID": "operation-ac05-001",
+      "publishedFormats": [],
+      "results": [],
+      "rhwpCommit": "2dced7bfe10c6597cead634264c7c1781c01f1e7",
+      "selectedFormats": [
+        "hwpx",
+        "hwp",
+        "docx",
+        "markdown"
+      ],
+      "snapshotHash": "sha256:9c0c3187db1dae3ad2c432f6d58fc66261460c74f686f61b2d6b141f5300ab6b",
+      "snapshotRevisionID": "revision-ac05-visual-unconsented"
+    }
+  ],
+  "sourceEvidence": [
+    {
+      "path": "output/ac-05/final-current.G3DeQN/basic-hwp-family/stdout-receipt.json",
+      "sha256": "sha256:dba96b6350b6882c13ebb10c56ce3b8d48b63f0cc4bf0d6d26dab7faf5303564"
+    },
+    {
+      "path": "output/ac-05/final-current.G3DeQN/all-consented/stdout-receipt.json",
+      "sha256": "sha256:9503ff5254cc786099c66e92eae979d23f9dd377ab27787c021fdda4fc7c857d"
+    },
+    {
+      "path": "output/ac-05/final-current.G3DeQN/authoring-universe/stdout-receipt.json",
+      "sha256": "sha256:01f04c7913450adb154aed819132f1a46ca03ccf662627c7622437a9498baba2"
+    },
+    {
+      "path": "output/ac-05/final-current.G3DeQN/visual-unconsented/stdout-receipt.json",
+      "sha256": "sha256:ee0ebb12498ce927a23afe178e4a7fffcb38d2110c31863276729f61a0674c93"
+    }
+  ]
+}

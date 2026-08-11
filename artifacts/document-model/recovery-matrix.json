@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "projectStore": {
+    "assetsPreserved": true,
+    "derivedExportDidNotMutateProject": true,
+    "evidenceLinksPreserved": true,
+    "recoveredAutosave": true,
+    "recoveryFileRemovedAfterCommit": true,
+    "revisionHistoryPreserved": true,
+    "richStructurePreserved": true,
+    "schemaVersion": 1,
+    "stableElementIDs": true,
+    "stylesPreserved": true,
+    "templateBindingPreserved": true
+  },
+  "migration": {
+    "documentID": "document-legacy-001",
+    "elementIDs": [
+      "element-legacy-heading",
+      "element-legacy-body"
+    ],
+    "fromSchemaVersion": 0,
+    "historyEvent": "schema-migrated",
+    "revisionCount": 1,
+    "toSchemaVersion": 1
+  },
+  "windowLifecycle": {
+    "visibleWindowCount": 1
+  },
+  "sourceEvidence": [
+    {
+      "path": "output/ac-02/final-current.PUpQaw/project-store-receipt.json",
+      "sha256": "sha256:2117497b5467224ae06204a5c95267a3ec9cc9cb66d29e737749a9798e9e24ad"
+    },
+    {
+      "path": "output/ac-02/final-current.PUpQaw/project-migration-receipt.json",
+      "sha256": "sha256:238b81c5b654ea1b019f4b4b589967a067a6d75d568808da91c0f010c62e3f65"
+    },
+    {
+      "path": "output/ac-02/final-current.PUpQaw/window-lifecycle-receipt.json",
+      "sha256": "sha256:87c944477c60c21289e521ffca6699819d25c494473dd8e376b6656737b41b40"
+    },
+    {
+      "path": "output/ac-02/final-current.PUpQaw/project-store/project.json",
+      "sha256": "sha256:e59150e7e8fe70327679495d3f3e35c81081f2b283055d11a2f3d569343d21cf"
+    }
+  ]
+}
