@@ -1,0 +1,5 @@
+{
+  "extraPaths": ["."],
+  "include": ["external_stage2", "verify_package.py", "verify_pinned_receipt.py", "verify_receipt.py"],
+  "typeCheckingMode": "basic"
+}
