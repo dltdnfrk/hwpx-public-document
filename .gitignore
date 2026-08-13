@@ -1,5 +1,7 @@
 .build/
 .build.quarantined-*/
+Resources/Engines/node
+
 __pycache__/
 tests/__pycache__/
 *.pyc

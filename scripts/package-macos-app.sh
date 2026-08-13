@@ -71,6 +71,7 @@ cp -R "$root/Resources/Capabilities" "$destination/Contents/Resources/Capabiliti
 cp -R "$root/Resources/Compatibility" "$destination/Contents/Resources/Compatibility"
 cp -R "$root/Resources/Performance" "$destination/Contents/Resources/Performance"
 cp -R "$root/Resources/GenOffice" "$destination/Contents/Resources/GenOffice"
+"$root/scripts/fetch-bundled-node.sh"
 cp "$root/Resources/Engines/rhwp" "$destination/Contents/Resources/Engines/rhwp"
 cp "$root/Resources/Engines/node" "$destination/Contents/Resources/Engines/node"
 chmod 755 "$destination/Contents/Resources/Engines/node"
