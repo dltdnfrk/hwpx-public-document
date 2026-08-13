@@ -28,8 +28,11 @@ Artifact inventory entries contain only `path`, `size_bytes`, and the SHA-256
 of exact stored bytes. Paths are relative POSIX NFC strings, sorted by unsigned
 UTF-8 bytes, and fail closed on symlinks, non-regular files, normalization or
 case-fold collisions, and v1 count/path/byte limits. The closed v1 exclusions
-cover the three Stage 2 sidecars, the pin SQLite database and journal files,
-and the single `external-stage2-reports` report directory.
+cover the copy-root `manifest.json` (bound separately through
+`manifest_jcs_sha256` and byte-compared by copy integrity, so it is never
+double-bound into the tree), the three Stage 2 sidecars, the pin SQLite
+database and journal files, and the single `external-stage2-reports` report
+directory.
 
 ## Decision
 

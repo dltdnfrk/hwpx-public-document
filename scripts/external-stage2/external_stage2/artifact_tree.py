@@ -14,6 +14,12 @@ MAX_PATH_BYTES: Final = 512
 MAX_TOTAL_BYTES: Final = 2147483648
 EXCLUDED_FILES: Final = frozenset(
     {
+        # The established two-copy layout stores each copy's 89-key manifest
+        # inside the copy root. The manifest is bound separately and
+        # content-addressed through manifest_jcs_sha256 (and byte-compared by
+        # copy integrity), so it is excluded here to avoid double-binding the
+        # same material into artifact_tree_sha256.
+        "manifest.json",
         "stage2-receipt.json",
         "stage2-request.json",
         "stage2-result.json",
