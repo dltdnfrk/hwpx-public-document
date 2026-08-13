@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Dict, Final, FrozenSet, List, Optional, Set
+from pathlib import Path
+from typing import Dict, Final, FrozenSet, List, Mapping, Optional, Set, Tuple, cast
 
 from .canonical_json import JsonValue
 from .contract import (
@@ -21,15 +24,112 @@ from .contract import (
 )
 
 
-# Established 89-key manifest schema (v1). The key-name set is normative for
-# the preserved compatibility manifest: a bound manifest must contain exactly
-# these keys. Manifest values stay untrusted compatibility data; they are
-# digest-bound via manifest_jcs_sha256 and never interpreted for
-# authorization. Any key-schema change requires a new version and a new or
-# updated Seed.
-MANIFEST_KEYS_V1: Final[FrozenSet[str]] = frozenset(
-    "manifest_key_{index:02d}".format(index=index) for index in range(89)
+# The established 89-key manifest is the brownfield format-capability matrix,
+# vendored with provenance under tests/external_stage2/. Keys are the 89
+# definition paths of that product artifact (not invented names). Values,
+# including compatibility fields PASS/approval/score/independentlyProduced,
+# remain untrusted data: they are digest-bound via manifest_jcs_sha256 and
+# never interpreted for authorization.
+CORE_MANIFEST_FIELDS_V1: Final[Tuple[str, str, str]] = (
+    "manifestVersion",
+    "classifications",
+    "matrix",
 )
+COMPATIBILITY_FIELD_NAMES_V1: Final[FrozenSet[str]] = frozenset(
+    {"PASS", "approval", "score", "independentlyProduced"}
+)
+_VENDORED_MANIFEST_PATH: Final[Path] = (
+    Path(__file__).resolve().parents[3]
+    / "tests"
+    / "external_stage2"
+    / "established-89-key-manifest.json"
+)
+
+
+def _load_vendored_product_manifest() -> Dict[str, JsonValue]:
+    raw = _VENDORED_MANIFEST_PATH.read_bytes()
+    parsed = json.loads(raw.decode("utf-8"))
+    if not isinstance(parsed, dict):
+        raise RuntimeError("vendored 89-key manifest must be a JSON object")
+    return cast(Dict[str, JsonValue], parsed)
+
+
+def definition_keys(manifest: Mapping[str, JsonValue]) -> FrozenSet[str]:
+    """Return the 89 definition paths of the product format-capability matrix."""
+    paths: List[str] = ["manifestVersion"]
+    classifications = manifest["classifications"]
+    if not isinstance(classifications, list):
+        raise ContractError("MANIFEST_BINDING_MISMATCH")
+    paths.extend(
+        "classifications[{index}]".format(index=index)
+        for index in range(len(classifications))
+    )
+    matrix = manifest["matrix"]
+    if not isinstance(matrix, list):
+        raise ContractError("MANIFEST_BINDING_MISMATCH")
+    for row_index, row in enumerate(matrix):
+        if not isinstance(row, dict):
+            raise ContractError("MANIFEST_BINDING_MISMATCH")
+        for key in row:
+            paths.append("matrix[{index}].{key}".format(index=row_index, key=key))
+    return frozenset(paths)
+
+
+def _valid_core_structure(manifest: Mapping[str, JsonValue]) -> bool:
+    if manifest.get("manifestVersion") != "1.0.0":
+        return False
+    classifications = manifest.get("classifications")
+    matrix = manifest.get("matrix")
+    if not isinstance(classifications, list) or not classifications:
+        return False
+    if not isinstance(matrix, list) or not matrix:
+        return False
+    normalized: List[str] = []
+    for item in classifications:
+        if not isinstance(item, str):
+            return False
+        normalized.append(item)
+    if len(normalized) != len(set(normalized)):
+        return False
+    for row in matrix:
+        if not isinstance(row, dict) or "capability" not in row:
+            return False
+        for key, value in row.items():
+            if not isinstance(key, str) or not isinstance(value, str):
+                return False
+            if key != "capability" and value not in normalized:
+                return False
+    return True
+
+
+def is_established_89_key_manifest(value: JsonValue) -> bool:
+    if not isinstance(value, dict):
+        return False
+    extras = set(value) - set(CORE_MANIFEST_FIELDS_V1)
+    if extras - COMPATIBILITY_FIELD_NAMES_V1:
+        return False
+    if any(field not in value for field in CORE_MANIFEST_FIELDS_V1):
+        return False
+    if not _valid_core_structure(value):
+        return False
+    try:
+        return definition_keys(value) == MANIFEST_KEYS_V1
+    except ContractError:
+        return False
+
+
+def require_established_manifest(value: JsonValue) -> None:
+    if not is_established_89_key_manifest(value):
+        raise ContractError("MANIFEST_BINDING_MISMATCH")
+
+
+_VENDORED_MANIFEST: Final[Dict[str, JsonValue]] = _load_vendored_product_manifest()
+MANIFEST_KEYS_V1: Final[FrozenSet[str]] = definition_keys(_VENDORED_MANIFEST)
+ESTABLISHED_MANIFEST_SHA256: Final[str] = hashlib.sha256(
+    _VENDORED_MANIFEST_PATH.read_bytes()
+).hexdigest()
+if len(MANIFEST_KEYS_V1) != 89:
+    raise RuntimeError("vendored product manifest does not contain 89 definition keys")
 
 
 @dataclass(frozen=True)

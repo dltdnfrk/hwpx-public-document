@@ -54,6 +54,28 @@ independently recomputing the receipt bindings. Trust snapshots and future pin
 storage are orchestrator-owned and must remain outside both package copies and
 the repository.
 
+The 89-key manifest is the brownfield format-capability matrix, not a locally
+invented key list. The exact product bytes are vendored at
+`tests/external_stage2/established-89-key-manifest.json` with provenance in
+`tests/external_stage2/established-89-key-manifest.provenance.json`.
+
+- Product source: `Resources/Capabilities/format-capabilities-1.0.0.json`
+- Materialized second copy: `artifacts/formats/format-capability-matrix.json`,
+  produced by `scripts/materialize-seed-artifacts.mjs` calling `copy()` from
+  `scripts/seed-artifacts-lib.mjs`
+- SHA-256: `c8cb49c859e902ce6434b167f2b72c757a379a16a6315ab38f8ad6c7caa01e6a`
+- Definition count: `1 + len(classifications) + sum(len(row) for row in matrix) = 89`
+
+`MANIFEST_KEYS_V1` is derived from those vendored bytes. Compatibility fields
+`PASS`, `approval`, `score`, and `independentlyProduced` may remain as extra
+untrusted data; they never authorize a package.
+
+Two-copy assembly publishes candidate trees by invoking the product `ditto`
+argv from `scripts/package-macos-app.sh` (`/usr/bin/ditto --norsrc --noextattr
+--noqtn --noacl`) and raises `public_document.DuplicateWriteError` instead of
+a new `shutil.copytree` packaging path. Manifest sidecars stay beside the copy
+roots.
+
 `scripts/external-stage2/verify_package.py` is the package-facing dual-gate
 entrypoint. It requires explicit primary and secondary artifact roots and
 manifest paths, verifies that both copies exist, compares their artifact-tree

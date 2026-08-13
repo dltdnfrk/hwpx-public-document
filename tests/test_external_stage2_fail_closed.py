@@ -73,10 +73,10 @@ def test_candidate_authored_semantic_claims_cannot_override_external_rejection(
     # Given: all compatibility claims in the candidate manifest are maximally positive.
     fixture = build_fixture(tmp_path, final_approved=False, score_ppm=1000000)
     manifest = json.loads(fixture.manifest_path.read_text(encoding="utf-8"))
-    assert manifest["manifest_key_00"] == "PASS"
-    assert manifest["manifest_key_01"] is True
-    assert manifest["manifest_key_02"] == 1000000
-    assert manifest["manifest_key_03"] == {"independentlyProduced": True}
+    assert manifest["PASS"] == "PASS"
+    assert manifest["approval"] is True
+    assert manifest["score"] == 1000000
+    assert manifest["independentlyProduced"] == {"independentlyProduced": True}
 
     # When: authenticated external Stage 2 vetoes the bound package.
     completed = run_verifier(fixture)

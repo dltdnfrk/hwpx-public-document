@@ -54,8 +54,17 @@ def run_verifier(
 
 
 def test_accepts_only_fully_authenticated_and_bound_receipt(tmp_path: Path) -> None:
-    # Given: an external receipt signed by an authorized key and bound to every input.
+    # Given: an external receipt signed by an authorized key and bound to every input,
+    # including the vendored product 89-key format-capability matrix.
     fixture = build_fixture(tmp_path)
+    vendored = json.loads(
+        (
+            Path(__file__).resolve().parents[1]
+            / "tests/external_stage2/established-89-key-manifest.json"
+        ).read_text(encoding="utf-8")
+    )
+    generated = json.loads(fixture.manifest_path.read_text(encoding="utf-8"))
+    assert {key: generated[key] for key in ("manifestVersion", "classifications", "matrix")} == vendored
 
     # When: the receipt is evaluated through the package-facing verifier.
     completed = run_verifier(fixture)
@@ -163,7 +172,7 @@ def test_fails_closed_when_authenticated_context_or_binding_changes(
         (fixture.artifact_root / "document.bin").write_bytes(b"changed artifact")
     elif target == "manifest":
         manifest = json.loads(fixture.manifest_path.read_text(encoding="utf-8"))
-        manifest["manifest_key_00"] = "changed"
+        manifest["matrix"][0]["hwpx"] = "lossless"
         fixture.manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
     elif target == "request":
         request = json.loads(fixture.request_path.read_text(encoding="utf-8"))

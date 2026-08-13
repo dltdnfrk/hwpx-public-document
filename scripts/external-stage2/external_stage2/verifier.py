@@ -218,16 +218,15 @@ def _require_policy_outside_package(policy_path: Path, artifact_root: Path) -> N
 
 
 def _require_established_manifest(value: JsonValue) -> None:
-    """Validate the manifest against the established 89-key schema.
+    """Validate the manifest against the vendored product 89-key schema.
 
-    The established key set is normative; both missing and unknown key names
-    are binding failures. Values remain untrusted compatibility data and are
-    only bound by manifest_jcs_sha256, never interpreted for authorization.
+    The established definition-path set is derived from the brownfield
+    format-capability artifact. Missing, unknown, or structurally different
+    keys are binding failures. Compatibility fields PASS, approval, score,
+    and independentlyProduced may remain as extra data; they are never
+    interpreted for authorization and are only bound by manifest_jcs_sha256.
     """
-    if not isinstance(value, dict):
-        raise ContractError("MANIFEST_BINDING_MISMATCH")
-    if set(value) != schemas.MANIFEST_KEYS_V1:
-        raise ContractError("MANIFEST_BINDING_MISMATCH")
+    schemas.require_established_manifest(value)
 
 
 def _require_context_agreement(

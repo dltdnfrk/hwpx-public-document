@@ -1,0 +1,45 @@
+{
+  "artifact": "established-89-key-manifest.json",
+  "definition_count": 89,
+  "definition_rule": "1 + len(classifications) + sum(len(row) for row in matrix)",
+  "source_sha256": "c8cb49c859e902ce6434b167f2b72c757a379a16a6315ab38f8ad6c7caa01e6a",
+  "jcs_sha256": "74653afa61fc8e75242fc04e255c4b3670c921a10b999739cec7cf82e6efa9d6",
+  "byte_count": 2738,
+  "sources": [
+    {
+      "role": "product-source",
+      "path": "Resources/Capabilities/format-capabilities-1.0.0.json",
+      "sha256": "c8cb49c859e902ce6434b167f2b72c757a379a16a6315ab38f8ad6c7caa01e6a"
+    },
+    {
+      "role": "materialized-second-copy",
+      "path": "artifacts/formats/format-capability-matrix.json",
+      "sha256": "c8cb49c859e902ce6434b167f2b72c757a379a16a6315ab38f8ad6c7caa01e6a",
+      "produced_by": "scripts/materialize-seed-artifacts.mjs copy(Resources/Capabilities/format-capabilities-1.0.0.json, artifacts/formats/format-capability-matrix.json) via scripts/seed-artifacts-lib.mjs"
+    },
+    {
+      "role": "lineage-output-bundle",
+      "path": "output/ac-07/PublicDocument-AC07.app/Contents/Resources/Capabilities/format-capabilities-1.0.0.json",
+      "sha256": "c8cb49c859e902ce6434b167f2b72c757a379a16a6315ab38f8ad6c7caa01e6a"
+    },
+    {
+      "role": "lineage-output-bundle",
+      "path": "output/ac-09-authored-probe-1m-64k/runner/Resources/Capabilities/format-capabilities-1.0.0.json",
+      "sha256": "c8cb49c859e902ce6434b167f2b72c757a379a16a6315ab38f8ad6c7caa01e6a"
+    }
+  ],
+  "surveyed_non_matches": [
+    {
+      "path": "output/ac-06/final-current.2vQamI/partial-failure/.public-document-studio-exports/batch-ac06-partial/manifest.json",
+      "reason": "batch-export manifest with 8 top-level keys, not the 89-definition format-capability matrix"
+    },
+    {
+      "path": "output/ac-10/final-functional-20260811T074033Z/Evidence/release-manifest.json",
+      "reason": "release evidence manifest with 13 top-level keys"
+    }
+  ],
+  "prior_lineage": [
+    "orch_a8ddc2ea4510",
+    "orch_3388c5166c37"
+  ]
+}

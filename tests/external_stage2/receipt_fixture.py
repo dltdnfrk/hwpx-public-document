@@ -10,10 +10,6 @@ from typing import Final
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
-from tests.external_stage2.loader import load
-
-schemas = load("external_stage2.schemas")
-
 
 NOW: Final = "2026-08-13T12:00:00.000Z"
 EXECUTION_ID: Final = "exec-ac3-001"
@@ -65,16 +61,15 @@ def build_fixture(
     artifact = artifact_root / "document.bin"
     artifact.write_bytes(b"bound candidate artifact\n")
 
-    # The established key set comes from the closed v1 manifest schema —
-    # the single normative source — never regenerated locally.
-    manifest_keys = sorted(schemas.MANIFEST_KEYS_V1)
-    manifest: dict[str, str | bool | int | dict[str, bool]] = {
-        key: f"value-{index}" for index, key in enumerate(manifest_keys)
-    }
-    manifest[manifest_keys[0]] = "PASS"
-    manifest[manifest_keys[1]] = True
-    manifest[manifest_keys[2]] = 1000000
-    manifest[manifest_keys[3]] = {"independentlyProduced": True}
+    # The established 89-key object is the vendored product format-capability
+    # matrix. Compatibility PASS/approval/score/independentlyProduced fields
+    # remain as extra untrusted data and never authorize the package.
+    vendored = Path(__file__).resolve().parent / "established-89-key-manifest.json"
+    manifest = json.loads(vendored.read_text(encoding="utf-8"))
+    manifest["PASS"] = "PASS"
+    manifest["approval"] = True
+    manifest["score"] = 1000000
+    manifest["independentlyProduced"] = {"independentlyProduced": True}
     manifest_path = root / "manifest.json"
     manifest_path.write_bytes(canonical(manifest))
 

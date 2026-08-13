@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -49,26 +50,93 @@ def _verify_assembled_package(fixture: ReceiptFixture, assembly, pin_db: Path):
     )
 
 
+def test_established_89_key_manifest_is_the_product_format_capability_artifact() -> None:
+    # Given: the vendored product artifact and its independent provenance record.
+    root = Path(__file__).resolve().parents[1]
+    vendored = root / "tests/external_stage2/established-89-key-manifest.json"
+    provenance = json.loads(
+        (root / "tests/external_stage2/established-89-key-manifest.provenance.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    product_source = root / "Resources/Capabilities/format-capabilities-1.0.0.json"
+    materialized = root / "artifacts/formats/format-capability-matrix.json"
+    schemas = load("external_stage2.schemas")
+
+    # When: the independent product bytes and derived definition-path set are hashed.
+    vendored_bytes = vendored.read_bytes()
+    product_bytes = product_source.read_bytes()
+    materialized_bytes = materialized.read_bytes()
+    vendored_manifest = json.loads(vendored_bytes.decode("utf-8"))
+    derived_keys = schemas.definition_keys(vendored_manifest)
+
+    # Then: the schema is derived from the product artifact, the two established
+    # copies remain byte-identical, and the definition count is exactly 89.
+    assert hashlib.sha256(vendored_bytes).hexdigest() == provenance["source_sha256"]
+    assert hashlib.sha256(product_bytes).hexdigest() == provenance["source_sha256"]
+    assert hashlib.sha256(materialized_bytes).hexdigest() == provenance["source_sha256"]
+    assert vendored_bytes == product_bytes == materialized_bytes
+    assert len(derived_keys) == 89
+    assert schemas.MANIFEST_KEYS_V1 == derived_keys
+    assert schemas.ESTABLISHED_MANIFEST_SHA256 == provenance["source_sha256"]
+
+
+def test_materializer_still_emits_the_established_two_manifest_copies() -> None:
+    # Given: the existing brownfield materializer and the product 89-key source.
+    root = Path(__file__).resolve().parents[1]
+    materializer = (root / "scripts/materialize-seed-artifacts.mjs").read_text(encoding="utf-8")
+    source = "Resources/Capabilities/format-capabilities-1.0.0.json"
+    target = "artifacts/formats/format-capability-matrix.json"
+
+    # When: its copy() declaration for the format-capability matrix is read.
+    assert 'copy("{source}", "{target}");'.format(source=source, target=target) in materializer
+
+    # Then: both established copies still exist as the product two-copy packaging.
+    assert (root / source).read_bytes() == (root / target).read_bytes()
+
+
 def test_manifest_generation_preserves_all_established_keys_and_values(
     tmp_path: Path,
 ) -> None:
-    # Given: the closed v1 manifest key schema — the single normative source
-    # for the established 89-key manifest (never regenerated locally).
+    # Given: the vendored product 89-key format-capability matrix — an
+    # independent brownfield artifact, not a locally invented key list.
+    root = Path(__file__).resolve().parents[1]
+    vendored = json.loads(
+        (root / "tests/external_stage2/established-89-key-manifest.json").read_text(
+            encoding="utf-8"
+        )
+    )
     schemas = load("external_stage2.schemas")
-    established_keys = sorted(schemas.MANIFEST_KEYS_V1)
-    assert len(established_keys) == 89
+    assert len(schemas.MANIFEST_KEYS_V1) == 89
+    assert schemas.MANIFEST_KEYS_V1 == schemas.definition_keys(vendored)
 
     # When: the Stage 2 package fixture generates its compatibility manifest.
     fixture = build_fixture(tmp_path)
     generated_manifest = json.loads(fixture.manifest_path.read_text(encoding="utf-8"))
 
-    # Then: the generated key set is exactly the established schema, and the
-    # candidate-authored semantic values survive untouched as plain data.
-    assert sorted(generated_manifest) == established_keys
-    assert generated_manifest[established_keys[0]] == "PASS"
-    assert generated_manifest[established_keys[1]] is True
-    assert generated_manifest[established_keys[2]] == 1000000
-    assert generated_manifest[established_keys[3]] == {"independentlyProduced": True}
+    # Then: the product 89-definition core is preserved, and candidate-authored
+    # semantic values survive only as untrusted compatibility extras.
+    core = {field: generated_manifest[field] for field in schemas.CORE_MANIFEST_FIELDS_V1}
+    assert core == vendored
+    assert generated_manifest["PASS"] == "PASS"
+    assert generated_manifest["approval"] is True
+    assert generated_manifest["score"] == 1000000
+    assert generated_manifest["independentlyProduced"] == {"independentlyProduced": True}
+
+
+def test_package_assembly_calls_product_ditto_instead_of_a_new_copytree_path() -> None:
+    # Given: the existing macOS packaging script that publishes trees with ditto.
+    root = Path(__file__).resolve().parents[1]
+    assembly_source = (
+        root / "scripts/external-stage2/external_stage2/package_assembly.py"
+    ).read_text(encoding="utf-8")
+    packaging_script = (root / "scripts/package-macos-app.sh").read_bytes()
+
+    # Then: two-copy assembly invokes that product command and DuplicateWriteError.
+    assert "from public_document import DuplicateWriteError" in assembly_source
+    assert "shutil.copytree" not in assembly_source
+    assert hashlib.sha256(packaging_script).hexdigest() == package_assembly.PRODUCT_PACKAGING_SCRIPT_SHA256
+    assert " ".join(package_assembly.PRODUCT_DITTO_ARGV) in packaging_script.decode("utf-8")
 
 
 def test_final_acceptance_requires_both_gates_and_holds_when_both_pass(

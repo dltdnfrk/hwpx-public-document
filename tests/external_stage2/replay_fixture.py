@@ -10,10 +10,6 @@ from typing import Final, Optional
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
-from tests.external_stage2.loader import load
-
-schemas = load("external_stage2.schemas")
-
 
 KEY_ID: Final = "stage2-key-replay"
 EVALUATOR_ID: Final = "ouroboros-stage2"
@@ -73,12 +69,10 @@ def build_replay_fixture(
     }]
     artifact_tree_sha256 = digest(artifact_tree)
 
-    # The established key set comes from the closed v1 manifest schema —
-    # the single normative source — never regenerated locally.
-    manifest = {
-        key: f"value-{index}"
-        for index, key in enumerate(sorted(schemas.MANIFEST_KEYS_V1))
-    }
+    # Bind replay fixtures to the vendored product 89-key format-capability
+    # matrix rather than a locally invented key set.
+    vendored = Path(__file__).resolve().parent / "established-89-key-manifest.json"
+    manifest = json.loads(vendored.read_text(encoding="utf-8"))
     manifest_path = root / "manifest.json"
     manifest_path.write_bytes(canonical(manifest))
     manifest_jcs_sha256 = digest(manifest)
