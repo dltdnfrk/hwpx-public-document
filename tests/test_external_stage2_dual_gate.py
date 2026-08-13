@@ -40,6 +40,7 @@ def _verify_assembled_package(fixture: ReceiptFixture, assembly, pin_db: Path):
                 artifact_root=assembly.copy_roots[0],
                 execution_id=EXECUTION_ID,
                 now=contract.parse_timestamp(NOW, "INTERNAL_VERIFIER_ERROR"),
+                trust_policy_sha256=fixture.policy_sha256_pin,
             ),
             secondary_artifact_root=assembly.copy_roots[1],
             secondary_manifest_path=assembly.manifest_paths[1],
@@ -51,26 +52,23 @@ def _verify_assembled_package(fixture: ReceiptFixture, assembly, pin_db: Path):
 def test_manifest_generation_preserves_all_established_keys_and_values(
     tmp_path: Path,
 ) -> None:
-    # Given: the complete established 89-key manifest contract.
-    expected_manifest: dict[str, str | bool | int | dict[str, bool]] = {
-        f"manifest_key_{index:02d}": f"value-{index}" for index in range(89)
-    }
-    expected_manifest.update(
-        {
-            "manifest_key_00": "PASS",
-            "manifest_key_01": True,
-            "manifest_key_02": 1000000,
-            "manifest_key_03": {"independentlyProduced": True},
-        }
-    )
+    # Given: the closed v1 manifest key schema — the single normative source
+    # for the established 89-key manifest (never regenerated locally).
+    schemas = load("external_stage2.schemas")
+    established_keys = sorted(schemas.MANIFEST_KEYS_V1)
+    assert len(established_keys) == 89
 
     # When: the Stage 2 package fixture generates its compatibility manifest.
     fixture = build_fixture(tmp_path)
     generated_manifest = json.loads(fixture.manifest_path.read_text(encoding="utf-8"))
 
-    # Then: neither the manifest key names nor any values changed.
-    assert len(generated_manifest) == 89
-    assert generated_manifest == expected_manifest
+    # Then: the generated key set is exactly the established schema, and the
+    # candidate-authored semantic values survive untouched as plain data.
+    assert sorted(generated_manifest) == established_keys
+    assert generated_manifest[established_keys[0]] == "PASS"
+    assert generated_manifest[established_keys[1]] is True
+    assert generated_manifest[established_keys[2]] == 1000000
+    assert generated_manifest[established_keys[3]] == {"independentlyProduced": True}
 
 
 def test_final_acceptance_requires_both_gates_and_holds_when_both_pass(

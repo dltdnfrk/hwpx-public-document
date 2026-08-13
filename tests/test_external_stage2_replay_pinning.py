@@ -27,6 +27,7 @@ def run_verifier(
             str(VERIFIER),
             "--receipt", str(fixture.receipt_path),
             "--trust-policy", str(fixture.policy_path),
+            "--trust-policy-sha256", fixture.policy_sha256_pin,
             "--request", str(fixture.request_path),
             "--result", str(fixture.result_path),
             "--manifest", str(fixture.manifest_path),

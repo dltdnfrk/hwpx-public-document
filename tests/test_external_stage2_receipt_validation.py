@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import sys
@@ -19,7 +20,10 @@ ROOT = Path(__file__).resolve().parents[1]
 VERIFIER = ROOT / "scripts/external-stage2/verify_receipt.py"
 
 
-def run_verifier(fixture: ReceiptFixture) -> subprocess.CompletedProcess[str]:
+def run_verifier(
+    fixture: ReceiptFixture,
+    pin: str | None = None,
+) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         [
             sys.executable,
@@ -28,6 +32,8 @@ def run_verifier(fixture: ReceiptFixture) -> subprocess.CompletedProcess[str]:
             str(fixture.receipt_path),
             "--trust-policy",
             str(fixture.policy_path),
+            "--trust-policy-sha256",
+            pin if pin is not None else fixture.policy_sha256_pin,
             "--request",
             str(fixture.request_path),
             "--result",
@@ -168,7 +174,10 @@ def test_fails_closed_when_authenticated_context_or_binding_changes(
         result["completed_at"] = "2026-08-13T12:00:01.000Z"
         fixture.result_path.write_text(json.dumps(result), encoding="utf-8")
 
-    # When: the changed evaluation is verified.
+    # When: the changed evaluation is verified. For the policy case the
+    # orchestrator pin is recomputed over the presented snapshot bytes so the
+    # receipt-vs-policy binding failure (POLICY_MISMATCH) is exercised on its
+    # own, distinct from the provenance anchor (POLICY_SNAPSHOT_INVALID).
     if target == "execution":
         completed = subprocess.run(
             [
@@ -179,6 +188,11 @@ def test_fails_closed_when_authenticated_context_or_binding_changes(
             check=False,
             capture_output=True,
             text=True,
+        )
+    elif target == "policy":
+        completed = run_verifier(
+            fixture,
+            pin=hashlib.sha256(fixture.policy_path.read_bytes()).hexdigest(),
         )
     else:
         completed = run_verifier(fixture)
@@ -196,6 +210,8 @@ def run_command(fixture: ReceiptFixture) -> list[str]:
         str(fixture.receipt_path),
         "--trust-policy",
         str(fixture.policy_path),
+        "--trust-policy-sha256",
+        fixture.policy_sha256_pin,
         "--request",
         str(fixture.request_path),
         "--result",

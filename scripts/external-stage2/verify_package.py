@@ -12,6 +12,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--trust-policy", type=Path, required=True)
+    parser.add_argument("--trust-policy-sha256", required=True)
     parser.add_argument("--request", type=Path, required=True)
     parser.add_argument("--result", type=Path, required=True)
     parser.add_argument("--primary-manifest", type=Path, required=True)
@@ -52,6 +53,7 @@ def main() -> int:
                 artifact_root=arguments.primary_artifact_root,
                 execution_id=arguments.execution_id,
                 now=now,
+                trust_policy_sha256=arguments.trust_policy_sha256,
             ),
             secondary_artifact_root=arguments.secondary_artifact_root,
             secondary_manifest_path=arguments.secondary_manifest,

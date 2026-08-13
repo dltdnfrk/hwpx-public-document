@@ -36,6 +36,12 @@ class VerificationInputs:
     artifact_root: Path
     execution_id: str
     now: datetime
+    # Orchestrator-owned trust anchor: lowercase hex SHA-256 of the exact
+    # trust-policy snapshot bytes, supplied by the orchestrator out of band.
+    # This pins policy provenance independently of the receipt's own
+    # policy_sha256 claim, so a candidate cannot substitute a policy carrying
+    # a self-generated key and self-sign an approving receipt.
+    trust_policy_sha256: str
 
 
 @dataclass(frozen=True)
@@ -85,6 +91,14 @@ def _verify(inputs: VerificationInputs) -> VerificationDecision:
     key = None
     policy_error: Optional[ContractError] = None
     try:
+        pin = inputs.trust_policy_sha256
+        if (
+            not isinstance(pin, str)
+            or len(pin) != 64
+            or any(character not in "0123456789abcdef" for character in pin)
+            or hashlib.sha256(policy_raw).hexdigest() != pin
+        ):
+            raise ContractError("POLICY_SNAPSHOT_INVALID")
         policy_value = _parse(policy_raw, "POLICY_SNAPSHOT_INVALID")
         policy = schemas.TrustPolicy.parse(policy_value)
         key = next((candidate for candidate in policy.keys if candidate.key_id == envelope.key_id), None)

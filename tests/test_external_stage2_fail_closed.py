@@ -23,6 +23,7 @@ def run_verifier(
     fixture: ReceiptFixture,
     *,
     now: str = NOW,
+    pin: str | None = None,
 ) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         [
@@ -32,6 +33,8 @@ def run_verifier(
             str(fixture.receipt_path),
             "--trust-policy",
             str(fixture.policy_path),
+            "--trust-policy-sha256",
+            pin if pin is not None else fixture.policy_sha256_pin,
             "--request",
             str(fixture.request_path),
             "--result",
@@ -195,3 +198,36 @@ def test_inconsistent_external_approval_and_score_fails_closed(tmp_path: Path) -
         "receipt_digest": fixture.receipt_digest,
         "semantic_pass": False,
     }
+
+
+def test_candidate_substituted_policy_with_self_generated_key_is_rejected(
+    tmp_path: Path,
+) -> None:
+    # Given: the orchestrator's out-of-band trust anchor pins the legitimate
+    # policy snapshot, while a candidate substitutes a complete self-signed
+    # chain — its own Ed25519 key, its own policy listing that key, and its
+    # own approving receipt signed with it.
+    orchestrator_root = tmp_path / "orchestrator"
+    orchestrator_root.mkdir()
+    legitimate = build_fixture(orchestrator_root)
+    candidate_root = tmp_path / "candidate"
+    candidate_root.mkdir()
+    forged = build_fixture(candidate_root)
+
+    # When: the forged chain is presented under the orchestrator's pin.
+    completed = run_verifier(forged, pin=legitimate.policy_sha256_pin)
+
+    # Then: policy provenance fails closed before any forged key material is
+    # trusted; the internally consistent self-signed chain cannot authorize.
+    assert_not_accepted(completed, ["POLICY_SNAPSHOT_INVALID"])
+
+
+def test_malformed_orchestrator_trust_anchor_fails_closed(tmp_path: Path) -> None:
+    # Given: a fully valid receipt chain but a malformed orchestrator pin.
+    fixture = build_fixture(tmp_path)
+
+    # When: the verifier runs with a pin that is not lowercase 64-hex.
+    completed = run_verifier(fixture, pin="NOT-A-VALID-PIN")
+
+    # Then: the anchor itself fails closed rather than being ignored.
+    assert_not_accepted(completed, ["POLICY_SNAPSHOT_INVALID"])

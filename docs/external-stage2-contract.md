@@ -11,6 +11,10 @@ effect.
 
 - the closed receipt envelope;
 - an orchestrator-owned immutable trust-policy snapshot;
+- the orchestrator's out-of-band trust anchor (`--trust-policy-sha256`), the
+  lowercase-hex SHA-256 of the exact snapshot bytes — the supplied policy must
+  hash to this pin before any of its key material is trusted, so a candidate
+  cannot substitute a policy carrying a self-generated signing key;
 - the external Stage 2 request and result sidecars;
 - the strictly parsed 89-key manifest;
 - the evaluated package-copy root; and
@@ -28,11 +32,11 @@ Artifact inventory entries contain only `path`, `size_bytes`, and the SHA-256
 of exact stored bytes. Paths are relative POSIX NFC strings, sorted by unsigned
 UTF-8 bytes, and fail closed on symlinks, non-regular files, normalization or
 case-fold collisions, and v1 count/path/byte limits. The closed v1 exclusions
-cover the copy-root `manifest.json` (bound separately through
-`manifest_jcs_sha256` and byte-compared by copy integrity, so it is never
-double-bound into the tree), the three Stage 2 sidecars, the pin SQLite
-database and journal files, and the single `external-stage2-reports` report
-directory.
+cover the three Stage 2 sidecars, the pin SQLite database and journal files,
+and the single `external-stage2-reports` report directory. Package manifests
+live beside the copy roots (never inside them), so the manifest is bound
+exactly once, through `manifest_jcs_sha256`, and byte-compared by copy
+integrity.
 
 ## Decision
 

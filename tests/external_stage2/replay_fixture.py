@@ -10,6 +10,10 @@ from typing import Final, Optional
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
+from tests.external_stage2.loader import load
+
+schemas = load("external_stage2.schemas")
+
 
 KEY_ID: Final = "stage2-key-replay"
 EVALUATOR_ID: Final = "ouroboros-stage2"
@@ -45,6 +49,9 @@ class ReplayFixture:
     manifest_path: Path
     execution_id: str
     receipt_digest: str
+    # Orchestrator-owned trust anchor: SHA-256 of the exact policy snapshot
+    # bytes, passed to the verifier out of band (--trust-policy-sha256).
+    policy_sha256_pin: str
 
 
 def build_replay_fixture(
@@ -66,7 +73,12 @@ def build_replay_fixture(
     }]
     artifact_tree_sha256 = digest(artifact_tree)
 
-    manifest = {f"manifest_key_{index:02d}": f"value-{index}" for index in range(89)}
+    # The established key set comes from the closed v1 manifest schema —
+    # the single normative source — never regenerated locally.
+    manifest = {
+        key: f"value-{index}"
+        for index, key in enumerate(sorted(schemas.MANIFEST_KEYS_V1))
+    }
     manifest_path = root / "manifest.json"
     manifest_path.write_bytes(canonical(manifest))
     manifest_jcs_sha256 = digest(manifest)
@@ -163,4 +175,5 @@ def build_replay_fixture(
         manifest_path=manifest_path,
         execution_id=execution_id,
         receipt_digest=digest(envelope),
+        policy_sha256_pin=hashlib.sha256(policy_path.read_bytes()).hexdigest(),
     )

@@ -34,16 +34,26 @@ def test_package_assembly_places_exactly_two_manifests_at_established_paths(
         assembly_root=tmp_path / "assembled",
     )
 
-    # Then: the only manifests are at the two established package paths.
+    # Then: both manifests sit beside the copy roots (never inside them), so
+    # the manifest is bound exactly once via manifest_jcs_sha256 while the
+    # artifact tree binds the copy-root contents.
     assert tuple(path.relative_to(assembly.root).as_posix() for path in assembly.manifest_paths) == (
-        "package-copy/manifest.json",
-        "package-copy-secondary/manifest.json",
+        "manifest.json",
+        "manifest-secondary.json",
     )
-    assert sorted(path.relative_to(assembly.root).as_posix() for path in assembly.root.rglob("manifest.json")) == [
-        "package-copy-secondary/manifest.json",
-        "package-copy/manifest.json",
+    assert sorted(path.name for path in assembly.root.rglob("manifest*.json")) == [
+        "manifest-secondary.json",
+        "manifest.json",
     ]
     assert all(path.read_bytes() == manifest_bytes for path in assembly.manifest_paths)
+    assert sorted(
+        path.relative_to(assembly.root).as_posix()
+        for copy_root in assembly.copy_roots
+        for path in copy_root.rglob("*")
+    ) == [
+        "package-copy-secondary/document.hwpx",
+        "package-copy/document.hwpx",
+    ]
 
 
 def test_package_assembly_refuses_to_overwrite_published_copies(

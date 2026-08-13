@@ -10,6 +10,10 @@ from typing import Final
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
+from tests.external_stage2.loader import load
+
+schemas = load("external_stage2.schemas")
+
 
 NOW: Final = "2026-08-13T12:00:00.000Z"
 EXECUTION_ID: Final = "exec-ac3-001"
@@ -46,6 +50,9 @@ class ReceiptFixture:
     result_path: Path
     manifest_path: Path
     receipt_digest: str
+    # Orchestrator-owned trust anchor: SHA-256 of the exact policy snapshot
+    # bytes, passed to the verifier out of band (--trust-policy-sha256).
+    policy_sha256_pin: str
 
 
 def build_fixture(
@@ -58,13 +65,16 @@ def build_fixture(
     artifact = artifact_root / "document.bin"
     artifact.write_bytes(b"bound candidate artifact\n")
 
+    # The established key set comes from the closed v1 manifest schema —
+    # the single normative source — never regenerated locally.
+    manifest_keys = sorted(schemas.MANIFEST_KEYS_V1)
     manifest: dict[str, str | bool | int | dict[str, bool]] = {
-        f"manifest_key_{index:02d}": f"value-{index}" for index in range(89)
+        key: f"value-{index}" for index, key in enumerate(manifest_keys)
     }
-    manifest["manifest_key_00"] = "PASS"
-    manifest["manifest_key_01"] = True
-    manifest["manifest_key_02"] = 1000000
-    manifest["manifest_key_03"] = {"independentlyProduced": True}
+    manifest[manifest_keys[0]] = "PASS"
+    manifest[manifest_keys[1]] = True
+    manifest[manifest_keys[2]] = 1000000
+    manifest[manifest_keys[3]] = {"independentlyProduced": True}
     manifest_path = root / "manifest.json"
     manifest_path.write_bytes(canonical(manifest))
 
@@ -186,4 +196,5 @@ def build_fixture(
         result_path=result_path,
         manifest_path=manifest_path,
         receipt_digest=digest(envelope),
+        policy_sha256_pin=hashlib.sha256(policy_path.read_bytes()).hexdigest(),
     )

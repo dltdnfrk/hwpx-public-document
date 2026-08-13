@@ -33,6 +33,8 @@ def run_package_verifier(
             str(fixture.receipt_path),
             "--trust-policy",
             str(fixture.policy_path),
+            "--trust-policy-sha256",
+            fixture.policy_sha256_pin,
             "--request",
             str(fixture.request_path),
             "--result",
