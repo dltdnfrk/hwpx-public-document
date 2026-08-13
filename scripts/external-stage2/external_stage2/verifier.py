@@ -55,62 +55,94 @@ def verify(inputs: VerificationInputs) -> VerificationDecision:
 
 
 def _verify(inputs: VerificationInputs) -> VerificationDecision:
+    # Stage (1): deterministic byte-limit prechecks over every declared input.
+    # The trust-policy snapshot must be orchestrator-owned material located
+    # outside the evaluated package copy; package-root-internal data is never
+    # trusted as a policy source.
     receipt_raw = _read_receipt(inputs.receipt_path)
+    _require_policy_outside_package(inputs.policy_path, inputs.artifact_root)
     policy_raw = _read_limited(inputs.policy_path, POLICY_LIMIT, "POLICY_SNAPSHOT_INVALID", "POLICY_SNAPSHOT_INVALID")
     request_raw = _read_limited(inputs.request_path, SIDECAR_LIMIT, "SIDECAR_OVERSIZED", "REQUEST_SCHEMA_INVALID")
     result_raw = _read_limited(inputs.result_path, SIDECAR_LIMIT, "SIDECAR_OVERSIZED", "RESULT_SCHEMA_INVALID")
     manifest_raw = _read_limited(inputs.manifest_path, MANIFEST_LIMIT, "MANIFEST_BINDING_MISMATCH", "MANIFEST_BINDING_MISMATCH")
 
+    # Stages (2)-(3): strict receipt parsing and closed envelope schema.
     envelope_value = _parse(receipt_raw, "RECEIPT_PARSE_INVALID")
     envelope = schemas.Envelope.parse(envelope_value)
+    # Stage (4): canonical unpadded base64url decoding.
     payload_raw = _decode_b64url(envelope.payload, PAYLOAD_LIMIT, "RECEIPT_OVERSIZED", "RECEIPT_SCHEMA_INVALID")
     signature = _decode_b64url(envelope.signature, 64, "RECEIPT_SCHEMA_INVALID", "RECEIPT_SCHEMA_INVALID")
     if len(signature) != 64:
         raise ContractError("RECEIPT_SCHEMA_INVALID")
 
-    policy_value = _parse(policy_raw, "POLICY_SNAPSHOT_INVALID")
-    policy = schemas.TrustPolicy.parse(policy_value)
-    key = next((candidate for candidate in policy.keys if candidate.key_id == envelope.key_id), None)
-    if key is None:
-        raise ContractError("SIGNER_UNAUTHORIZED")
-    public_key = _decode_b64url(key.public_key_text, 32, "POLICY_SNAPSHOT_INVALID", "POLICY_SNAPSHOT_INVALID")
-    if len(public_key) != 32:
-        raise ContractError("POLICY_SNAPSHOT_INVALID")
-    signed_message = (
-        b"ouroboros-stage2-receipt-v1\0"
-        + envelope.key_id.encode("utf-8")
-        + b"\0"
-        + payload_raw
-    )
+    # Stage (5): Ed25519 signature verification over the exact signed message.
+    # Key-material resolution here is tentative: every trust-policy resolution
+    # failure is deferred to stage (8) so it can never preempt the
+    # receipt-first stages (5)-(7). When the key material does resolve, an
+    # invalid signature terminates validation at this stage.
+    policy_value: JsonValue = None
+    policy = None
+    key = None
+    policy_error: Optional[ContractError] = None
     try:
-        Ed25519PublicKey.from_public_bytes(public_key).verify(signature, signed_message)
-    except InvalidSignature as error:
-        raise ContractError("SIGNATURE_INVALID") from error
+        policy_value = _parse(policy_raw, "POLICY_SNAPSHOT_INVALID")
+        policy = schemas.TrustPolicy.parse(policy_value)
+        key = next((candidate for candidate in policy.keys if candidate.key_id == envelope.key_id), None)
+        if key is None:
+            raise ContractError("SIGNER_UNAUTHORIZED")
+        public_key = _decode_b64url(key.public_key_text, 32, "POLICY_SNAPSHOT_INVALID", "POLICY_SNAPSHOT_INVALID")
+        if len(public_key) != 32:
+            raise ContractError("POLICY_SNAPSHOT_INVALID")
+    except ContractError as error:
+        policy_error = error
+    if policy_error is None:
+        signed_message = (
+            b"ouroboros-stage2-receipt-v1\0"
+            + envelope.key_id.encode("utf-8")
+            + b"\0"
+            + payload_raw
+        )
+        try:
+            Ed25519PublicKey.from_public_bytes(public_key).verify(signature, signed_message)
+        except InvalidSignature as error:
+            raise ContractError("SIGNATURE_INVALID") from error
 
+    # Stage (6): strict payload parse and JCS byte-identity check.
     payload_value = _parse(payload_raw, "RECEIPT_SCHEMA_INVALID")
     if canonicalize(payload_value) != payload_raw:
         raise ContractError("RECEIPT_SCHEMA_INVALID")
+    # Stage (7): closed payload schema validation.
     payload = schemas.ReceiptPayload.parse(payload_value)
 
-    if sha256_jcs(policy_value) != payload.data["policy_sha256"]:
-        raise ContractError("POLICY_MISMATCH")
+    # Stage (8): trust-policy snapshot resolution with signer authorization
+    # and revocation evaluated at issued_at.
+    if policy_error is not None:
+        raise policy_error
+    assert policy is not None and key is not None
     if not key.authorized_from <= payload.issued_at < key.authorized_until:
         raise ContractError("SIGNER_UNAUTHORIZED")
     if key.revoked_at is not None and payload.issued_at >= key.revoked_at:
         raise ContractError("SIGNER_REVOKED")
+    # Stage (9): policy and evaluator recognition.
+    if sha256_jcs(policy_value) != payload.data["policy_sha256"]:
+        raise ContractError("POLICY_MISMATCH")
     evaluator = (
         str(payload.data["evaluator_id"]),
         str(payload.data["evaluator_build_sha256"]),
     )
     if evaluator not in policy.evaluators:
         raise ContractError("EVALUATOR_MISMATCH")
+    # Stage (10): execution identity validation (payload-internal retry
+    # linkage is enforced by the closed payload schema at stage (7)).
     if payload.data["execution_id"] != inputs.execution_id:
         raise ContractError("EXECUTION_MISMATCH")
+    # Stage (11): freshness-window validation.
     if payload.issued_at < inputs.now - timedelta(seconds=600):
         raise ContractError("RECEIPT_STALE")
     if payload.issued_at > inputs.now + timedelta(seconds=30):
         raise ContractError("RECEIPT_FUTURE")
 
+    # Stage (12): sidecar validation and recomputed digest bindings.
     request_value = _parse(request_raw, "REQUEST_SCHEMA_INVALID")
     request = schemas.Stage2Request.parse(request_value)
     result_value = _parse(result_raw, "RESULT_SCHEMA_INVALID")
@@ -121,8 +153,7 @@ def _verify(inputs: VerificationInputs) -> VerificationDecision:
 
     current_artifact = artifact_tree_digest(inputs.artifact_root)
     current_manifest_value = _parse(manifest_raw, "MANIFEST_BINDING_MISMATCH")
-    if not isinstance(current_manifest_value, dict) or len(current_manifest_value) != 89:
-        raise ContractError("MANIFEST_BINDING_MISMATCH")
+    _require_established_manifest(current_manifest_value)
     if current_artifact != payload.data["artifact_tree_sha256"]:
         raise ContractError("ARTIFACT_BINDING_MISMATCH")
     if sha256_jcs(current_manifest_value) != payload.data["manifest_jcs_sha256"]:
@@ -132,6 +163,7 @@ def _verify(inputs: VerificationInputs) -> VerificationDecision:
     if sha256_jcs(result_value) != payload.data["stage2_result_jcs_sha256"]:
         raise ContractError("RESULT_BINDING_MISMATCH")
 
+    # Stage (13): semantic evaluation of the authenticated verdict.
     semantic_reasons = set()
     if payload.data["final_approved"] is not True:
         semantic_reasons.add("FINAL_APPROVAL_FALSE")
@@ -151,6 +183,37 @@ def _verify(inputs: VerificationInputs) -> VerificationDecision:
         hashlib.sha256(canonicalize(envelope_value)).hexdigest(),
         (),
     )
+
+
+def _require_policy_outside_package(policy_path: Path, artifact_root: Path) -> None:
+    """Reject trust-policy snapshots that are not orchestrator-owned files.
+
+    The snapshot must be an immutable regular file that lives outside the
+    evaluated package copy; a policy reachable from the candidate-controlled
+    package root could be substituted by the candidate and is never trusted.
+    """
+    if policy_path.is_symlink():
+        raise ContractError("POLICY_SNAPSHOT_INVALID")
+    try:
+        policy_real = policy_path.resolve()
+        root_real = artifact_root.resolve()
+    except (OSError, RuntimeError) as error:
+        raise ContractError("POLICY_SNAPSHOT_INVALID") from error
+    if policy_real == root_real or root_real in policy_real.parents:
+        raise ContractError("POLICY_SNAPSHOT_INVALID")
+
+
+def _require_established_manifest(value: JsonValue) -> None:
+    """Validate the manifest against the established 89-key schema.
+
+    The established key set is normative; both missing and unknown key names
+    are binding failures. Values remain untrusted compatibility data and are
+    only bound by manifest_jcs_sha256, never interpreted for authorization.
+    """
+    if not isinstance(value, dict):
+        raise ContractError("MANIFEST_BINDING_MISMATCH")
+    if set(value) != schemas.MANIFEST_KEYS_V1:
+        raise ContractError("MANIFEST_BINDING_MISMATCH")
 
 
 def _require_context_agreement(

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Dict, List, Optional, Set
+from typing import Dict, Final, FrozenSet, List, Optional, Set
 
 from .canonical_json import JsonValue
 from .contract import (
@@ -18,6 +18,17 @@ from .contract import (
     require_object,
     require_reason_codes,
     require_string,
+)
+
+
+# Established 89-key manifest schema (v1). The key-name set is normative for
+# the preserved compatibility manifest: a bound manifest must contain exactly
+# these keys. Manifest values stay untrusted compatibility data; they are
+# digest-bound via manifest_jcs_sha256 and never interpreted for
+# authorization. Any key-schema change requires a new version and a new or
+# updated Seed.
+MANIFEST_KEYS_V1: Final[FrozenSet[str]] = frozenset(
+    "manifest_key_{index:02d}".format(index=index) for index in range(89)
 )
 
 
