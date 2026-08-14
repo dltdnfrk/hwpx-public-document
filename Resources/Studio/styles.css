@@ -238,7 +238,10 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .trusted-badge { color: var(--studio-success); font-size: 10px; font-weight: 700; }
 .pinned-template, .catalog-version { margin: var(--space-2) 0 0; color: var(--studio-muted); font-size: 11px; }
 .pinned-template strong { color: var(--studio-ink); }
-.catalog-entries, .official-rules ul { display: grid; gap: var(--space-1); margin: var(--space-2) 0; padding-left: var(--space-4); color: var(--studio-muted); font-size: 10px; }
+.catalog-entries, .official-rules ul { display: grid; gap: var(--space-1); margin: var(--space-2) 0; padding-left: 0; color: var(--studio-muted); font-size: 10px; list-style: none; }
+.catalog-entries button { width: 100%; padding: 6px 8px; border: 1px solid var(--studio-border); border-radius: var(--radius-sm); background: var(--studio-panel); color: var(--studio-ink); text-align: left; cursor: pointer; }
+.catalog-entries button:hover { border-color: var(--studio-border-strong); background: var(--studio-hover); }
+.catalog-entries button[aria-pressed="true"] { border-color: var(--studio-accent-border); background: var(--studio-accent-soft); color: var(--studio-accent-strong); font-weight: 700; }
 .template-actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1); margin-top: var(--space-2); }
 .template-actions button { min-height: 28px; padding: var(--space-1); border: 1px solid var(--studio-border); border-radius: var(--radius-sm); background: var(--studio-panel); cursor: pointer; font-size: 10px; }
 .template-actions button:hover { border-color: var(--studio-border-strong); background: var(--studio-hover); }
@@ -288,17 +291,17 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   outline: 0;
   background: var(--studio-surface);
   box-shadow: var(--page-shadow);
-  font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-family: "AppleMyungjo", "Apple SD Gothic Neo", "Malgun Gothic", serif;
   font-size: 15px;
-  line-height: 1.78;
+  line-height: 1.8;
   word-break: keep-all;
 }
 .genoffice-editor { display: block; overflow: hidden; }
 .genoffice-editor:focus, .page:focus { box-shadow: var(--page-shadow), 0 0 0 2px var(--studio-focus); }
 .page { padding: 82px 78px 92px; }
 .document-kicker { margin-bottom: 52px; color: var(--studio-muted); font-size: 12px; text-align: right; }
-.page h1 { margin: 0 0 42px; font-size: 28px; line-height: 1.35; text-align: center; letter-spacing: -0.045em; }
-.page h2 { margin: 36px 0 10px; color: var(--studio-accent-strong); font-size: 17px; letter-spacing: -0.02em; }
+.page h1 { margin: 0 0 42px; font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; font-size: 16px; line-height: 1.6; text-align: center; letter-spacing: -0.02em; }
+.page h2 { margin: 36px 0 10px; font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: var(--studio-ink); font-size: 16px; font-weight: 700; letter-spacing: 0; }
 .page p { margin: 0 0 var(--space-4); text-align: left; }
 .keep-phrase { white-space: nowrap; }
 .approval-grid { display: grid; grid-template-columns: repeat(3, 62px); width: max-content; margin: 0 0 32px auto; border-top: 1px solid var(--studio-ink); border-left: 1px solid var(--studio-ink); font-size: 11px; text-align: center; }

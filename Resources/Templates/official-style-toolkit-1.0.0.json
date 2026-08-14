@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "toolkitID": "beompeace-guidebook-1100-v1",
+  "source": "소통혁신24 붙임 범피스1100가이드북.pdf. 한글 애드온 실행파일은 포함하지 않는다.",
+  "guidebook": {
+    "filename": "범피스1100가이드북.pdf",
+    "pages": 91,
+    "sha256": "c5dce038a2f869fcbaacf0180237c1a66238446b9dd20b4d4937bd9f1aa4dc26",
+    "origin": "https://sotong.go.kr/front/board/boardContentsView.do?board_id=240&contents_id=7bf5da6228d146fcade014ede52bb129&menu_id=606&mode=W"
+  },
+  "authorityOrder": [
+    "institution-template",
+    "current-official-rules",
+    "beompeace-guidebook-1100",
+    "product-paragraph-preset"
+  ],
+  "presets": {
+    "title": {
+      "styleID": "style-title",
+      "name": "문서 제목",
+      "guidebookSection": "2.1",
+      "guidebookSpecifiesType": false,
+      "hangulFont": "헤드라인",
+      "macFont": "Apple SD Gothic Neo",
+      "docxStyleId": "Title",
+      "pointSize": 16,
+      "bold": true,
+      "align": "center",
+      "note": "2.1은 한 페이지 보고서 제목 개체를 넣는 버튼만 설명하고 글꼴·크기는 적지 않는다. 책에 적힌 유일한 제목급 크기는 2.2 □의 헤드라인 16이다."
+    },
+    "section-heading": {
+      "styleID": "style-section-heading",
+      "name": "□ 소제목",
+      "guidebookSection": "2.2",
+      "marker": "□",
+      "markerSpacing": "one-space",
+      "hangulFont": "헤드라인",
+      "macFont": "Apple SD Gothic Neo",
+      "docxStyleId": "Heading2",
+      "pointSize": 16,
+      "bold": true,
+      "align": "left"
+    },
+    "body": {
+      "styleID": "style-body",
+      "name": "○ 주요내용",
+      "guidebookSection": "2.2",
+      "marker": "○",
+      "hangulFont": "휴먼명조",
+      "macFont": "AppleMyungjo",
+      "docxStyleId": "Normal",
+      "pointSize": 15,
+      "bold": false,
+      "align": "left"
+    },
+    "body-detail": {
+      "styleID": "style-body-detail",
+      "name": "- 세부내용",
+      "guidebookSection": "2.2",
+      "marker": "-",
+      "hangulFont": "휴먼명조",
+      "macFont": "AppleMyungjo",
+      "docxStyleId": "Normal",
+      "pointSize": 15,
+      "bold": false,
+      "align": "left"
+    },
+    "reference": {
+      "styleID": "style-reference-note",
+      "name": "※ 참고내용",
+      "guidebookSection": "2.2",
+      "marker": "※",
+      "hangulFont": "맑은고딕",
+      "macFont": "Apple SD Gothic Neo",
+      "docxStyleId": "IntenseQuote",
+      "pointSize": 12,
+      "bold": false,
+      "align": "left"
+    },
+    "annotation": {
+      "styleID": "style-annotation",
+      "name": "* 주석내용",
+      "guidebookSection": "2.2",
+      "marker": "*",
+      "hangulFont": "맑은고딕",
+      "macFont": "Apple SD Gothic Neo",
+      "docxStyleId": "IntenseQuote",
+      "pointSize": 12,
+      "bold": false,
+      "align": "left"
+    },
+    "reference-box": {
+      "styleID": "style-reference",
+      "name": "참고 글상자",
+      "guidebookSection": "2.1",
+      "guidebookSpecifiesType": false,
+      "hangulFont": "맑은고딕",
+      "macFont": "Apple SD Gothic Neo",
+      "docxStyleId": "IntenseQuote",
+      "pointSize": 12,
+      "bold": false,
+      "align": "left",
+      "note": "2.1 글상자 버튼은 개체만 만들고 글꼴을 적지 않는다. 참고 본문은 2.2 ※의 맑은고딕 12를 쓴다."
+    }
+  },
+  "listMarkers": ["□", "○", "-", "※", "*"],
+  "operations": {
+    "word-keep": {
+      "guidebookSection": "2.3",
+      "letterSpacing": -10
+    },
+    "range-cleanup": {
+      "guidebookSection": "5.1",
+      "hangingIndent": true,
+      "letterSpacing": true,
+      "pointSizeDelta": -2
+    }
+  },
+  "defaultFont": {
+    "hangulFont": "휴먼명조",
+    "macFont": "AppleMyungjo"
+  }
+}

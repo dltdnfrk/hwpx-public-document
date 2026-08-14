@@ -3,7 +3,7 @@ import Foundation
 
 private struct RhwpIngest: Encodable {
     let version = "1"
-    let defaultFont = "Apple SD Gothic Neo"
+    let defaultFont = "AppleMyungjo"
     let questions: [RhwpQuestion]
 
     enum CodingKeys: String, CodingKey {

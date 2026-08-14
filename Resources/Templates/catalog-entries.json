@@ -1,0 +1,80 @@
+{
+  "catalogID": "public-document-templates",
+  "version": "2026.08.2",
+  "publishedAt": "2026-08-14T00:00:00Z",
+  "entries": [
+    {
+      "templateID": "public-plan",
+      "version": "3.2",
+      "effectiveDate": "2026-08-01",
+      "publishingAuthority": "기관 표준",
+      "source": "공공문서 작성기 기본 카탈로그",
+      "documentType": "추진계획서",
+      "requiredSections": ["개요", "추진 배경", "세부 추진계획", "예산 및 일정", "검토 및 결재"],
+      "checklist": ["목적과 대상", "추진 근거", "담당 부서", "시행 일정", "소요 예산", "결재선"],
+      "officialRules": [
+        {
+          "field": "title",
+          "precedence": 100,
+          "requiredValue": "기관 공식 제목을 사용하세요",
+          "source": "공공문서 작성 지침 제4조"
+        }
+      ]
+    },
+    {
+      "templateID": "public-draft",
+      "version": "1.0",
+      "effectiveDate": "2026-08-14",
+      "publishingAuthority": "기관 표준",
+      "source": "행정업무운영 편람 일반문서·기안문 골격",
+      "documentType": "기안문",
+      "requiredSections": ["수신·제목", "본문", "끝·붙임", "발신명의"],
+      "checklist": ["수신", "제목", "근거", "요청 사항", "붙임", "발신명의"],
+      "officialRules": []
+    },
+    {
+      "templateID": "public-report",
+      "version": "1.0",
+      "effectiveDate": "2026-08-14",
+      "publishingAuthority": "기관 표준",
+      "source": "행정업무운영 편람 보고서 골격",
+      "documentType": "보고서",
+      "requiredSections": ["추진배경", "현황", "문제점", "개선방안", "기대효과", "향후계획"],
+      "checklist": ["제목 방향", "현황과 문제 구분", "대안", "기대효과", "향후계획"],
+      "officialRules": []
+    },
+    {
+      "templateID": "public-result",
+      "version": "1.0",
+      "effectiveDate": "2026-08-14",
+      "publishingAuthority": "기관 표준",
+      "source": "행정업무운영 편람 결과보고 골격",
+      "documentType": "결과보고서",
+      "requiredSections": ["개요", "추진 경과", "주요 결과", "시사점", "향후 조치"],
+      "checklist": ["목적", "경과", "결과", "미비점", "후속 조치", "담당"],
+      "officialRules": []
+    },
+    {
+      "templateID": "public-coop",
+      "version": "1.0",
+      "effectiveDate": "2026-08-14",
+      "publishingAuthority": "기관 표준",
+      "source": "일반행정 업무협조 골격",
+      "documentType": "업무협조",
+      "requiredSections": ["요청 취지", "협조 사항", "일정", "회신 요청"],
+      "checklist": ["수신 기관", "협조 내용", "기한", "담당자", "회신 방법"],
+      "officialRules": []
+    },
+    {
+      "templateID": "public-minutes",
+      "version": "1.0",
+      "effectiveDate": "2026-08-14",
+      "publishingAuthority": "기관 표준",
+      "source": "회의록 골격",
+      "documentType": "회의록",
+      "requiredSections": ["회의 개요", "참석자", "안건", "논의", "결정 사항", "후속 조치"],
+      "checklist": ["일시·장소", "참석자", "안건", "결정", "담당·기한"],
+      "officialRules": []
+    }
+  ]
+}

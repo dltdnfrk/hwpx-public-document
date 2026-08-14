@@ -1,6 +1,7 @@
 .build/
 .build.quarantined-*/
 Resources/Engines/node
+scripts/keys/
 
 __pycache__/
 tests/__pycache__/

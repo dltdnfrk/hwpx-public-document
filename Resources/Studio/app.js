@@ -202,14 +202,7 @@ const initialProject = () => {
     currentRevisionID: revisionID,
     elements,
     assets: [],
-    styles: [
-      { styleID: 'style-title', name: '문서 제목', properties: { level: '1' } },
-      { styleID: 'style-section-heading', name: '구역 제목', properties: { level: '2' } },
-      { styleID: 'style-body', name: '본문', properties: { preset: 'public-body' } },
-      { styleID: 'style-table', name: '표', properties: { preset: 'public-table' } },
-      { styleID: 'style-metadata', name: '문서 정보', properties: { preset: 'metadata' } },
-      { styleID: 'style-review', name: '확인 필요', properties: { preset: 'review-required' } },
-    ],
+    styles: officialProjectStyles(),
     templateBinding: {
       templateID: 'public-plan',
       version: '3.2',
@@ -339,12 +332,14 @@ const renderProject = (project, officialRuleState = null) => {
 }
 
 const renderGuidance = (binding) => {
-  const sectionTargets = ['summary', 'background', 'plan', 'budget', 'review']
+  const typeLabel = currentTemplateCatalog?.entries.find((entry) => entry.templateID === binding.templateID)?.documentType
+  if (typeLabel) document.querySelector('.panel-heading h2').textContent = typeLabel
   outlineList.replaceChildren(...binding.requiredSections.map((section, index) => {
     const item = document.createElement('li')
     const button = document.createElement('button')
     button.type = 'button'
-    button.dataset.section = sectionTargets[index] || sectionTargets.at(-1)
+    button.dataset.section = `section-${index + 1}`
+    button.dataset.elementId = `element-section-${index + 1}-heading`
     button.setAttribute('aria-label', `${index + 1}. ${section}`)
     item.classList.toggle('active', index === 0)
     if (index === 0) button.setAttribute('aria-current', 'location')
@@ -416,7 +411,13 @@ const renderTemplateCatalog = (catalog, announceStatus = true) => {
   templatePanel.querySelector('[data-template-action="rollback-template"]').disabled = !catalog.rollbackAvailable
   templatePanel.querySelector('.catalog-entries').replaceChildren(...catalog.entries.map((entry) => {
     const item = document.createElement('li')
-    item.textContent = `${entry.documentType} · ${entry.templateID} v${entry.version}`
+    const button = document.createElement('button')
+    button.type = 'button'
+    button.dataset.templateId = entry.templateID
+    button.textContent = `${entry.documentType} · ${entry.templateID} v${entry.version}`
+    button.setAttribute('aria-pressed', String(entry.templateID === currentProject?.templateBinding.templateID))
+    button.addEventListener('click', () => applyCatalogEntry(entry))
+    item.append(button)
     return item
   }))
   const pinnedID = currentProject?.templateBinding.templateID
@@ -480,16 +481,93 @@ const syncFormatStates = (selectionState = editor.getSelectionState?.()) => {
   })
 }
 
-const sectionElementIDs = {
-  summary: 'element-summary-heading',
-  background: 'element-background-heading',
-  plan: 'element-plan-heading',
-  budget: 'element-budget-heading',
-  review: 'element-review-heading',
+const officialProjectStyles = () => ([
+  { styleID: 'style-title', name: '문서 제목', properties: { level: '1', preset: 'title', font: '헤드라인', macFont: 'Apple SD Gothic Neo', pointSize: '16', align: 'center' } },
+  { styleID: 'style-section-heading', name: '□ 소제목', properties: { level: '2', preset: 'section-heading', font: '헤드라인', macFont: 'Apple SD Gothic Neo', pointSize: '16', marker: '□' } },
+  { styleID: 'style-body', name: '○ 주요내용', properties: { preset: 'body', font: '휴먼명조', macFont: 'AppleMyungjo', pointSize: '15', marker: '○' } },
+  { styleID: 'style-body-detail', name: '- 세부내용', properties: { preset: 'body-detail', font: '휴먼명조', macFont: 'AppleMyungjo', pointSize: '15', marker: '-' } },
+  { styleID: 'style-reference-note', name: '※ 참고내용', properties: { preset: 'reference', font: '맑은고딕', macFont: 'Apple SD Gothic Neo', pointSize: '12', marker: '※' } },
+  { styleID: 'style-annotation', name: '* 주석내용', properties: { preset: 'annotation', font: '맑은고딕', macFont: 'Apple SD Gothic Neo', pointSize: '12', marker: '*' } },
+  { styleID: 'style-reference', name: '참고 글상자', properties: { preset: 'reference-box', font: '맑은고딕', macFont: 'Apple SD Gothic Neo', pointSize: '12' } },
+  { styleID: 'style-table', name: '표', properties: { preset: 'public-table' } },
+  { styleID: 'style-metadata', name: '문서 정보', properties: { preset: 'metadata' } },
+  { styleID: 'style-review', name: '확인 필요', properties: { preset: 'review-required' } },
+])
+
+const elementsFromTemplate = (entry, title) => {
+  const documentTitle = title || entry.documentType
+  const elements = [{
+    elementID: 'element-title',
+    kind: 'heading',
+    order: 0,
+    text: documentTitle,
+    styleID: 'style-title',
+    evidenceIDs: [],
+  }]
+  entry.requiredSections.forEach((section, index) => {
+    const slug = `section-${index + 1}`
+    elements.push({
+      elementID: `element-${slug}-heading`,
+      kind: 'heading',
+      order: elements.length,
+      text: `□ ${section}`,
+      styleID: 'style-section-heading',
+      evidenceIDs: [],
+    })
+    elements.push({
+      elementID: `element-${slug}-body`,
+      kind: 'paragraph',
+      order: elements.length,
+      text: '[확인 필요]',
+      styleID: 'style-body',
+      evidenceIDs: [],
+    })
+  })
+  return elements
 }
 
-const focusEditorElement = (section) => {
-  const elementID = sectionElementIDs[section]
+const applyCatalogEntry = (entry) => {
+  if (!currentProject) currentProject = initialProject()
+  const title = entry.templateID === 'public-plan' ? (titleInput.value.trim() || entry.documentType) : entry.documentType
+  titleInput.value = title
+  const elements = elementsFromTemplate(entry, title)
+  const revisionID = `revision-${crypto.randomUUID()}`
+  const createdAt = new Date().toISOString()
+  currentProject = {
+    ...currentProject,
+    title,
+    currentRevisionID: revisionID,
+    elements,
+    styles: officialProjectStyles(),
+    templateBinding: {
+      templateID: entry.templateID,
+      version: entry.version,
+      publishingAuthority: entry.publishingAuthority,
+      requiredSections: entry.requiredSections,
+      checklistResults: Object.fromEntries(entry.checklist.map((item) => [item, false])),
+    },
+    revisions: [...currentProject.revisions, {
+      revisionID,
+      parentRevisionID: currentProject.currentRevisionID,
+      createdAt,
+      summary: 'template-applied',
+      elementIDs: elements.map((element) => element.elementID),
+      snapshotElements: elements,
+    }],
+    history: [...currentProject.history, {
+      eventID: `history-${crypto.randomUUID()}`,
+      kind: 'template-applied',
+      revisionID,
+      createdAt,
+    }],
+  }
+  renderProject(currentProject)
+  projectBridge('save', currentProject)
+  announce(`${entry.documentType} 템플릿을 적용했습니다.`)
+}
+
+const focusEditorElement = (section, explicitElementID) => {
+  const elementID = explicitElementID || `element-${section}-heading`
   if (!editorReady || !elementID || typeof editor.focusElement !== 'function' || !editor.focusElement(elementID)) {
     announce('GenOffice 편집기에서 선택한 문서 구조로 이동할 수 없습니다.')
     return false
@@ -816,7 +894,7 @@ compactLayout.addEventListener('change', syncOutlineForViewport)
 outlineList.addEventListener('click', (event) => {
   const button = event.target.closest('[data-section]')
   if (!button) return
-  if (!focusEditorElement(button.dataset.section)) return
+  if (!focusEditorElement(button.dataset.section, button.dataset.elementId)) return
   setOutlineCurrent(button)
 })
 
