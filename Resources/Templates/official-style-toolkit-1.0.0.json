@@ -32,7 +32,7 @@
       "styleID": "style-section-heading",
       "name": "□ 소제목",
       "guidebookSection": "2.2",
-      "marker": "□",
+      "marker": "□ ",
       "markerSpacing": "one-space",
       "hangulFont": "헤드라인",
       "macFont": "Apple SD Gothic Neo",
@@ -103,7 +103,7 @@
       "note": "2.1 글상자 버튼은 개체만 만들고 글꼴을 적지 않는다. 참고 본문은 2.2 ※의 맑은고딕 12를 쓴다."
     }
   },
-  "listMarkers": ["□", "○", "-", "※", "*"],
+  "listMarkers": ["□ ", "○", "-", "※", "*"],
   "operations": {
     "word-keep": {
       "guidebookSection": "2.3",

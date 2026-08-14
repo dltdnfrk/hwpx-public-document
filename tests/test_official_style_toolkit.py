@@ -42,15 +42,92 @@ def test_official_style_toolkit_locks_guidebook_1100_presets() -> None:
     assert toolkit["toolkitID"] == "beompeace-guidebook-1100-v1"
     assert toolkit["guidebook"]["filename"] == "범피스1100가이드북.pdf"
     assert toolkit["guidebook"]["pages"] == 91
+    assert {
+        name: {
+            key: preset[key]
+            for key in (
+                "styleID",
+                "hangulFont",
+                "macFont",
+                "docxStyleId",
+                "pointSize",
+                "bold",
+                "align",
+                "marker",
+            )
+            if key in preset
+        }
+        for name, preset in toolkit["presets"].items()
+    } == {
+        "title": {
+            "styleID": "style-title",
+            "hangulFont": "헤드라인",
+            "macFont": "Apple SD Gothic Neo",
+            "docxStyleId": "Title",
+            "pointSize": 16,
+            "bold": True,
+            "align": "center",
+        },
+        "section-heading": {
+            "styleID": "style-section-heading",
+            "hangulFont": "헤드라인",
+            "macFont": "Apple SD Gothic Neo",
+            "docxStyleId": "Heading2",
+            "pointSize": 16,
+            "bold": True,
+            "align": "left",
+            "marker": "□ ",
+        },
+        "body": {
+            "styleID": "style-body",
+            "hangulFont": "휴먼명조",
+            "macFont": "AppleMyungjo",
+            "docxStyleId": "Normal",
+            "pointSize": 15,
+            "bold": False,
+            "align": "left",
+            "marker": "○",
+        },
+        "body-detail": {
+            "styleID": "style-body-detail",
+            "hangulFont": "휴먼명조",
+            "macFont": "AppleMyungjo",
+            "docxStyleId": "Normal",
+            "pointSize": 15,
+            "bold": False,
+            "align": "left",
+            "marker": "-",
+        },
+        "reference": {
+            "styleID": "style-reference-note",
+            "hangulFont": "맑은고딕",
+            "macFont": "Apple SD Gothic Neo",
+            "docxStyleId": "IntenseQuote",
+            "pointSize": 12,
+            "bold": False,
+            "align": "left",
+            "marker": "※",
+        },
+        "annotation": {
+            "styleID": "style-annotation",
+            "hangulFont": "맑은고딕",
+            "macFont": "Apple SD Gothic Neo",
+            "docxStyleId": "IntenseQuote",
+            "pointSize": 12,
+            "bold": False,
+            "align": "left",
+            "marker": "*",
+        },
+        "reference-box": {
+            "styleID": "style-reference",
+            "hangulFont": "맑은고딕",
+            "macFont": "Apple SD Gothic Neo",
+            "docxStyleId": "IntenseQuote",
+            "pointSize": 12,
+            "bold": False,
+            "align": "left",
+        },
+    }
     assert toolkit["presets"]["title"]["guidebookSpecifiesType"] is False
-    assert toolkit["presets"]["section-heading"]["hangulFont"] == "헤드라인"
-    assert toolkit["presets"]["section-heading"]["pointSize"] == 16
-    assert toolkit["presets"]["section-heading"]["marker"] == "□"
-    assert toolkit["presets"]["body"]["hangulFont"] == "휴먼명조"
-    assert toolkit["presets"]["body"]["pointSize"] == 15
-    assert toolkit["presets"]["body-detail"]["marker"] == "-"
-    assert toolkit["presets"]["reference"]["hangulFont"] == "맑은고딕"
-    assert toolkit["presets"]["reference"]["pointSize"] == 12
-    assert toolkit["presets"]["annotation"]["marker"] == "*"
-    assert toolkit["listMarkers"] == ["□", "○", "-", "※", "*"]
+    assert toolkit["listMarkers"] == ["□ ", "○", "-", "※", "*"]
     assert "ㆍ" not in toolkit["listMarkers"]

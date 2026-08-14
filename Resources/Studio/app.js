@@ -483,7 +483,7 @@ const syncFormatStates = (selectionState = editor.getSelectionState?.()) => {
 
 const officialProjectStyles = () => ([
   { styleID: 'style-title', name: '문서 제목', properties: { level: '1', preset: 'title', font: '헤드라인', macFont: 'Apple SD Gothic Neo', pointSize: '16', align: 'center' } },
-  { styleID: 'style-section-heading', name: '□ 소제목', properties: { level: '2', preset: 'section-heading', font: '헤드라인', macFont: 'Apple SD Gothic Neo', pointSize: '16', marker: '□' } },
+  { styleID: 'style-section-heading', name: '□ 소제목', properties: { level: '2', preset: 'section-heading', font: '헤드라인', macFont: 'Apple SD Gothic Neo', pointSize: '16', marker: '□ ' } },
   { styleID: 'style-body', name: '○ 주요내용', properties: { preset: 'body', font: '휴먼명조', macFont: 'AppleMyungjo', pointSize: '15', marker: '○' } },
   { styleID: 'style-body-detail', name: '- 세부내용', properties: { preset: 'body-detail', font: '휴먼명조', macFont: 'AppleMyungjo', pointSize: '15', marker: '-' } },
   { styleID: 'style-reference-note', name: '※ 참고내용', properties: { preset: 'reference', font: '맑은고딕', macFont: 'Apple SD Gothic Neo', pointSize: '12', marker: '※' } },
