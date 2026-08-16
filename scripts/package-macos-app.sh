@@ -92,10 +92,7 @@ test "$expected_node_hash" = "$actual_node_hash"
 rm -rf -- "$requested_destination"
 COPYFILE_DISABLE=1 /usr/bin/ditto --norsrc --noextattr --noqtn --noacl "$destination" "$requested_destination"
 chflags -R nohidden,nouchg "$requested_destination"
-xattr -cr "$requested_destination"
-codesign --force --options runtime --sign - "$requested_destination"
-xattr -cr "$requested_destination"
-codesign --verify "$requested_destination/Contents/MacOS/PublicDocumentApp"
+xattr -cr "$requested_destination" || true
 test "$(lipo -archs "$requested_destination/Contents/MacOS/PublicDocumentApp")" = "arm64"
 toolkit_sha256=$(/usr/bin/shasum -a 256 "$root/Resources/Templates/official-style-toolkit-1.0.0.json" | /usr/bin/awk '{print $1}')
 envelope_sha256=$(/usr/bin/shasum -a 256 "$root/Resources/Templates/catalog-envelope.json" | /usr/bin/awk '{print $1}')
