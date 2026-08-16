@@ -946,6 +946,29 @@ final class PublicDocumentStudioApp: NSObject, NSApplicationDelegate {
                 Darwin.exit(EXIT_FAILURE)
             }
         }
+        if arguments.count == 3, arguments[1] == "--export-official-samples" {
+            do {
+                try OfficialStyleSamples.export(to: URL(fileURLWithPath: arguments[2], isDirectory: true))
+                return
+            } catch {
+                FileHandle.standardError.write(Data("\(error)\n".utf8))
+                Darwin.exit(EXIT_FAILURE)
+            }
+        }
+        if arguments.count == 3, arguments[1] == "--verify-template-catalog-envelope" {
+            do {
+                let envelope = try Data(contentsOf: URL(fileURLWithPath: arguments[2]))
+                let store = try TemplateCatalogStore(
+                    root: FileManager.default.temporaryDirectory,
+                    bundledEnvelope: envelope
+                )
+                try ProjectSelfTest.printJSON(store.verifiedCatalog(from: envelope))
+                return
+            } catch {
+                FileHandle.standardError.write(Data("\(error)\n".utf8))
+                Darwin.exit(EXIT_FAILURE)
+            }
+        }
         if arguments.count == 3, arguments[1] == "--project-store-self-test" {
             do {
                 let receipt = try ProjectSelfTest.runLifecycle(at: URL(fileURLWithPath: arguments[2]))

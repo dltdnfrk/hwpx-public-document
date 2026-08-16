@@ -93,7 +93,7 @@ enum ExportSerializers {
             } else if element.styleID == "style-reference" || element.styleID == "style-reference-note" || element.styleID == "style-annotation" {
                 paragraphStyle = "<w:pPr><w:pStyle w:val=\"IntenseQuote\"/></w:pPr>"
             } else {
-                paragraphStyle = ""
+                paragraphStyle = "<w:pPr><w:pStyle w:val=\"Normal\"/></w:pPr>"
             }
             return "<w:p>\(paragraphStyle)<w:r><w:t xml:space=\"preserve\">\(xml(element.text))</w:t></w:r></w:p>"
         default:

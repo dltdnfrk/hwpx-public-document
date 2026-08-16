@@ -518,7 +518,7 @@ const elementsFromTemplate = (entry, title) => {
       elementID: `element-${slug}-body`,
       kind: 'paragraph',
       order: elements.length,
-      text: '[확인 필요]',
+      text: `○ ${section}`,
       styleID: 'style-body',
       evidenceIDs: [],
     })

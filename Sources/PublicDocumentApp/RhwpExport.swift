@@ -1,6 +1,30 @@
 import CryptoKit
 import Foundation
 
+enum OfficialStyleBinding {
+    static let presetIDs = [
+        "style-title",
+        "style-section-heading",
+        "style-body",
+        "style-body-detail",
+        "style-reference-note",
+        "style-annotation",
+        "style-reference",
+    ]
+    static let markers = ["□ ", "○", "-", "※", "*"]
+
+    static func json() throws -> Data {
+        try JSONSerialization.data(
+            withJSONObject: [
+                "default_font": "AppleMyungjo",
+                "preset_ids": presetIDs,
+                "markers": markers,
+            ],
+            options: [.sortedKeys]
+        )
+    }
+}
+
 private struct RhwpIngest: Encodable {
     let version = "1"
     let defaultFont = "AppleMyungjo"
@@ -60,6 +84,7 @@ struct RhwpExportAdapter {
         }
         try JSONEncoder().encode(RhwpIngest(questions: questions)).write(to: ingest)
         _ = try run(engine, ["build-from-ingest", ingest.path, "-o", hwpx.path])
+        try embedStyleBinding(in: hwpx, work: work)
         switch format {
         case .hwpx:
             return try Data(contentsOf: hwpx)
@@ -123,6 +148,26 @@ struct RhwpExportAdapter {
             cursor = range.upperBound
         }
         return observed
+    }
+
+    private func embedStyleBinding(in hwpx: URL, work: URL) throws {
+        let memberDirectory = work.appendingPathComponent("PublicDocument", isDirectory: true)
+        try fileManager.createDirectory(at: memberDirectory, withIntermediateDirectories: true)
+        let member = memberDirectory.appendingPathComponent("style-binding.json")
+        try OfficialStyleBinding.json().write(to: member, options: [.atomic])
+        let process = Process()
+        let standardError = Pipe()
+        process.currentDirectoryURL = work
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/zip")
+        process.arguments = ["-q", "-u", hwpx.lastPathComponent, "PublicDocument/style-binding.json"]
+        process.standardOutput = Pipe()
+        process.standardError = standardError
+        try process.run()
+        process.waitUntilExit()
+        guard process.terminationStatus == 0 else {
+            let diagnostic = String(data: standardError.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+            throw ExportError.rhwpFailed(diagnostic)
+        }
     }
 
     private func textHash(_ text: String) -> String {

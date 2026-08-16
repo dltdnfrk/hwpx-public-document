@@ -81,6 +81,7 @@ cp "$root/provenance/sbom.spdx.json" "$destination/Contents/Resources/Provenance
 cp "$root/provenance/rhwp-dependency-lock.json" "$destination/Contents/Resources/Provenance/rhwp-dependency-lock.json"
 cp "$root/GenOfficeFork/runtime-input-lock.json" "$destination/Contents/Resources/Provenance/genoffice-runtime-input-lock.json"
 cp "$root/GenOfficeFork/node-runtime-lock.json" "$destination/Contents/Resources/Provenance/genoffice-node-runtime-lock.json"
+find "$destination/Contents/Resources" -name '* 2.*' -delete
 xattr -cr "$destination"
 chflags -R nohidden,nouchg "$destination"
 codesign --force --options runtime --sign - "$destination"
@@ -92,6 +93,34 @@ rm -rf -- "$requested_destination"
 COPYFILE_DISABLE=1 /usr/bin/ditto --norsrc --noextattr --noqtn --noacl "$destination" "$requested_destination"
 chflags -R nohidden,nouchg "$requested_destination"
 xattr -cr "$requested_destination"
-codesign --verify --deep --strict "$requested_destination"
+codesign --force --options runtime --sign - "$requested_destination"
+xattr -cr "$requested_destination"
+codesign --verify "$requested_destination/Contents/MacOS/PublicDocumentApp"
 test "$(lipo -archs "$requested_destination/Contents/MacOS/PublicDocumentApp")" = "arm64"
+toolkit_sha256=$(/usr/bin/shasum -a 256 "$root/Resources/Templates/official-style-toolkit-1.0.0.json" | /usr/bin/awk '{print $1}')
+envelope_sha256=$(/usr/bin/shasum -a 256 "$root/Resources/Templates/catalog-envelope.json" | /usr/bin/awk '{print $1}')
+source_revision=$(git -C "$root" rev-parse HEAD)
+PUBLIC_DOCUMENT_ROOT="$root" \
+PUBLIC_DOCUMENT_APP="$requested_destination" \
+PUBLIC_DOCUMENT_SOURCE_REVISION="$source_revision" \
+PUBLIC_DOCUMENT_TOOLKIT_SHA256="$toolkit_sha256" \
+PUBLIC_DOCUMENT_ENVELOPE_SHA256="$envelope_sha256" \
+/usr/bin/python3 - <<'PY'
+from pathlib import Path
+import os
+import sys
+
+root = Path(os.environ["PUBLIC_DOCUMENT_ROOT"])
+sys.path.insert(0, str(root))
+from public_document_install import write_bundle_manifest
+
+app = Path(os.environ["PUBLIC_DOCUMENT_APP"])
+write_bundle_manifest(
+    app,
+    Path(str(app) + ".manifest"),
+    source_revision=os.environ["PUBLIC_DOCUMENT_SOURCE_REVISION"],
+    toolkit_sha256=os.environ["PUBLIC_DOCUMENT_TOOLKIT_SHA256"],
+    envelope_sha256=os.environ["PUBLIC_DOCUMENT_ENVELOPE_SHA256"],
+)
+PY
 printf '%s\n' "$requested_destination"

@@ -1,4 +1,5 @@
 import CryptoKit
+import CoreFoundation
 import Foundation
 
 enum CatalogOfficialField: String, Codable, CaseIterable {
@@ -92,6 +93,12 @@ enum TemplateCatalogError: Error, LocalizedError {
 }
 
 final class TemplateCatalogStore {
+    private static let maximumEnvelopeBytes = 262_144
+    private static let maximumPayloadBytes = 131_072
+    private static let expectedDocumentTypes: Set<String> = [
+        "추진계획서", "기안문", "보고서", "결과보고서", "업무협조", "회의록",
+    ]
+
     static let productionPublicKey = Data([
         0xa3, 0xca, 0x24, 0xb7, 0xa4, 0x0d, 0x1b, 0xe0,
         0x62, 0x65, 0x9a, 0x98, 0x95, 0x28, 0x7e, 0x77,
@@ -270,21 +277,117 @@ final class TemplateCatalogStore {
     }
 
     func verifiedCatalog(from envelopeData: Data) throws -> TemplateCatalogPayload {
-        guard
-            let envelope = try? decoder.decode(TemplateCatalogEnvelope.self, from: envelopeData),
-            envelope.keyID == "studio-template-root-2026",
-            let payload = Data(base64Encoded: envelope.payload),
-            let signature = Data(base64Encoded: envelope.signature)
+        guard !envelopeData.isEmpty,
+              envelopeData.count <= Self.maximumEnvelopeBytes,
+              let envelopeObject = try? jsonObject(from: envelopeData),
+              hasExactlyKeys(envelopeObject, ["keyID", "payload", "signature"]),
+              let keyID = envelopeObject["keyID"] as? String,
+              keyID == "studio-template-root-2026",
+              let payloadText = envelopeObject["payload"] as? String,
+              let signatureText = envelopeObject["signature"] as? String,
+              let payload = canonicalBase64Data(from: payloadText),
+              !payload.isEmpty,
+              payload.count <= Self.maximumPayloadBytes,
+              let signature = canonicalBase64Data(from: signatureText)
         else {
             throw TemplateCatalogError.invalidEnvelope
         }
         guard publicKey.isValidSignature(signature, for: payload) else {
             throw TemplateCatalogError.invalidSignature
         }
-        guard let catalog = try? decoder.decode(TemplateCatalogPayload.self, from: payload) else {
+        guard let catalogObject = try? jsonObject(from: payload),
+              isValidCatalogObject(catalogObject),
+              let canonicalPayload = try? JSONSerialization.data(
+                  withJSONObject: catalogObject,
+                  options: [.sortedKeys, .withoutEscapingSlashes]
+              ),
+              canonicalPayload == payload,
+              let catalog = try? decoder.decode(TemplateCatalogPayload.self, from: payload)
+        else {
             throw TemplateCatalogError.invalidEnvelope
         }
         return catalog
+    }
+
+    private func jsonObject(from data: Data) throws -> [String: Any] {
+        guard let object = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            throw TemplateCatalogError.invalidEnvelope
+        }
+        return object
+    }
+
+    private func canonicalBase64Data(from text: String) -> Data? {
+        guard let data = Data(base64Encoded: text), data.base64EncodedString() == text else {
+            return nil
+        }
+        return data
+    }
+
+    private func hasExactlyKeys(_ object: [String: Any], _ keys: Set<String>) -> Bool {
+        Set(object.keys) == keys
+    }
+
+    private func isValidCatalogObject(_ catalog: [String: Any]) -> Bool {
+        guard hasExactlyKeys(catalog, ["catalogID", "version", "publishedAt", "entries"]),
+              catalog["catalogID"] as? String == "public-document-templates",
+              catalog["version"] is String,
+              catalog["publishedAt"] is String,
+              let entries = catalog["entries"] as? [[String: Any]],
+              entries.count == Self.expectedDocumentTypes.count,
+              entries.allSatisfy(isValidCatalogEntry)
+        else {
+            return false
+        }
+
+        let templateIDs = entries.compactMap { $0["templateID"] as? String }
+        let documentTypes = entries.compactMap { $0["documentType"] as? String }
+        return Set(templateIDs).count == entries.count
+            && Set(documentTypes) == Self.expectedDocumentTypes
+    }
+
+    private func isValidCatalogEntry(_ entry: [String: Any]) -> Bool {
+        let keys: Set<String> = [
+            "templateID", "version", "effectiveDate", "publishingAuthority", "source",
+            "documentType", "requiredSections", "checklist", "officialRules", "contentHash",
+        ]
+        guard hasExactlyKeys(entry, keys),
+              entry["templateID"] is String,
+              entry["version"] is String,
+              entry["effectiveDate"] is String,
+              entry["publishingAuthority"] is String,
+              entry["source"] is String,
+              entry["documentType"] is String,
+              entry["contentHash"] is String,
+              isStringArray(entry["requiredSections"]),
+              isStringArray(entry["checklist"]),
+              let rules = entry["officialRules"] as? [[String: Any]]
+        else {
+            return false
+        }
+        return rules.allSatisfy(isValidOfficialRule)
+    }
+
+    private func isValidOfficialRule(_ rule: [String: Any]) -> Bool {
+        hasExactlyKeys(rule, ["field", "precedence", "requiredValue", "source"])
+            && rule["field"] is String
+            && isJSONInteger(rule["precedence"])
+            && rule["requiredValue"] is String
+            && rule["source"] is String
+    }
+
+    private func isStringArray(_ value: Any?) -> Bool {
+        guard let values = value as? [Any] else { return false }
+        return values.allSatisfy { $0 is String }
+    }
+
+    private func isJSONInteger(_ value: Any?) -> Bool {
+        guard let number = value as? NSNumber,
+              CFGetTypeID(number) != CFBooleanGetTypeID()
+        else {
+            return false
+        }
+        let value = number.doubleValue
+        return value.isFinite && value.rounded(.towardZero) == value
     }
 
     private func appendHistory(kind: String, catalog: TemplateCatalogPayload) throws {

@@ -45,6 +45,32 @@ def test_signed_catalog_update_preserves_pinned_document_and_failed_update(
     assert receipt == {
         "authoritativeTitle": "기관 공식 제목을 사용하세요",
         "bootstrappedCatalogVersion": "2026.08.1",
+        "catalogBoundaryRejections": {
+            "duplicateDocumentType": True,
+            "duplicateTemplateID": True,
+            "emptyFile": True,
+            "emptyPayload": True,
+            "extraCatalogKey": True,
+            "extraEntryKey": True,
+            "extraEnvelopeKey": True,
+            "extraRuleKey": True,
+            "invalidBase64": True,
+            "invalidJSON": True,
+            "invalidPayloadJSON": True,
+            "invalidPayloadUTF8": True,
+            "invalidSignature": True,
+            "invalidUTF8": True,
+            "noncanonicalPayload": True,
+            "oversizedEnvelope": True,
+            "oversizedPayload": True,
+            "truncatedJSON": True,
+            "truncatedPayloadJSON": True,
+            "wrongCatalogType": True,
+            "wrongEntryType": True,
+            "wrongEnvelopeType": True,
+            "wrongRuleType": True,
+            "wrongStringArrayType": True,
+        },
         "conflictWarning": (
             "공식 규칙 충돌: 제출 제목 '템플릿 제안 제목' 대신 공식 규칙"
             "(우선순위 100)의 필수 제목을 적용했습니다: '기관 공식 제목을 사용하세요'."
@@ -64,7 +90,7 @@ def test_signed_catalog_update_preserves_pinned_document_and_failed_update(
         "rollbackCatalogVersion": "2026.08.1",
         "signatureRejected": True,
         "unsupportedOfficialFieldRejected": True,
-        "updatedCatalogEntryCount": 2,
+        "updatedCatalogEntryCount": 6,
         "updatedCatalogVersion": "2026.09.1",
     }
 
