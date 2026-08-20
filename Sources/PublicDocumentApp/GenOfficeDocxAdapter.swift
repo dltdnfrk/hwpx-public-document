@@ -49,12 +49,21 @@ struct GenOfficeDocxAdapter {
         self.fileManager = fileManager
     }
 
+    private static func parseSavedAt(_ savedAt: String) -> Date? {
+        let fractional = ISO8601DateFormatter()
+        fractional.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        if let date = fractional.date(from: savedAt) { return date }
+        let wholeSeconds = ISO8601DateFormatter()
+        wholeSeconds.formatOptions = [.withInternetDateTime]
+        return wholeSeconds.date(from: savedAt)
+    }
+
     func normalize(
         seed: Data,
         workingDirectory: URL,
         savedAt: String
     ) throws -> GenOfficeDocxNormalization {
-        guard ISO8601DateFormatter().date(from: savedAt) != nil else {
+        guard Self.parseSavedAt(savedAt) != nil else {
             throw ExportError.genOfficeDocxFailed("결정적 savedAt ISO-8601")
         }
         let runtime = try verifiedRuntime()

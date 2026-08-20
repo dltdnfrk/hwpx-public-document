@@ -955,6 +955,45 @@ final class PublicDocumentStudioApp: NSObject, NSApplicationDelegate {
                 Darwin.exit(EXIT_FAILURE)
             }
         }
+        if arguments.count >= 4, arguments[1] == "--export-project" {
+            do {
+                let project = try JSONDecoder().decode(
+                    DocumentProject.self,
+                    from: Data(contentsOf: URL(fileURLWithPath: arguments[2]))
+                )
+                var formats: [DocumentFormat] = [.docx, .hwpx]
+                var consent = false
+                var index = 4
+                while index < arguments.count {
+                    if arguments[index] == "--formats", index + 1 < arguments.count {
+                        formats = arguments[index + 1]
+                            .split(separator: ",")
+                            .compactMap { DocumentFormat(rawValue: String($0)) }
+                        index += 2
+                    } else if arguments[index] == "--flattening-consent" {
+                        consent = true
+                        index += 1
+                    } else {
+                        index += 1
+                    }
+                }
+                guard !formats.isEmpty else { throw ExportError.noFormatSelected }
+                let receipt = try DocumentExportEngine().export(
+                    project: project,
+                    request: ExportRequest(
+                        operationID: "web-export-\(UUID().uuidString)",
+                        destination: URL(fileURLWithPath: arguments[3], isDirectory: true),
+                        formats: formats,
+                        flatteningConsent: consent ? Set(formats) : []
+                    )
+                )
+                try ProjectSelfTest.printJSON(receipt)
+                Darwin.exit(EXIT_SUCCESS)
+            } catch {
+                FileHandle.standardError.write(Data("\(error)\n".utf8))
+                Darwin.exit(EXIT_FAILURE)
+            }
+        }
         if arguments.count == 3, arguments[1] == "--verify-template-catalog-envelope" {
             do {
                 let envelope = try Data(contentsOf: URL(fileURLWithPath: arguments[2]))
