@@ -169,6 +169,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   border-bottom: 1px solid var(--studio-border-strong);
   background: var(--studio-surface);
 }
+.ribbon[hidden] { display: none !important; }
 .tool-group {
   position: relative;
   display: flex;
@@ -285,6 +286,10 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
     var(--studio-canvas);
 }
 .genoffice-editor, .page {
+  --easy-page-pad-top: 20mm;
+  --easy-page-pad-right: 20mm;
+  --easy-page-pad-bottom: 20mm;
+  --easy-page-pad-left: 20mm;
   width: 794px;
   min-height: 1123px;
   margin: 0 auto 40px;
@@ -298,7 +303,22 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 }
 .genoffice-editor { display: block; overflow: hidden; }
 .genoffice-editor:focus, .page:focus { box-shadow: var(--page-shadow), 0 0 0 2px var(--studio-focus); }
-.page { padding: 82px 78px 92px; }
+.page { padding: var(--easy-page-pad-top) var(--easy-page-pad-right) var(--easy-page-pad-bottom) var(--easy-page-pad-left); }
+.catalog-entries li { display: flex; gap: 4px; }
+.catalog-entries li button:first-child { flex: 1; }
+.catalog-entries .favorite-toggle { width: 32px; flex: none; padding: 0; }
+.easy-tool-fields { display: grid; gap: 10px; margin: var(--space-4) var(--space-5); }
+.easy-tool-fields label { display: grid; gap: 6px; color: var(--studio-muted); font-size: 12px; }
+.easy-tool-fields input, .easy-tool-fields select, .easy-tool-fields textarea {
+  min-width: 0;
+  min-height: 32px;
+  padding: 8px;
+  border: 1px solid var(--studio-border);
+  border-radius: 6px;
+  background: var(--studio-surface);
+  color: var(--studio-ink);
+  font: inherit;
+}
 .document-kicker { margin-bottom: 52px; color: var(--studio-muted); font-size: 12px; text-align: right; }
 .page h1 { margin: 0 0 42px; font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; font-size: 16px; font-weight: 700; line-height: 1.6; text-align: center; letter-spacing: -0.02em; }
 .page h2 { margin: 36px 0 10px; font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: var(--studio-ink); font-size: 16px; font-weight: 700; letter-spacing: 0; }

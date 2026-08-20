@@ -35,9 +35,9 @@
         <nav class="ribbon-tabs" aria-label="편집 리본">
           <div class="ribbon-tablist" role="tablist" aria-label="편집 리본 탭">
             <button class="ribbon-tab active" role="tab" type="button" data-tab="home" aria-selected="true" aria-controls="home-tools">홈</button>
-            <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">삽입</button>
-            <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">표</button>
-            <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">레이아웃</button>
+            <button class="ribbon-tab" role="tab" type="button" data-tab="insert" aria-selected="false" aria-controls="insert-tools">삽입</button>
+            <button class="ribbon-tab" role="tab" type="button" data-tab="table" aria-selected="false" aria-controls="table-tools">표</button>
+            <button class="ribbon-tab" role="tab" type="button" data-tab="layout" aria-selected="false" aria-controls="layout-tools">레이아웃</button>
             <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">검토</button>
             <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">보기</button>
           </div>
@@ -69,6 +69,55 @@
           <button class="tool" type="button" data-action="open-ai"><span class="tool-icon">AI</span>AI 제안</button>
           <span class="group-label">공공문서</span>
         </div>
+        <div class="tool-group text-controls">
+          <label>자동저장<select data-easy="autosave-interval" aria-label="자동저장 간격"><option value="60000">1분</option><option value="180000" selected>3분</option><option value="300000">5분</option><option value="600000">10분</option></select></label>
+          <button class="tool" type="button" data-easy-action="save-library"><span class="tool-icon">함</span>문서함 보관</button>
+          <span class="group-label">작업 환경</span>
+        </div>
+        </div>
+        <div class="ribbon" id="insert-tools" role="tabpanel" aria-label="삽입 도구" hidden>
+          <div class="tool-group">
+            <button class="tool" type="button" data-easy-action="insert-date"><span class="tool-icon">날</span>날짜 넣기</button>
+            <button class="tool" type="button" data-easy-action="insert-date-range"><span class="tool-icon">기</span>기간 넣기</button>
+            <button class="tool" type="button" data-easy-action="insert-currency"><span class="tool-icon">금</span>금액→한글</button>
+            <span class="group-label">날짜·금액</span>
+          </div>
+          <div class="tool-group">
+            <button class="tool" type="button" data-easy-action="normalize-markers"><span class="tool-icon">□</span>목차 정리</button>
+            <span class="group-label">공문서 표기</span>
+          </div>
+          <div class="tool-group text-controls">
+            <label>내 양식<select data-easy="my-form" aria-label="내 양식"></select></label>
+            <button class="tool" type="button" data-easy-action="insert-my-form">양식 넣기</button>
+            <button class="tool" type="button" data-easy-action="save-my-form">양식 저장</button>
+            <button class="tool" type="button" data-easy-action="merge-library">문서 취합</button>
+            <span class="group-label">내 양식·취합</span>
+          </div>
+        </div>
+        <div class="ribbon" id="table-tools" role="tabpanel" aria-label="표 도구" hidden>
+          <div class="tool-group">
+            <button class="tool" type="button" data-easy-action="insert-table"><span class="tool-icon">표</span>표 넣기</button>
+            <button class="tool" type="button" data-easy-action="add-table-row">행 추가</button>
+            <button class="tool" type="button" data-easy-action="clean-table">표 정리</button>
+            <span class="group-label">표 만들기</span>
+          </div>
+          <div class="tool-group">
+            <button class="tool" type="button" data-easy-action="set-table-borders">테두리</button>
+            <button class="tool" type="button" data-easy-action="set-table-fill">셀 색</button>
+            <span class="group-label">표 서식</span>
+          </div>
+        </div>
+        <div class="ribbon" id="layout-tools" role="tabpanel" aria-label="레이아웃 도구" hidden>
+          <div class="tool-group">
+            <button class="tool" type="button" data-easy-action="page-margins" data-easy-margin="narrow">좁게</button>
+            <button class="tool" type="button" data-easy-action="page-margins" data-easy-margin="normal">보통</button>
+            <button class="tool" type="button" data-easy-action="page-margins" data-easy-margin="wide">넓게</button>
+            <span class="group-label">여백</span>
+          </div>
+          <div class="tool-group">
+            <button class="tool" type="button" data-easy-action="hanging-indent">내어쓰기</button>
+            <span class="group-label">단락</span>
+          </div>
         </div>
       </section>
 
@@ -213,7 +262,14 @@
         <div class="ai-request-actions"><button type="button" data-ai-approve-selected>선택한 변경 승인</button><button type="button" data-ai-reject>제안 거절</button></div>
       </section>
     </dialog>
+    <dialog class="project-inspector easy-tool-dialog" aria-labelledby="easy-tool-title" aria-describedby="easy-tool-description">
+      <div class="inspector-heading"><h2 id="easy-tool-title">작성 도구</h2><button type="button" data-action="close-easy-tool" aria-label="작성 도구 닫기">×</button></div>
+      <p id="easy-tool-description">선택한 공문서 작성 도구의 값을 입력한 뒤 본문에 넣습니다.</p>
+      <form class="easy-tool-fields" data-easy-fields></form>
+      <div class="export-actions"><button type="button" data-action="close-easy-tool">취소</button><button type="button" data-easy-action="confirm-easy-tool">적용</button></div>
+    </dialog>
     <script src="../GenOffice/public-document-genoffice.js"></script>
+    <script src="easy-tools.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

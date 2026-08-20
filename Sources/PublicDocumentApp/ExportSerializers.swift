@@ -108,7 +108,15 @@ enum ExportSerializers {
     }
 
     static func tableRows(_ element: DocumentElement) throws -> [[String]] {
-        let document = try XMLDocument(xmlString: "<root>\(element.contentHTML)</root>", options: .nodePreserveAll)
+        let document: XMLDocument
+        do {
+            document = try XMLDocument(
+                xmlString: "<root>\(element.contentHTML)</root>",
+                options: [.documentTidyHTML, .nodePreserveAll]
+            )
+        } catch {
+            throw ExportError.invalidPackage("\(element.elementID) 표 셀을 읽을 수 없습니다")
+        }
         let rows = try document.nodes(forXPath: "//tr").compactMap { node -> [String]? in
             guard let row = node as? XMLElement else { return nil }
             let cells = row.children?.compactMap { child -> String? in

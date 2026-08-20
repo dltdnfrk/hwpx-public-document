@@ -9,52 +9,82 @@
       {
         "path": "apps/docs/src/renderer/App.tsx",
         "sha256": "sha256:0cd748ce1b259c52a051f9976f785119e03f9dd6358b0f3136d3c75bf136b155",
-        "reviewedResponsibilities": ["docs-shell-composition", "editor-command-routing"]
+        "reviewedResponsibilities": [
+          "docs-shell-composition",
+          "editor-command-routing"
+        ]
       },
       {
         "path": "apps/docs/src/renderer/components/Ribbon.tsx",
         "sha256": "sha256:9b17e022ddd5f8d0d5ba728b1522a1f70b80b2734f0e1f5dc2cd55774da8019d",
-        "reviewedResponsibilities": ["ribbon-composition", "format-command-surface"]
+        "reviewedResponsibilities": [
+          "ribbon-composition",
+          "format-command-surface"
+        ]
       },
       {
         "path": "apps/docs/src/renderer/components/NavPane.tsx",
         "sha256": "sha256:2feb9209f9a92e7f54a71930d11502e4e3fbae3bc32a218b1903b0af6f4a03c7",
-        "reviewedResponsibilities": ["document-outline", "navigation-pane"]
+        "reviewedResponsibilities": [
+          "document-outline",
+          "navigation-pane"
+        ]
       },
       {
         "path": "apps/docs/src/renderer/components/ribbon-tabs.tsx",
         "sha256": "sha256:66a02109b0450ba5306f2f1a695810d55f47960cec0e22746489af11b9157f34",
-        "reviewedResponsibilities": ["ribbon-tab-model", "command-grouping"]
+        "reviewedResponsibilities": [
+          "ribbon-tab-model",
+          "command-grouping"
+        ]
       },
       {
         "path": "apps/docs/src/renderer/file-actions.ts",
         "sha256": "sha256:6699e5b841d5a2430018e9644110777c84b9f9525e88055e77661a65c4bfa08c",
-        "reviewedResponsibilities": ["document-file-actions", "export-action-routing"]
+        "reviewedResponsibilities": [
+          "document-file-actions",
+          "export-action-routing"
+        ]
       },
       {
         "path": "apps/docs/src/renderer/styles.css",
         "sha256": "sha256:1ea360efb6976e3a2a1378f51dd08723b2a8bade1ab5b34d6f0eccf69c89bae7",
-        "reviewedResponsibilities": ["docs-layout-grammar", "editor-visual-hierarchy"]
+        "reviewedResponsibilities": [
+          "docs-layout-grammar",
+          "editor-visual-hierarchy"
+        ]
       },
       {
         "path": "packages/ui/src/index.ts",
         "sha256": "sha256:761c3bddd885c8f5fd9d54bab6faa6009f30c95f31d36662fc51e37802fe5bcf",
-        "reviewedResponsibilities": ["shared-ui-boundary", "accessible-control-composition"]
+        "reviewedResponsibilities": [
+          "shared-ui-boundary",
+          "accessible-control-composition"
+        ]
       },
       {
         "path": "packages/docx-engine/src/index.ts",
         "sha256": "sha256:707d99e0ca80ba0ed2ed0752dfe90b9e5597d82023fb48eb4c3161d2350106ab",
-        "reviewedResponsibilities": ["docx-engine-boundary", "docx-document-model"]
+        "reviewedResponsibilities": [
+          "docx-engine-boundary",
+          "docx-document-model"
+        ]
       },
       {
         "path": "packages/docx-engine/src/generate.ts",
         "sha256": "sha256:067b6ba8f9e01c752fe572fa2be21770a37adf0cb88f23276505fae07597a79b",
-        "reviewedResponsibilities": ["docx-package-generation", "docx-structure-emission"]
+        "reviewedResponsibilities": [
+          "docx-package-generation",
+          "docx-structure-emission"
+        ]
       },
       {
         "path": "packages/docx-engine/src/patch.ts",
         "sha256": "sha256:ec2140201a91eaf9f46ddfa2bb99e3d39728ed390a5fd72412ed1a3639065b10",
-        "reviewedResponsibilities": ["docx-structure-patching", "docx-reopen-behavior"]
+        "reviewedResponsibilities": [
+          "docx-structure-patching",
+          "docx-reopen-behavior"
+        ]
       }
     ]
   },
@@ -89,9 +119,12 @@
   "localArtifacts": [
     {
       "path": "Resources/Studio/index.html",
-      "sha256": "sha256:3f749a0abdae414db0b9841f064b885941cb270dfa0748e4148a4ee6c3b1af41",
+      "sha256": "sha256:3745e2e57024e2fe851cdd28c20198c10a81b492873399166764b3f9de3501fe",
       "runtimeSurface": true,
-      "portedResponsibilities": ["docs-shell-semantic-structure", "ribbon-and-outline-controls"],
+      "portedResponsibilities": [
+        "docs-shell-semantic-structure",
+        "ribbon-and-outline-controls"
+      ],
       "upstreamSources": [
         "apps/docs/src/renderer/App.tsx",
         "apps/docs/src/renderer/components/Ribbon.tsx",
@@ -100,9 +133,12 @@
     },
     {
       "path": "Resources/Studio/styles.css",
-      "sha256": "sha256:b905fba51298ac582eb2103dea6a0163d493cccc1f12613c662716f679c831d7",
+      "sha256": "sha256:1de2fb6fee85bcc8aef1029c936b71ea4813be2f7b6dba2e0e9fc04abc18a27c",
       "runtimeSurface": true,
-      "portedResponsibilities": ["docs-layout-grammar", "owned-editor-design-tokens"],
+      "portedResponsibilities": [
+        "docs-layout-grammar",
+        "owned-editor-design-tokens"
+      ],
       "upstreamSources": [
         "apps/docs/src/renderer/styles.css",
         "packages/ui/src/index.ts"
@@ -110,9 +146,12 @@
     },
     {
       "path": "Resources/Studio/app.js",
-      "sha256": "sha256:05a0b8c8a86d8c1f6d266b3b9120037f75e93910744e25fa4341816435a1a339",
+      "sha256": "sha256:a9b900aa75c89aa38aade9ebe37faf53d0af63a4adab2bafe94570378619b637",
       "runtimeSurface": true,
-      "portedResponsibilities": ["editor-command-routing", "ribbon-navigation-and-file-actions"],
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
       "upstreamSources": [
         "apps/docs/src/renderer/App.tsx",
         "apps/docs/src/renderer/components/Ribbon.tsx",
@@ -124,9 +163,12 @@
     },
     {
       "path": "Sources/PublicDocumentApp/ExportSerializers.swift",
-      "sha256": "sha256:5fa6b09f5a8ba10bc44c66022fa786d69c63957a5c5ea1ee577acc4bbdbd4a47",
+      "sha256": "sha256:7a93addc864cb6cb5db79aabf89208c4b684f01995c8071ebea481bf7c7bcfd4",
       "runtimeSurface": true,
-      "portedResponsibilities": ["docx-package-generation", "docx-structure-emission"],
+      "portedResponsibilities": [
+        "docx-package-generation",
+        "docx-structure-emission"
+      ],
       "upstreamSources": [
         "packages/docx-engine/src/index.ts",
         "packages/docx-engine/src/generate.ts"
@@ -136,7 +178,10 @@
       "path": "Sources/PublicDocumentApp/ExportValidation.swift",
       "sha256": "sha256:8ec8ece30eff749522aa2907717e68dc5388491aa59aa2c21a862d02256bcdab",
       "runtimeSurface": true,
-      "portedResponsibilities": ["docx-package-reopen-validation", "docx-structure-binding"],
+      "portedResponsibilities": [
+        "docx-package-reopen-validation",
+        "docx-structure-binding"
+      ],
       "upstreamSources": [
         "packages/docx-engine/src/index.ts",
         "packages/docx-engine/src/generate.ts",
@@ -151,7 +196,13 @@
     "enum ExportSerializers",
     "enum ExportArtifactValidator"
   ],
-  "excludedRuntimeWords": ["genspark", "aipanel", "electron-updater", "websocket", "xmlhttprequest"],
+  "excludedRuntimeWords": [
+    "genspark",
+    "aipanel",
+    "electron-updater",
+    "websocket",
+    "xmlhttprequest"
+  ],
   "runtimeFork": {
     "buildScript": "scripts/build-genoffice-runtime.mjs",
     "inputLock": "GenOfficeFork/runtime-input-lock.json",
