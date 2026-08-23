@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleDisplayName</key>
-    <string>공공문서 작성기</string>
+    <string>문서작성기</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
     <key>CFBundleExecutable</key>
     <string>PublicDocumentApp</string>
     <key>CFBundleIdentifier</key>

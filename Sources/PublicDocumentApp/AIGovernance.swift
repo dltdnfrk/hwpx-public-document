@@ -25,8 +25,25 @@ struct AIRequestBinding: Equatable {
     let documentID: String
     let provider: AIProviderKind
     let endpointIdentity: String
+    let model: String
     let operation: AIOperation
     let payloadScope: String
+
+    init(
+        documentID: String,
+        provider: AIProviderKind,
+        endpointIdentity: String,
+        model: String = "gpt-5-mini",
+        operation: AIOperation,
+        payloadScope: String
+    ) {
+        self.documentID = documentID
+        self.provider = provider
+        self.endpointIdentity = endpointIdentity
+        self.model = model
+        self.operation = operation
+        self.payloadScope = payloadScope
+    }
 }
 
 enum AIGovernanceError: Error, LocalizedError {

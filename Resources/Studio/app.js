@@ -14,10 +14,18 @@ const exportConsent = document.querySelector('[data-export-consent]')
 const batchExportProgress = document.querySelector('.batch-export-progress')
 const aiWorkspace = document.querySelector('.ai-workspace')
 const aiProposalReview = document.querySelector('[data-ai-proposal-review]')
+const byokSettings = document.querySelector('.byok-settings')
+const studioSession = document.querySelector('meta[name="public-document-session"]')?.content || ''
 const compactLayout = window.matchMedia('(max-width: 1099px)')
 const easyToolDialog = document.querySelector('.easy-tool-dialog')
 const easyTools = () => window.PublicDocumentEasyTools
 const revisionTimestamp = () => new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')
+const PROVIDER_DEFAULTS = {
+  openai: { endpointIdentity: 'https://api.openai.com/v1', model: 'gpt-5-mini' },
+  anthropic: { endpointIdentity: 'https://api.anthropic.com', model: 'claude-sonnet-4-5' },
+  gemini: { endpointIdentity: 'https://generativelanguage.googleapis.com', model: 'gemini-2.5-flash' },
+  'openai-compatible': { endpointIdentity: '', model: '' },
+}
 const isTitleElement = (element) => Boolean(element && (element.elementID === 'element-title' || element.styleID === 'style-title'))
 const isEasyTableElement = (element) => Boolean(
   element && (element.kind === 'table' || /data-easy-table/i.test(element.contentHTML || ''))
@@ -76,6 +84,8 @@ let autosaveTimer = null
 let periodicSaveTimer = null
 let selectedAIOperation = 'source-grounded-draft'
 let pendingAIProposal = null
+let aiSettingsSnapshot = { activeProvider: null, providers: [] }
+let suppressEditorAutosave = false
 let pendingEasyConfirm = null
 let pendingMergeHeading = ''
 let studioPrefs = { autosaveIntervalMs: 180000, favorites: [], myForms: [] }
@@ -117,7 +127,11 @@ const projectBridge = (action, project, details = {}) => {
   }
   fetch('/api/bridge', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Public-Document-Session': studioSession,
+    },
     body: JSON.stringify(message),
   }).then(async (response) => {
     const payload = await response.json()
@@ -305,14 +319,99 @@ const initialProject = () => {
 }
 
 const aiRequestDetails = () => {
-  const provider = document.querySelector('[data-ai-provider]').value
-  const endpointIdentity = document.querySelector('[data-ai-endpoint]').value.trim()
+  const active = aiSettingsSnapshot.providers.find((item) => item.provider === aiSettingsSnapshot.activeProvider)
   const payloadScope = document.querySelector('[data-ai-payload-scope]').value
   const instruction = document.querySelector('[data-ai-free-form]').value.trim()
   return {
-    provider, endpointIdentity, payloadScope, instruction,
+    provider: active?.provider || '',
+    payloadScope, instruction,
     operation: instruction ? 'free-form' : selectedAIOperation,
   }
+}
+
+const activeAISetting = () => (
+  aiSettingsSnapshot.providers.find((item) => item.provider === aiSettingsSnapshot.activeProvider) || null
+)
+
+const setBYOKStatus = (state, message) => {
+  const status = document.querySelector('[data-byok-status]')
+  status.dataset.state = state
+  status.textContent = message
+}
+
+const updateBYOKDestination = () => {
+  const provider = document.querySelector('[data-byok-provider]').value
+  const endpoint = document.querySelector('[data-byok-endpoint]').value.trim()
+  const output = document.querySelector('[data-byok-destination]')
+  try {
+    const url = new URL(endpoint)
+    const compatible = provider === 'openai-compatible'
+    output.textContent = compatible
+      ? `전송 대상: ${url.host} · 사용자 지정 ${url.protocol === 'https:' ? 'HTTPS' : '로컬 HTTP'} 호스트`
+      : `전송 대상: ${url.host} · HTTPS만 허용`
+  } catch {
+    output.textContent = '전송 대상을 확인할 수 없습니다.'
+  }
+}
+
+const applyProviderDefaults = (provider) => {
+  const defaults = PROVIDER_DEFAULTS[provider]
+  const endpoint = document.querySelector('[data-byok-endpoint]')
+  const model = document.querySelector('[data-byok-model]')
+  endpoint.value = defaults.endpointIdentity
+  endpoint.readOnly = provider !== 'openai-compatible'
+  model.value = defaults.model
+  document.querySelector('[data-byok-secret]').value = ''
+  setBYOKStatus('draft', '자격 증명을 입력한 뒤 저장하세요.')
+  updateBYOKDestination()
+}
+
+const renderAISettings = (snapshot, state = 'loaded') => {
+  aiSettingsSnapshot = snapshot || { activeProvider: null, providers: [] }
+  const active = activeAISetting()
+  document.querySelector('[data-ai-active-provider]').textContent = active?.provider || '-'
+  document.querySelector('[data-ai-active-endpoint]').textContent = active?.endpointIdentity || '-'
+  document.querySelector('[data-ai-active-model]').textContent = active?.model || '-'
+  document.querySelector('[data-ai-active-status]').textContent = active?.hasSecret
+    ? `${active.provider} · 키체인 저장됨`
+    : '저장된 제공자가 없습니다.'
+  document.querySelector('[data-ai-request]').disabled = !active?.hasSecret
+  const providerControl = document.querySelector('[data-byok-provider]')
+  const selected = active?.provider || providerControl.value || 'openai'
+  providerControl.value = selected
+  if (active) {
+    document.querySelector('[data-byok-endpoint]').value = active.endpointIdentity
+    document.querySelector('[data-byok-endpoint]').readOnly = selected !== 'openai-compatible'
+    document.querySelector('[data-byok-model]').value = active.model
+  } else {
+    applyProviderDefaults(selected)
+  }
+  const accounts = document.querySelector('[data-byok-accounts]')
+  accounts.replaceChildren(...aiSettingsSnapshot.providers.map((item) => {
+    const entry = document.createElement('li')
+    const button = document.createElement('button')
+    button.type = 'button'
+    button.dataset.provider = item.provider
+    button.setAttribute('aria-pressed', String(item.provider === aiSettingsSnapshot.activeProvider))
+    button.textContent = `${item.provider} · ${item.hostDisclosure} · ${item.model}`
+    button.addEventListener('click', () => {
+      projectBridge('configureAISettings', null, {
+        provider: item.provider,
+        endpointIdentity: item.endpointIdentity,
+        model: item.model,
+      })
+      document.querySelector('[data-ai-consent]').checked = false
+    })
+    entry.append(button)
+    return entry
+  }))
+  document.querySelector('[data-byok-delete]').disabled = !active
+  document.querySelector('[data-byok-test]').disabled = !active?.hasSecret
+  if (state === 'saved') setBYOKStatus('saved', '자격 증명을 macOS 키체인에 저장했습니다.')
+  else if (state === 'tested') setBYOKStatus('test-ok', '연결에 성공했습니다. 문서 내용은 전송하지 않았습니다.')
+  else if (state === 'deleted') setBYOKStatus('deleted', '이 제공자의 자격 증명을 삭제했습니다.')
+  else setBYOKStatus(active?.hasSecret ? 'saved' : 'unset', active?.hasSecret ? '자격 증명이 저장되어 있습니다.' : '저장된 제공자가 없습니다.')
+  updateBYOKDestination()
 }
 
 const selectedAIElementIDs = () => {
@@ -321,10 +420,16 @@ const selectedAIElementIDs = () => {
     ? selection.anchorNode
     : selection?.anchorNode?.parentElement
   const target = anchor?.closest?.('[data-element-id]')
-  return target ? [target.dataset.elementId] : []
+  if (target) return [target.dataset.elementId]
+  return focusedEditorElementID ? [focusedEditorElementID] : []
 }
 
 const requestAIProposal = () => {
+  if (!aiSettingsSnapshot.activeProvider) {
+    announce('AI 제공자 설정에서 자격 증명을 먼저 저장하세요.')
+    openDialog(byokSettings, document.querySelector('[data-ai-request]'))
+    return
+  }
   const consent = document.querySelector('[data-ai-consent]')
   if (!consent.checked) {
     announce('선택한 문서·제공자·엔드포인트·작업·전송 범위에 대한 동의가 필요합니다.')
@@ -338,7 +443,10 @@ const requestAIProposal = () => {
     page.focus()
     return
   }
-  projectBridge('requestAIProposal', currentProject || initialProject(), {
+  window.clearTimeout(autosaveTimer)
+  const requestProject = newRevision(currentProject || initialProject(), 'ai-request-snapshot')
+  if (requestProject !== currentProject) currentProject = requestProject
+  projectBridge('requestAIProposal', currentProject, {
     ...details, selectedElementIDs, consent: true,
   })
   announce('동의 범위를 확인하고 AI 제안을 요청했습니다. 문서는 변경되지 않았습니다.')
@@ -391,15 +499,21 @@ const applyAIProposal = () => {
     announce('적용할 수 있는 스키마 유효 변경을 하나 이상 선택하세요.')
     return
   }
-  projectBridge('applyAIProposal', null, { proposalID: pendingAIProposal.proposalID, commandIDs })
+  projectBridge('applyAIProposal', currentProject, { proposalID: pendingAIProposal.proposalID, commandIDs })
   announce('선택한 변경의 원자적 적용을 요청했습니다.')
 }
 
 const renderProject = (project, officialRuleState = null) => {
+  pendingAIProposal = null
+  aiProposalReview.hidden = true
   currentProject = project
   titleInput.value = project.title
   applyPageMarginStyles(project.pageMargins)
-  if (editorReady) editor.setProject(project)
+  if (editorReady) {
+    suppressEditorAutosave = true
+    editor.setProject(project)
+    window.requestAnimationFrame(() => { suppressEditorAutosave = false })
+  }
   else project.elements.forEach((element) => {
     const target = page.querySelector(`[data-element-id="${CSS.escape(element.elementID)}"]`)
     if (target && element.contentHTML && target.innerHTML !== element.contentHTML) rehydrateRichContent(target, element.contentHTML)
@@ -903,10 +1017,27 @@ window.projectStoreReceive = ({ event, payload }) => {
     announce('선택한 AI 제공자 자격 증명이 구성되지 않았습니다. 오프라인 편집과 내보내기는 계속 사용할 수 있습니다.')
     return
   }
-  if (event === 'aiProviderConfigured') {
-    renderProject(payload.project, payload.officialRuleState)
-    document.querySelector('[data-ai-secret]').value = ''
+  if (event === 'aiSettingsLoaded') {
+    renderAISettings(payload.project)
+    return
+  }
+  if (event === 'aiSettingsSaved') {
+    renderAISettings(payload.project, 'saved')
+    document.querySelector('[data-byok-secret]').value = ''
+    document.querySelector('[data-ai-consent]').checked = false
     announce('제공자 자격 증명을 macOS 키체인에 저장했습니다.')
+    return
+  }
+  if (event === 'aiSettingsTested') {
+    renderAISettings(payload.project, 'tested')
+    announce('AI 제공자 연결을 확인했습니다.')
+    return
+  }
+  if (event === 'aiSettingsDeleted') {
+    renderAISettings(payload.project, 'deleted')
+    document.querySelector('[data-byok-secret]').value = ''
+    document.querySelector('[data-ai-consent]').checked = false
+    announce('AI 제공자 자격 증명을 삭제했습니다.')
     return
   }
   if (event === 'aiConsentRevoked') {
@@ -930,6 +1061,9 @@ window.projectStoreReceive = ({ event, payload }) => {
     announce('AI 제안을 거절하고 기록에 보존했습니다.')
     aiWorkspace.querySelector('[data-ai-request]').focus()
     return
+  }
+  if (event === 'error' && byokSettings.open) {
+    setBYOKStatus('test-failed', payload.message || 'AI 제공자 작업에 실패했습니다.')
   }
   announce(payload.message || '프로젝트 작업을 완료하지 못했습니다.')
 }
@@ -980,7 +1114,7 @@ document.querySelectorAll('[data-action="close-export-setup"]').forEach((button)
 })
 exportSetup.addEventListener('cancel', resetExportConsent)
 editor.addEventListener('public-document-genoffice-change', (event) => {
-  if (editorReady && Array.isArray(event.detail?.elements)) scheduleAutosave()
+  if (!suppressEditorAutosave && editorReady && Array.isArray(event.detail?.elements)) scheduleAutosave()
 })
 editor.addEventListener('public-document-genoffice-selection-change', (event) => {
   syncFormatStates(event.detail)
@@ -1039,24 +1173,63 @@ document.querySelectorAll('[data-ai-operation]').forEach((button) => {
   button.addEventListener('click', () => {
     selectedAIOperation = button.dataset.aiOperation
     document.querySelectorAll('[data-ai-operation]').forEach((candidate) => candidate.setAttribute('aria-pressed', String(candidate === button)))
+    document.querySelector('[data-ai-consent]').checked = false
     announce(`${button.textContent.trim()} 작업을 선택했습니다.`)
   })
 })
 
 document.querySelector('[data-ai-request]').addEventListener('click', requestAIProposal)
-document.querySelector('[data-ai-configure]').addEventListener('click', () => {
-  const secret = document.querySelector('[data-ai-secret]').value
-  if (!secret) {
-    announce('키체인에 저장할 제공자 자격 증명을 입력하세요.')
-    document.querySelector('[data-ai-secret]').focus()
-    return
-  }
-  projectBridge('configureAIProvider', currentProject || initialProject(), { ...aiRequestDetails(), secret })
+document.querySelectorAll('[data-action="open-settings"]').forEach((button) => {
+  button.addEventListener('click', () => {
+    document.querySelector('[data-byok-host]').textContent = isLocalWeb()
+      ? '로컬 웹 호스트입니다. 자격 증명은 세션 인증된 로컬 bridge를 통해 이 Mac의 키체인에 저장되며 디스크에는 기록하지 않습니다.'
+      : '자격 증명은 이 Mac의 키체인에만 저장됩니다. 문서 파일에는 키가 들어가지 않습니다.'
+    openDialog(byokSettings, button)
+    projectBridge('loadAISettings')
+  })
+})
+document.querySelectorAll('[data-action="close-settings"]').forEach((button) => {
+  button.addEventListener('click', () => {
+    document.querySelector('[data-byok-secret]').value = ''
+    closeDialog(byokSettings)
+  })
+})
+byokSettings.addEventListener('cancel', () => {
+  document.querySelector('[data-byok-secret]').value = ''
+})
+document.querySelector('[data-byok-provider]').addEventListener('change', (event) => {
+  applyProviderDefaults(event.target.value)
+})
+document.querySelectorAll('[data-byok-endpoint], [data-byok-model]').forEach((input) => {
+  input.addEventListener('input', () => {
+    setBYOKStatus('draft', '설정을 저장하거나 연결을 확인하세요.')
+    updateBYOKDestination()
+  })
+})
+document.querySelector('[data-byok-save]').addEventListener('click', () => {
+  const provider = document.querySelector('[data-byok-provider]').value
+  const endpointIdentity = document.querySelector('[data-byok-endpoint]').value.trim()
+  const model = document.querySelector('[data-byok-model]').value.trim()
+  const secretControl = document.querySelector('[data-byok-secret]')
+  const secret = secretControl.value
+  setBYOKStatus('saving', '키체인에 저장하는 중입니다.')
+  projectBridge('configureAISettings', null, {
+    provider, endpointIdentity, model,
+    ...(secret ? { secret } : {}),
+  })
+  secretControl.value = ''
+})
+document.querySelector('[data-byok-test]').addEventListener('click', () => {
+  setBYOKStatus('testing', '연결을 확인하는 중입니다. 문서 내용은 전송하지 않습니다.')
+  projectBridge('testAISettings', null, { provider: document.querySelector('[data-byok-provider]').value })
+})
+document.querySelector('[data-byok-delete]').addEventListener('click', () => {
+  projectBridge('deleteAISettings', null, { provider: document.querySelector('[data-byok-provider]').value })
 })
 document.querySelector('[data-ai-approve-selected]').addEventListener('click', applyAIProposal)
 document.querySelector('[data-ai-reject]').addEventListener('click', () => {
   if (!pendingAIProposal) return
-  projectBridge('rejectAIProposal', null, { proposalID: pendingAIProposal.proposalID })
+  projectBridge('rejectAIProposal', currentProject, { proposalID: pendingAIProposal.proposalID })
   announce('AI 제안 거절을 기록하고 있습니다.')
 })
 document.querySelector('[data-ai-revoke]').addEventListener('click', () => {
@@ -1064,7 +1237,7 @@ document.querySelector('[data-ai-revoke]').addEventListener('click', () => {
   announce('AI 전송 동의를 철회하고 있습니다.')
 })
 
-document.querySelectorAll('[data-ai-provider], [data-ai-endpoint], [data-ai-payload-scope], [data-ai-free-form], [data-ai-operation]').forEach((input) => {
+document.querySelectorAll('[data-ai-payload-scope], [data-ai-free-form]').forEach((input) => {
   input.addEventListener('input', () => { document.querySelector('[data-ai-consent]').checked = false })
   input.addEventListener('change', () => { document.querySelector('[data-ai-consent]').checked = false })
 })
@@ -1524,6 +1697,8 @@ syncOutlineForViewport()
 if (!(window.webkit && window.webkit.messageHandlers.projectStore)) {
   document.body.dataset.host = 'local-web'
 }
+applyProviderDefaults('openai')
+document.querySelector('[data-ai-request]').disabled = true
 applyStudioPrefs(studioPrefs)
 currentProject = initialProject()
 editor.addEventListener('public-document-genoffice-ready', activateGenOfficeEditor)

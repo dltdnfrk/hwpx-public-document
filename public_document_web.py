@@ -4,6 +4,7 @@ import argparse
 import base64
 import json
 import posixpath
+import secrets
 import shutil
 import subprocess
 import tempfile
@@ -11,8 +12,9 @@ import threading
 import uuid
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.cookies import SimpleCookie
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 from urllib.parse import unquote, urlparse
 
 
@@ -29,11 +31,36 @@ MIME_TYPES = {
     ".json": "application/json; charset=utf-8",
     ".svg": "image/svg+xml",
     ".png": "image/png",
+    ".ico": "image/vnd.microsoft.icon",
+    ".webmanifest": "application/manifest+json",
     ".woff2": "font/woff2",
     ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     ".hwpx": "application/hwp+zip",
     ".hwp": "application/x-hwp",
     ".md": "text/markdown; charset=utf-8",
+}
+AI_BRIDGE_ACTIONS = {
+    "loadAISettings",
+    "configureAISettings",
+    "testAISettings",
+    "deleteAISettings",
+    "requestAIProposal",
+    "revokeAIConsent",
+    "applyAIProposal",
+    "rejectAIProposal",
+}
+AI_PROJECT_EVENTS = {
+    "aiProposal",
+    "aiConsentRevoked",
+    "aiProposalApplied",
+    "aiProposalRejected",
+}
+UNSUPPORTED_ACTIONS = {
+    "batchExport",
+    "cancelBatchExport",
+    "retryBatchExport",
+    "undoAIRevision",
+    "redoAIRevision",
 }
 
 
@@ -255,6 +282,24 @@ def resolve_app_binary() -> Path:
     return debug
 
 
+def run_ai_bridge(message: dict[str, Any]) -> dict[str, Any]:
+    result = subprocess.run(
+        [str(resolve_app_binary()), "--ai-bridge-stdin"],
+        cwd=ROOT,
+        input=json.dumps(message, ensure_ascii=False),
+        capture_output=True,
+        text=True,
+        timeout=90,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise RuntimeError("AI 제공자 작업을 완료하지 못했습니다.")
+    payload = json.loads(result.stdout)
+    if not isinstance(payload, dict) or not isinstance(payload.get("events"), list):
+        raise RuntimeError("AI 제공자 응답 형식이 올바르지 않습니다.")
+    return payload
+
+
 def export_project(project: dict[str, Any], formats: list[str], consent: bool, downloads: Path) -> dict[str, Any]:
     operation = uuid.uuid4().hex
     work = Path(tempfile.mkdtemp(prefix="public-document-web-export-"))
@@ -370,6 +415,7 @@ def handle_bridge(state: StudioState, body: dict[str, Any]) -> list[dict[str, An
             event("documentLibrary", {"entries": state.list_library()}),
             event("templateCatalog", catalog),
         ]
+        events.extend(run_ai_bridge({"action": "loadAISettings"})["events"])
         if state.recovery_file.is_file():
             events.append(event("recovered", state.load_json(state.recovery_file)))
         elif state.project_file.is_file():
@@ -425,18 +471,18 @@ def handle_bridge(state: StudioState, body: dict[str, Any]) -> list[dict[str, An
         return [event("templateCatalog", state.catalog_status())]
     if action == "updateTemplateCatalog":
         return [error_event("로컬 웹앱은 번들된 서명 카탈로그를 사용합니다. 카탈로그 파일 선택은 앱에서 하세요.")]
-    if action in {
-        "batchExport",
-        "cancelBatchExport",
-        "retryBatchExport",
-        "requestAIProposal",
-        "configureAIProvider",
-        "revokeAIConsent",
-        "applyAIProposal",
-        "rejectAIProposal",
-        "undoAIRevision",
-        "redoAIRevision",
-    }:
+    if action in AI_BRIDGE_ACTIONS:
+        response = run_ai_bridge(body)
+        for entry in response["events"]:
+            if entry.get("event") not in AI_PROJECT_EVENTS:
+                continue
+            project = (entry.get("payload") or {}).get("project")
+            if not isinstance(project, dict) or "schemaVersion" not in project:
+                continue
+            state.write_json(state.project_file, project)
+            state.recovery_file.unlink(missing_ok=True)
+        return response["events"]
+    if action in UNSUPPORTED_ACTIONS:
         return [error_event("로컬 웹앱에서는 이 작업을 아직 지원하지 않습니다.")]
     return [error_event("지원하지 않는 프로젝트 작업입니다.")]
 
@@ -496,10 +542,17 @@ class StudioHandler(BaseHTTPRequestHandler):
         data = resource.read_bytes()
         if resource.name == "index.html" and resource.parent.name == "Studio":
             data = data.replace(b"connect-src 'none'", b"connect-src 'self'")
+            meta = f'<meta name="public-document-session" content="{self._studio_server.session_token}">'.encode()
+            data = data.replace(b"<title>", meta + b"\n    <title>", 1)
         self.send_response(200)
         self.send_header("Content-Type", MIME_TYPES.get(resource.suffix, "application/octet-stream"))
         self.send_header("Content-Length", str(len(data)))
         self.send_header("Cache-Control", "no-store")
+        if resource.name == "index.html" and resource.parent.name == "Studio":
+            self.send_header(
+                "Set-Cookie",
+                f"PublicDocumentSession={self._studio_server.session_token}; HttpOnly; SameSite=Strict; Path=/",
+            )
         self.end_headers()
         self.wfile.write(data)
 
@@ -507,22 +560,29 @@ class StudioHandler(BaseHTTPRequestHandler):
         if urlparse(self.path).path != "/api/bridge":
             self.send_error(404, "Not Found")
             return
+        if not self._bridge_authorized():
+            self._send_json(403, {"events": [error_event("로컬 Studio 세션을 확인할 수 없습니다.")]})
+            return
         length = int(self.headers.get("Content-Length") or 0)
         if length <= 0 or length > 2_000_000:
             self._send_json(400, {"events": [error_event("요청 본문 크기가 올바르지 않습니다.")]})
             return
         try:
             body = json.loads(self.rfile.read(length).decode("utf-8"))
-            events = handle_bridge(self.server.state, body)
+            events = handle_bridge(self._studio_server.state, body)
             self._send_json(200, {"events": events})
         except Exception as error:  # noqa: BLE001 - local host returns the failure to Studio
-            self._send_json(400, {"events": [error_event(str(error))]})
+            message = str(error) if not isinstance(error, subprocess.SubprocessError) else "AI 제공자 작업을 완료하지 못했습니다."
+            self._send_json(400, {"events": [error_event(message)]})
+
+    def do_OPTIONS(self) -> None:
+        self._send_json(403, {"events": [error_event("교차 출처 요청은 허용되지 않습니다.")]})
 
     def _send_download(self, path: str) -> None:
         relative = posixpath.normpath(unquote(path).lstrip("/"))
-        candidate = (self.server.state.data_dir / relative).resolve()
+        candidate = (self._studio_server.state.data_dir / relative).resolve()
         try:
-            candidate.relative_to(self.server.state.downloads.resolve())
+            candidate.relative_to(self._studio_server.state.downloads.resolve())
         except ValueError:
             self.send_error(404, "Not Found")
             return
@@ -546,6 +606,21 @@ class StudioHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
+    def _bridge_authorized(self) -> bool:
+        if self.headers.get("Host") not in self._studio_server.allowed_hosts:
+            return False
+        if self.headers.get("Origin") not in self._studio_server.allowed_origins:
+            return False
+        if self.headers.get("X-Public-Document-Session") != self._studio_server.session_token:
+            return False
+        cookie = SimpleCookie(self.headers.get("Cookie", ""))
+        morsel = cookie.get("PublicDocumentSession")
+        return morsel is not None and morsel.value == self._studio_server.session_token
+
+    @property
+    def _studio_server(self) -> "StudioServer":
+        return cast("StudioServer", self.server)
+
     def log_message(self, format: str, *args: object) -> None:
         return
 
@@ -554,6 +629,10 @@ class StudioServer(ThreadingHTTPServer):
     def __init__(self, address: tuple[str, int], state: StudioState) -> None:
         super().__init__(address, StudioHandler)
         self.state = state
+        self.session_token = secrets.token_urlsafe(32)
+        port = self.server_address[1]
+        self.allowed_hosts = {f"127.0.0.1:{port}", f"localhost:{port}"}
+        self.allowed_origins = {f"http://127.0.0.1:{port}", f"http://localhost:{port}"}
 
 
 def serve(host: str, port: int, data_dir: Path, open_browser: bool) -> StudioServer:
@@ -567,7 +646,7 @@ def serve(host: str, port: int, data_dir: Path, open_browser: bool) -> StudioSer
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="공공문서 작성기 로컬 웹앱")
+    parser = argparse.ArgumentParser(description="문서작성기 로컬 웹앱")
     parser.add_argument("--host", default=DEFAULT_HOST)
     parser.add_argument("--port", type=int, default=DEFAULT_PORT)
     parser.add_argument(
@@ -579,7 +658,7 @@ def main() -> None:
     if args.host not in {"127.0.0.1", "localhost"}:
         raise SystemExit("로컬 웹앱은 127.0.0.1에서만 엽니다.")
     server = serve(args.host, args.port, Path(args.data_dir), open_browser=not args.no_open)
-    host, port = server.server_address
+    host, port = cast(tuple[str, int], server.server_address)
     print(f"http://{host}:{port}/Studio/index.html", flush=True)
     try:
         threading.Event().wait()

@@ -20,7 +20,13 @@ enum AIProviderTransportError: Error, LocalizedError {
 }
 
 struct AIKeychainCredentialStore {
-    private let service = "com.muni.public-document.ai-provider"
+    private let service: String
+
+    init(service: String? = nil) {
+        self.service = service
+            ?? ProcessInfo.processInfo.environment["PUBLIC_DOCUMENT_STUDIO_AI_KEYCHAIN_SERVICE"]
+            ?? "com.muni.public-document.ai-provider"
+    }
 
     func set(secret: String, accountReference: String) throws {
         let query: [CFString: Any] = [
@@ -31,6 +37,8 @@ struct AIKeychainCredentialStore {
         SecItemDelete(query as CFDictionary)
         var item = query
         item[kSecValueData] = Data(secret.utf8)
+        item[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+        item[kSecAttrSynchronizable] = kCFBooleanFalse as Any
         guard SecItemAdd(item as CFDictionary, nil) == errSecSuccess else {
             throw AIProviderTransportError.credentialUnavailable
         }
@@ -50,6 +58,18 @@ struct AIKeychainCredentialStore {
               let secret = String(data: data, encoding: .utf8)
         else { throw AIProviderTransportError.credentialUnavailable }
         return secret
+    }
+
+    func delete(accountReference: String) throws {
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: accountReference,
+        ]
+        let status = SecItemDelete(query as CFDictionary)
+        guard status == errSecSuccess || status == errSecItemNotFound else {
+            throw AIProviderTransportError.credentialUnavailable
+        }
     }
 }
 
@@ -117,9 +137,15 @@ struct AIProviderTransport {
         case .openAI, .openAICompatible:
             if !url.path.hasSuffix("/chat/completions") { url.append(path: "chat/completions") }
         case .anthropic:
-            if !url.path.hasSuffix("/v1/messages") { url.append(path: "v1/messages") }
+            if url.path == "/v1" {
+                url.append(path: "messages")
+            } else if !url.path.hasSuffix("/v1/messages") {
+                url.append(path: "v1/messages")
+            }
         case .gemini:
-            if !url.path.contains(":generateContent") { url.append(path: "v1beta/models/gemini-2.5-flash:generateContent") }
+            if !url.path.contains(":generateContent") {
+                url.append(path: "v1beta/models/\(binding.model):generateContent")
+            }
         }
         let scopedElements = elements.map { ["elementID": $0.elementID, "text": $0.text] }
         let input = try JSONSerialization.data(withJSONObject: [
@@ -135,11 +161,11 @@ struct AIProviderTransport {
         switch binding.provider {
         case .openAI, .openAICompatible:
             request.setValue("Bearer \(credential)", forHTTPHeaderField: "Authorization")
-            body = ["model": "gpt-5-mini", "messages": [["role": "system", "content": schemaInstruction], ["role": "user", "content": content]], "response_format": ["type": "json_object"]]
+            body = ["model": binding.model, "messages": [["role": "system", "content": schemaInstruction], ["role": "user", "content": content]], "response_format": ["type": "json_object"]]
         case .anthropic:
             request.setValue(credential, forHTTPHeaderField: "x-api-key")
             request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
-            body = ["model": "claude-sonnet-4-5", "max_tokens": 4096, "system": schemaInstruction, "messages": [["role": "user", "content": content]]]
+            body = ["model": binding.model, "max_tokens": 4096, "system": schemaInstruction, "messages": [["role": "user", "content": content]]]
         case .gemini:
             request.setValue(credential, forHTTPHeaderField: "x-goog-api-key")
             body = ["system_instruction": ["parts": [["text": schemaInstruction]]], "contents": [["parts": [["text": content]]]]]

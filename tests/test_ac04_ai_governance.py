@@ -81,6 +81,8 @@ def test_ai_governance_is_consent_bound_reviewed_atomic_and_restart_persistent(
 
     source_paths = [
         "Sources/PublicDocumentApp/AIGovernance.swift",
+        "Sources/PublicDocumentApp/AISettings.swift",
+        "Sources/PublicDocumentApp/AISettingsSelfTest.swift",
         "Sources/PublicDocumentApp/AIProviderTransport.swift",
         "Sources/PublicDocumentApp/AIGovernanceSelfTest.swift",
         "Sources/PublicDocumentApp/DocumentProject.swift",
@@ -121,7 +123,10 @@ def test_studio_exposes_guided_free_form_consent_diff_and_review_controls() -> N
     assert "projectBridge('applyAIProposal'" in script
     assert "projectBridge('rejectAIProposal'" in script
     assert "projectBridge('revokeAIConsent'" in script
-    assert "projectBridge('configureAIProvider'" in script
+    assert "projectBridge('configureAISettings'" in script
+    assert "projectBridge('testAISettings'" in script
+    assert "projectBridge('deleteAISettings'" in script
+    assert "data-byok-secret" in html
     assert 'case "applyAIProposal"' in host
     assert 'case "rejectAIProposal"' in host
     assert 'case "revokeAIConsent"' in host

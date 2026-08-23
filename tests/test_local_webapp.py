@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import Any
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
@@ -12,21 +13,36 @@ if str(ROOT) not in sys.path:
 
 import public_document_web as webapp
 
+_SESSIONS: dict[str, str] = {}
+
 
 def _start(tmp_path: Path):
     server = webapp.serve("127.0.0.1", 0, tmp_path / "data", open_browser=False)
-    return server, f"http://127.0.0.1:{server.server_address[1]}"
+    origin = f"http://127.0.0.1:{server.server_address[1]}"
+    _SESSIONS[origin] = server.session_token
+    return server, origin
 
 
-def _json(url: str, payload: dict) -> dict:
+def _json(url: str, payload: dict[str, Any]) -> dict[str, Any]:
+    origin = url.split("/api/", 1)[0]
     request = Request(
         url,
         data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
+        headers=_auth_headers(origin),
         method="POST",
     )
     with urlopen(request) as response:
         return json.loads(response.read().decode("utf-8"))
+
+
+def _auth_headers(origin: str) -> dict[str, str]:
+    token = _SESSIONS[origin]
+    return {
+        "Content-Type": "application/json",
+        "Origin": origin,
+        "Cookie": f"PublicDocumentSession={token}",
+        "X-Public-Document-Session": token,
+    }
 
 
 def test_local_webapp_serves_studio_and_allows_same_origin_api(tmp_path: Path) -> None:
@@ -269,7 +285,7 @@ def test_local_webapp_exports_docx_with_fractional_revision_timestamp(tmp_path: 
                 "formats": ["docx"],
                 "flatteningConsent": True,
             }).encode("utf-8"),
-            headers={"Content-Type": "application/json"},
+            headers=_auth_headers(origin),
             method="POST",
         )
         with urlopen(request, timeout=120) as response:
@@ -372,7 +388,7 @@ def test_local_webapp_exports_docx_with_empty_easy_table(tmp_path: Path) -> None
                 "formats": ["docx"],
                 "flatteningConsent": True,
             }).encode("utf-8"),
-            headers={"Content-Type": "application/json"},
+            headers=_auth_headers(origin),
             method="POST",
         )
         with urlopen(request, timeout=120) as response:
@@ -453,7 +469,7 @@ def test_local_webapp_exports_docx_with_genoffice_prosemirror_table(tmp_path: Pa
                 "formats": ["docx"],
                 "flatteningConsent": True,
             }).encode("utf-8"),
-            headers={"Content-Type": "application/json"},
+            headers=_auth_headers(origin),
             method="POST",
         )
         with urlopen(request, timeout=120) as response:

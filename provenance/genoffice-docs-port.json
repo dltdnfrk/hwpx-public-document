@@ -119,7 +119,7 @@
   "localArtifacts": [
     {
       "path": "Resources/Studio/index.html",
-      "sha256": "sha256:3745e2e57024e2fe851cdd28c20198c10a81b492873399166764b3f9de3501fe",
+      "sha256": "sha256:d1668ad8972aa47f97fcd4c5008eb345c214c0579c25bb1d8312f2478ad7c3ab",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-shell-semantic-structure",
@@ -133,7 +133,7 @@
     },
     {
       "path": "Resources/Studio/styles.css",
-      "sha256": "sha256:1de2fb6fee85bcc8aef1029c936b71ea4813be2f7b6dba2e0e9fc04abc18a27c",
+      "sha256": "sha256:61d20a8449b9d71f06613448ee0f5b6ce33b6b0dd271916a4550084f8ce40ba0",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-layout-grammar",
@@ -146,7 +146,7 @@
     },
     {
       "path": "Resources/Studio/app.js",
-      "sha256": "sha256:a9b900aa75c89aa38aade9ebe37faf53d0af63a4adab2bafe94570378619b637",
+      "sha256": "sha256:acc723314db24365929c4c5a5a7b746632b78dd8691e9520b78beac199490501",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",

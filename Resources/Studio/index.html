@@ -3,9 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; media-src 'none'; base-uri 'none'; form-action 'none'">
-    <title>공공문서 작성기 / Public Document Studio</title>
-    <link rel="icon" href="data:,">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; worker-src 'none'; media-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'">
+    <title>문서작성기</title>
+    <link rel="icon" href="icons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="manifest" href="icons/site.webmanifest">
+    <meta name="theme-color" content="#006879">
+    <meta name="apple-mobile-web-app-title" content="문서작성기">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -14,8 +21,7 @@
         <div class="traffic-space" aria-hidden="true"></div>
         <div class="brand-lockup">
           <span class="brand-mark" aria-hidden="true">문</span>
-          <span>공공문서 작성기</span>
-          <span class="brand-en">Public Document Studio</span>
+          <span class="brand-name">문서작성기</span>
         </div>
         <label class="document-title">
           <span class="sr-only">문서 제목</span>
@@ -67,6 +73,7 @@
           <button class="tool" type="button" data-action="check"><span class="tool-icon">✓</span>필수항목 점검</button>
           <button class="tool" type="button" data-action="marker"><span class="tool-icon">!</span>확인 필요</button>
           <button class="tool" type="button" data-action="open-ai"><span class="tool-icon">AI</span>AI 제안</button>
+          <button class="tool" type="button" data-action="open-settings"><span class="tool-icon">⚙</span>AI 설정</button>
           <span class="group-label">공공문서</span>
         </div>
         <div class="tool-group text-controls">
@@ -234,12 +241,13 @@
     <dialog class="project-inspector ai-workspace" aria-labelledby="ai-workspace-title" aria-describedby="ai-workspace-description">
       <div class="inspector-heading"><h2 id="ai-workspace-title">AI 제안 검토</h2><button type="button" data-action="close-ai" aria-label="AI 제안 검토 닫기">×</button></div>
       <p id="ai-workspace-description">AI는 문서를 직접 바꾸지 않습니다. 선택한 범위와 작업에 대한 명령 제안을 받은 뒤 변경 전·후를 검토하세요.</p>
-      <div class="ai-provider-grid">
-        <label>제공자<select data-ai-provider><option value="openai">OpenAI</option><option value="anthropic">Anthropic</option><option value="gemini">Gemini</option><option value="openai-compatible">OpenAI 호환 엔드포인트</option></select></label>
-        <label>엔드포인트 식별자<input data-ai-endpoint value="https://api.openai.com/v1"></label>
-        <label>전송 범위<select data-ai-payload-scope><option value="selected-elements">선택 요소만</option><option value="evidence-and-claims">근거와 연결 주장</option><option value="whole-document">문서 전체</option></select></label>
-        <label>제공자 자격 증명<input type="password" data-ai-secret autocomplete="off" placeholder="macOS 키체인에만 저장"></label>
-      </div>
+      <section class="ai-active-binding" aria-labelledby="ai-active-binding-title">
+        <h3 id="ai-active-binding-title">사용할 제공자</h3>
+        <p data-ai-active-status>저장된 제공자가 없습니다.</p>
+        <dl><div><dt>제공자</dt><dd data-ai-active-provider>-</dd></div><div><dt>엔드포인트</dt><dd data-ai-active-endpoint>-</dd></div><div><dt>모델</dt><dd data-ai-active-model>-</dd></div></dl>
+        <button type="button" data-action="open-settings">제공자 설정</button>
+      </section>
+      <label>전송 범위<select data-ai-payload-scope><option value="selected-elements">선택 요소만</option><option value="evidence-and-claims">근거와 연결 주장</option><option value="whole-document">문서 전체</option></select></label>
       <fieldset class="ai-guided-operations"><legend>안내형 작업</legend>
         <button type="button" data-ai-operation="source-grounded-draft" aria-pressed="true">근거 기반 초안</button>
         <button type="button" data-ai-operation="template-completion">템플릿 완성</button>
@@ -254,13 +262,28 @@
       </fieldset>
       <label class="ai-free-form-label">자유 요청<textarea data-ai-free-form rows="3" placeholder="문서에 직접 적용되지 않는 제안을 요청합니다."></textarea></label>
       <label class="ai-consent"><input type="checkbox" data-ai-consent> 이 문서·제공자·엔드포인트·작업·전송 범위에 한해 전송에 동의합니다.</label>
-      <div class="ai-request-actions"><button type="button" data-ai-configure>자격 증명 저장</button><button type="button" data-ai-request>제안 요청</button><button type="button" data-ai-revoke>동의 철회</button></div>
+      <div class="ai-request-actions"><button type="button" data-ai-request>제안 요청</button><button type="button" data-ai-revoke>동의 철회</button></div>
       <section data-ai-proposal-review hidden aria-labelledby="ai-proposal-title" aria-live="polite">
         <h3 id="ai-proposal-title">적용 전 변경 검토</h3>
         <p class="ai-base-revision"></p>
         <ul data-ai-diff aria-label="AI 제안 변경 전후"></ul>
         <div class="ai-request-actions"><button type="button" data-ai-approve-selected>선택한 변경 승인</button><button type="button" data-ai-reject>제안 거절</button></div>
       </section>
+    </dialog>
+    <dialog class="project-inspector byok-settings" aria-labelledby="byok-settings-title" aria-describedby="byok-settings-host">
+      <div class="inspector-heading"><h2 id="byok-settings-title">BYOK 설정</h2><button type="button" data-action="close-settings" aria-label="BYOK 설정 닫기">×</button></div>
+      <p id="byok-settings-host" data-byok-host role="status"></p>
+      <p data-byok-status data-state="unset" role="status">저장된 제공자가 없습니다.</p>
+      <div class="byok-settings-grid">
+        <label>제공자<select data-byok-provider><option value="openai">OpenAI</option><option value="anthropic">Anthropic</option><option value="gemini">Gemini</option><option value="openai-compatible">OpenAI 호환 엔드포인트</option></select></label>
+        <label>엔드포인트 식별자<input data-byok-endpoint inputmode="url" spellcheck="false"></label>
+        <label>모델<input data-byok-model spellcheck="false"></label>
+        <label>제공자 자격 증명<input type="password" data-byok-secret autocomplete="off" placeholder="저장됨 · 바꾸려면 새로 입력"></label>
+      </div>
+      <p data-byok-destination role="status"></p>
+      <details class="official-rules"><summary>허용되는 전송 대상</summary><ul><li>OpenAI · api.openai.com · HTTPS</li><li>Anthropic · api.anthropic.com · HTTPS</li><li>Gemini · generativelanguage.googleapis.com · HTTPS</li><li>호환 엔드포인트 · HTTPS 또는 localhost HTTP</li></ul></details>
+      <ul class="catalog-entries" data-byok-accounts aria-label="저장된 제공자"></ul>
+      <div class="export-actions"><button type="button" data-byok-delete>자격 증명 삭제</button><button type="button" data-byok-test>연결 확인</button><button type="button" data-byok-save>저장</button></div>
     </dialog>
     <dialog class="project-inspector easy-tool-dialog" aria-labelledby="easy-tool-title" aria-describedby="easy-tool-description">
       <div class="inspector-heading"><h2 id="easy-tool-title">작성 도구</h2><button type="button" data-action="close-easy-tool" aria-label="작성 도구 닫기">×</button></div>

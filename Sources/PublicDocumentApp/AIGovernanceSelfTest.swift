@@ -337,16 +337,16 @@ enum AIGovernanceSelfTest {
 
     private static func verifyEndpointValidationPrecedesPersistence() throws -> Bool {
         let source = try String(
-            contentsOf: sourceRoot.appendingPathComponent("Sources/PublicDocumentApp/main.swift"),
+            contentsOf: sourceRoot.appendingPathComponent("Sources/PublicDocumentApp/AISettings.swift"),
             encoding: .utf8
         )
-        guard let start = source.range(of: "private func configureAIProvider"),
-              let end = source.range(of: "private func revokeAIConsent", range: start.upperBound..<source.endIndex)
+        guard let start = source.range(of: "func save("),
+              let end = source.range(of: "func delete(", range: start.upperBound..<source.endIndex)
         else { return false }
         let body = source[start.lowerBound..<end.lowerBound]
         guard let validation = body.range(of: "AIProviderTransport.endpointIsAllowed"),
-              let keychain = body.range(of: "AIKeychainCredentialStore().set"),
-              let persistence = body.range(of: "projectStore.save")
+              let keychain = body.range(of: "credentials.set"),
+              let persistence = body.range(of: "try write(settings)")
         else { return false }
         return validation.lowerBound < keychain.lowerBound && keychain.lowerBound < persistence.lowerBound
     }
@@ -354,6 +354,8 @@ enum AIGovernanceSelfTest {
     private static func implementationSourceSHA256() throws -> [String: String] {
         let paths = [
             "Sources/PublicDocumentApp/AIGovernance.swift",
+            "Sources/PublicDocumentApp/AISettings.swift",
+            "Sources/PublicDocumentApp/AISettingsSelfTest.swift",
             "Sources/PublicDocumentApp/AIProviderTransport.swift",
             "Sources/PublicDocumentApp/AIGovernanceSelfTest.swift",
             "Sources/PublicDocumentApp/DocumentProject.swift",

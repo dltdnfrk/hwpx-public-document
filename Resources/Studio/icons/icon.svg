@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" role="img" aria-label="문서작성기">
+  <defs>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#006879"/>
+      <stop offset="1" stop-color="#005361"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#mark)" d="M7,0 H21 A7,7 0 0 1 28,7 V21 A7,7 0 0 1 21,28 H2 A2,2 0 0 1 0,26 V7 A7,7 0 0 1 7,0 Z"/>
+  <text x="14" y="12.2" text-anchor="middle" fill="#fff" font-family="Apple SD Gothic Neo, sans-serif" font-weight="700" font-size="8">문서</text>
+  <text x="14" y="21.4" text-anchor="middle" fill="#fff" font-family="Apple SD Gothic Neo, sans-serif" font-weight="700" font-size="8">작성기</text>
+</svg>

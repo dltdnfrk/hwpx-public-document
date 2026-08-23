@@ -249,8 +249,7 @@ def test_app_bundle_resources_use_owned_branding_and_no_forbidden_surface() -> N
     runtime_words = set(re.findall(r"[a-z]+", runtime_text))
 
     # Then: owned names are visible and rejected products and marks are unreachable.
-    assert "공공문서 작성기" in runtime_text
-    assert "public document studio" in runtime_text
+    assert "문서작성기" in runtime_text
     assert FORBIDDEN_RUNTIME_SURFACES.isdisjoint(runtime_words)
 
 

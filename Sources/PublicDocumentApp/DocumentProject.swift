@@ -195,7 +195,20 @@ struct AIProposalCommand: Codable, Equatable {
 struct AIProviderConfiguration: Codable, Equatable {
     let provider: String
     let endpointIdentity: String
+    let model: String?
     let keychainAccountReference: String
+
+    init(
+        provider: String,
+        endpointIdentity: String,
+        model: String? = nil,
+        keychainAccountReference: String
+    ) {
+        self.provider = provider
+        self.endpointIdentity = endpointIdentity
+        self.model = model
+        self.keychainAccountReference = keychainAccountReference
+    }
 }
 
 struct AIConsentGrant: Codable, Equatable {
@@ -203,9 +216,30 @@ struct AIConsentGrant: Codable, Equatable {
     let documentID: String
     let provider: String
     let endpointIdentity: String
+    let model: String?
     let operation: String
     let payloadScope: String
     let revoked: Bool
+
+    init(
+        grantID: String,
+        documentID: String,
+        provider: String,
+        endpointIdentity: String,
+        model: String? = nil,
+        operation: String,
+        payloadScope: String,
+        revoked: Bool
+    ) {
+        self.grantID = grantID
+        self.documentID = documentID
+        self.provider = provider
+        self.endpointIdentity = endpointIdentity
+        self.model = model
+        self.operation = operation
+        self.payloadScope = payloadScope
+        self.revoked = revoked
+    }
 }
 
 struct DocumentProject: Codable, Equatable {

@@ -114,6 +114,7 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
     private let studioResources: StudioResourceLocation
     private let projectStore: DocumentProjectStore
     private let templateCatalogStore: TemplateCatalogStore
+    private let aiSettingsStore = AISettingsStore()
     private let batchRecoveryRegistry = BatchExportRecoveryRegistry()
     private var batchCancellation: BatchExportCancellation?
 
@@ -154,9 +155,9 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
             backing: .buffered,
             defer: false
         )
-        window.title = "공공문서 작성기 / Public Document Studio"
+        window.title = "문서작성기"
         window.titlebarAppearsTransparent = true
-        window.titleVisibility = .hidden
+        window.titleVisibility = .visible
         window.minSize = NSSize(width: 920, height: 640)
         window.contentView = webView
         window.center()
@@ -239,6 +240,7 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
         do {
             switch action {
             case "ready":
+                try send(encodable: aiSettingsStore.snapshot(), event: "aiSettingsLoaded")
                 try send(encodable: templateCatalogStore.bootstrap(), event: "templateCatalog")
                 recoverKnownBatchExports()
                 if projectStore.hasRecovery() {
@@ -269,8 +271,14 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
                 try send(encodable: projectStore.inspect(project), event: "inspection")
             case "requestAIProposal":
                 try requestAIProposal(from: body)
-            case "configureAIProvider":
-                try configureAIProvider(from: body)
+            case "loadAISettings":
+                try send(encodable: aiSettingsStore.snapshot(), event: "aiSettingsLoaded")
+            case "configureAISettings":
+                try configureAISettings(from: body)
+            case "testAISettings":
+                try testAISettings(from: body)
+            case "deleteAISettings":
+                try deleteAISettings(from: body)
             case "revokeAIConsent":
                 try revokeAIConsent(from: body)
             case "applyAIProposal":
@@ -502,18 +510,14 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
         let engine = AIGovernanceEngine()
         let governed = engine.grantConsent(binding, in: project)
         try projectStore.save(governed)
-        guard let configuration = governed.providerConfigurations.first(where: {
-            $0.provider == binding.provider.rawValue && $0.endpointIdentity == binding.endpointIdentity
-        }) else {
+        guard let setting = try? aiSettingsStore.setting(for: binding.provider) else {
             try send(enforcement: OfficialRuleEnforcement(
                 project: governed,
                 state: enforcement.state
             ), event: "aiProviderUnavailable")
             return
         }
-        let credential = try AIKeychainCredentialStore().get(
-            accountReference: configuration.keychainAccountReference
-        )
+        let credential = try aiSettingsStore.credential(for: setting)
         let selectedIDs = Set(body["selectedElementIDs"] as? [String] ?? [])
         let scopedElements: [DocumentElement]
         switch binding.payloadScope {
@@ -554,29 +558,55 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
         }
     }
 
-    private func configureAIProvider(from body: [String: Any]) throws {
-        let enforcement = try templateCatalogStore.enforceOfficialRules(
-            in: decodeProject(from: body)
+    private func configureAISettings(from body: [String: Any]) throws {
+        guard let rawProvider = body["provider"] as? String,
+              let provider = AIProviderKind(rawValue: rawProvider),
+              let endpoint = body["endpointIdentity"] as? String,
+              let model = body["model"] as? String
+        else { throw AISettingsError.invalidProvider }
+        _ = try aiSettingsStore.save(
+            provider: provider,
+            endpointIdentity: endpoint,
+            model: model,
+            secret: body["secret"] as? String
         )
-        let project = enforcement.project
-        guard let secret = body["secret"] as? String, !secret.isEmpty else {
-            throw AIProviderTransportError.credentialUnavailable
+        try send(encodable: aiSettingsStore.snapshot(), event: "aiSettingsSaved")
+    }
+
+    private func deleteAISettings(from body: [String: Any]) throws {
+        guard let rawProvider = body["provider"] as? String,
+              let provider = AIProviderKind(rawValue: rawProvider)
+        else { throw AISettingsError.invalidProvider }
+        try aiSettingsStore.delete(provider: provider)
+        try send(encodable: aiSettingsStore.snapshot(), event: "aiSettingsDeleted")
+    }
+
+    private func testAISettings(from body: [String: Any]) throws {
+        guard let rawProvider = body["provider"] as? String,
+              let provider = AIProviderKind(rawValue: rawProvider)
+        else { throw AISettingsError.invalidProvider }
+        let input = try JSONSerialization.data(withJSONObject: [
+            "action": "testAISettings",
+            "provider": provider.rawValue,
+        ])
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self else { return }
+            let output = AIBridgeCLI.run(input: input, settings: self.aiSettingsStore)
+            DispatchQueue.main.async {
+                guard let response = try? JSONSerialization.jsonObject(with: output) as? [String: Any],
+                      let events = response["events"] as? [[String: Any]]
+                else {
+                    self.send(event: "error", payload: ["message": AIProviderTransportError.invalidResponse.localizedDescription])
+                    return
+                }
+                for entry in events {
+                    guard let event = entry["event"] as? String,
+                          let payload = entry["payload"] as? [String: Any]
+                    else { continue }
+                    self.send(event: event, payload: payload)
+                }
+            }
         }
-        let binding = try aiBinding(from: body, project: project)
-        guard let endpoint = URL(string: binding.endpointIdentity),
-              AIProviderTransport.endpointIsAllowed(endpoint, provider: binding.provider)
-        else { throw AIProviderTransportError.invalidEndpoint }
-        let configured = AIGovernanceEngine().configureProvider(
-            provider: binding.provider,
-            endpointIdentity: binding.endpointIdentity,
-            in: project
-        )
-        try AIKeychainCredentialStore().set(secret: secret, accountReference: configured.1)
-        try projectStore.save(configured.0)
-        try send(enforcement: OfficialRuleEnforcement(
-            project: configured.0,
-            state: enforcement.state
-        ), event: "aiProviderConfigured")
     }
 
     private func revokeAIConsent(from body: [String: Any]) throws {
@@ -643,14 +673,15 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
     private func aiBinding(from body: [String: Any], project: DocumentProject) throws -> AIRequestBinding {
         guard let rawProvider = body["provider"] as? String,
               let provider = AIProviderKind(rawValue: rawProvider),
-              let endpointIdentity = body["endpointIdentity"] as? String, !endpointIdentity.isEmpty,
               let rawOperation = body["operation"] as? String,
               let operation = AIOperation(rawValue: rawOperation),
               let payloadScope = body["payloadScope"] as? String, !payloadScope.isEmpty
         else { throw AIGovernanceError.consentRequired }
+        let setting = try aiSettingsStore.setting(for: provider)
         return AIRequestBinding(
             documentID: project.documentID, provider: provider,
-            endpointIdentity: endpointIdentity, operation: operation, payloadScope: payloadScope
+            endpointIdentity: setting.endpointIdentity, model: setting.model,
+            operation: operation, payloadScope: payloadScope
         )
     }
 
@@ -911,6 +942,24 @@ final class PublicDocumentStudioApp: NSObject, NSApplicationDelegate {
 
     static func run() {
         let arguments = CommandLine.arguments
+        if arguments.count == 2, arguments[1] == "--ai-bridge-stdin" {
+            let input = FileHandle.standardInput.readDataToEndOfFile()
+            FileHandle.standardOutput.write(AIBridgeCLI.run(input: input))
+            FileHandle.standardOutput.write(Data("\n".utf8))
+            return
+        }
+        if arguments.count == 3, arguments[1] == "--ai-settings-self-test" {
+            do {
+                let receipt = try AISettingsSelfTest.run(
+                    at: URL(fileURLWithPath: arguments[2], isDirectory: true)
+                )
+                try ProjectSelfTest.printJSON(receipt)
+                return
+            } catch {
+                FileHandle.standardError.write(Data("\(error.localizedDescription)\n".utf8))
+                Darwin.exit(EXIT_FAILURE)
+            }
+        }
         if arguments.count == 3, arguments[1] == "--studio-host-security-self-test" {
             do {
                 let application = NSApplication.shared
