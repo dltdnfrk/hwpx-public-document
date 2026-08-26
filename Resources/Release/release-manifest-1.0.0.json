@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "product": "공공문서 작성기 / Public Document Studio",
+  "product": "문서작성기",
   "version": "0.1.0",
   "releaseType": "unsigned-local-functional",
   "architecture": "arm64",

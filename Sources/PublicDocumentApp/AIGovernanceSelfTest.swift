@@ -30,6 +30,7 @@ struct AIGovernanceSelfTestReceipt: Codable {
     let tableCellOnlyMutation: Bool
     let fullDiffPersisted: Bool
     let consentRebindingRequired: Bool
+    let sharedPayloadScopeRules: Bool
     let implementationSourceSHA256: [String: String]
 }
 
@@ -40,7 +41,7 @@ enum AIGovernanceSelfTest {
         let store = DocumentProjectStore(root: root.appendingPathComponent("governed.publicdocument"))
         let binding = AIRequestBinding(
             documentID: "document-ac04", provider: .openAI,
-            endpointIdentity: "https://api.openai.com/v1", operation: .rewrite,
+            endpointIdentity: "https://api.openai.com/v1", model: "gpt-5-mini", operation: .rewrite,
             payloadScope: "elements:element-body,element-summary"
         )
         var project = fixture()
@@ -49,11 +50,12 @@ enum AIGovernanceSelfTest {
             && Set(DocumentFormat.allCases.map(\.rawValue)) == Set(["hwpx", "hwp", "docx", "markdown"])
         project = engine.grantConsent(binding, in: project)
         let bindingChecks = [
-            AIRequestBinding(documentID: "other", provider: .openAI, endpointIdentity: binding.endpointIdentity, operation: .rewrite, payloadScope: binding.payloadScope),
-            AIRequestBinding(documentID: binding.documentID, provider: .anthropic, endpointIdentity: binding.endpointIdentity, operation: .rewrite, payloadScope: binding.payloadScope),
-            AIRequestBinding(documentID: binding.documentID, provider: .openAI, endpointIdentity: "https://other.example/v1", operation: .rewrite, payloadScope: binding.payloadScope),
-            AIRequestBinding(documentID: binding.documentID, provider: .openAI, endpointIdentity: binding.endpointIdentity, operation: .summarize, payloadScope: binding.payloadScope),
-            AIRequestBinding(documentID: binding.documentID, provider: .openAI, endpointIdentity: binding.endpointIdentity, operation: .rewrite, payloadScope: "whole-document"),
+            AIRequestBinding(documentID: "other", provider: .openAI, endpointIdentity: binding.endpointIdentity, model: binding.model, operation: .rewrite, payloadScope: binding.payloadScope),
+            AIRequestBinding(documentID: binding.documentID, provider: .anthropic, endpointIdentity: binding.endpointIdentity, model: binding.model, operation: .rewrite, payloadScope: binding.payloadScope),
+            AIRequestBinding(documentID: binding.documentID, provider: .openAI, endpointIdentity: "https://other.example/v1", model: binding.model, operation: .rewrite, payloadScope: binding.payloadScope),
+            AIRequestBinding(documentID: binding.documentID, provider: .openAI, endpointIdentity: binding.endpointIdentity, model: binding.model, operation: .summarize, payloadScope: binding.payloadScope),
+            AIRequestBinding(documentID: binding.documentID, provider: .openAI, endpointIdentity: binding.endpointIdentity, model: binding.model, operation: .rewrite, payloadScope: "whole-document"),
+            AIRequestBinding(documentID: binding.documentID, provider: .openAI, endpointIdentity: binding.endpointIdentity, model: "gpt-5.6-terra", operation: .rewrite, payloadScope: binding.payloadScope),
         ]
         let allBindingsRequired = bindingChecks.allSatisfy { candidate in
             do {
@@ -144,6 +146,11 @@ enum AIGovernanceSelfTest {
             && fullBodyReplacement.utf8.count > 512
         let transportEvidence = try verifyProviderTransport(binding: binding)
         let operationEvidence = try verifyScopedOperations(engine: engine)
+        let sharedScopeIDs = try AIGovernanceEngine.scopedElements(
+            in: fixture(),
+            scope: .evidenceAndClaims,
+            selectedElementIDs: []
+        ).map(\.elementID)
         return AIGovernanceSelfTestReceipt(
             approvedProviderKinds: AIGovernanceEngine.approvedProviderKinds.map(\.rawValue).sorted(),
             offlineEditingAndExportAvailable: offlineReady,
@@ -167,6 +174,7 @@ enum AIGovernanceSelfTest {
             tableCellOnlyMutation: operationEvidence.cellOnlyMutation,
             fullDiffPersisted: fullDiffPersisted,
             consentRebindingRequired: allBindingsRequired,
+            sharedPayloadScopeRules: sharedScopeIDs == ["element-title", "element-body"],
             implementationSourceSHA256: try implementationSourceSHA256()
         )
     }
@@ -187,7 +195,7 @@ enum AIGovernanceSelfTest {
             _ = try transport.makeRequest(
                 binding: AIRequestBinding(
                     documentID: binding.documentID, provider: binding.provider,
-                    endpointIdentity: "http://provider.example/v1", operation: binding.operation,
+                    endpointIdentity: "http://provider.example/v1", model: binding.model, operation: binding.operation,
                     payloadScope: binding.payloadScope
                 ),
                 instruction: "요약", elements: [], credential: "secret"
@@ -320,7 +328,9 @@ enum AIGovernanceSelfTest {
     private static func binding(for operation: AIOperation, scope: String) -> AIRequestBinding {
         AIRequestBinding(
             documentID: "document-ac04", provider: .openAI,
-            endpointIdentity: "https://api.openai.com/v1", operation: operation, payloadScope: scope
+            endpointIdentity: AIProviderCatalog.policy(for: .openAI).endpointIdentity,
+            model: AIProviderCatalog.policy(for: .openAI).defaultModel,
+            operation: operation, payloadScope: scope
         )
     }
 
@@ -336,25 +346,47 @@ enum AIGovernanceSelfTest {
     }
 
     private static func verifyEndpointValidationPrecedesPersistence() throws -> Bool {
-        let source = try String(
-            contentsOf: sourceRoot.appendingPathComponent("Sources/PublicDocumentApp/AISettings.swift"),
-            encoding: .utf8
-        )
-        guard let start = source.range(of: "func save("),
-              let end = source.range(of: "func delete(", range: start.upperBound..<source.endIndex)
-        else { return false }
-        let body = source[start.lowerBound..<end.lowerBound]
-        guard let validation = body.range(of: "AIProviderTransport.endpointIsAllowed"),
-              let keychain = body.range(of: "credentials.set"),
-              let persistence = body.range(of: "try write(settings)")
-        else { return false }
-        return validation.lowerBound < keychain.lowerBound && keychain.lowerBound < persistence.lowerBound
+        let service = "com.muni.public-document.endpoint-order.\(UUID().uuidString)"
+        let root = FileManager.default.temporaryDirectory
+            .appendingPathComponent("public-document-endpoint-order-\(UUID().uuidString)")
+        setenv("PUBLIC_DOCUMENT_STUDIO_AI_KEYCHAIN_SERVICE", service, 1)
+        defer {
+            unsetenv("PUBLIC_DOCUMENT_STUDIO_AI_KEYCHAIN_SERVICE")
+            try? FileManager.default.removeItem(at: root)
+        }
+        let store = AISettingsStore(root: root)
+        do {
+            _ = try store.save(
+                provider: .openAI,
+                endpointIdentity: "https://evil.example/v1",
+                model: "gpt-5.6-terra",
+                secret: "SHOULD-NOT-BE-STORED"
+            )
+            return false
+        } catch AISettingsError.invalidEndpoint {
+            let settingsMissing = !FileManager.default.fileExists(
+                atPath: root.appendingPathComponent("ai-settings.json").path
+            )
+            let credentialMissing: Bool
+            do {
+                _ = try AIKeychainCredentialStore(service: service).get(
+                    accountReference: "provider/openai"
+                )
+                credentialMissing = false
+            } catch {
+                credentialMissing = true
+            }
+            return settingsMissing && credentialMissing
+        }
     }
 
     private static func implementationSourceSHA256() throws -> [String: String] {
         let paths = [
             "Sources/PublicDocumentApp/AIGovernance.swift",
-            "Sources/PublicDocumentApp/AISettings.swift",
+            "Sources/PublicDocumentApp/AIBridgeCLI.swift",
+            "Sources/PublicDocumentApp/AIProviderCatalog.swift",
+            "Sources/PublicDocumentApp/AISettingsModels.swift",
+            "Sources/PublicDocumentApp/AISettingsStore.swift",
             "Sources/PublicDocumentApp/AISettingsSelfTest.swift",
             "Sources/PublicDocumentApp/AIProviderTransport.swift",
             "Sources/PublicDocumentApp/AIGovernanceSelfTest.swift",

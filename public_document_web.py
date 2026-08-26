@@ -14,7 +14,7 @@ import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from http.cookies import SimpleCookie
 from pathlib import Path
-from typing import Any, cast
+from typing import Any
 from urllib.parse import unquote, urlparse
 
 
@@ -54,6 +54,17 @@ AI_PROJECT_EVENTS = {
     "aiConsentRevoked",
     "aiProposalApplied",
     "aiProposalRejected",
+}
+AI_PROJECT_ACTIONS = {
+    "requestAIProposal",
+    "revokeAIConsent",
+    "applyAIProposal",
+    "rejectAIProposal",
+}
+AI_CANONICAL_PROJECT_ACTIONS = {
+    "revokeAIConsent",
+    "applyAIProposal",
+    "rejectAIProposal",
 }
 UNSUPPORTED_ACTIONS = {
     "batchExport",
@@ -415,7 +426,17 @@ def handle_bridge(state: StudioState, body: dict[str, Any]) -> list[dict[str, An
             event("documentLibrary", {"entries": state.list_library()}),
             event("templateCatalog", catalog),
         ]
-        events.extend(run_ai_bridge({"action": "loadAISettings"})["events"])
+        settings_request: dict[str, Any] = {"action": "loadAISettings"}
+        settings_source = state.recovery_file if state.recovery_file.is_file() else state.project_file
+        if settings_source.is_file():
+            settings_request["project"] = state.load_json(settings_source)
+        try:
+            events.extend(run_ai_bridge(settings_request)["events"])
+        except (RuntimeError, OSError, subprocess.SubprocessError, json.JSONDecodeError):
+            events.append({
+                "event": "aiSettingsUnavailable",
+                "payload": {"message": "AI 설정을 불러오지 못했지만 문서 기능은 계속 사용할 수 있습니다."},
+            })
         if state.recovery_file.is_file():
             events.append(event("recovered", state.load_json(state.recovery_file)))
         elif state.project_file.is_file():
@@ -472,14 +493,24 @@ def handle_bridge(state: StudioState, body: dict[str, Any]) -> list[dict[str, An
     if action == "updateTemplateCatalog":
         return [error_event("로컬 웹앱은 번들된 서명 카탈로그를 사용합니다. 카탈로그 파일 선택은 앱에서 하세요.")]
     if action in AI_BRIDGE_ACTIONS:
-        response = run_ai_bridge(body)
+        ai_body = dict(body)
+        if action in AI_PROJECT_ACTIONS:
+            project = body.get("project")
+            if action in AI_CANONICAL_PROJECT_ACTIONS and state.project_file.is_file():
+                project = state.load_json(state.project_file)
+            if isinstance(project, dict):
+                ai_body["project"] = enforce_official_rules(project, catalog)[0]
+        response = run_ai_bridge(ai_body)
         for entry in response["events"]:
             if entry.get("event") not in AI_PROJECT_EVENTS:
                 continue
             project = (entry.get("payload") or {}).get("project")
             if not isinstance(project, dict) or "schemaVersion" not in project:
                 continue
-            state.write_json(state.project_file, project)
+            governed, official = enforce_official_rules(project, catalog)
+            entry["payload"]["project"] = governed
+            entry["payload"]["officialRuleState"] = official
+            state.write_json(state.project_file, governed)
             state.recovery_file.unlink(missing_ok=True)
         return response["events"]
     if action in UNSUPPORTED_ACTIONS:
@@ -542,22 +573,19 @@ class StudioHandler(BaseHTTPRequestHandler):
         data = resource.read_bytes()
         if resource.name == "index.html" and resource.parent.name == "Studio":
             data = data.replace(b"connect-src 'none'", b"connect-src 'self'")
-            meta = f'<meta name="public-document-session" content="{self._studio_server.session_token}">'.encode()
-            data = data.replace(b"<title>", meta + b"\n    <title>", 1)
         self.send_response(200)
         self.send_header("Content-Type", MIME_TYPES.get(resource.suffix, "application/octet-stream"))
         self.send_header("Content-Length", str(len(data)))
         self.send_header("Cache-Control", "no-store")
-        if resource.name == "index.html" and resource.parent.name == "Studio":
-            self.send_header(
-                "Set-Cookie",
-                f"PublicDocumentSession={self._studio_server.session_token}; HttpOnly; SameSite=Strict; Path=/",
-            )
         self.end_headers()
         self.wfile.write(data)
 
     def do_POST(self) -> None:
-        if urlparse(self.path).path != "/api/bridge":
+        path = urlparse(self.path).path
+        if path == "/api/bootstrap":
+            self._bootstrap_bridge()
+            return
+        if path != "/api/bridge":
             self.send_error(404, "Not Found")
             return
         if not self._bridge_authorized():
@@ -606,20 +634,62 @@ class StudioHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
+    def _bootstrap_bridge(self) -> None:
+        server = self._studio_server
+        if self.headers.get("Host") not in server.allowed_hosts:
+            self._send_json(403, {"error": "invalid bootstrap"})
+            return
+        if self.headers.get("Origin") not in server.allowed_origins:
+            self._send_json(403, {"error": "invalid bootstrap"})
+            return
+        length = int(self.headers.get("Content-Length") or 0)
+        if length <= 0 or length > 4096:
+            self._send_json(400, {"error": "invalid bootstrap"})
+            return
+        try:
+            payload = json.loads(self.rfile.read(length).decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            self._send_json(400, {"error": "invalid bootstrap"})
+            return
+        cookie = SimpleCookie(self.headers.get("Cookie", ""))
+        existing_session = cookie.get("PublicDocumentSession")
+        session_token = server.resume_or_consume_bootstrap(
+            candidate=str(payload.get("token") or ""),
+            existing_session=existing_session.value if existing_session is not None else None,
+        )
+        if session_token is None:
+            self._send_json(403, {"error": "invalid bootstrap"})
+            return
+        data = json.dumps({"sessionToken": session_token}).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(data)))
+        self.send_header("Cache-Control", "no-store")
+        self.send_header(
+            "Set-Cookie",
+            f"PublicDocumentSession={session_token}; HttpOnly; SameSite=Strict; Path=/",
+        )
+        self.end_headers()
+        self.wfile.write(data)
+
     def _bridge_authorized(self) -> bool:
+        session_token = self._studio_server.session_token
+        if session_token is None:
+            return False
         if self.headers.get("Host") not in self._studio_server.allowed_hosts:
             return False
         if self.headers.get("Origin") not in self._studio_server.allowed_origins:
             return False
-        if self.headers.get("X-Public-Document-Session") != self._studio_server.session_token:
+        if self.headers.get("X-Public-Document-Session") != session_token:
             return False
         cookie = SimpleCookie(self.headers.get("Cookie", ""))
         morsel = cookie.get("PublicDocumentSession")
-        return morsel is not None and morsel.value == self._studio_server.session_token
+        return morsel is not None and morsel.value == session_token
 
     @property
     def _studio_server(self) -> "StudioServer":
-        return cast("StudioServer", self.server)
+        assert isinstance(self.server, StudioServer)
+        return self.server
 
     def log_message(self, format: str, *args: object) -> None:
         return
@@ -629,10 +699,27 @@ class StudioServer(ThreadingHTTPServer):
     def __init__(self, address: tuple[str, int], state: StudioState) -> None:
         super().__init__(address, StudioHandler)
         self.state = state
-        self.session_token = secrets.token_urlsafe(32)
+        self.bootstrap_token = secrets.token_urlsafe(32)
+        self.session_token: str | None = None
+        self._bootstrap_lock = threading.Lock()
         port = self.server_address[1]
         self.allowed_hosts = {f"127.0.0.1:{port}", f"localhost:{port}"}
         self.allowed_origins = {f"http://127.0.0.1:{port}", f"http://localhost:{port}"}
+
+    def resume_or_consume_bootstrap(
+        self,
+        candidate: str,
+        existing_session: str | None,
+    ) -> str | None:
+        with self._bootstrap_lock:
+            if self.session_token is not None and existing_session is not None:
+                if secrets.compare_digest(existing_session, self.session_token):
+                    return self.session_token
+            if not self.bootstrap_token or not secrets.compare_digest(candidate, self.bootstrap_token):
+                return None
+            self.bootstrap_token = ""
+            self.session_token = secrets.token_urlsafe(32)
+            return self.session_token
 
 
 def serve(host: str, port: int, data_dir: Path, open_browser: bool) -> StudioServer:
@@ -641,7 +728,7 @@ def serve(host: str, port: int, data_dir: Path, open_browser: bool) -> StudioSer
     thread.start()
     url = f"http://{host}:{server.server_address[1]}/Studio/index.html"
     if open_browser:
-        webbrowser.open(url)
+        webbrowser.open(f"{url}#bridge-bootstrap={server.bootstrap_token}")
     return server
 
 
@@ -658,8 +745,12 @@ def main() -> None:
     if args.host not in {"127.0.0.1", "localhost"}:
         raise SystemExit("로컬 웹앱은 127.0.0.1에서만 엽니다.")
     server = serve(args.host, args.port, Path(args.data_dir), open_browser=not args.no_open)
-    host, port = cast(tuple[str, int], server.server_address)
-    print(f"http://{host}:{port}/Studio/index.html", flush=True)
+    host = str(server.server_address[0])
+    port = int(server.server_address[1])
+    url = f"http://{host}:{port}/Studio/index.html"
+    if args.no_open:
+        url += f"#bridge-bootstrap={server.bootstrap_token}"
+    print(url, flush=True)
     try:
         threading.Event().wait()
     except KeyboardInterrupt:

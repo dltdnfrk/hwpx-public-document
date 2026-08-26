@@ -11,7 +11,7 @@
     <key>CFBundleIdentifier</key>
     <string>com.muni.public-document</string>
     <key>CFBundleName</key>
-    <string>Public Document Studio</string>
+    <string>문서작성기</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>

@@ -261,7 +261,7 @@
         <button type="button" data-ai-operation="evidence-claim-check">근거·주장 점검</button>
       </fieldset>
       <label class="ai-free-form-label">자유 요청<textarea data-ai-free-form rows="3" placeholder="문서에 직접 적용되지 않는 제안을 요청합니다."></textarea></label>
-      <label class="ai-consent"><input type="checkbox" data-ai-consent> 이 문서·제공자·엔드포인트·작업·전송 범위에 한해 전송에 동의합니다.</label>
+      <label class="ai-consent"><input type="checkbox" data-ai-consent> 이 문서·제공자·엔드포인트·모델·작업·전송 범위에 한해 전송에 동의합니다.</label>
       <div class="ai-request-actions"><button type="button" data-ai-request>제안 요청</button><button type="button" data-ai-revoke>동의 철회</button></div>
       <section data-ai-proposal-review hidden aria-labelledby="ai-proposal-title" aria-live="polite">
         <h3 id="ai-proposal-title">적용 전 변경 검토</h3>
@@ -275,13 +275,13 @@
       <p id="byok-settings-host" data-byok-host role="status"></p>
       <p data-byok-status data-state="unset" role="status">저장된 제공자가 없습니다.</p>
       <div class="byok-settings-grid">
-        <label>제공자<select data-byok-provider><option value="openai">OpenAI</option><option value="anthropic">Anthropic</option><option value="gemini">Gemini</option><option value="openai-compatible">OpenAI 호환 엔드포인트</option></select></label>
+        <label>제공자<select data-byok-provider></select></label>
         <label>엔드포인트 식별자<input data-byok-endpoint inputmode="url" spellcheck="false"></label>
         <label>모델<input data-byok-model spellcheck="false"></label>
         <label>제공자 자격 증명<input type="password" data-byok-secret autocomplete="off" placeholder="저장됨 · 바꾸려면 새로 입력"></label>
       </div>
       <p data-byok-destination role="status"></p>
-      <details class="official-rules"><summary>허용되는 전송 대상</summary><ul><li>OpenAI · api.openai.com · HTTPS</li><li>Anthropic · api.anthropic.com · HTTPS</li><li>Gemini · generativelanguage.googleapis.com · HTTPS</li><li>호환 엔드포인트 · HTTPS 또는 localhost HTTP</li></ul></details>
+      <details class="official-rules"><summary>허용되는 전송 대상</summary><ul data-byok-policy-list></ul></details>
       <ul class="catalog-entries" data-byok-accounts aria-label="저장된 제공자"></ul>
       <div class="export-actions"><button type="button" data-byok-delete>자격 증명 삭제</button><button type="button" data-byok-test>연결 확인</button><button type="button" data-byok-save>저장</button></div>
     </dialog>

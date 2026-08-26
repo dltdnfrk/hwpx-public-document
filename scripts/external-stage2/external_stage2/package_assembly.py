@@ -44,7 +44,7 @@ PRODUCT_DITTO_ARGV: Final[tuple[str, ...]] = (
 )
 PRODUCT_PACKAGING_SCRIPT: Final[str] = "scripts/package-macos-app.sh"
 PRODUCT_PACKAGING_SCRIPT_SHA256: Final[str] = (
-    "915e0ddc18e474240355575898e2e3c51f32322c837ed697b6b3ac625c1099d9"
+    "f48cddcd1504a55d8b5f6cf5e095948ae2c8c51cc8507713f27968d26680303d"
 )
 
 

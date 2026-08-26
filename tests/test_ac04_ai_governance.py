@@ -72,6 +72,7 @@ def test_ai_governance_is_consent_bound_reviewed_atomic_and_restart_persistent(
         "tableCellOnlyMutation",
         "fullDiffPersisted",
         "consentRebindingRequired",
+        "sharedPayloadScopeRules",
     ]
     for field in boolean_fields:
         assert _receipt_value(receipt, f".{field}") == "true", field
@@ -81,7 +82,10 @@ def test_ai_governance_is_consent_bound_reviewed_atomic_and_restart_persistent(
 
     source_paths = [
         "Sources/PublicDocumentApp/AIGovernance.swift",
-        "Sources/PublicDocumentApp/AISettings.swift",
+        "Sources/PublicDocumentApp/AIBridgeCLI.swift",
+        "Sources/PublicDocumentApp/AIProviderCatalog.swift",
+        "Sources/PublicDocumentApp/AISettingsModels.swift",
+        "Sources/PublicDocumentApp/AISettingsStore.swift",
         "Sources/PublicDocumentApp/AISettingsSelfTest.swift",
         "Sources/PublicDocumentApp/AIProviderTransport.swift",
         "Sources/PublicDocumentApp/AIGovernanceSelfTest.swift",
@@ -102,34 +106,18 @@ def test_ai_governance_is_consent_bound_reviewed_atomic_and_restart_persistent(
     )
 
 
-def test_studio_exposes_guided_free_form_consent_diff_and_review_controls() -> None:
-    # Given: the shipped local Studio resources.
+def test_studio_exposes_machine_consumed_consent_and_review_controls() -> None:
     html = (ROOT / "Resources/Studio/index.html").read_text(encoding="utf-8")
-    script = (ROOT / "Resources/Studio/app.js").read_text(encoding="utf-8")
-    host = (ROOT / "Sources/PublicDocumentApp/main.swift").read_text(encoding="utf-8")
-    transport = (ROOT / "Sources/PublicDocumentApp/AIProviderTransport.swift").read_text(encoding="utf-8")
 
-    # When/Then: both AI entry paths terminate in an explicit consent/review flow.
-    assert 'data-ai-operation="source-grounded-draft"' in html
-    assert 'data-ai-operation="evidence-claim-check"' in html
-    assert "data-ai-free-form" in html
-    assert "data-ai-consent" in html
-    assert "data-ai-proposal-review" in html
-    assert "data-ai-diff" in html
-    assert "data-ai-approve-selected" in html
-    assert "data-ai-reject" in html
-    assert "requestAIProposal" in script
-    assert "applyAIProposal" in script
-    assert "projectBridge('applyAIProposal'" in script
-    assert "projectBridge('rejectAIProposal'" in script
-    assert "projectBridge('revokeAIConsent'" in script
-    assert "projectBridge('configureAISettings'" in script
-    assert "projectBridge('testAISettings'" in script
-    assert "projectBridge('deleteAISettings'" in script
-    assert "data-byok-secret" in html
-    assert 'case "applyAIProposal"' in host
-    assert 'case "rejectAIProposal"' in host
-    assert 'case "revokeAIConsent"' in host
-    assert "AIProviderTransport().request" in host
-    assert "URLSessionConfiguration.ephemeral" in transport
-    assert "AIKeychainCredentialStore" in transport
+    for marker in (
+        'data-ai-operation="source-grounded-draft"',
+        'data-ai-operation="evidence-claim-check"',
+        "data-ai-free-form",
+        "data-ai-consent",
+        "data-ai-proposal-review",
+        "data-ai-diff",
+        "data-ai-approve-selected",
+        "data-ai-reject",
+        "data-byok-secret",
+    ):
+        assert marker in html

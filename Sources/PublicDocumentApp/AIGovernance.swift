@@ -21,6 +21,12 @@ enum AIOperation: String, Codable {
     case freeForm = "free-form"
 }
 
+enum AIPayloadScope: String, Codable {
+    case selectedElements = "selected-elements"
+    case evidenceAndClaims = "evidence-and-claims"
+    case wholeDocument = "whole-document"
+}
+
 struct AIRequestBinding: Equatable {
     let documentID: String
     let provider: AIProviderKind
@@ -33,7 +39,7 @@ struct AIRequestBinding: Equatable {
         documentID: String,
         provider: AIProviderKind,
         endpointIdentity: String,
-        model: String = "gpt-5-mini",
+        model: String,
         operation: AIOperation,
         payloadScope: String
     ) {
@@ -101,6 +107,7 @@ struct AIGovernanceEngine {
         let grant = AIConsentGrant(
             grantID: "consent-\(UUID().uuidString)", documentID: binding.documentID,
             provider: binding.provider.rawValue, endpointIdentity: binding.endpointIdentity,
+            model: binding.model,
             operation: binding.operation.rawValue, payloadScope: binding.payloadScope, revoked: false
         )
         return copy(project, consentGrants: project.consentGrants + [grant])
@@ -111,7 +118,7 @@ struct AIGovernanceEngine {
             guard grant.grantID == grantID else { return grant }
             return AIConsentGrant(
                 grantID: grant.grantID, documentID: grant.documentID, provider: grant.provider,
-                endpointIdentity: grant.endpointIdentity, operation: grant.operation,
+                endpointIdentity: grant.endpointIdentity, model: grant.model, operation: grant.operation,
                 payloadScope: grant.payloadScope, revoked: true
             )
         }
@@ -123,10 +130,30 @@ struct AIGovernanceEngine {
             !grant.revoked && grant.documentID == binding.documentID
                 && grant.provider == binding.provider.rawValue
                 && grant.endpointIdentity == binding.endpointIdentity
+                && grant.model == binding.model
                 && grant.operation == binding.operation.rawValue
                 && grant.payloadScope == binding.payloadScope
         }
         guard matched else { throw AIGovernanceError.consentRequired }
+    }
+
+    static func scopedElements(
+        in project: DocumentProject,
+        scope: AIPayloadScope,
+        selectedElementIDs: [String]
+    ) throws -> [DocumentElement] {
+        switch scope {
+        case .selectedElements:
+            guard !selectedElementIDs.isEmpty else { throw AIGovernanceError.consentRequired }
+            let selected = Set(selectedElementIDs)
+            let elements = project.elements.filter { selected.contains($0.elementID) }
+            guard !elements.isEmpty else { throw AIGovernanceError.consentRequired }
+            return elements
+        case .evidenceAndClaims:
+            return project.elements.filter { !$0.evidenceIDs.isEmpty || $0.kind == "heading" }
+        case .wholeDocument:
+            return project.elements
+        }
     }
 
     func propose(

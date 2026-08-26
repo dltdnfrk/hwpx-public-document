@@ -6,6 +6,9 @@ struct AISettingsSelfTestReceipt: Codable {
     let modelUsedByTransport: Bool
     let secretAbsentFromSettingsFile: Bool
     let snapshotReportsStoredSecret: Bool
+    let endpointChangeRequiresReplacementSecret: Bool
+    let legacyCredentialMigrated: Bool
+    let providerCatalogIncluded: Bool
     let deleteRemovedSetting: Bool
     let deleteRemovedCredential: Bool
 }
@@ -46,7 +49,37 @@ enum AISettingsSelfTest {
             contentsOf: root.appendingPathComponent("ai-settings.json"),
             encoding: .utf8
         )
+        let endpointChangeRejected: Bool
+        do {
+            _ = try store.save(
+                provider: provider,
+                endpointIdentity: "http://127.0.0.1:19000/v1",
+                model: "audit-model",
+                secret: nil
+            )
+            endpointChangeRejected = false
+        } catch AISettingsError.invalidSecret {
+            endpointChangeRejected = try store.setting(for: provider).endpointIdentity == setting.endpointIdentity
+        }
+        let legacyAccount = "provider-credential-legacy"
+        let legacySecret = "AI-SETTINGS-LEGACY-SECRET"
+        let credentialStore = AIKeychainCredentialStore(service: service)
+        try credentialStore.set(secret: legacySecret, accountReference: legacyAccount)
+        defer { try? credentialStore.delete(accountReference: legacyAccount) }
+        let migrated = try store.migrateLegacyConfigurations([
+            AIProviderConfiguration(
+                provider: AIProviderKind.anthropic.rawValue,
+                endpointIdentity: AIProviderCatalog.policy(for: .anthropic).endpointIdentity,
+                keychainAccountReference: legacyAccount
+            ),
+        ])
+        let migratedSetting = try store.setting(for: .anthropic)
+        let migratedCredential = try store.credential(for: migratedSetting)
+        let legacyCredentialMigrated = migrated
+            && migratedSetting.model == AIProviderCatalog.policy(for: .anthropic).defaultModel
+            && migratedCredential == legacySecret
         try store.delete(provider: provider)
+        try store.delete(provider: .anthropic)
         let credentialMissing: Bool
         do {
             _ = try AIKeychainCredentialStore(service: service).get(
@@ -61,6 +94,9 @@ enum AISettingsSelfTest {
             modelUsedByTransport: body?["model"] as? String == "audit-model",
             secretAbsentFromSettingsFile: !settingsText.contains(secret),
             snapshotReportsStoredSecret: snapshot.providers.first?.hasSecret == true,
+            endpointChangeRequiresReplacementSecret: endpointChangeRejected,
+            legacyCredentialMigrated: legacyCredentialMigrated,
+            providerCatalogIncluded: snapshot.catalog == AIProviderCatalog.policies,
             deleteRemovedSetting: try store.snapshot().providers.isEmpty,
             deleteRemovedCredential: credentialMissing
         )

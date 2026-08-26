@@ -240,7 +240,20 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
         do {
             switch action {
             case "ready":
-                try send(encodable: aiSettingsStore.snapshot(), event: "aiSettingsLoaded")
+                do {
+                    if projectStore.hasRecovery() || projectStore.hasProject() {
+                        let project = try projectStore.loadRecoveringAutosave()
+                        _ = try aiSettingsStore.migrateLegacyConfigurations(
+                            project.providerConfigurations
+                        )
+                    }
+                    try send(settings: aiSettingsStore.snapshot(), event: "aiSettingsLoaded")
+                } catch {
+                    try send(settings: AISettingsSnapshot.unavailable, event: "aiSettingsLoaded")
+                    send(event: "aiSettingsUnavailable", payload: [
+                        "message": "AI 설정을 불러오지 못했지만 문서 기능은 계속 사용할 수 있습니다.",
+                    ])
+                }
                 try send(encodable: templateCatalogStore.bootstrap(), event: "templateCatalog")
                 recoverKnownBatchExports()
                 if projectStore.hasRecovery() {
@@ -272,7 +285,7 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
             case "requestAIProposal":
                 try requestAIProposal(from: body)
             case "loadAISettings":
-                try send(encodable: aiSettingsStore.snapshot(), event: "aiSettingsLoaded")
+                try send(settings: aiSettingsStore.snapshot(), event: "aiSettingsLoaded")
             case "configureAISettings":
                 try configureAISettings(from: body)
             case "testAISettings":
@@ -518,14 +531,14 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
             return
         }
         let credential = try aiSettingsStore.credential(for: setting)
-        let selectedIDs = Set(body["selectedElementIDs"] as? [String] ?? [])
-        let scopedElements: [DocumentElement]
-        switch binding.payloadScope {
-        case "selected-elements": scopedElements = governed.elements.filter { selectedIDs.contains($0.elementID) }
-        case "evidence-and-claims": scopedElements = governed.elements.filter { !$0.evidenceIDs.isEmpty }
-        case "whole-document": scopedElements = governed.elements
-        default: throw AIGovernanceError.consentRequired
+        guard let payloadScope = AIPayloadScope(rawValue: binding.payloadScope) else {
+            throw AIGovernanceError.consentRequired
         }
+        let scopedElements = try AIGovernanceEngine.scopedElements(
+            in: governed,
+            scope: payloadScope,
+            selectedElementIDs: body["selectedElementIDs"] as? [String] ?? []
+        )
         AIProviderTransport().request(
             binding: binding,
             instruction: body["instruction"] as? String ?? "",
@@ -570,7 +583,7 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
             model: model,
             secret: body["secret"] as? String
         )
-        try send(encodable: aiSettingsStore.snapshot(), event: "aiSettingsSaved")
+        try send(settings: aiSettingsStore.snapshot(), event: "aiSettingsSaved")
     }
 
     private func deleteAISettings(from body: [String: Any]) throws {
@@ -578,7 +591,7 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
               let provider = AIProviderKind(rawValue: rawProvider)
         else { throw AISettingsError.invalidProvider }
         try aiSettingsStore.delete(provider: provider)
-        try send(encodable: aiSettingsStore.snapshot(), event: "aiSettingsDeleted")
+        try send(settings: aiSettingsStore.snapshot(), event: "aiSettingsDeleted")
     }
 
     private func testAISettings(from body: [String: Any]) throws {
@@ -619,6 +632,7 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
             !$0.revoked && $0.documentID == binding.documentID
                 && $0.provider == binding.provider.rawValue
                 && $0.endpointIdentity == binding.endpointIdentity
+                && $0.model == binding.model
                 && $0.operation == binding.operation.rawValue
                 && $0.payloadScope == binding.payloadScope
         }.map(\.grantID)
@@ -751,6 +765,12 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate, WK
         let data = try JSONEncoder().encode(encodable)
         let payload = try JSONSerialization.jsonObject(with: data)
         send(event: event, payload: ["project": payload])
+    }
+
+    private func send(settings: AISettingsSnapshot, event: String) throws {
+        let data = try JSONEncoder().encode(settings)
+        let payload = try JSONSerialization.jsonObject(with: data)
+        send(event: event, payload: ["settings": payload])
     }
 
     private func send(event: String, payload: [String: Any]) {

@@ -22,6 +22,17 @@ def _server(tmp_path: Path) -> tuple[webapp.StudioServer, str]:
     return server, f"http://127.0.0.1:{server.server_address[1]}"
 
 
+def _bootstrap(server: webapp.StudioServer, origin: str) -> str:
+    request = Request(
+        f"{origin}/api/bootstrap",
+        data=json.dumps({"token": server.bootstrap_token}).encode(),
+        headers={"Content-Type": "application/json", "Origin": origin},
+        method="POST",
+    )
+    with urlopen(request) as response:
+        return str(json.loads(response.read())["sessionToken"])
+
+
 def _request(origin: str, token: str, payload: dict[str, Any], request_origin: str | None = None) -> Request:
     return Request(
         f"{origin}/api/bridge",
@@ -47,14 +58,56 @@ def test_bridge_requires_host_origin_cookie_and_session(tmp_path: Path) -> None:
                 method="POST",
             ))
         assert missing.value.code == 403
+        token = _bootstrap(server, origin)
         with pytest.raises(HTTPError) as wrong_origin:
-            urlopen(_request(origin, server.session_token, {"action": "ready"}, "http://evil.example"))
+            urlopen(_request(origin, token, {"action": "ready"}, "http://evil.example"))
         assert wrong_origin.value.code == 403
+    finally:
+        server.shutdown()
+
+
+def test_index_does_not_disclose_bridge_credentials(tmp_path: Path) -> None:
+    server, origin = _server(tmp_path)
+    try:
         with urlopen(f"{origin}/Studio/index.html") as response:
             html = response.read().decode()
+            cookie = response.headers.get("Set-Cookie")
+        assert 'name="public-document-session"' not in html
+        assert cookie is None
+    finally:
+        server.shutdown()
+
+
+def test_bridge_bootstrap_token_is_required_and_single_use(tmp_path: Path) -> None:
+    server, origin = _server(tmp_path)
+    request = Request(
+        f"{origin}/api/bootstrap",
+        data=json.dumps({"token": server.bootstrap_token}).encode(),
+        headers={"Content-Type": "application/json", "Origin": origin},
+        method="POST",
+    )
+    try:
+        with urlopen(request) as response:
+            payload = json.loads(response.read())
             cookie = response.headers["Set-Cookie"]
-        assert f'name="public-document-session" content="{server.session_token}"' in html
+        assert payload["sessionToken"]
         assert "PublicDocumentSession=" in cookie
+        resume = Request(
+            f"{origin}/api/bootstrap",
+            data=b'{"token":""}',
+            headers={
+                "Content-Type": "application/json",
+                "Origin": origin,
+                "Cookie": cookie.split(";", 1)[0],
+            },
+            method="POST",
+        )
+        with urlopen(resume) as response:
+            resumed = json.loads(response.read())
+        assert resumed["sessionToken"] == payload["sessionToken"]
+        with pytest.raises(HTTPError) as replay:
+            urlopen(request)
+        assert replay.value.code == 403
     finally:
         server.shutdown()
 
@@ -72,7 +125,7 @@ def test_web_byok_forwards_to_swift_without_persisting_secret(
         return {
             "events": [{
                 "event": "aiSettingsSaved",
-                "payload": {"project": {
+                "payload": {"settings": {
                     "activeProvider": "openai",
                     "providers": [{
                         "provider": "openai",
@@ -81,12 +134,14 @@ def test_web_byok_forwards_to_swift_without_persisting_secret(
                         "hasSecret": True,
                         "hostDisclosure": "api.openai.com",
                     }],
+                    "catalog": [],
                 }},
             }],
         }
 
     monkeypatch.setattr(webapp, "run_ai_bridge", fake_bridge)
     try:
+        token = _bootstrap(server, origin)
         payload = {
             "action": "configureAISettings",
             "provider": "openai",
@@ -94,7 +149,7 @@ def test_web_byok_forwards_to_swift_without_persisting_secret(
             "model": "gpt-5-mini",
             "secret": sentinel,
         }
-        with urlopen(_request(origin, server.session_token, payload)) as response:
+        with urlopen(_request(origin, token, payload)) as response:
             result = json.loads(response.read())
         assert result["events"][0]["event"] == "aiSettingsSaved"
         assert captured == [payload]

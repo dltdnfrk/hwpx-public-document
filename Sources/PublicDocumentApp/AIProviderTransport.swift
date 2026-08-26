@@ -34,9 +34,19 @@ struct AIKeychainCredentialStore {
             kSecAttrService: service,
             kSecAttrAccount: accountReference,
         ]
-        SecItemDelete(query as CFDictionary)
+        let data = Data(secret.utf8)
+        let updateStatus = SecItemUpdate(
+            query as CFDictionary,
+            [kSecValueData: data] as CFDictionary
+        )
+        if updateStatus == errSecSuccess {
+            return
+        }
+        guard updateStatus == errSecItemNotFound else {
+            throw AIProviderTransportError.credentialUnavailable
+        }
         var item = query
-        item[kSecValueData] = Data(secret.utf8)
+        item[kSecValueData] = data
         item[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
         item[kSecAttrSynchronizable] = kCFBooleanFalse as Any
         guard SecItemAdd(item as CFDictionary, nil) == errSecSuccess else {
@@ -215,14 +225,16 @@ struct AIProviderTransport {
 
     static func endpointIsAllowed(_ url: URL, provider: AIProviderKind = .openAICompatible) -> Bool {
         let host = url.host?.lowercased() ?? ""
-        if provider != .openAICompatible {
-            let allowed: Set<String> = provider == .openAI ? ["api.openai.com"] : provider == .anthropic ? ["api.anthropic.com"] : ["generativelanguage.googleapis.com"]
-            return url.scheme?.lowercased() == "https" && allowed.contains(host)
+        switch provider {
+        case .openAI, .anthropic, .gemini:
+            let policy = AIProviderCatalog.policy(for: provider)
+            return url.scheme?.lowercased() == "https" && policy.allowedHosts.contains(host)
+        case .openAICompatible:
+            if url.scheme?.lowercased() == "https" { return true }
+            guard url.scheme?.lowercased() == "http", let host = url.host?.lowercased() else {
+                return false
+            }
+            return host == "localhost" || host == "127.0.0.1" || host == "::1"
         }
-        if url.scheme?.lowercased() == "https" { return true }
-        guard url.scheme?.lowercased() == "http", let host = url.host?.lowercased() else {
-            return false
-        }
-        return host == "localhost" || host == "127.0.0.1" || host == "::1"
     }
 }
