@@ -125,10 +125,19 @@ FileHandle.standardOutput.write(try encoder.encode(reports))
 """,
         (
             "AIGovernance.swift",
+            "AIGovernanceModels.swift",
+            "AIGovernanceProposalEngine.swift",
+            "AIGovernanceRevisionEngine.swift",
             "DocumentProject.swift",
+            "DocumentProjectCoreModels.swift",
+            "DocumentProjectAIModels.swift",
+            "DocumentProjectState.swift",
+            "DocumentProjectStore.swift",
             "ExportModel.swift",
             "CompatibilityEvidence.swift",
             "FormatCapabilityPolicy.swift",
+            "FormatCapabilityObservation.swift",
+            "FormatCapabilityReporting.swift",
         ),
         str(fixture),
     )
@@ -205,10 +214,19 @@ FileHandle.standardOutput.write(try encoder.encode(reports))
 """,
         (
             "AIGovernance.swift",
+            "AIGovernanceModels.swift",
+            "AIGovernanceProposalEngine.swift",
+            "AIGovernanceRevisionEngine.swift",
             "DocumentProject.swift",
+            "DocumentProjectCoreModels.swift",
+            "DocumentProjectAIModels.swift",
+            "DocumentProjectState.swift",
+            "DocumentProjectStore.swift",
             "ExportModel.swift",
             "CompatibilityEvidence.swift",
             "FormatCapabilityPolicy.swift",
+            "FormatCapabilityObservation.swift",
+            "FormatCapabilityReporting.swift",
         ),
     )
     reports = json.loads(result.stdout)
@@ -323,11 +341,23 @@ print("artifact-derived mutation checks: pass")
 """,
         (
             "AIGovernance.swift",
+            "AIGovernanceModels.swift",
+            "AIGovernanceProposalEngine.swift",
+            "AIGovernanceRevisionEngine.swift",
             "DocumentProject.swift",
+            "DocumentProjectCoreModels.swift",
+            "DocumentProjectAIModels.swift",
+            "DocumentProjectState.swift",
+            "DocumentProjectStore.swift",
             "ExportModel.swift",
             "CompatibilityEvidence.swift",
             "FormatCapabilityPolicy.swift",
+            "FormatCapabilityObservation.swift",
+            "FormatCapabilityReporting.swift",
             "PackageArchive.swift",
+            "PackageArchiveModels.swift",
+            "PackageArchiveReader.swift",
+            "PackageArchiveWriter.swift",
             "ExportSerializers.swift",
             "ExportValidation.swift",
             "RhwpExport.swift",
@@ -409,7 +439,7 @@ def test_markdown_escapes_authored_markup_and_retains_element_identity(tmp_path:
 
 def test_export_consent_is_fresh_for_each_dialog_and_retry() -> None:
     # Given: the Studio export dialog and native batch retry store.
-    script = (ROOT / "Resources" / "Studio" / "app.js").read_text(encoding="utf-8")
+    script = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Resources" / "Studio").glob("*.js")))
     store = (ROOT / "Sources" / "PublicDocumentApp" / "BatchExportStore.swift").read_text(
         encoding="utf-8"
     )

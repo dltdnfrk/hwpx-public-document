@@ -224,7 +224,7 @@ def test_official_style_toolkit_locks_guidebook_1100_presets() -> None:
 
 
 def test_studio_creates_title_heading_and_body_markers() -> None:
-    app = (ROOT / "Resources/Studio/app.js").read_text(encoding="utf-8")
+    app = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Resources" / "Studio").glob("*.js")))
     css = (ROOT / "Resources/Studio/styles.css").read_text(encoding="utf-8")
     assert "styleID: 'style-title'" in app
     assert "text: `□ ${section}`" in app

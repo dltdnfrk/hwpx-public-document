@@ -391,8 +391,8 @@ def test_visual_only_unconsented_fixture_blocks_every_selected_format(
 def test_studio_exposes_selected_format_and_loss_consent_controls() -> None:
     # Given: the shipped editor and native bridge sources.
     html = (ROOT / "Resources" / "Studio" / "index.html").read_text(encoding="utf-8")
-    script = (ROOT / "Resources" / "Studio" / "app.js").read_text(encoding="utf-8")
-    host = (ROOT / "Sources" / "PublicDocumentApp" / "main.swift").read_text(encoding="utf-8")
+    script = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Resources" / "Studio").glob("*.js")))
+    host = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Sources" / "PublicDocumentApp").glob("*.swift")))
 
     # When/Then: selection and consent are explicit and export crosses the native bridge.
     for format_name in ("hwpx", "hwp", "docx", "markdown"):

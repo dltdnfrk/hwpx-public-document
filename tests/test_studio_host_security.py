@@ -95,7 +95,7 @@ def test_native_host_loads_genoffice_sibling_and_denies_network(tmp_path: Path) 
 
 
 def test_production_host_uses_common_resources_root_and_keeps_bridge() -> None:
-    source = (ROOT / "Sources/PublicDocumentApp/main.swift").read_text(encoding="utf-8")
+    source = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Sources" / "PublicDocumentApp").glob("*.swift")))
 
     assert "allowingReadAccessTo: studioResources.readAccessRoot" in source
     assert 'appendingPathComponent("Resources", isDirectory: true)' in source

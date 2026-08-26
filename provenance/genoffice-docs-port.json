@@ -101,7 +101,21 @@
       "Resources/Studio/styles.css",
       "Resources/Studio/app.js",
       "Sources/PublicDocumentApp/ExportSerializers.swift",
-      "Sources/PublicDocumentApp/ExportValidation.swift"
+      "Sources/PublicDocumentApp/ExportValidation.swift",
+      "Resources/Studio/ai-settings.js",
+      "Resources/Studio/ai-workspace.js",
+      "Resources/Studio/bridge.js",
+      "Resources/Studio/easy-library.js",
+      "Resources/Studio/easy-tools-ui.js",
+      "Resources/Studio/editor-commands.js",
+      "Resources/Studio/export-dialogs.js",
+      "Resources/Studio/project-content.js",
+      "Resources/Studio/project-model.js",
+      "Resources/Studio/project-render.js",
+      "Resources/Studio/studio-events.js",
+      "Resources/Studio/studio-prefs.js",
+      "Resources/Studio/studio-state.js",
+      "Resources/Studio/template-panel.js"
     ],
     "excludedUpstreamScopes": [
       "ee",
@@ -119,7 +133,7 @@
   "localArtifacts": [
     {
       "path": "Resources/Studio/index.html",
-      "sha256": "sha256:9fba93fe2ca586816442dfe9784392884a32e33e0bae4394d761e014b57d17af",
+      "sha256": "sha256:b7b80a8ea21e1b14b663a00d5fde82b2ec561a330c521cba94b5aab7e39da6b0",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-shell-semantic-structure",
@@ -146,7 +160,7 @@
     },
     {
       "path": "Resources/Studio/app.js",
-      "sha256": "sha256:c9749d27dd7dc877a07476bf1a4145095475fbe3635d7f9ae8f5133b7bccb29c",
+      "sha256": "sha256:31c590227dc680b6377d575e840a770139f3253b9f6555cac5f038c80fd398ca",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",
@@ -186,6 +200,244 @@
         "packages/docx-engine/src/index.ts",
         "packages/docx-engine/src/generate.ts",
         "packages/docx-engine/src/patch.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/ai-settings.js",
+      "sha256": "sha256:66bfde5bf4ed89f4c124533aa51fedf77ceaa0138daa514752997b0f0ce5f3d0",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/ai-workspace.js",
+      "sha256": "sha256:826da6b080d782cbe0b54e5a8fdc148208deea054398e3b928ff4240526ead0d",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/bridge.js",
+      "sha256": "sha256:2f6d44ffda82f795a25e0b0bf69336613d25a84b497b4ebf69beaba5c4b43396",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/easy-library.js",
+      "sha256": "sha256:edee7e8fca03961c44c00f82269d2b70f49dd2c493dda1dde892cffdd8b7effe",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/easy-tools-ui.js",
+      "sha256": "sha256:3278d82a724cc2b6747356a272b96cab1db8d3247e7ecde0f8d46cd006a36007",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/editor-commands.js",
+      "sha256": "sha256:443e443d354c61eac3a493c82cd5c252d7dfe58cf82ceb5960658504b5ad9f14",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/export-dialogs.js",
+      "sha256": "sha256:397cd505cc671c9350c50f678cdf263efb72724f119fd20a4f17383e2a869502",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/project-content.js",
+      "sha256": "sha256:51fb6774e98b682cad4748d3bb00a03a99b8803976e59a779ee03ba84cbeec32",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/project-model.js",
+      "sha256": "sha256:56dc1a8cd6d7e580a641a17c53db90b1acac21f8a123067323a50fc240ba93b4",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/project-render.js",
+      "sha256": "sha256:ed579104f008447a18e44e52c0d3570357060ebcde66804de48db1f88a551702",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/studio-events.js",
+      "sha256": "sha256:cf9d0b5d3408a09c8038e44ef30c2f041383889dd10fee1beb000b187415f130",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/studio-prefs.js",
+      "sha256": "sha256:b19dbc2570cf5c47b20d038979bd67b6f6ea22c97bb97012ee998486422998e4",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/studio-state.js",
+      "sha256": "sha256:59451395fc58efb30bc3823423ec00e1066c84a9928e0badac205c1604e48c55",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/template-panel.js",
+      "sha256": "sha256:db51928bffe33c01585a0641571aaf4737a28ccd5484fc057ffbd0567138d565",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
       ]
     }
   ],

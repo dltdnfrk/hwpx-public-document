@@ -340,8 +340,8 @@ def test_crash_after_move_reconciles_hash_and_manifestless_startup_isolated(
 def test_studio_exposes_batch_progress_cancellation_and_recovery() -> None:
     # Given: the shipped Studio and native bridge sources.
     html = (ROOT / "Resources" / "Studio" / "index.html").read_text(encoding="utf-8")
-    script = (ROOT / "Resources" / "Studio" / "app.js").read_text(encoding="utf-8")
-    host = (ROOT / "Sources" / "PublicDocumentApp" / "main.swift").read_text(encoding="utf-8")
+    script = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Resources" / "Studio").glob("*.js")))
+    host = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Sources" / "PublicDocumentApp").glob("*.swift")))
 
     # When/Then: batch selection, per-item progress, cancellation, and recovery are operable.
     assert "여러 문서 일괄 내보내기" in html

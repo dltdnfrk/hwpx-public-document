@@ -88,6 +88,9 @@ def test_store_only_archive_reader_rejects_ambiguous_or_corrupt_entries(
         [
             "swiftc",
             str(ROOT / "Sources" / "PublicDocumentApp" / "PackageArchive.swift"),
+            str(ROOT / "Sources" / "PublicDocumentApp" / "PackageArchiveModels.swift"),
+            str(ROOT / "Sources" / "PublicDocumentApp" / "PackageArchiveReader.swift"),
+            str(ROOT / "Sources" / "PublicDocumentApp" / "PackageArchiveWriter.swift"),
             str(runner),
             "-o",
             str(binary),

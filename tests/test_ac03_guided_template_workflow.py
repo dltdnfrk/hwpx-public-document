@@ -98,8 +98,8 @@ def test_signed_catalog_update_preserves_pinned_document_and_failed_update(
 def test_studio_exposes_governed_template_and_guided_workflow() -> None:
     # Given: the shipped editor, native host, and catalog implementation.
     markup = (ROOT / "Resources/Studio/index.html").read_text(encoding="utf-8")
-    editor = (ROOT / "Resources/Studio/app.js").read_text(encoding="utf-8")
-    host = (ROOT / "Sources/PublicDocumentApp/main.swift").read_text(encoding="utf-8")
+    editor = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Resources" / "Studio").glob("*.js")))
+    host = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Sources" / "PublicDocumentApp").glob("*.swift")))
     catalog = (ROOT / "Sources/PublicDocumentApp/TemplateCatalog.swift").read_text(
         encoding="utf-8"
     )

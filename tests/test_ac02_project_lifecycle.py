@@ -82,8 +82,8 @@ def test_native_store_migrates_legacy_project_without_changing_stable_content(
 
 def test_editor_exposes_project_lifecycle_without_browser_storage() -> None:
     # Given: the shipped editor and native host sources.
-    editor = (ROOT / "Resources/Studio/app.js").read_text(encoding="utf-8")
-    host = (ROOT / "Sources/PublicDocumentApp/main.swift").read_text(encoding="utf-8")
+    editor = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Resources" / "Studio").glob("*.js")))
+    host = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Sources" / "PublicDocumentApp").glob("*.swift")))
 
     # When/Then: lifecycle actions cross the native bridge and browser storage is absent.
     for action in ("save", "reopen", "recover", "inspect"):
@@ -98,7 +98,7 @@ def test_editor_exposes_project_lifecycle_without_browser_storage() -> None:
 
 def test_editor_project_projection_preserves_safe_rich_text_and_tables() -> None:
     # Given: the editor projection used by save, reopen, autosave, and recovery.
-    editor = (ROOT / "Resources/Studio/app.js").read_text(encoding="utf-8")
+    editor = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Resources" / "Studio").glob("*.js")))
     model = (ROOT / "Sources/PublicDocumentApp/DocumentProject.swift").read_text(encoding="utf-8")
 
     # When/Then: safe structure and stable inline identities cross the native boundary.

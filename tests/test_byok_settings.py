@@ -89,7 +89,7 @@ def test_studio_script_is_valid_and_uses_no_browser_storage() -> None:
         capture_output=True,
         text=True,
     )
-    script = (ROOT / "Resources/Studio/app.js").read_text(encoding="utf-8")
+    script = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Resources" / "Studio").glob("*.js")))
     assert "localStorage" not in script
     assert "sessionStorage" not in script
 

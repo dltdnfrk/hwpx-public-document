@@ -67,6 +67,7 @@ def test_studio_html_wires_the_icon_bundle() -> None:
 
 
 def test_local_webapp_serves_icon_mime_types() -> None:
-    source = (ROOT / "public_document_web.py").read_text(encoding="utf-8")
-    assert '".ico": "image/vnd.microsoft.icon"' in source
-    assert '".webmanifest": "application/manifest+json"' in source
+    import public_document_web as webapp
+
+    assert webapp.MIME_TYPES[".ico"] == "image/vnd.microsoft.icon"
+    assert webapp.MIME_TYPES[".webmanifest"] == "application/manifest+json"

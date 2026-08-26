@@ -82,6 +82,9 @@ def test_ai_governance_is_consent_bound_reviewed_atomic_and_restart_persistent(
 
     source_paths = [
         "Sources/PublicDocumentApp/AIGovernance.swift",
+        "Sources/PublicDocumentApp/AIGovernanceModels.swift",
+        "Sources/PublicDocumentApp/AIGovernanceProposalEngine.swift",
+        "Sources/PublicDocumentApp/AIGovernanceRevisionEngine.swift",
         "Sources/PublicDocumentApp/AIBridgeCLI.swift",
         "Sources/PublicDocumentApp/AIProviderCatalog.swift",
         "Sources/PublicDocumentApp/AISettingsModels.swift",
@@ -89,8 +92,16 @@ def test_ai_governance_is_consent_bound_reviewed_atomic_and_restart_persistent(
         "Sources/PublicDocumentApp/AISettingsSelfTest.swift",
         "Sources/PublicDocumentApp/AIProviderTransport.swift",
         "Sources/PublicDocumentApp/AIGovernanceSelfTest.swift",
+        "Sources/PublicDocumentApp/AIGovernanceSelfTestFixtures.swift",
+        "Sources/PublicDocumentApp/AIGovernanceSelfTestScenarios.swift",
         "Sources/PublicDocumentApp/DocumentProject.swift",
+        "Sources/PublicDocumentApp/DocumentProjectCoreModels.swift",
+        "Sources/PublicDocumentApp/DocumentProjectAIModels.swift",
+        "Sources/PublicDocumentApp/DocumentProjectState.swift",
+        "Sources/PublicDocumentApp/DocumentProjectStore.swift",
         "Sources/PublicDocumentApp/main.swift",
+        "Sources/PublicDocumentApp/StudioBridgeAI.swift",
+        "Sources/PublicDocumentApp/StudioBridgeDispatch.swift",
     ]
     expected_source_hashes = {
         relative_path: "sha256:"

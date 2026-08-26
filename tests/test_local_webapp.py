@@ -99,7 +99,7 @@ def test_local_webapp_serves_studio_and_allows_same_origin_api(tmp_path: Path) -
         assert "connect-src 'none'" not in html
         with urlopen(f"{origin}/GenOffice/public-document-genoffice.js") as response:
             assert response.status == 200
-        app = (ROOT / "Resources/Studio/app.js").read_text(encoding="utf-8")
+        app = "\n".join(p.read_text(encoding="utf-8") for p in sorted((ROOT / "Resources" / "Studio").glob("*.js")))
         assert "fetch('/api/bridge'" in app
         assert "window.webkit.messageHandlers.projectStore" in app
     finally:
