@@ -146,6 +146,10 @@
       flatteningConsent,
     }
     if (document.querySelector('[data-batch-export]').checked) {
+      if (studio.isLocalWeb()) {
+        announce('로컬 앱에서만')
+        return
+      }
       projectBridge('batchExport', store.currentProject, details)
     } else {
       projectBridge('export', store.currentProject, details)

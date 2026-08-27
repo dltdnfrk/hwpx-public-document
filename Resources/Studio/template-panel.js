@@ -21,7 +21,8 @@
   }, new Map()).values())
 
   const renderOfficialRules = (rules, conflicts = []) => {
-    const details = templatePanel.querySelector('.official-rules')
+    const details = document.querySelector('#review-tools .official-rules')
+    if (!details) return
     const ruleItems = rules.map((rule) => {
       const item = document.createElement('li')
       item.textContent = `${rule.source} · ${rule.field} · 우선순위 ${rule.precedence} · 필수값 “${rule.requiredValue}”`
@@ -137,6 +138,10 @@
   document.querySelectorAll('[data-template-action]').forEach((button) => {
     button.addEventListener('click', () => {
       const action = button.dataset.templateAction
+      if (action === 'update-template' && studio.isLocalWeb()) {
+        announce('로컬 앱에서만')
+        return
+      }
       projectBridge(action === 'update-template' ? 'updateTemplateCatalog' : 'rollbackTemplateCatalog')
     })
   })

@@ -133,7 +133,7 @@
   "localArtifacts": [
     {
       "path": "Resources/Studio/index.html",
-      "sha256": "sha256:f0112f56ed369fde6d936c820115134eafdaf6077eeceef6f97dac3f546a1c4c",
+      "sha256": "sha256:15ad56b6f37d3d524ee02de056830faa65577b498d8f601995d4040fd5b97a67",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-shell-semantic-structure",
@@ -147,7 +147,7 @@
     },
     {
       "path": "Resources/Studio/styles.css",
-      "sha256": "sha256:22be4059c106c735d700e4df6c3b713af9c3e87c9cff6187afa2cf6e26fe7688",
+      "sha256": "sha256:f6cc50b0322e4f37116e6fe892e1fba37a47fd5249e14720fbbe15831278010f",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-layout-grammar",
@@ -160,7 +160,7 @@
     },
     {
       "path": "Resources/Studio/app.js",
-      "sha256": "sha256:31c590227dc680b6377d575e840a770139f3253b9f6555cac5f038c80fd398ca",
+      "sha256": "sha256:0fb127343bdfbe01e8562b790a1c27b68b9a6ac77459086332d07488b2655785",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",
@@ -289,7 +289,7 @@
     },
     {
       "path": "Resources/Studio/editor-commands.js",
-      "sha256": "sha256:443e443d354c61eac3a493c82cd5c252d7dfe58cf82ceb5960658504b5ad9f14",
+      "sha256": "sha256:0c2b34645fd4063ecc28a95e173e0fe807f0dd8f710ed91f96883e1399bc4998",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",
@@ -306,7 +306,7 @@
     },
     {
       "path": "Resources/Studio/export-dialogs.js",
-      "sha256": "sha256:397cd505cc671c9350c50f678cdf263efb72724f119fd20a4f17383e2a869502",
+      "sha256": "sha256:1db6047be87bf8556fd1c77dc0096a514a23c3fb22f6686e37d70cf5b8fd5dc2",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",
@@ -425,7 +425,7 @@
     },
     {
       "path": "Resources/Studio/template-panel.js",
-      "sha256": "sha256:0352f7902f9dc734989fb2360d165037bff87d6cd4edc80da966d43c51faeb5f",
+      "sha256": "sha256:eae05af13575145de3736dd8d46de9137d9c5dbd59dd90f97370ca4da4206425",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",

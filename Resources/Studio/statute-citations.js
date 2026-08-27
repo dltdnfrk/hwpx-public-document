@@ -28,7 +28,7 @@
   }
 
   const renderStatuteWarnings = (proposal) => {
-    const box = document.querySelector('[data-statute-warnings]')
+    const box = document.querySelector('[data-ai-proposal-review] [data-statute-warnings]')
     if (!box) return []
     const values = [
       ...(proposal?.commands || []).map((command) => command.value),

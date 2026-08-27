@@ -73,7 +73,11 @@
   })
 
   document.querySelector('[data-action="check"]').addEventListener('click', () => {
-    announce('필수항목 6개 중 4개를 작성했습니다. 소요 예산과 결재선을 확인하세요.')
+    const results = Object.entries(store.currentProject?.templateBinding?.checklistResults || {})
+    const complete = results.filter(([, done]) => done).length
+    const missing = results.filter(([, done]) => !done).map(([label]) => label)
+    const missingText = missing.length ? ` ${missing.join('과 ')}을 확인하세요.` : ''
+    announce(`필수항목 ${results.length}개 중 ${complete}개를 작성했습니다.${missingText}`)
   })
 
   document.addEventListener('keydown', (event) => {

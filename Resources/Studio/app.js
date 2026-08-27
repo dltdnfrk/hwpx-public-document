@@ -81,6 +81,7 @@
   document.querySelector('[data-ai-request]').disabled = true
   applyStudioPrefs(store.studioPrefs)
   store.currentProject = initialProject()
+  studio.applyTitleLock(store.currentProject)
   editor.addEventListener('public-document-genoffice-ready', activateGenOfficeEditor)
   if (!activateGenOfficeEditor()) announce('GenOffice 편집기 번들을 불러오지 못해 편집을 차단했습니다.')
   projectBridge('ready')
