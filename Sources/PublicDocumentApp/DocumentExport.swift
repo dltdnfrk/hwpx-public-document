@@ -62,6 +62,7 @@ final class DocumentExportEngine {
             }
         }
 
+        TypstSidecar.write(project: project, destination: request.destination)
         return ExportReceipt(
             operationID: request.operationID,
             snapshotRevisionID: project.currentRevisionID,

@@ -361,6 +361,7 @@ print("artifact-derived mutation checks: pass")
             "ExportSerializers.swift",
             "ExportValidation.swift",
             "RhwpExport.swift",
+            "RhwpStyleCompile.swift",
         ),
         str(fixture),
     )

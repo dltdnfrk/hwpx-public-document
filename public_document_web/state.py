@@ -114,6 +114,7 @@ def default_studio_prefs() -> dict[str, Any]:
         "autosaveIntervalMs": 180000,
         "favorites": [],
         "myForms": [],
+        "checklistConsent": False,
     }
 
 
@@ -148,4 +149,5 @@ def normalize_studio_prefs(raw: Any) -> dict[str, Any]:
                 "text": text,
             })
         prefs["myForms"] = cleaned
+    prefs["checklistConsent"] = raw.get("checklistConsent") is True
     return prefs

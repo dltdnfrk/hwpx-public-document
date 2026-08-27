@@ -67,6 +67,15 @@ def _style_fonts(styles: ElementTree.Element) -> dict[str, tuple[str, str, bool]
     return found
 
 
+def test_pdf_sidecar_is_written_beside_official_samples(tmp_path: Path) -> None:
+    samples = _export_samples(tmp_path)
+    typ = samples / "기안문" / "document.typ"
+    assert typ.is_file()
+    text = typ.read_text(encoding="utf-8")
+    assert "기안문" in text
+    assert "HWPX 대체" in text
+
+
 def test_docx_exports_lock_guidebook_type_and_markers(tmp_path: Path) -> None:
     samples = _export_samples(tmp_path)
     for document_type in TYPES:
@@ -89,8 +98,12 @@ def test_docx_exports_lock_guidebook_type_and_markers(tmp_path: Path) -> None:
             text = "".join(node.text or "" for node in paragraph.findall(".//w:t", NS))
             paragraphs.append((style_id, text))
         assert any(style_id == "Title" for style_id, _ in paragraphs)
-        assert any(style_id == "Heading2" and text.startswith("□ ") for style_id, text in paragraphs)
-        assert any(style_id == "Normal" and text.startswith("○") for style_id, text in paragraphs)
+        if document_type == "기안문":
+            assert any(style_id == "Heading2" and text[:3].endswith(". ") for style_id, text in paragraphs)
+            assert any(style_id == "Normal" and text.startswith("가.") for style_id, text in paragraphs)
+        else:
+            assert any(style_id == "Heading2" and text.startswith("□ ") for style_id, text in paragraphs)
+            assert any(style_id == "Normal" and text.startswith("○") for style_id, text in paragraphs)
 
 
 def test_hwpx_exports_bind_presets_and_markers(tmp_path: Path) -> None:
@@ -103,9 +116,16 @@ def test_hwpx_exports_bind_presets_and_markers(tmp_path: Path) -> None:
             names = archive.namelist()
             assert "PublicDocument/style-binding.json" in names
             binding = json.loads(archive.read("PublicDocument/style-binding.json"))
+            header = archive.read("Contents/header.xml").decode("utf-8")
+            section = archive.read("Contents/section0.xml").decode("utf-8")
         assert binding["default_font"] == "AppleMyungjo"
         assert binding["preset_ids"] == PRESET_IDS
         assert binding["markers"] == MARKERS
+        assert binding["statutory_list"] == ["1. ", "가. ", "1) ", "가) ", "(1) ", "(가) ", "① ", "㉮ "]
+        assert binding["guidebook_list"] == MARKERS
+        assert "헤드라인" in header
+        assert "휴먼명조" in header
+        assert 'engName="Title"' in header
         engine = ROOT / "Resources" / "Engines" / "rhwp"
         extracted = subprocess.run(
             [str(engine), "export-text", str(hwpx), "--json"],
@@ -114,5 +134,9 @@ def test_hwpx_exports_bind_presets_and_markers(tmp_path: Path) -> None:
         )
         receipt = json.loads(extracted.stdout)
         text = "\n".join(page["text"] for page in receipt["pages"])
-        assert "□ " in text
-        assert "○" in text
+        if document_type == "기안문":
+            assert "1. " in text
+            assert "가. " in text
+        else:
+            assert "□ " in text
+            assert "○" in text

@@ -17,6 +17,8 @@ from .entry import main
 from .http import MIME_TYPES, StudioHandler, StudioServer, safe_resource, serve
 from .native import export_project, resolve_app_binary, run_ai_bridge
 from .official_rules import enforce_official_rules
+from .official_style_lint import apply_lint, dry_run_lint
+from .statute_citations import review_citations
 from .paths import (
     DEFAULT_HOST,
     DEFAULT_PORT,
@@ -44,7 +46,10 @@ __all__ = [
     "StudioState",
     "UNSUPPORTED_ACTIONS",
     "default_studio_prefs",
+    "apply_lint",
+    "dry_run_lint",
     "enforce_official_rules",
+    "review_citations",
     "enforcement_event",
     "error_event",
     "event",

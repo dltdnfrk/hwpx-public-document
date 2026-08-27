@@ -104,6 +104,8 @@
     }
   },
   "listMarkers": ["□ ", "○", "-", "※", "*"],
+  "guidebookList": ["□ ", "○", "-", "※", "*"],
+  "statutoryList": ["1. ", "가. ", "1) ", "가) ", "(1) ", "(가) ", "① ", "㉮ "],
   "operations": {
     "word-keep": {
       "guidebookSection": "2.3",

@@ -62,7 +62,7 @@ enum OfficialStyleSamples {
                     elementID: "element-section-\(index + 1)-heading",
                     kind: "heading",
                     order: elements.count,
-                    text: "□ \(section)",
+                    text: "\(ListNumbering.headingPrefix(templateID: entry.templateID, index: index))\(section)",
                     styleID: "style-section-heading",
                     evidenceIDs: []
                 )
@@ -72,7 +72,7 @@ enum OfficialStyleSamples {
                     elementID: "element-section-\(index + 1)-body",
                     kind: "paragraph",
                     order: elements.count,
-                    text: "○ \(section)",
+                    text: "\(ListNumbering.bodyPrefix(templateID: entry.templateID))\(section)",
                     styleID: "style-body",
                     evidenceIDs: []
                 )

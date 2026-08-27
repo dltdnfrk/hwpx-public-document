@@ -158,10 +158,12 @@
             <li><button type="button" data-section="budget" aria-label="4. 예산 및 일정"><span>4</span>예산 및 일정</button></li>
             <li><button type="button" data-section="review" aria-label="5. 검토 및 결재"><span>5</span>검토 및 결재</button></li>
           </ol>
-          <section class="checklist" aria-labelledby="checklist-heading">
+          <section class="checklist" aria-labelledby="checklist-heading" data-checklist-consent="false">
             <div class="checklist-title"><h2 id="checklist-heading">작성 점검</h2><strong>4 / 6</strong></div>
-            <div class="progress-track" role="progressbar" aria-label="작성 점검" aria-valuemin="0" aria-valuemax="6" aria-valuenow="4"><span></span></div>
-            <ul>
+            <p class="checklist-note">기관 템플릿 점검입니다. 행정안전부 표준이 아닙니다.</p>
+            <label class="checklist-consent"><input type="checkbox" data-checklist-consent> 이 문서에서 작성 점검을 표시합니다.</label>
+            <div class="progress-track" hidden role="progressbar" aria-label="작성 점검" aria-valuemin="0" aria-valuemax="6" aria-valuenow="4"><span></span></div>
+            <ul hidden>
               <li class="done">목적과 대상</li><li class="done">추진 근거</li><li class="done">담당 부서</li>
               <li class="done">시행 일정</li><li>소요 예산</li><li>결재선</li>
             </ul>
@@ -266,6 +268,7 @@
       <section data-ai-proposal-review hidden aria-labelledby="ai-proposal-title" aria-live="polite">
         <h3 id="ai-proposal-title">적용 전 변경 검토</h3>
         <p class="ai-base-revision"></p>
+        <ul data-statute-warnings hidden aria-label="법령 인용 확인"></ul>
         <ul data-ai-diff aria-label="AI 제안 변경 전후"></ul>
         <div class="ai-request-actions"><button type="button" data-ai-approve-selected>선택한 변경 승인</button><button type="button" data-ai-reject>제안 거절</button></div>
       </section>
@@ -307,6 +310,8 @@
     <script src="easy-library.js"></script>
     <script src="easy-tools-ui.js"></script>
     <script src="studio-events.js"></script>
+    <script src="statute-citations.js"></script>
+    <script src="checklist-consent.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

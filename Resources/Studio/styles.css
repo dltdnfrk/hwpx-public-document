@@ -271,6 +271,10 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .checklist-title { display: flex; justify-content: space-between; align-items: baseline; }
 .checklist-title h2 { margin: 0; font-size: 14px; }
 .checklist-title strong { color: var(--studio-accent-strong); font-size: 12px; }
+.checklist-note { margin: var(--space-2) 0; color: var(--studio-muted); font-size: 12px; }
+.checklist-consent { display: block; margin: var(--space-2) 0 var(--space-3); font-size: 12px; }
+[data-statute-warnings] { margin: 0 0 var(--space-3); padding-left: 1.2em; color: var(--studio-muted); }
+[data-statute-warnings] [data-statute-verified="false"] { color: var(--studio-accent-strong); }
 .progress-track { height: 5px; margin: var(--space-3) 0; overflow: hidden; border-radius: 3px; background: var(--studio-border); }
 .progress-track span { display: block; width: 66.666%; height: 100%; background: var(--studio-accent); }
 .checklist ul { display: grid; gap: var(--space-2); margin: 0; padding: 0; color: var(--studio-muted); list-style: none; }

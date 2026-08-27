@@ -21,6 +21,7 @@
           return name && text ? [{ id: id || `form-${name}`, name, text }] : []
         }).slice(0, 20)
         : [],
+      checklistConsent: prefs?.checklistConsent === true,
     }
   }
 
@@ -42,6 +43,8 @@
     const select = document.querySelector('[data-easy="autosave-interval"]')
     if (select) select.value = String(store.studioPrefs.autosaveIntervalMs)
     renderMyForms()
+    if (typeof studio.bindChecklistConsent === 'function') studio.bindChecklistConsent()
+    if (typeof studio.setChecklistConsent === 'function') studio.setChecklistConsent(Boolean(store.studioPrefs.checklistConsent))
     if (store.currentTemplateCatalog) renderTemplateCatalog(store.currentTemplateCatalog, false)
     window.clearInterval(store.periodicSaveTimer)
     store.periodicSaveTimer = window.setInterval(() => {

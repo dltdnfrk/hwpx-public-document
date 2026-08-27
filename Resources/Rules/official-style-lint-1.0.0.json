@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "lintID": "official-style-lint-1.0.0",
+  "note": "공식규칙 강제 이후에만 돌린다. 제목 덮어쓰기를 되돌리지 않는다. 실재 영·규칙만 인용한다.",
+  "rules": [
+    {
+      "id": "lint-end-mark",
+      "kind": "endMark",
+      "citation": "행정업무의 운영 및 혁신에 관한 규정 시행규칙 제4조④",
+      "message": "본문 끝에 「끝」이 있어야 합니다."
+    },
+    {
+      "id": "lint-attachment",
+      "kind": "attachment",
+      "citation": "행정업무의 운영 및 혁신에 관한 규정 시행규칙 제4조⑤",
+      "message": "첨부가 있으면 「붙임」을 적어야 합니다."
+    },
+    {
+      "id": "lint-sender-name",
+      "kind": "senderName",
+      "citation": "행정업무의 운영 및 혁신에 관한 규정 제13조",
+      "message": "내부결재가 아니면 발신명의를 적어야 합니다."
+    },
+    {
+      "id": "lint-title-lock",
+      "kind": "titleLock",
+      "citation": "기관 표준",
+      "message": "공식 제목 덮어쓰기를 되돌리지 않습니다."
+    }
+  ]
+}

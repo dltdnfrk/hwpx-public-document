@@ -19,6 +19,8 @@ enum OfficialStyleBinding {
                 "default_font": "AppleMyungjo",
                 "preset_ids": presetIDs,
                 "markers": markers,
+                "guidebook_list": ["□ ", "○", "-", "※", "*"],
+                "statutory_list": ["1. ", "가. ", "1) ", "가) ", "(1) ", "(가) ", "① ", "㉮ "],
             ],
             options: [.sortedKeys]
         )
@@ -84,6 +86,7 @@ struct RhwpExportAdapter {
         }
         try JSONEncoder().encode(RhwpIngest(questions: questions)).write(to: ingest)
         _ = try run(engine, ["build-from-ingest", ingest.path, "-o", hwpx.path])
+        try RhwpStyleCompile.apply(to: hwpx, work: work)
         try embedStyleBinding(in: hwpx, work: work)
         switch format {
         case .hwpx:

@@ -33,8 +33,14 @@
       item.textContent = `충돌 경고 · ${conflict.warning}`
       return item
     })
-    details.querySelector('ul').replaceChildren(...ruleItems, ...conflictItems)
-    if (conflicts.length) details.open = true
+    const lintItems = (store.currentOfficialRuleState?.styleLint?.findings || []).map((finding) => {
+      const item = document.createElement('li')
+      item.dataset.styleLint = finding.ruleID
+      item.textContent = `문체 린트(dry_run) · ${finding.citation} · ${finding.message}`
+      return item
+    })
+    details.querySelector('ul').replaceChildren(...ruleItems, ...conflictItems, ...lintItems)
+    if (conflicts.length || lintItems.length) details.open = true
   }
 
   const renderOfficialRuleState = (state) => {

@@ -80,6 +80,7 @@
       item.append(label)
       return item
     }))
+    if (typeof studio.renderStatuteWarnings === 'function') studio.renderStatuteWarnings(proposal)
     aiProposalReview.querySelector('[data-ai-approve-selected]').focus()
   }
 

@@ -35,7 +35,7 @@ window.PublicDocumentStudio = window.PublicDocumentStudio || {}
     suppressEditorAutosave: false,
     pendingEasyConfirm: null,
     pendingMergeHeading: '',
-    studioPrefs: { autosaveIntervalMs: 180000, favorites: [], myForms: [] },
+    studioPrefs: { autosaveIntervalMs: 180000, favorites: [], myForms: [], checklistConsent: false },
     libraryEntries: [],
     libraryProjects: {},
     activeBatchOperationID: null,

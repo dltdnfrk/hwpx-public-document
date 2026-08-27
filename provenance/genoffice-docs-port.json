@@ -133,7 +133,7 @@
   "localArtifacts": [
     {
       "path": "Resources/Studio/index.html",
-      "sha256": "sha256:b7b80a8ea21e1b14b663a00d5fde82b2ec561a330c521cba94b5aab7e39da6b0",
+      "sha256": "sha256:f0112f56ed369fde6d936c820115134eafdaf6077eeceef6f97dac3f546a1c4c",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-shell-semantic-structure",
@@ -147,7 +147,7 @@
     },
     {
       "path": "Resources/Studio/styles.css",
-      "sha256": "sha256:61d20a8449b9d71f06613448ee0f5b6ce33b6b0dd271916a4550084f8ce40ba0",
+      "sha256": "sha256:22be4059c106c735d700e4df6c3b713af9c3e87c9cff6187afa2cf6e26fe7688",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-layout-grammar",
@@ -221,7 +221,7 @@
     },
     {
       "path": "Resources/Studio/ai-workspace.js",
-      "sha256": "sha256:826da6b080d782cbe0b54e5a8fdc148208deea054398e3b928ff4240526ead0d",
+      "sha256": "sha256:f2266038e9b662c05ca1f5c7daf9728c587f597e415c975e99a5c35d6d385e8d",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",
@@ -340,7 +340,7 @@
     },
     {
       "path": "Resources/Studio/project-model.js",
-      "sha256": "sha256:56dc1a8cd6d7e580a641a17c53db90b1acac21f8a123067323a50fc240ba93b4",
+      "sha256": "sha256:f52d75741b6c261ac4e5ea8e86a13f9fcee123fe9848eefe4616e9bf7f5f0925",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",
@@ -391,7 +391,7 @@
     },
     {
       "path": "Resources/Studio/studio-prefs.js",
-      "sha256": "sha256:b19dbc2570cf5c47b20d038979bd67b6f6ea22c97bb97012ee998486422998e4",
+      "sha256": "sha256:d2de14bd86955a45cf1e4643df3635222a2b32d1acecc70f6e7b4597a1c32f8f",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",
@@ -408,7 +408,7 @@
     },
     {
       "path": "Resources/Studio/studio-state.js",
-      "sha256": "sha256:59451395fc58efb30bc3823423ec00e1066c84a9928e0badac205c1604e48c55",
+      "sha256": "sha256:0586fa6d8060a4679b67a70b6537de972698e268ff6950a5c7c6e83fdd09a0d9",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",
@@ -425,7 +425,7 @@
     },
     {
       "path": "Resources/Studio/template-panel.js",
-      "sha256": "sha256:db51928bffe33c01585a0641571aaf4737a28ccd5484fc057ffbd0567138d565",
+      "sha256": "sha256:0352f7902f9dc734989fb2360d165037bff87d6cd4edc80da966d43c51faeb5f",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",

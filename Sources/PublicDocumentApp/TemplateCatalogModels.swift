@@ -20,6 +20,7 @@ struct OfficialRuleEnforcementState: Codable, Equatable {
     let appliedRules: [CatalogOfficialRule]
     let conflicts: [OfficialRuleConflict]
     let contentChanged: Bool
+    let styleLint: OfficialStyleLintReport
 }
 
 struct OfficialRuleEnforcement {

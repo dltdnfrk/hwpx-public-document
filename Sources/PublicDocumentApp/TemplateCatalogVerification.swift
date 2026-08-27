@@ -61,11 +61,16 @@ extension TemplateCatalogStore {
     }
 
     func isValidOfficialRule(_ rule: [String: Any]) -> Bool {
-        hasExactlyKeys(rule, ["field", "precedence", "requiredValue", "source"])
-            && rule["field"] is String
-            && isJSONInteger(rule["precedence"])
-            && rule["requiredValue"] is String
-            && rule["source"] is String
+        guard hasExactlyKeys(rule, ["field", "precedence", "requiredValue", "source"]),
+              let field = rule["field"] as? String,
+              CatalogOfficialField(rawValue: field) != nil,
+              isJSONInteger(rule["precedence"]),
+              rule["requiredValue"] is String,
+              rule["source"] is String
+        else {
+            return false
+        }
+        return true
     }
 
     func isStringArray(_ value: Any?) -> Bool {

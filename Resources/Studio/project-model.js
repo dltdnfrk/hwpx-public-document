@@ -102,7 +102,7 @@
         elementID: `element-${slug}-heading`,
         kind: 'heading',
         order: elements.length,
-        text: `□ ${section}`,
+        text: entry.templateID === 'public-draft' ? `${index + 1}. ${section}` : `□ ${section}`,
         styleID: 'style-section-heading',
         evidenceIDs: [],
       })
@@ -110,7 +110,7 @@
         elementID: `element-${slug}-body`,
         kind: 'paragraph',
         order: elements.length,
-        text: `○ ${section}`,
+        text: entry.templateID === 'public-draft' ? `가. ${section}` : `○ ${section}`,
         styleID: 'style-body',
         evidenceIDs: [],
       })

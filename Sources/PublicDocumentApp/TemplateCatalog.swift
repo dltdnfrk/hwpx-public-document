@@ -3,6 +3,9 @@ import Foundation
 
 enum CatalogOfficialField: String, Codable, CaseIterable {
     case title
+    case endMark
+    case attachment
+    case senderName
 }
 
 final class TemplateCatalogStore {

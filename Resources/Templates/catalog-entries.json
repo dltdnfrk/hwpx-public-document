@@ -17,7 +17,7 @@
           "field": "title",
           "precedence": 100,
           "requiredValue": "기관 공식 제목을 사용하세요",
-          "source": "공공문서 작성 지침 제4조"
+          "source": "기관 표준"
         }
       ]
     },
@@ -30,7 +30,26 @@
       "documentType": "기안문",
       "requiredSections": ["수신·제목", "본문", "끝·붙임", "발신명의"],
       "checklist": ["수신", "제목", "근거", "요청 사항", "붙임", "발신명의"],
-      "officialRules": []
+      "officialRules": [
+        {
+          "field": "endMark",
+          "precedence": 80,
+          "requiredValue": "끝",
+          "source": "행정업무의 운영 및 혁신에 관한 규정 시행규칙 제4조④"
+        },
+        {
+          "field": "attachment",
+          "precedence": 70,
+          "requiredValue": "붙임",
+          "source": "행정업무의 운영 및 혁신에 관한 규정 시행규칙 제4조⑤"
+        },
+        {
+          "field": "senderName",
+          "precedence": 60,
+          "requiredValue": "발신명의",
+          "source": "행정업무의 운영 및 혁신에 관한 규정 제13조"
+        }
+      ]
     },
     {
       "templateID": "public-report",

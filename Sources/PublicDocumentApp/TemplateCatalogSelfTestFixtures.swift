@@ -152,7 +152,7 @@ extension TemplateCatalogSelfTest {
             version: version,
             effectiveDate: "2026-08-01",
             publishingAuthority: "기관 표준",
-            source: "공공문서 작성 지침",
+            source: "기관 표준",
             contentHash: "sha256:fixture-\(templateID)-\(version)",
             documentType: documentType,
             requiredSections: ["개요", "추진 배경", "세부 추진계획", "예산 및 일정", "검토 및 결재"],
@@ -168,7 +168,7 @@ extension TemplateCatalogSelfTest {
                     field: .title,
                     precedence: 100,
                     requiredValue: "기관 공식 제목을 사용하세요",
-                    source: "공공문서 작성 지침 제4조"
+                    source: "기관 표준"
                 ),
             ]
         )
