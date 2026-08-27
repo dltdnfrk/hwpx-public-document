@@ -362,6 +362,7 @@ print("artifact-derived mutation checks: pass")
             "ExportValidation.swift",
             "RhwpExport.swift",
             "RhwpStyleCompile.swift",
+            "RhwpTableCompile.swift",
         ),
         str(fixture),
     )

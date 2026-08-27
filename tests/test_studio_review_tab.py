@@ -34,9 +34,10 @@ def test_review_tab_button_is_enabled_and_controls_review_tools() -> None:
     assert "aria-disabled" not in review
     assert 'data-tab="review"' in review
     assert 'aria-controls="review-tools"' in review
-    assert "disabled" in view
-    assert 'aria-disabled="true"' in view
-    assert "data-tab=" not in view
+    assert "disabled" not in view
+    assert "aria-disabled" not in view
+    assert 'data-tab="view"' in view
+    assert 'aria-controls="view-tools"' in view
 
 
 def test_outline_panel_keeps_template_trust_without_review_widgets() -> None:

@@ -87,6 +87,7 @@ struct RhwpExportAdapter {
         try JSONEncoder().encode(RhwpIngest(questions: questions)).write(to: ingest)
         _ = try run(engine, ["build-from-ingest", ingest.path, "-o", hwpx.path])
         try RhwpStyleCompile.apply(to: hwpx, work: work)
+        try RhwpTableCompile.apply(to: hwpx, project: project, work: work)
         try embedStyleBinding(in: hwpx, work: work)
         switch format {
         case .hwpx:
@@ -129,6 +130,33 @@ struct RhwpExportAdapter {
         var cursor = extracted.startIndex
         var observed: [ValidatedExportElement] = []
         for element in project.elements.sorted(by: { $0.order < $1.order }) {
+            if ["table", "approval-grid"].contains(element.kind), !element.contentHTML.isEmpty {
+                let rows = try ExportSerializers.tableRows(element)
+                let cells = rows.flatMap { $0 }
+                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .filter { !$0.isEmpty }
+                var searchFrom = cursor
+                for cell in cells {
+                    guard let range = extracted.range(
+                        of: cell,
+                        options: .literal,
+                        range: searchFrom..<extracted.endIndex
+                    ) else {
+                        throw ExportError.rhwpFailed(
+                            "추출 검증에서 \(element.elementID) 표 셀의 순서 또는 개수가 다릅니다"
+                        )
+                    }
+                    searchFrom = range.upperBound
+                }
+                observed.append(ValidatedExportElement(
+                    elementID: element.elementID,
+                    kind: element.kind,
+                    order: element.order,
+                    textHash: textHash(cells.joined(separator: " "))
+                ))
+                cursor = searchFrom
+                continue
+            }
             guard
                 !element.text.isEmpty,
                 let range = extracted.range(

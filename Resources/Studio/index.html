@@ -46,7 +46,7 @@
             <button class="ribbon-tab" role="tab" type="button" data-tab="table" aria-selected="false" aria-controls="table-tools">표</button>
             <button class="ribbon-tab" role="tab" type="button" data-tab="layout" aria-selected="false" aria-controls="layout-tools">레이아웃</button>
             <button class="ribbon-tab" role="tab" type="button" data-tab="review" aria-selected="false" aria-controls="review-tools">검토</button>
-            <button class="ribbon-tab" role="tab" type="button" disabled aria-disabled="true" aria-selected="false">보기</button>
+            <button class="ribbon-tab" role="tab" type="button" data-tab="view" aria-selected="false" aria-controls="view-tools">보기</button>
           </div>
           <span class="ribbon-spacer"></span>
           <button class="outline-toggle" type="button" data-action="outline" aria-pressed="true">문서 구조</button>
@@ -71,6 +71,7 @@
           <span class="group-label">단락</span>
         </div>
         <div class="tool-group workflow-tools">
+          <button class="tool" type="button" data-action="open-draft-wizard"><span class="tool-icon">절</span>절 채우기</button>
           <button class="tool" type="button" data-action="marker"><span class="tool-icon">!</span>확인 필요</button>
           <button class="tool" type="button" data-action="open-ai"><span class="tool-icon">AI</span>AI 제안</button>
           <button class="tool" type="button" data-action="open-settings"><span class="tool-icon">⚙</span>AI 설정</button>
@@ -149,6 +150,21 @@
             </ul>
           </section>
           <ul data-statute-warnings hidden aria-label="법령 인용 확인"></ul>
+        </div>
+        <div class="ribbon" id="view-tools" role="tabpanel" aria-label="보기 도구" hidden>
+          <div class="tool-group">
+            <button class="tool" type="button" data-view-action="zoom-out">축소</button>
+            <button class="tool" type="button" data-view-action="zoom-fit-width">폭맞춤</button>
+            <button class="tool" type="button" data-view-action="zoom-100" data-view-zoom="100" aria-pressed="true">100%</button>
+            <button class="tool" type="button" data-view-action="zoom-fit-page">쪽맞춤</button>
+            <button class="tool" type="button" data-view-action="zoom-in">확대</button>
+            <span class="group-label">배율</span>
+          </div>
+          <div class="tool-group">
+            <button class="tool" type="button" data-view-action="toggle-outline" aria-pressed="true">문서 구조</button>
+            <span class="group-label">창</span>
+          </div>
+          <p class="view-page-note" data-view-page-note>미리보기 1장. 캔버스 높이 기준이며 쪽 나누기 엔진은 없습니다.</p>
         </div>
       </section>
 
@@ -304,6 +320,12 @@
       <form class="easy-tool-fields" data-easy-fields></form>
       <div class="export-actions"><button type="button" data-action="close-easy-tool">취소</button><button type="button" data-easy-action="confirm-easy-tool">적용</button></div>
     </dialog>
+    <dialog class="project-inspector draft-wizard" aria-labelledby="draft-wizard-title" aria-describedby="draft-wizard-description">
+      <div class="inspector-heading"><h2 id="draft-wizard-title">필수 절 채우기</h2><button type="button" data-action="close-draft-wizard" aria-label="필수 절 채우기 닫기">×</button></div>
+      <p id="draft-wizard-description" data-wizard-note>템플릿 절을 채웁니다. 완성 공문을 자동 생성하지 않습니다.</p>
+      <form class="easy-tool-fields" data-wizard-fields></form>
+      <div class="export-actions"><button type="button" data-action="close-draft-wizard">건너뛰기</button><button type="button" data-action="apply-draft-wizard">절 채우기</button></div>
+    </dialog>
     <script src="../GenOffice/public-document-genoffice.js"></script>
     <script src="easy-tools.js"></script>
     <script src="studio-state.js"></script>
@@ -324,6 +346,8 @@
     <script src="checklist-consent.js"></script>
     <script src="review-tab.js"></script>
     <script src="title-lock.js"></script>
+    <script src="view-tab.js"></script>
+    <script src="draft-wizard.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

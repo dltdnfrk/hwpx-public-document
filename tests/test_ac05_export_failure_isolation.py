@@ -35,6 +35,7 @@ SWIFT_SOURCES: Final = (
     "GenOfficeDocxAdapter.swift",
     "RhwpExport.swift",
     "RhwpStyleCompile.swift",
+    "RhwpTableCompile.swift",
     "TypstSidecar.swift",
     "DocumentExport.swift",
 )

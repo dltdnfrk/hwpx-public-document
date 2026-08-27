@@ -115,7 +115,11 @@
       "Resources/Studio/studio-events.js",
       "Resources/Studio/studio-prefs.js",
       "Resources/Studio/studio-state.js",
-      "Resources/Studio/template-panel.js"
+      "Resources/Studio/template-panel.js",
+      "Resources/Studio/view-tab.js",
+      "Resources/Studio/draft-wizard.js",
+      "Resources/Studio/review-tab.js",
+      "Resources/Studio/title-lock.js"
     ],
     "excludedUpstreamScopes": [
       "ee",
@@ -133,7 +137,7 @@
   "localArtifacts": [
     {
       "path": "Resources/Studio/index.html",
-      "sha256": "sha256:15ad56b6f37d3d524ee02de056830faa65577b498d8f601995d4040fd5b97a67",
+      "sha256": "sha256:db40d5fd11507472aa98eccde2d86840b3075cd9b50ae36710bd37e0eee24357",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-shell-semantic-structure",
@@ -147,7 +151,7 @@
     },
     {
       "path": "Resources/Studio/styles.css",
-      "sha256": "sha256:f6cc50b0322e4f37116e6fe892e1fba37a47fd5249e14720fbbe15831278010f",
+      "sha256": "sha256:84fcc9ceb784aed0ee65654869fa4d653f7fe5b90dececf44bd6e8b2ba7bcb1e",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-layout-grammar",
@@ -289,7 +293,7 @@
     },
     {
       "path": "Resources/Studio/editor-commands.js",
-      "sha256": "sha256:0c2b34645fd4063ecc28a95e173e0fe807f0dd8f710ed91f96883e1399bc4998",
+      "sha256": "sha256:561f1f1fa7c9177dc0e2dc05a14bd1d643a75a9c125a80410f743f277755c061",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",
@@ -426,6 +430,74 @@
     {
       "path": "Resources/Studio/template-panel.js",
       "sha256": "sha256:eae05af13575145de3736dd8d46de9137d9c5dbd59dd90f97370ca4da4206425",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/view-tab.js",
+      "sha256": "sha256:75623225d99a642477aabbd9decdeea428da790e635716e22334229e17589290",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/draft-wizard.js",
+      "sha256": "sha256:1f3239de88fec374d957c5f6313ef092bc52aca27c838a3ada8ed4eac1a4d8bb",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/review-tab.js",
+      "sha256": "sha256:a183d12046d6fc7c0896affe0759324e1a33a98e3f5258fd3019755ba904fbef",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/title-lock.js",
+      "sha256": "sha256:0dff50e3f0832ebe0d9939a4e7884f5ca3bc90188d521a994976697d40f1e73b",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",

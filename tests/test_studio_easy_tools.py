@@ -70,5 +70,5 @@ def test_studio_exposes_easy_hangul_tools_on_enabled_ribbon_tabs() -> None:
     assert "tables.length === 1" in script
     assert ".ribbon[hidden]" in css
     assert "--easy-page-pad-top" in css
-    assert "disabled aria-disabled=\"true\"" in html
-    assert html.count("disabled aria-disabled=\"true\"") == 1
+    assert 'data-tab="view"' in html
+    assert html.count("disabled aria-disabled=\"true\"") == 0

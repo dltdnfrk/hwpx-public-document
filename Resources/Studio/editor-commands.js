@@ -48,10 +48,17 @@
     })
   })
 
-  outlineToggle.addEventListener('click', () => {
+  const toggleOutline = () => {
     const hidden = workspace.classList.toggle('outline-hidden')
     outlineToggle.setAttribute('aria-pressed', String(!hidden))
+    const viewOutline = document.querySelector('[data-view-action="toggle-outline"]')
+    if (viewOutline) viewOutline.setAttribute('aria-pressed', String(!hidden))
     announce(hidden ? '문서 구조를 닫았습니다.' : '문서 구조를 열었습니다.')
+    return !hidden
+  }
+
+  outlineToggle.addEventListener('click', () => {
+    toggleOutline()
   })
 
   const syncOutlineForViewport = () => {
@@ -86,15 +93,10 @@
     runEditorCommand('redo')
   })
 
-  document.querySelector('.zoom-control input').addEventListener('input', (event) => {
-    const zoom = Number(event.target.value)
-    editor.style.zoom = zoom / 100
-    document.querySelector('.zoom-control output').value = `${zoom}%`
-  })
-
   Object.assign(studio, {
     runEditorCommand,
     syncFormatStates,
-    syncOutlineForViewport
+    syncOutlineForViewport,
+    toggleOutline
   })
 }(window.PublicDocumentStudio))
