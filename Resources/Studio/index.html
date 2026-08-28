@@ -162,9 +162,10 @@
           </div>
           <div class="tool-group">
             <button class="tool" type="button" data-view-action="toggle-outline" aria-pressed="true">문서 구조</button>
+            <button class="tool" type="button" data-view-action="toggle-page-preview" aria-pressed="false">쪽 미리보기</button>
             <span class="group-label">창</span>
           </div>
-          <p class="view-page-note" data-view-page-note>미리보기 1장. 캔버스 높이 기준이며 쪽 나누기 엔진은 없습니다.</p>
+          <p class="view-page-note" data-view-page-note>A4 미리보기 1장. 인쇄 토큰 기준이며 한컴 쪽 나누기를 대체하지 않습니다.</p>
         </div>
       </section>
 
@@ -199,6 +200,8 @@
         <section class="canvas" aria-label="문서 편집 영역" tabindex="0" aria-describedby="canvas-keyboard-help">
           <span class="sr-only" id="canvas-keyboard-help">스크롤 가능한 문서 편집 영역입니다. 탭 키를 한 번 더 누르면 공공문서 본문을 편집할 수 있습니다.</span>
           <public-document-genoffice-editor class="genoffice-editor" aria-label="공공문서 본문" tabindex="0" hide-navigation></public-document-genoffice-editor>
+          <div class="page-engine-overlay" data-page-engine-overlay hidden aria-hidden="true"></div>
+          <section class="page-preview" data-page-preview hidden aria-hidden="true" aria-label="A4 쪽 미리보기"></section>
           <article class="page" id="static-editor-fallback" hidden aria-hidden="true">
             <div class="document-kicker" data-element-id="element-kicker" data-element-kind="metadata" data-style-id="style-metadata">생활안전과 · 2026. 8. 9.</div>
             <h1 data-element-id="element-title" data-element-kind="heading" data-style-id="style-title">2026년 생활안전 추진계획</h1>
@@ -346,6 +349,7 @@
     <script src="checklist-consent.js"></script>
     <script src="review-tab.js"></script>
     <script src="title-lock.js"></script>
+    <script src="page-engine.js"></script>
     <script src="view-tab.js"></script>
     <script src="draft-wizard.js"></script>
     <script src="app.js"></script>

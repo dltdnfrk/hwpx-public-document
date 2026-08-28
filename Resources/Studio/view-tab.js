@@ -1,14 +1,26 @@
 (function (studio) {
   const { editor, workspace, outlineToggle } = studio.dom
   const announce = (...args) => studio.announce(...args)
-  const PAGE_WIDTH = 794
-  const PAGE_HEIGHT = 1123
+  const pageEngine = () => globalThis.PublicDocumentPageEngine
   const MIN_ZOOM = 70
   const MAX_ZOOM = 130
   const zoomInput = document.querySelector('.zoom-control input')
   const zoomOutput = document.querySelector('.zoom-control output')
   const pageStatus = document.querySelector('[data-page-status]')
   const viewNote = document.querySelector('[data-view-page-note]')
+  const pagePreview = document.querySelector('[data-page-preview]')
+  const previewToggle = document.querySelector('[data-view-action="toggle-page-preview"]')
+  const canvasNode = document.querySelector('.canvas')
+
+  const pageWidth = () => {
+    const engine = pageEngine()
+    return engine && engine.pageMetrics ? engine.pageMetrics().widthPx : 794
+  }
+
+  const pageHeight = () => {
+    const engine = pageEngine()
+    return engine && engine.pageMetrics ? engine.pageMetrics().heightPx : 1123
+  }
 
   const clampZoom = (value) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, Math.round(Number(value) || 100)))
 
@@ -27,29 +39,60 @@
 
   const fitWidthZoom = () => {
     const canvas = document.querySelector('.canvas')
-    const available = (canvas && canvas.clientWidth) || (workspace && workspace.clientWidth) || PAGE_WIDTH
-    return clampZoom((available / PAGE_WIDTH) * 100)
+    const available = (canvas && canvas.clientWidth) || (workspace && workspace.clientWidth) || pageWidth()
+    return clampZoom((available / pageWidth()) * 100)
   }
 
   const fitPageZoom = () => {
     const canvas = document.querySelector('.canvas')
-    const availableW = (canvas && canvas.clientWidth) || PAGE_WIDTH
-    const availableH = (canvas && canvas.clientHeight) || PAGE_HEIGHT
-    return clampZoom(Math.min(availableW / PAGE_WIDTH, availableH / PAGE_HEIGHT) * 100)
+    const availableW = (canvas && canvas.clientWidth) || pageWidth()
+    const availableH = (canvas && canvas.clientHeight) || pageHeight()
+    return clampZoom(Math.min(availableW / pageWidth(), availableH / pageHeight()) * 100)
   }
 
   const previewSheetCount = () => {
+    const engine = pageEngine()
+    const project = studio.state && studio.state.currentProject
+    if (engine && project && typeof engine.pageCountForProject === 'function') {
+      return engine.pageCountForProject(project)
+    }
+    if (engine && engine.lastLayout && engine.lastLayout.pageCount) return engine.lastLayout.pageCount
     const surface = editor || document.querySelector('#static-editor-fallback')
     const height = surface && (surface.scrollHeight || (surface.getBoundingClientRect && surface.getBoundingClientRect().height))
     if (!height) return 1
-    return Math.max(1, Math.ceil(height / PAGE_HEIGHT))
+    return Math.max(1, Math.ceil(height / pageHeight()))
   }
 
+  const setPagePreview = (on) => {
+    const engine = pageEngine()
+    const show = Boolean(on)
+    if (canvasNode) canvasNode.classList.toggle('page-preview-open', show)
+    if (pagePreview) {
+      pagePreview.hidden = !show
+      pagePreview.setAttribute('aria-hidden', String(!show))
+      if (show && engine && studio.state && studio.state.currentProject && typeof engine.renderPreview === 'function') {
+        engine.renderPreview(pagePreview, engine.paginateProject(studio.state.currentProject))
+      }
+    }
+    if (previewToggle) previewToggle.setAttribute('aria-pressed', String(show))
+    return show
+  }
+
+  const togglePagePreview = () => setPagePreview(!(pagePreview && !pagePreview.hidden))
+
   const updatePreviewSheets = () => {
+    const engine = pageEngine()
+    if (engine && typeof engine.syncStudio === 'function' && studio.state && studio.state.currentProject) {
+      engine.syncStudio(studio)
+    }
     const count = previewSheetCount()
-    const text = `미리보기 ${count}장`
+    const text = engine && typeof engine.statusCopy === 'function' ? engine.statusCopy(count) : `미리보기 ${count}장`
     if (pageStatus) pageStatus.textContent = text
-    if (viewNote) viewNote.textContent = `${text}. 캔버스 높이 기준이며 쪽 나누기 엔진은 없습니다.`
+    if (viewNote) {
+      viewNote.textContent = engine && typeof engine.previewCopy === 'function'
+        ? engine.previewCopy(count)
+        : `${text}. 인쇄 토큰 기준이며 한컴 쪽 나누기를 대체하지 않습니다.`
+    }
     return count
   }
 
@@ -69,6 +112,7 @@
       else if (action === 'zoom-fit-width') setZoom(fitWidthZoom())
       else if (action === 'zoom-fit-page') setZoom(fitPageZoom())
       else if (action === 'toggle-outline' && typeof studio.toggleOutline === 'function') studio.toggleOutline()
+      else if (action === 'toggle-page-preview') togglePagePreview()
       syncOutlineButtons()
       updatePreviewSheets()
     })
@@ -110,5 +154,7 @@
     fitPageZoom,
     previewSheetCount,
     updatePreviewSheets,
+    togglePagePreview,
+    setPagePreview,
   })
 }(window.PublicDocumentStudio))

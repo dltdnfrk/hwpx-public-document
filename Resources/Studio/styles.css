@@ -365,6 +365,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .checklist li.done { color: var(--studio-ink); }
 .checklist li.done::before { content: "✓"; color: var(--studio-success); font-weight: 700; }
 .canvas {
+  position: relative;
   min-width: 0;
   padding: 40px max(40px, calc((100% - 794px) / 2));
   overflow: auto;
@@ -525,3 +526,69 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; }
 }
+
+.page-engine-overlay {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  width: 794px;
+  min-height: 1123px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 2;
+}
+.page-engine-break {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed var(--studio-border-strong);
+}
+.page-engine-break span {
+  position: absolute;
+  right: 8px;
+  top: -16px;
+  color: var(--studio-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.canvas.page-preview-open .genoffice-editor,
+.canvas.page-preview-open .page-engine-overlay {
+  display: none;
+}
+.page-preview {
+  display: none;
+  gap: 24px;
+  justify-items: center;
+  padding-bottom: 40px;
+}
+.canvas.page-preview-open .page-preview:not([hidden]) {
+  display: grid;
+}
+.page-preview-sheet {
+  width: 794px;
+  min-height: 1123px;
+  padding: 20mm 20mm 10mm 20mm;
+  background: var(--studio-surface);
+  box-shadow: var(--page-shadow);
+  font-family: "AppleMyungjo", "Apple SD Gothic Neo", "Malgun Gothic", serif;
+  font-size: 15px;
+  line-height: 1.78;
+  word-break: keep-all;
+}
+.page-preview-sheet h1 {
+  margin: 0 0 42px;
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+.page-preview-sheet h2 {
+  margin: 36px 0 10px;
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+.page-preview-sheet p { margin: 0 0 16px; }
+.page-preview-sheet table { width: 100%; margin: 16px 0 30px; border-collapse: collapse; font-size: 13px; }
+.page-preview-sheet caption { caption-side: bottom; color: var(--studio-muted); font-size: 11px; }

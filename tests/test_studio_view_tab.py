@@ -43,7 +43,8 @@ def test_view_tab_is_enabled_and_hosts_zoom_outline_and_honest_preview() -> None
     assert 'data-view-action="zoom-fit-page"' in panel
     assert 'data-view-action="toggle-outline"' in panel
     assert "data-view-page-note" in panel
-    assert "쪽 나누기 엔진은 없습니다" in panel
+    assert "한컴 쪽 나누기를 대체하지 않습니다" in panel
+    assert "쪽 나누기 엔진은 없습니다" not in panel
     assert "1쪽 / 1쪽" not in html
 
 

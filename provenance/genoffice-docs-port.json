@@ -119,7 +119,8 @@
       "Resources/Studio/view-tab.js",
       "Resources/Studio/draft-wizard.js",
       "Resources/Studio/review-tab.js",
-      "Resources/Studio/title-lock.js"
+      "Resources/Studio/title-lock.js",
+      "Resources/Studio/page-engine.js"
     ],
     "excludedUpstreamScopes": [
       "ee",
@@ -137,7 +138,7 @@
   "localArtifacts": [
     {
       "path": "Resources/Studio/index.html",
-      "sha256": "sha256:db40d5fd11507472aa98eccde2d86840b3075cd9b50ae36710bd37e0eee24357",
+      "sha256": "sha256:90ea630b80c2b22d46a9eb85378946368c3511327e3fac4c1604c87b49fd7266",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-shell-semantic-structure",
@@ -151,7 +152,7 @@
     },
     {
       "path": "Resources/Studio/styles.css",
-      "sha256": "sha256:84fcc9ceb784aed0ee65654869fa4d653f7fe5b90dececf44bd6e8b2ba7bcb1e",
+      "sha256": "sha256:8e1f347e476c30fe11843bba22063e817ab72fcc6f783f02af3da57052ac60c6",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "docs-layout-grammar",
@@ -446,7 +447,7 @@
     },
     {
       "path": "Resources/Studio/view-tab.js",
-      "sha256": "sha256:75623225d99a642477aabbd9decdeea428da790e635716e22334229e17589290",
+      "sha256": "sha256:c4a686022e06c4a3befa240ba1f1b95f2ca9789d8a6e30ead5c7dbc8216a7a0b",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",
@@ -498,6 +499,23 @@
     {
       "path": "Resources/Studio/title-lock.js",
       "sha256": "sha256:0dff50e3f0832ebe0d9939a4e7884f5ca3bc90188d521a994976697d40f1e73b",
+      "runtimeSurface": true,
+      "portedResponsibilities": [
+        "editor-command-routing",
+        "ribbon-navigation-and-file-actions"
+      ],
+      "upstreamSources": [
+        "apps/docs/src/renderer/App.tsx",
+        "apps/docs/src/renderer/components/Ribbon.tsx",
+        "apps/docs/src/renderer/components/NavPane.tsx",
+        "apps/docs/src/renderer/components/ribbon-tabs.tsx",
+        "apps/docs/src/renderer/file-actions.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "path": "Resources/Studio/page-engine.js",
+      "sha256": "sha256:11925787c209cfbdfb475071a904a4821a9155a84fd2871d8fcd74f8f7cff6cc",
       "runtimeSurface": true,
       "portedResponsibilities": [
         "editor-command-routing",

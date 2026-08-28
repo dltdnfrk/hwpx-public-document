@@ -11,7 +11,7 @@
       "role": "Pinned source and package runtime for the owned Docs editor and DOCX normalization boundary",
       "integration_mode": "pinned-adapter-runtime-fork",
       "port_manifest": "provenance/genoffice-docs-port.json",
-      "port_manifest_sha256": "sha256:693b531a874f440d6b081a5f33c5db50c21ccf40962b962ecad3ebe2f16998dd",
+      "port_manifest_sha256": "sha256:0cd5d92b31105ed3450c6df598a1278695f1dd66cd8c2444551a0217e242eab4",
       "direct_package_runtime_linkage": true,
       "upstream_runtime_files_bundled": true,
       "runtime_manifest": "Resources/GenOffice/runtime-manifest.json",
