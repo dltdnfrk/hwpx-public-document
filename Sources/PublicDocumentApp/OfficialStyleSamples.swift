@@ -10,7 +10,7 @@ enum OfficialStyleSamples {
         let catalog = try store.verifiedCatalog(from: envelope)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         for entry in catalog.entries {
-            let project = project(for: entry)
+            let project = try project(for: entry)
             let destination = directory.appendingPathComponent(entry.documentType, isDirectory: true)
             let receipt = try DocumentExportEngine().export(
                 project: project,
@@ -45,7 +45,8 @@ enum OfficialStyleSamples {
             .appendingPathComponent("Resources/Templates/catalog-envelope.json")
     }
 
-    private static func project(for entry: TemplateCatalogEntry) -> DocumentProject {
+    private static func project(for entry: TemplateCatalogEntry) throws -> DocumentProject {
+        let profile = try OfficialDocumentProfile.load()
         var elements = [
             DocumentElement(
                 elementID: "element-title",
@@ -109,7 +110,7 @@ enum OfficialStyleSamples {
             currentRevisionID: revision.revisionID,
             elements: elements,
             assets: [],
-            styles: OfficialStyleBinding.presetIDs.map {
+            styles: profile.presetIDs.map {
                 DocumentStyle(styleID: $0, name: $0, properties: [:])
             },
             templateBinding: ProjectTemplateBinding(

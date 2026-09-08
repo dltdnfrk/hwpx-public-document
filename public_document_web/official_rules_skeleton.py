@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from html import escape
+from html.parser import HTMLParser
 from typing import Any
 
 
@@ -25,7 +27,7 @@ def is_title_element(element: dict[str, Any]) -> bool:
     return element.get("styleID") == "style-title" or element.get("elementID") == "element-title"
 
 
-def has_end_mark(elements: list) -> bool:
+def has_end_mark(elements: list[dict[str, Any]]) -> bool:
     for element in elements:
         text = str(element.get("text") or "").strip()
         if element.get("styleID") == "style-end-mark" or text == "끝" or text.endswith(" 끝"):
@@ -42,7 +44,7 @@ def has_attachments(project: dict[str, Any]) -> bool:
     return False
 
 
-def has_attachment_label(elements: list) -> bool:
+def has_attachment_label(elements: list[dict[str, Any]]) -> bool:
     for element in elements:
         text = str(element.get("text") or "").strip()
         if element.get("styleID") == "style-attachment" or text == "붙임" or text.startswith("붙임"):
@@ -50,7 +52,7 @@ def has_attachment_label(elements: list) -> bool:
     return False
 
 
-def is_internal_approval(elements: list) -> bool:
+def is_internal_approval(elements: list[dict[str, Any]]) -> bool:
     for element in elements:
         text = str(element.get("text") or "")
         if element.get("styleID") == "style-internal-approval" or "내부결재" in text:
@@ -58,7 +60,7 @@ def is_internal_approval(elements: list) -> bool:
     return False
 
 
-def has_sender_name(elements: list) -> bool:
+def has_sender_name(elements: list[dict[str, Any]]) -> bool:
     for element in elements:
         text = str(element.get("text") or "").strip()
         if element.get("styleID") == "style-sender-name" or text == "발신명의" or text.startswith("발신명의"):
@@ -66,7 +68,12 @@ def has_sender_name(elements: list) -> bool:
     return False
 
 
-def insert_marker(elements: list, element_id: str, text: str, style_id: str) -> list:
+def insert_marker(
+    elements: list[dict[str, Any]],
+    element_id: str,
+    text: str,
+    style_id: str,
+) -> list[dict[str, Any]]:
     order = max([int(element.get("order") or 0) for element in elements] or [-1]) + 1
     added = {
         "elementID": element_id,
@@ -81,21 +88,44 @@ def insert_marker(elements: list, element_id: str, text: str, style_id: str) -> 
     return list(elements) + [added]
 
 
-def apply_title(project: dict[str, Any], rule: dict[str, Any]):
+def _title_text(html: str) -> str:
+    """Read title text without rewriting unchanged rich source."""
+    parts: list[str] = []
+    parser = HTMLParser(convert_charrefs=True)
+    parser.handle_data = lambda data: parts.append(data)
+    parser.feed(html)
+    parser.close()
+    return "".join(parts)
+
+
+def apply_title(
+    project: dict[str, Any],
+    rule: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any]] | None:
     required = rule["requiredValue"]
-    elements = list(project.get("elements") or [])
-    title_elements = [element for element in elements if is_title_element(element)]
+    elements: list[dict[str, Any]] = list(project.get("elements") or [])
+    title_elements = [
+        element for element in elements
+        if is_title_element(element) and (
+            element.get("text") != required
+            or (element.get("contentHTML") and _title_text(element["contentHTML"]) != required)
+        )
+    ]
     submitted = project.get("title") if project.get("title") != required else next(
-        (element.get("text") for element in title_elements if element.get("text") != required),
+        (element.get("text") if element.get("text") != required else element["contentHTML"]
+         for element in title_elements),
         None,
     )
     if submitted is None:
         return None
-    updated = []
+    updated: list[dict[str, Any]] = []
     for element in elements:
-        if is_title_element(element) and element.get("text") != required:
+        if element in title_elements:
             changed = dict(element)
             changed["text"] = required
+            # Authoritative replacement has no character mapping to old rich runs.
+            changed["contentHTML"] = escape(required)
+            changed["inlineIDs"] = []
             updated.append(changed)
         else:
             updated.append(element)
@@ -116,7 +146,10 @@ def apply_title(project: dict[str, Any], rule: dict[str, Any]):
     return governed, conflict
 
 
-def apply_skeleton(project: dict[str, Any], rule: dict[str, Any]):
+def apply_skeleton(
+    project: dict[str, Any],
+    rule: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any]] | None:
     field = rule.get("field")
     required = rule["requiredValue"]
     elements = list(project.get("elements") or [])

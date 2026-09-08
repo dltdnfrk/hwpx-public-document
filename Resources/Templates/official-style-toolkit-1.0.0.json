@@ -103,6 +103,15 @@
       "note": "2.1 글상자 버튼은 개체만 만들고 글꼴을 적지 않는다. 참고 본문은 2.2 ※의 맑은고딕 12를 쓴다."
     }
   },
+  "presetOrder": [
+    "style-title",
+    "style-section-heading",
+    "style-body",
+    "style-body-detail",
+    "style-reference-note",
+    "style-annotation",
+    "style-reference"
+  ],
   "listMarkers": ["□ ", "○", "-", "※", "*"],
   "guidebookList": ["□ ", "○", "-", "※", "*"],
   "statutoryList": ["1. ", "가. ", "1) ", "가) ", "(1) ", "(가) ", "① ", "㉮ "],

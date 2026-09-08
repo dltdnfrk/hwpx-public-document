@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "documentID": "official-layout-rich",
+  "locale": "ko-KR",
+  "title": "공식 조판 프로필 검증",
+  "currentRevisionID": "revision-layout-rich-1",
+  "elements": [
+    {
+      "elementID": "element-title",
+      "kind": "heading",
+      "order": 0,
+      "text": "공식 조판 프로필 검증",
+      "contentHTML": "공식 조판 프로필 검증",
+      "inlineIDs": [],
+      "styleID": "style-title",
+      "evidenceIDs": []
+    },
+    {
+      "elementID": "element-heading",
+      "kind": "heading",
+      "order": 1,
+      "text": "□ 추진 배경",
+      "contentHTML": "□ 추진 배경",
+      "inlineIDs": [],
+      "styleID": "style-section-heading",
+      "evidenceIDs": []
+    },
+    {
+      "elementID": "element-body",
+      "kind": "paragraph",
+      "order": 2,
+      "text": "○ 주요내용",
+      "contentHTML": "○ 주요내용",
+      "inlineIDs": [],
+      "styleID": "style-body",
+      "evidenceIDs": []
+    }
+  ],
+  "assets": [],
+  "styles": [],
+  "templateBinding": {
+    "templateID": "public-draft",
+    "version": "1.0",
+    "publishingAuthority": "기관 표준",
+    "requiredSections": [
+      "본문"
+    ],
+    "checklistResults": {}
+  },
+  "evidenceLinks": [],
+  "revisions": [
+    {
+      "revisionID": "revision-layout-rich-1",
+      "createdAt": "2026-08-28T15:00:00Z",
+      "summary": "canonical-layout-profile",
+      "elementIDs": [
+        "element-title",
+        "element-heading",
+        "element-body"
+      ]
+    }
+  ],
+  "history": [],
+  "aiProposalHistory": [],
+  "providerConfigurations": [],
+  "consentGrants": [],
+  "redoRevisionIDs": []
+}

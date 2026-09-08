@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "tokenID": "print-tokens-malformed",
+  "page": {
+    "paper": "a4",
+    "marginMm": {
+      "top": "twenty",
+      "right": 20,
+      "bottom": 10,
+      "left": 20
+    }
+  },
+  "fonts": {
+    "title": "Apple SD Gothic Neo",
+    "body": "Apple Myungjo"
+  },
+  "sizesPt": {
+    "title": 16,
+    "heading": 16,
+    "body": 15
+  }
+}

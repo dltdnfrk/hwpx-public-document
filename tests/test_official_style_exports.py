@@ -84,6 +84,29 @@ def test_docx_exports_lock_guidebook_type_and_markers(tmp_path: Path) -> None:
         with zipfile.ZipFile(docx) as archive:
             styles = ElementTree.fromstring(archive.read("word/styles.xml"))
             document = ElementTree.fromstring(archive.read("word/document.xml"))
+        order = {
+            "pStyle": 0,
+            "keepNext": 1,
+            "spacing": 2,
+            "ind": 3,
+            "jc": 4,
+        }
+        for properties in document.findall(".//w:pPr", NS):
+            names = [child.tag.rsplit("}", 1)[-1] for child in properties]
+            relevant = [name for name in names if name in order]
+            assert relevant == sorted(relevant, key=order.__getitem__)
+        run_order = {
+            "rFonts": 0,
+            "b": 1,
+            "spacing": 2,
+            "sz": 3,
+            "szCs": 4,
+            "lang": 5,
+        }
+        for properties in styles.findall(".//w:rPr", NS):
+            names = [child.tag.rsplit("}", 1)[-1] for child in properties]
+            relevant = [name for name in names if name in run_order]
+            assert relevant == sorted(relevant, key=run_order.__getitem__)
         fonts = _style_fonts(styles)
         assert fonts["Title"] == ("Apple SD Gothic Neo", "32", True)
         assert fonts["Heading2"] == ("Apple SD Gothic Neo", "32", True)
@@ -126,6 +149,23 @@ def test_hwpx_exports_bind_presets_and_markers(tmp_path: Path) -> None:
         assert "헤드라인" in header
         assert "휴먼명조" in header
         assert 'engName="Title"' in header
+        assert 'itemCnt="5"' in header
+        assert 'intent="-2100"' in header
+        assert 'intent="-1800"' in header
+        for left, hanging in (
+            (2100, 2100),
+            (3600, 1800),
+            (5400, 1800),
+            (7200, 1800),
+            (9000, 1800),
+            (10800, 1800),
+            (12600, 1800),
+            (14400, 1800),
+        ):
+            assert f'intent="-{hanging}" left="{left}"' in header
+        assert 'hangul="-10"' in header
+        assert 'left="5669"' in section
+        assert 'bottom="2835"' in section
         engine = ROOT / "Resources" / "Engines" / "rhwp"
         extracted = subprocess.run(
             [str(engine), "export-text", str(hwpx), "--json"],

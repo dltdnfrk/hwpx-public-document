@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "policy": "엔진을 통째로 갈아끼우지 않는다. GitHub·편람의 조판 규칙을 토큰으로 컴파일한다.",
+  "sources": [
+    {
+      "id": "imsebeom/hwpx",
+      "url": "https://github.com/imsebeom/hwpx/blob/main/references/official-doc-style.md",
+      "transplanted": [
+        "A4 여백 위 20mm 아래 10mm 좌우 20mm",
+        "항목 1. → 가. → 1) → 가) 2타 들여쓰기",
+        "둘째 줄은 항목 내용 첫 글자에 맞춤(내어쓰기)",
+        "붙임 N. 은 본문 번호 항목으로 쪼개지 않음"
+      ]
+    },
+    {
+      "id": "airmang/hwpx-plugins",
+      "url": "https://github.com/airmang/hwpx-plugins/blob/main/references/official-document-rules.md",
+      "transplanted": [
+        "법정 항목 순서 1. 가. 1) 가) (1) (가) ① ㉮",
+        "끝. 표시와 붙임 목록을 본문 번호와 구분"
+      ]
+    },
+    {
+      "id": "commetee12-source/gov-report-docx",
+      "url": "https://github.com/commetee12-source/gov-report-docx",
+      "transplanted": [
+        "개조식 □ ○ - 계층",
+        "표 머리행 음영",
+        "표를 본문 폭에 맞춤"
+      ]
+    },
+    {
+      "id": "beompeace-guidebook-1100",
+      "path": "Resources/Templates/official-style-toolkit-1.0.0.json",
+      "transplanted": [
+        "제목 16pt 헤드라인 가운데",
+        "소제목 16pt 헤드라인",
+        "본문 15pt 휴먼명조/Apple Myungjo",
+        "참고 12pt 고딕",
+        "word-keep 자간"
+      ]
+    }
+  ],
+  "notTransplanted": [
+    "Typst·Vivliostyle·Paged.js·WeasyPrint를 HWPX 생성 엔진으로 교체하지 않음",
+    "gov-report-docx 표지·목차 필드는 기안문 골격 밖이라 넣지 않음",
+    "jkf87/hwpx-skill, kordoc, hwpx-toolkit는 파서·스킬이며 조판 규칙 소스가 아님"
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "plain-paragraph",
+      "expectedCapabilities": ["heading", "paragraph"],
+      "element": {
+        "kind": "paragraph",
+        "text": "○ 일반 본문",
+        "contentHTML": "○ 일반 본문",
+        "styleID": "style-body"
+      }
+    },
+    {
+      "id": "metadata",
+      "expectedCapabilities": ["heading", "metadata"],
+      "element": {
+        "kind": "metadata",
+        "text": "시행 2026. 8. 28.",
+        "contentHTML": "시행 2026. 8. 28.",
+        "styleID": "style-metadata"
+      }
+    },
+    {
+      "id": "review-marker",
+      "expectedCapabilities": ["heading", "review-marker"],
+      "element": {
+        "kind": "review-marker",
+        "text": "검토 필요",
+        "contentHTML": "검토 필요",
+        "styleID": "style-review"
+      }
+    },
+    {
+      "id": "formula",
+      "expectedCapabilities": ["heading", "formula"],
+      "element": {
+        "kind": "formula",
+        "text": " x + y = 10 ",
+        "contentHTML": " x + y = 10 ",
+        "styleID": "style-formula"
+      }
+    },
+    {
+      "id": "table",
+      "expectedCapabilities": ["heading", "table", "table-row", "table-cell", "table-cell", "table-cell", "table-row", "table-cell", "table-cell"],
+      "element": {
+        "kind": "table",
+        "text": "구분 값 비고 교육 95",
+        "contentHTML": "<table data-easy-table=\"true\"><tbody><tr><th>구분</th><th>값</th><th>비고</th></tr><tr><td>교육</td><td>95</td></tr></tbody></table>",
+        "styleID": "style-table"
+      }
+    },
+    {
+      "id": "approval-grid",
+      "expectedCapabilities": ["heading", "approval-grid", "table-row", "table-cell", "table-cell", "table-row", "table-cell", "table-cell"],
+      "element": {
+        "kind": "approval-grid",
+        "text": "담당 팀장 홍길동 김책임",
+        "contentHTML": "<table data-easy-table=\"true\"><tbody><tr><th>담당</th><th>팀장</th></tr><tr><td>홍길동</td><td>김책임</td></tr></tbody></table>",
+        "styleID": "style-approval"
+      }
+    },
+    {
+      "id": "rich-inline",
+      "expectedCapabilities": ["heading", "paragraph", "rich-inline", "strong", "emphasis", "underline"],
+      "element": {
+        "kind": "paragraph",
+        "text": "강조 기울임 밑줄",
+        "contentHTML": "<strong data-inline-id=\"strong-1\">강조</strong> <em data-inline-id=\"em-1\">기울임</em> <u data-inline-id=\"underline-1\">밑줄</u>",
+        "styleID": "style-body"
+      }
+    },
+    {
+      "id": "font-and-keep",
+      "expectedCapabilities": ["heading", "paragraph", "rich-inline", "font-face", "font-size", "keep-together"],
+      "element": {
+        "kind": "paragraph",
+        "text": "묶음 문구",
+        "contentHTML": "<span class=\"keep-phrase\" data-inline-id=\"keep-1\" style=\"font-family: Apple Myungjo; font-size: 15pt\">묶음 문구</span>",
+        "styleID": "style-body"
+      }
+    },
+    {
+      "id": "unordered-list",
+      "expectedCapabilities": ["heading", "list-item", "unordered-list", "list-item", "list-item"],
+      "element": {
+        "kind": "list-item",
+        "text": "첫째 둘째",
+        "contentHTML": "<ul><li>첫째</li><li>둘째</li></ul>",
+        "styleID": "style-body"
+      }
+    },
+    {
+      "id": "table-rich-inline",
+      "expectedCapabilities": ["heading", "table", "table+rich-inline", "strong", "table-row", "table-cell", "table-cell", "table-row", "table-cell", "table-cell"],
+      "element": {
+        "kind": "table",
+        "text": "항목 결과 점검 완료",
+        "contentHTML": "<table data-easy-table=\"true\"><tbody><tr><th>항목</th><th>결과</th></tr><tr><td><strong data-inline-id=\"cell-strong\">점검</strong></td><td>완료</td></tr></tbody></table>",
+        "styleID": "style-table"
+      }
+    }
+  ]
+}

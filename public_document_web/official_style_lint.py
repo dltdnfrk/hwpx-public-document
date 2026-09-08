@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, TypedDict
 
 from .official_rules_skeleton import (
     has_attachment_label,
@@ -17,13 +17,22 @@ from .paths import RESOURCES
 LINT_PATH = RESOURCES / "Rules" / "official-style-lint-1.0.0.json"
 
 
-def load_lint_rules(path=None):
+class LintReport(TypedDict):
+    dryRun: bool
+    findings: list[dict[str, Any]]
+
+
+def load_lint_rules(path: Path | None = None) -> list[dict[str, Any]]:
     payload = json.loads((path or LINT_PATH).read_text(encoding="utf-8"))
     return list(payload.get("rules") or [])
 
 
-def dry_run_lint(project, catalog=None, path=None):
-    findings = []
+def dry_run_lint(
+    project: dict[str, Any],
+    catalog: dict[str, Any] | None = None,
+    path: Path | None = None,
+) -> LintReport:
+    findings: list[dict[str, Any]] = []
     elements = list(project.get("elements") or [])
     title_rule = None
     fields = {"endMark", "attachment", "senderName", "title"}
@@ -56,7 +65,10 @@ def dry_run_lint(project, catalog=None, path=None):
     return {"dryRun": True, "findings": findings}
 
 
-def apply_lint(project, catalog=None):
+def apply_lint(
+    project: dict[str, Any],
+    catalog: dict[str, Any] | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
     report = dry_run_lint(project, catalog)
     locked = [item for item in report["findings"] if item.get("ruleID") == "lint-title-lock"]
     if locked:
