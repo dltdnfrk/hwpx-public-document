@@ -30,10 +30,13 @@ SWIFT_SOURCES: Final = (
     "PackageArchiveModels.swift",
     "PackageArchiveReader.swift",
     "PackageArchiveWriter.swift",
+    "OfficialTypeset.swift",
+    "OfficialLayoutEngine.swift",
     "ExportSerializers.swift",
     "ExportValidation.swift",
     "GenOfficeDocxAdapter.swift",
     "RhwpExport.swift",
+    "RhwpLargeTextCompile.swift",
     "RhwpStyleCompile.swift",
     "RhwpTableCompile.swift",
     "TypstSidecar.swift",
@@ -73,6 +76,18 @@ def _runtime_root(
     _ = shutil.copyfile(
         ROOT / "Resources" / "Capabilities" / "format-capabilities-1.0.0.json",
         capability_root / "format-capabilities-1.0.0.json",
+    )
+    template_root = runtime_root / "Resources" / "Templates"
+    template_root.mkdir(parents=True)
+    _ = shutil.copyfile(
+        ROOT / "Resources" / "Templates" / "official-style-toolkit-1.0.0.json",
+        template_root / "official-style-toolkit-1.0.0.json",
+    )
+    print_root = runtime_root / "Resources" / "Print"
+    print_root.mkdir(parents=True)
+    _ = shutil.copyfile(
+        ROOT / "Resources" / "Print" / "print-tokens-1.0.0.json",
+        print_root / "print-tokens-1.0.0.json",
     )
     if include_genoffice:
         _ = shutil.copytree(
@@ -220,6 +235,43 @@ def test_invalid_authored_element_identity_fails_before_any_export(
     assert result.returncode != 0
     assert "작성 요소 ID가 비어 있거나 중복되었습니다" in result.stderr
     assert not destination.exists()
+
+
+def test_fully_blocked_export_preserves_user_owned_sidecars(
+    tmp_path: Path,
+    export_harness: Path,
+) -> None:
+    runtime_root = _runtime_root(tmp_path)
+    destination = runtime_root / "all-blocked"
+    destination.mkdir()
+    typ = destination / "document.typ"
+    pdf = destination / "document.pdf"
+    typ.write_bytes(b"user-owned-typ")
+    pdf.write_bytes(b"user-owned-pdf")
+    before = {
+        path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in (typ, pdf)
+    }
+
+    result = subprocess.run(
+        [str(export_harness), str(destination), "all-blocked"],
+        cwd=runtime_root,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    receipt = json.loads(result.stdout)
+
+    assert receipt["publishedFormats"] == []
+    assert set(receipt["blockedFormats"]) == {"hwpx", "hwp", "docx", "markdown"}
+    assert before == {
+        path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in (typ, pdf)
+    }
+    assert sorted(path.name for path in destination.iterdir()) == [
+        "document.pdf",
+        "document.typ",
+    ]
 
 
 def test_missing_genoffice_runtime_fails_only_docx_and_keeps_hwp_siblings(

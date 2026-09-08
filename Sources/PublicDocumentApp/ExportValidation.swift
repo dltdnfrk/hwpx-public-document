@@ -18,7 +18,10 @@ struct FormatValidationReceipt: Codable {
 
 enum ExportArtifactValidator {
     static func validate(data: Data, format: DocumentFormat, project: DocumentProject) throws -> FormatValidationReceipt {
-        let expected = try expectedElements(project)
+        let expected = try expectedElements(
+            project,
+            normalizeWhitespace: format == .hwpx || format == .hwp
+        )
         let observed: [ValidatedExportElement]
         let validator: String
 
@@ -43,7 +46,10 @@ enum ExportArtifactValidator {
         )
     }
 
-    static func expectedElements(_ project: DocumentProject) throws -> [ValidatedExportElement] {
+    static func expectedElements(
+        _ project: DocumentProject,
+        normalizeWhitespace: Bool = false
+    ) throws -> [ValidatedExportElement] {
         let elements = project.elements.sorted { $0.order < $1.order }
         let ids = elements.map(\.elementID), orders = elements.map(\.order)
         guard Set(ids).count == ids.count,
@@ -52,9 +58,12 @@ enum ExportArtifactValidator {
             throw ExportError.invalidPackage("작성 요소 ID 또는 순서가 중복되었습니다")
         }
         return elements.map {
-            ValidatedExportElement(
+            let text = normalizeWhitespace
+                ? $0.text.split(whereSeparator: \.isWhitespace).joined(separator: " ")
+                : $0.text
+            return ValidatedExportElement(
                 elementID: $0.elementID, kind: $0.kind,
-                order: $0.order, textHash: textHash($0.text)
+                order: $0.order, textHash: textHash(text)
             )
         }
     }
@@ -132,17 +141,39 @@ enum ExportArtifactValidator {
                 }
                 textNodes = [text]
             case "metadata", "heading", "paragraph", "review-marker":
-                guard let paragraph = onlyChild(content, named: "p") else {
+                let paragraphs = children(content, named: "p")
+                let heading = element.kind == "heading"
+                    || element.styleID == "style-title"
+                    || element.styleID == "style-section-heading"
+                guard !paragraphs.isEmpty, !heading || paragraphs.count == 1 else {
                     throw ExportError.invalidPackage("DOCX \(element.elementID) 문단 구조")
                 }
-                textNodes = descendants(paragraph, named: "t")
+                textNodes = paragraphs.flatMap { descendants($0, named: "t") }
             default:
                 throw ExportError.unsupportedElementKind(element.kind)
             }
             let actualText = textNodes.compactMap(\.stringValue).joined(separator: " ")
                 .split(whereSeparator: \.isWhitespace).joined(separator: " ")
             let expectedText = element.text.split(whereSeparator: \.isWhitespace).joined(separator: " ")
-            guard actualText == expectedText else {
+            let typesetLines = OfficialTypeset.lines(element.text)
+            let preservesExactWhitespace = !["table", "approval-grid", "formula"].contains(element.kind)
+                && typesetLines.count <= 1
+            let exactText = try content.nodes(
+                forXPath: ".//*[local-name()='t' or local-name()='br' or local-name()='tab']"
+            ).map { node in
+                switch node.localName {
+                case "br": return "\n"
+                case "tab": return "\t"
+                default: return node.stringValue ?? ""
+                }
+            }.joined()
+            let normalizedExpected = element.text
+                .replacingOccurrences(of: "\r\n", with: "\n")
+                .replacingOccurrences(of: "\r", with: "\n")
+            guard preservesExactWhitespace
+                ? exactText == normalizedExpected
+                : actualText == expectedText
+            else {
                 throw ExportError.invalidPackage("DOCX \(element.elementID) 본문 바인딩")
             }
         }
@@ -183,7 +214,7 @@ enum ExportArtifactValidator {
                 throw ExportError.invalidPackage("Markdown \(elements[index].elementID) 표식 본문")
             }
         }
-        return try parseElements(in: Data(markdown.utf8), pattern: marker)
+        return try parseElements(matches: matches, in: markdown)
     }
 
     private static func children(_ node: XMLNode, named name: String) -> [XMLNode] {
@@ -218,6 +249,33 @@ enum ExportArtifactValidator {
             }
             let attributes = String(source[attributesRange])
             let values = try attributeValues(attributes)
+            guard
+                let elementID = values["element-id"],
+                let kind = values["kind"],
+                let orderText = values["order"],
+                let order = Int(orderText),
+                let textHash = values["text-hash"]
+            else {
+                throw ExportError.invalidPackage("요소 매니페스트 필드")
+            }
+            return ValidatedExportElement(
+                elementID: xmlUnescape(elementID),
+                kind: xmlUnescape(kind),
+                order: order,
+                textHash: xmlUnescape(textHash)
+            )
+        }
+    }
+
+    private static func parseElements(
+        matches: [NSTextCheckingResult],
+        in source: String
+    ) throws -> [ValidatedExportElement] {
+        try matches.map { match in
+            guard let attributesRange = Range(match.range(at: 1), in: source) else {
+                throw ExportError.invalidPackage("요소 매니페스트 속성")
+            }
+            let values = try attributeValues(String(source[attributesRange]))
             guard
                 let elementID = values["element-id"],
                 let kind = values["kind"],

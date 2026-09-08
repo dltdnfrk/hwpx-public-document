@@ -26,16 +26,19 @@ struct FormatCapabilityRow: Decodable {
 struct ExportFailureHarness {
     static func main() throws {
         let destination = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: true)
+        let mode = CommandLine.arguments.dropFirst(2).first
         let element = DocumentElement(
             elementID: "element-runtime-isolation",
-            kind: "paragraph",
+            kind: mode == "all-blocked" ? "list-item" : "paragraph",
             order: 0,
             text: "형식별 실패 격리 본문",
-            contentHTML: "<span>형식별 실패 격리 본문</span>",
+            contentHTML: mode == "all-blocked"
+                ? "<ul><li>형식별 실패 격리 본문</li></ul>"
+                : "<span>형식별 실패 격리 본문</span>",
             styleID: "style-body",
             evidenceIDs: []
         )
-        let elements = CommandLine.arguments.dropFirst(2).first == "duplicate-id"
+        let elements = mode == "duplicate-id"
             ? [element, element]
             : [element]
         let revision = DocumentRevision(
@@ -66,7 +69,7 @@ struct ExportFailureHarness {
             history: [],
             aiProposalHistory: []
         )
-        let formats = CommandLine.arguments.dropFirst(2).first == "all-formats"
+        let formats = ["all-formats", "all-blocked"].contains(mode)
             ? DocumentFormat.allCases
             : [.hwpx, .docx, .markdown]
         let receipt = try DocumentExportEngine().export(

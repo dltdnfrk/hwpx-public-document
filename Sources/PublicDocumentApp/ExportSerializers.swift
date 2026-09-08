@@ -3,21 +3,21 @@ import Foundation
 
 enum ExportSerializers {
     static func docx(project: DocumentProject) throws -> Data {
-        let elements = orderedElements(project.elements)
-        let body = try elements.map { element in
-            let content = try docxElement(element)
-            return "<w:sdt><w:sdtPr><w:tag w:val=\"\(xmlAttribute(element.elementID))\"/></w:sdtPr><w:sdtContent>\(content)</w:sdtContent></w:sdt>"
+        let layout = try OfficialLayoutEngine.compile(project)
+        let body = layout.blocks.map { block in
+            let content = OfficialDocxEmit.content(block, profile: layout.profile)
+            return "<w:sdt><w:sdtPr><w:tag w:val=\"\(xmlAttribute(block.elementID))\"/></w:sdtPr><w:sdtContent>\(content)</w:sdtContent></w:sdt>"
         }.joined()
-        let manifestElements = elements.map {
-            "<public-document-element element-id=\"\(xmlAttribute($0.elementID))\" kind=\"\(xmlAttribute($0.kind))\" order=\"\($0.order)\" text-hash=\"\(textHash($0.text))\"/>"
+        let manifestElements = layout.blocks.map {
+            "<public-document-element element-id=\"\(xmlAttribute($0.elementID))\" kind=\"\(xmlAttribute($0.kind))\" order=\"\($0.order)\" text-hash=\"\(textHash($0.sourceText))\"/>"
         }.joined()
-        let document = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><w:body>\(body)<w:sectPr><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:top=\"1440\" w:right=\"1440\" w:bottom=\"1440\" w:left=\"1440\" w:header=\"720\" w:footer=\"720\" w:gutter=\"0\"/></w:sectPr></w:body></w:document>"
-        let customXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><public-document-manifest xmlns=\"urn:public-document-studio\" document-id=\"\(xmlAttribute(project.documentID))\" revision-id=\"\(xmlAttribute(project.currentRevisionID))\">\(manifestElements)</public-document-manifest>"
+        let document = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\"><w:body>\(body)\(OfficialDocxEmit.sectPr(layout.profile))</w:body></w:document>"
+        let customXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><public-document-manifest xmlns=\"urn:public-document-studio\" document-id=\"\(xmlAttribute(project.documentID))\" revision-id=\"\(xmlAttribute(project.currentRevisionID))\" layout-profile-sha=\"\(xmlAttribute(layout.profile.sourceFingerprint))\">\(manifestElements)</public-document-manifest>"
         return try PackageArchive.data(parts: [
             PackagePart(path: "[Content_Types].xml", data: Data(contentTypesXML.utf8)),
             PackagePart(path: "_rels/.rels", data: Data("<?xml version=\"1.0\" encoding=\"UTF-8\"?><Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"word/document.xml\"/></Relationships>".utf8)),
             PackagePart(path: "word/document.xml", data: Data(document.utf8)),
-            PackagePart(path: "word/styles.xml", data: Data(stylesXML.utf8)),
+            PackagePart(path: "word/styles.xml", data: Data(OfficialDocxEmit.stylesXML(layout.profile).utf8)),
             PackagePart(path: "word/_rels/document.xml.rels", data: Data(documentRelationshipsXML.utf8)),
             PackagePart(path: "customXml/item1.xml", data: Data(customXML.utf8)),
             PackagePart(path: "customXml/itemProps1.xml", data: Data(customXMLPropertiesXML.utf8)),
@@ -57,45 +57,19 @@ enum ExportSerializers {
         case "review-marker":
             return ["**\(commonMarkText(element.text))**"]
         case "metadata", "paragraph":
-            return [commonMarkText(element.text)]
-        case "formula":
-            throw ExportError.unsupportedElementKind(element.kind)
-        default:
-            throw ExportError.unsupportedElementKind(element.kind)
-        }
-    }
-
-    static func docxElement(_ element: DocumentElement) throws -> String {
-        switch element.kind {
-        case "table", "approval-grid":
-            let table = try tableRows(element)
-            let columnCount = table.map(\.count).max() ?? 1
-            let columnWidth = max(1, 9_000 / columnCount)
-            let grid = (0..<columnCount).map { _ in
-                "<w:gridCol w:w=\"\(columnWidth)\"/>"
-            }.joined()
-            let rows = table.enumerated().map { rowIndex, row in
-                let rowProperties = rowIndex == 0 ? "<w:trPr><w:tblHeader w:val=\"true\"/></w:trPr>" : ""
-                let cells = row.map { cell in
-                    "<w:tc><w:tcPr><w:tcW w:w=\"\(columnWidth)\" w:type=\"dxa\"/></w:tcPr><w:p><w:r><w:t xml:space=\"preserve\">\(xml(cell))</w:t></w:r></w:p></w:tc>"
-                }.joined()
-                return "<w:tr>\(rowProperties)\(cells)</w:tr>"
-            }.joined()
-            return "<w:tbl><w:tblPr><w:tblStyle w:val=\"TableGrid\"/><w:tblW w:w=\"0\" w:type=\"auto\"/><w:tblLayout w:type=\"fixed\"/><w:tblLook w:val=\"04A0\" w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"1\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"1\"/></w:tblPr><w:tblGrid>\(grid)</w:tblGrid>\(rows)</w:tbl>"
-        case "formula":
-            return "<w:p><m:oMath><m:r><m:t>\(xml(element.text))</m:t></m:r></m:oMath></w:p>"
-        case "metadata", "heading", "paragraph", "review-marker":
-            let paragraphStyle: String
-            if element.styleID == "style-title" || (element.kind == "heading" && element.elementID == "element-title") {
-                paragraphStyle = "<w:pPr><w:pStyle w:val=\"Title\"/></w:pPr>"
-            } else if element.kind == "heading" || element.styleID == "style-section-heading" {
-                paragraphStyle = "<w:pPr><w:pStyle w:val=\"Heading2\"/></w:pPr>"
-            } else if element.styleID == "style-reference" || element.styleID == "style-reference-note" || element.styleID == "style-annotation" {
-                paragraphStyle = "<w:pPr><w:pStyle w:val=\"IntenseQuote\"/></w:pPr>"
-            } else {
-                paragraphStyle = "<w:pPr><w:pStyle w:val=\"Normal\"/></w:pPr>"
+            let lines = OfficialTypeset.lines(element.text)
+            if lines.count > 1 {
+                return lines.map { commonMarkText($0) }
             }
-            return "<w:p>\(paragraphStyle)<w:r><w:t xml:space=\"preserve\">\(xml(element.text))</w:t></w:r></w:p>"
+            let normalized = element.text
+                .replacingOccurrences(of: "\r\n", with: "\n")
+                .replacingOccurrences(of: "\r", with: "\n")
+            return normalized.split(
+                separator: "\n",
+                omittingEmptySubsequences: false
+            ).map { commonMarkText(String($0)) }
+        case "formula":
+            throw ExportError.unsupportedElementKind(element.kind)
         default:
             throw ExportError.unsupportedElementKind(element.kind)
         }
@@ -105,6 +79,17 @@ enum ExportSerializers {
         elements.sorted {
             $0.order == $1.order ? $0.elementID < $1.elementID : $0.order < $1.order
         }
+    }
+
+    static func bindTableText(_ project: DocumentProject) throws -> DocumentProject {
+        try project.replacingElements(project.elements.map { element in
+            guard ["table", "approval-grid"].contains(element.kind), !element.contentHTML.isEmpty else {
+                return element
+            }
+            let text = try tableRows(element).flatMap { $0 }.joined(separator: " ")
+                .split(whereSeparator: \.isWhitespace).joined(separator: " ")
+            return text == element.text ? element : element.replacingText(text)
+        })
     }
 
     static func tableRows(_ element: DocumentElement) throws -> [[String]] {
@@ -157,16 +142,17 @@ enum ExportSerializers {
 
     static func commonMarkText(_ value: String) -> String {
         var escaped = ""
-        for character in normalizedLineBreaks(value) {
-            switch character {
-            case "&": escaped += "&amp;"
-            case "<": escaped += "&lt;"
-            case ">": escaped += "&gt;"
-            case "\n": escaped += "<br />"
-            case "\\", "`", "*", "_", "{", "}", "[", "]", "(", ")", "#", "+", "-", ".", "!", "|", "~", "=":
-                escaped += "\\\(character)"
-            default:
-                escaped.append(character)
+        escaped.reserveCapacity(value.utf8.count)
+        for scalar in normalizedLineBreaks(value).unicodeScalars {
+            switch scalar.value {
+            case 38: escaped.append(contentsOf: "&amp;")
+            case 60: escaped.append(contentsOf: "&lt;")
+            case 62: escaped.append(contentsOf: "&gt;")
+            case 10: escaped.append(contentsOf: "<br />")
+            case 33, 35, 40, 41, 42, 43, 45, 46, 61, 91, 92, 93, 95, 96, 123, 124, 125, 126:
+                escaped.append("\\")
+                escaped.unicodeScalars.append(scalar)
+            default: escaped.unicodeScalars.append(scalar)
             }
         }
         return escaped
@@ -188,7 +174,8 @@ enum ExportSerializers {
     }
 
     private static func normalizedLineBreaks(_ value: String) -> String {
-        value
+        guard value.contains("\r") else { return value }
+        return value
             .replacingOccurrences(of: "\r\n", with: "\n")
             .replacingOccurrences(of: "\r", with: "\n")
     }
@@ -205,5 +192,4 @@ enum ExportSerializers {
 
     private static let customXMLPropertiesXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><ds:datastoreItem ds:itemID=\"{94DB49B3-9D16-4AA7-872C-C156BCE7408B}\" xmlns:ds=\"http://schemas.openxmlformats.org/officeDocument/2006/customXml\"><ds:schemaRefs><ds:schemaRef ds:uri=\"urn:public-document-studio\"/></ds:schemaRefs></ds:datastoreItem>"
 
-    private static let stylesXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><w:styles xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii=\"Apple Myungjo\" w:eastAsia=\"Apple Myungjo\" w:hAnsi=\"Apple Myungjo\"/><w:sz w:val=\"30\"/><w:szCs w:val=\"30\"/><w:lang w:val=\"ko-KR\" w:eastAsia=\"ko-KR\"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:line=\"360\" w:lineRule=\"auto\"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type=\"paragraph\" w:default=\"1\" w:styleId=\"Normal\"><w:name w:val=\"Normal\"/><w:qFormat/></w:style><w:style w:type=\"paragraph\" w:styleId=\"Title\"><w:name w:val=\"Title\"/><w:basedOn w:val=\"Normal\"/><w:next w:val=\"Normal\"/><w:qFormat/><w:pPr><w:keepNext/><w:jc w:val=\"center\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Apple SD Gothic Neo\" w:eastAsia=\"Apple SD Gothic Neo\" w:hAnsi=\"Apple SD Gothic Neo\"/><w:b/><w:sz w:val=\"32\"/><w:szCs w:val=\"32\"/></w:rPr></w:style><w:style w:type=\"paragraph\" w:styleId=\"Heading2\"><w:name w:val=\"Heading 2\"/><w:basedOn w:val=\"Normal\"/><w:qFormat/><w:rPr><w:rFonts w:ascii=\"Apple SD Gothic Neo\" w:eastAsia=\"Apple SD Gothic Neo\" w:hAnsi=\"Apple SD Gothic Neo\"/><w:b/><w:sz w:val=\"32\"/><w:szCs w:val=\"32\"/></w:rPr></w:style><w:style w:type=\"paragraph\" w:styleId=\"IntenseQuote\"><w:name w:val=\"Intense Quote\"/><w:basedOn w:val=\"Normal\"/><w:qFormat/><w:rPr><w:rFonts w:ascii=\"Apple SD Gothic Neo\" w:eastAsia=\"Apple SD Gothic Neo\" w:hAnsi=\"Apple SD Gothic Neo\"/><w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/></w:rPr></w:style><w:style w:type=\"table\" w:styleId=\"TableGrid\"><w:name w:val=\"Table Grid\"/><w:uiPriority w:val=\"59\"/><w:tblPr><w:tblBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"auto\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"auto\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"auto\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"auto\"/><w:insideH w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"auto\"/><w:insideV w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"auto\"/></w:tblBorders></w:tblPr></w:style></w:styles>"
 }

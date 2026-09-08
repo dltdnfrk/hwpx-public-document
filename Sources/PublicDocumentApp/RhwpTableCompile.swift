@@ -16,7 +16,8 @@ enum RhwpTableCompile {
             xml = try replaceRun(in: xml, text: element.text, with: tableRun(id: index, rows: rows), elementID: element.elementID)
         }
         try xml.write(to: section, atomically: true, encoding: .utf8)
-        try run("/usr/bin/zip", ["-q", "-u", hwpx.path, "Contents/section0.xml"], directory: unpacked)
+        try run("/usr/bin/zip", ["-q", "-d", hwpx.path, "Contents/section0.xml"])
+        try run("/usr/bin/zip", ["-q", hwpx.path, "Contents/section0.xml"], directory: unpacked)
     }
 
     private static func replaceRun(in xml: String, text: String, with run: String, elementID: String) throws -> String {

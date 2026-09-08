@@ -30,6 +30,9 @@ final class BatchExportStore {
         guard Set(documentIDs).count == documentIDs.count else {
             throw BatchExportError.missingSnapshot("중복 문서 ID")
         }
+        // IDs are embedded in both snapshot filenames and staging directory names.
+        // Validate the entire request before writing its first snapshot.
+        try documentIDs.forEach(validateDocumentID)
         var items: [BatchExportItem] = []
         for document in request.documents {
             guard !document.fileStem.isEmpty,
@@ -91,6 +94,7 @@ final class BatchExportStore {
         var seenDocumentIDs: Set<String> = []
         var documents: [BatchDocumentInput] = []
         for item in manifest.items where seenDocumentIDs.insert(item.documentID).inserted {
+            try validateDocumentID(item.documentID)
             let project = try decoder.decode(
                 DocumentProject.self,
                 from: Data(contentsOf: snapshotsRoot(previousRoot)
@@ -111,6 +115,14 @@ final class BatchExportStore {
             formats: manifest.selectedFormats,
             flatteningConsent: []
         )
+    }
+
+    private func validateDocumentID(_ documentID: String) throws {
+        guard !documentID.isEmpty,
+              documentID != ".", documentID != "..",
+              !documentID.contains("/"), !documentID.contains("\\"),
+              !documentID.unicodeScalars.contains(where: { CharacterSet.controlCharacters.contains($0) })
+        else { throw BatchExportError.invalidFileStem(documentID) }
     }
 
     func operationExists(destination: URL, operationID: String) -> Bool {

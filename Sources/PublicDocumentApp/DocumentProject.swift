@@ -41,6 +41,13 @@ struct DocumentElement: Codable, Equatable {
         styleID = try values.decode(String.self, forKey: .styleID)
         evidenceIDs = try values.decode([String].self, forKey: .evidenceIDs)
     }
+
+    func replacingText(_ text: String) -> DocumentElement {
+        DocumentElement(
+            elementID: elementID, kind: kind, order: order, text: text,
+            contentHTML: contentHTML, inlineIDs: inlineIDs, styleID: styleID, evidenceIDs: evidenceIDs
+        )
+    }
 }
 
 struct DocumentProject: Codable, Equatable {
@@ -115,5 +122,16 @@ struct DocumentProject: Codable, Equatable {
         providerConfigurations = try values.decodeIfPresent([AIProviderConfiguration].self, forKey: .providerConfigurations) ?? []
         consentGrants = try values.decodeIfPresent([AIConsentGrant].self, forKey: .consentGrants) ?? []
         redoRevisionIDs = try values.decodeIfPresent([String].self, forKey: .redoRevisionIDs) ?? []
+    }
+
+    func replacingElements(_ elements: [DocumentElement]) -> DocumentProject {
+        DocumentProject(
+            schemaVersion: schemaVersion, documentID: documentID, locale: locale, title: title,
+            currentRevisionID: currentRevisionID, elements: elements, assets: assets, styles: styles,
+            templateBinding: templateBinding, evidenceLinks: evidenceLinks, revisions: revisions,
+            history: history, aiProposalHistory: aiProposalHistory,
+            providerConfigurations: providerConfigurations, consentGrants: consentGrants,
+            redoRevisionIDs: redoRevisionIDs
+        )
     }
 }

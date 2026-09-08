@@ -2,25 +2,15 @@ import CryptoKit
 import Foundation
 
 enum OfficialStyleBinding {
-    static let presetIDs = [
-        "style-title",
-        "style-section-heading",
-        "style-body",
-        "style-body-detail",
-        "style-reference-note",
-        "style-annotation",
-        "style-reference",
-    ]
-    static let markers = ["□ ", "○", "-", "※", "*"]
-
-    static func json() throws -> Data {
+    static func json(profile: OfficialDocumentProfile) throws -> Data {
         try JSONSerialization.data(
             withJSONObject: [
-                "default_font": "AppleMyungjo",
-                "preset_ids": presetIDs,
-                "markers": markers,
-                "guidebook_list": ["□ ", "○", "-", "※", "*"],
-                "statutory_list": ["1. ", "가. ", "1) ", "가) ", "(1) ", "(가) ", "① ", "㉮ "],
+                "default_font": profile.bodyFont.replacingOccurrences(of: " ", with: ""),
+                "preset_ids": profile.presetIDs,
+                "markers": profile.guidebookList,
+                "guidebook_list": profile.guidebookList,
+                "statutory_list": profile.statutoryList,
+                "profile_sha256": profile.sourceFingerprint,
             ],
             options: [.sortedKeys]
         )
@@ -81,14 +71,31 @@ struct RhwpExportAdapter {
         let ingest = work.appendingPathComponent("document.json")
         let hwpx = work.appendingPathComponent("document.hwpx")
         let hwp = work.appendingPathComponent("document.hwp")
-        let questions = project.elements.sorted(by: { $0.order < $1.order }).enumerated().map {
-            RhwpQuestion(number: $0.offset + 1, stem: $0.element.text, choices: [])
+        let profile = try OfficialDocumentProfile.load()
+        let elements = project.elements.sorted(by: { $0.order < $1.order })
+        let markerPrefix = "__PUBLIC_DOCUMENT_LARGE_TEXT_"
+        let markerCollision = elements.contains { $0.text.contains(markerPrefix) }
+        var largeText: [RhwpLargeTextReplacement] = []
+        let questions = elements.enumerated().map {
+            let marker = "\(markerPrefix)\(String(format: "%06d", $0.offset))__"
+            let useMarker = !markerCollision && $0.element.text.utf8.count >= 1024 * 1024
+            if useMarker {
+                largeText.append(
+                    RhwpLargeTextReplacement(marker: marker, text: $0.element.text)
+                )
+            }
+            return RhwpQuestion(
+                number: $0.offset + 1,
+                stem: useMarker ? marker : $0.element.text,
+                choices: []
+            )
         }
         try JSONEncoder().encode(RhwpIngest(questions: questions)).write(to: ingest)
         _ = try run(engine, ["build-from-ingest", ingest.path, "-o", hwpx.path])
-        try RhwpStyleCompile.apply(to: hwpx, work: work)
+        try RhwpLargeTextCompile.apply(to: hwpx, replacements: largeText, work: work)
         try RhwpTableCompile.apply(to: hwpx, project: project, work: work)
-        try embedStyleBinding(in: hwpx, work: work)
+        try RhwpStyleCompile.apply(to: hwpx, work: work, profile: profile, project: project)
+        try embedStyleBinding(in: hwpx, work: work, profile: profile)
         switch format {
         case .hwpx:
             return try Data(contentsOf: hwpx)
@@ -126,7 +133,7 @@ struct RhwpExportAdapter {
         defer { try? fileManager.removeItem(at: document) }
         let output = try run(engine, ["export-text", document.path, "--json"])
         let receipt = try JSONDecoder().decode(RhwpExtractReceipt.self, from: output)
-        let extracted = receipt.pages.map(\.text).joined(separator: "\n")
+        let extracted = normalizedText(receipt.pages.map(\.text).joined(separator: "\n"))
         var cursor = extracted.startIndex
         var observed: [ValidatedExportElement] = []
         for element in project.elements.sorted(by: { $0.order < $1.order }) {
@@ -137,8 +144,9 @@ struct RhwpExportAdapter {
                     .filter { !$0.isEmpty }
                 var searchFrom = cursor
                 for cell in cells {
+                    let expectedCell = normalizedText(cell)
                     guard let range = extracted.range(
-                        of: cell,
+                        of: expectedCell,
                         options: .literal,
                         range: searchFrom..<extracted.endIndex
                     ) else {
@@ -152,15 +160,16 @@ struct RhwpExportAdapter {
                     elementID: element.elementID,
                     kind: element.kind,
                     order: element.order,
-                    textHash: textHash(cells.joined(separator: " "))
+                    textHash: textHash(normalizedText(cells.joined(separator: " ")))
                 ))
                 cursor = searchFrom
                 continue
             }
+            let expectedText = normalizedText(element.text)
             guard
-                !element.text.isEmpty,
+                !expectedText.isEmpty,
                 let range = extracted.range(
-                    of: element.text,
+                    of: expectedText,
                     options: .literal,
                     range: cursor..<extracted.endIndex
                 )
@@ -169,23 +178,30 @@ struct RhwpExportAdapter {
                     "추출 검증에서 \(element.elementID) 텍스트의 순서 또는 개수가 다릅니다"
                 )
             }
-            let observedText = String(extracted[range])
             observed.append(ValidatedExportElement(
                 elementID: element.elementID,
                 kind: element.kind,
                 order: element.order,
-                textHash: textHash(observedText)
+                textHash: textHash(normalizedText(String(extracted[range])))
             ))
             cursor = range.upperBound
         }
         return observed
     }
 
-    private func embedStyleBinding(in hwpx: URL, work: URL) throws {
+    private func normalizedText(_ text: String) -> String {
+        text.split(whereSeparator: \.isWhitespace).joined(separator: " ")
+    }
+
+    private func embedStyleBinding(
+        in hwpx: URL,
+        work: URL,
+        profile: OfficialDocumentProfile
+    ) throws {
         let memberDirectory = work.appendingPathComponent("PublicDocument", isDirectory: true)
         try fileManager.createDirectory(at: memberDirectory, withIntermediateDirectories: true)
         let member = memberDirectory.appendingPathComponent("style-binding.json")
-        try OfficialStyleBinding.json().write(to: member, options: [.atomic])
+        try OfficialStyleBinding.json(profile: profile).write(to: member, options: [.atomic])
         let process = Process()
         let standardError = Pipe()
         process.currentDirectoryURL = work

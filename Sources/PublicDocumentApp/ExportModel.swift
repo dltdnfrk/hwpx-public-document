@@ -92,6 +92,14 @@ struct ExportFailureDisposition: Codable {
     }
 }
 
+struct TypstSidecarReceipt: Codable {
+    let state: String
+    let sourceFile: String?
+    let pdfFile: String?
+    let diagnosticCode: String
+    var diagnosticMessage: String? = nil
+}
+
 struct ExportReceipt: Codable {
     let operationID: String
     let snapshotRevisionID: String
@@ -110,6 +118,7 @@ struct ExportReceipt: Codable {
     let flatteningConsentFormats: [DocumentFormat]
     let allAuthoredElementIDsPreserved: Bool
     let rhwpCommit: String
+    let sidecar: TypstSidecarReceipt?
 }
 
 struct ExportRequest {

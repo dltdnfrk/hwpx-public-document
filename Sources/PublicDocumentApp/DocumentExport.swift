@@ -8,7 +8,8 @@ final class DocumentExportEngine {
         self.fileManager = fileManager
     }
 
-    func export(project: DocumentProject, request: ExportRequest) throws -> ExportReceipt {
+    func export(project incoming: DocumentProject, request: ExportRequest) throws -> ExportReceipt {
+        let project = try ExportSerializers.bindTableText(incoming)
         guard !request.formats.isEmpty else { throw ExportError.noFormatSelected }
         let authoredElementsValid = try validatesAuthorableElements(project)
         guard authoredElementsValid else {
@@ -62,7 +63,9 @@ final class DocumentExportEngine {
             }
         }
 
-        TypstSidecar.write(project: project, destination: request.destination)
+        let sidecar = published.isEmpty
+            ? nil
+            : TypstSidecar.write(project: project, destination: request.destination)
         return ExportReceipt(
             operationID: request.operationID,
             snapshotRevisionID: project.currentRevisionID,
@@ -85,7 +88,8 @@ final class DocumentExportEngine {
             flatteningConsentRecorded: consentRecorded,
             flatteningConsentFormats: consentFormats,
             allAuthoredElementIDsPreserved: authoredElementsValid,
-            rhwpCommit: ExportCapabilities.rhwpCommit
+            rhwpCommit: ExportCapabilities.rhwpCommit,
+            sidecar: sidecar
         )
     }
 

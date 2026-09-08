@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "mode": "semantic-loss-overwrite",
+  "element": {
+    "kind": "list-item",
+    "text": "기존 파일을 덮어쓰면 안 되는 목록",
+    "contentHTML": "<ul><li>기존 파일을 덮어쓰면 안 되는 목록</li></ul>",
+    "styleID": "style-body"
+  }
+}
