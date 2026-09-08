@@ -11,7 +11,7 @@
   "sourceEvidence": [
     {
       "path": "docs/ac-09-performance-evidence.md",
-      "sha256": "sha256:a6e1411098968f213794a78183daac1357281a84dec22055e6b91695d3000fb8"
+      "sha256": "sha256:8d9b9670afe7f6108152bffdf2213d7752d90bd803fe746e0213deff830c0522"
     },
     {
       "path": "provenance/seed-evidence-sources.json",

@@ -34,7 +34,7 @@ sha256_of() {
     /usr/bin/shasum -a 256 "$1" | /usr/bin/awk '{print $1}'
 }
 
-test "$(uname -m)" = "arm64" || {
+test "$(/usr/sbin/sysctl -n hw.optional.arm64 2>/dev/null)" = "1" || {
     printf '%s\n' "bundled Node is pinned to Apple Silicon arm64" >&2
     exit 2
 }

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "criterion": "AC-08",
-  "verdict": "pass",
-  "summary": "Current browser, keyboard, axe, visual, and VoiceOver journey checks passed.",
+  "verdict": "fail",
+  "summary": "2 criterion-specific check(s) failed.",
   "blockers": [],
   "seed": {
     "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
@@ -78,8 +78,8 @@
   ],
   "evaluation": {
     "criterion": "AC-08",
-    "verdict": "pass",
-    "summary": "Current browser, keyboard, axe, visual, and VoiceOver journey checks passed.",
+    "verdict": "fail",
+    "summary": "2 criterion-specific check(s) failed.",
     "blockers": [],
     "checks": [
       {
@@ -89,7 +89,7 @@
       },
       {
         "id": "accessibility.freshness",
-        "passed": true,
+        "passed": false,
         "detail": "browser evidence binds current Studio source"
       },
       {
@@ -129,8 +129,8 @@
       },
       {
         "id": "evidence.identity",
-        "passed": true,
-        "detail": "13 evidence identities verified"
+        "passed": false,
+        "detail": "hash drift: tests/ac08-browser-qa.spec.js"
       },
       {
         "id": "accessibility.voiceover-failures",

@@ -141,6 +141,9 @@ def test_upstream_lock_records_exact_reviewed_pins_and_docs_only_scope() -> None
         "Resources/Studio/styles.css",
         "Resources/Studio/app.js",
         "Sources/PublicDocumentApp/ExportSerializers.swift",
+        "Sources/PublicDocumentApp/OfficialLayoutEngine.swift",
+        "Resources/Studio/official-layout-profile.js",
+        "Resources/Studio/easy-tools.js",
         "Sources/PublicDocumentApp/ExportValidation.swift",
     }
     assert runtime_scope["direct_upstream_package_linkage"] is True

@@ -67,19 +67,19 @@
     },
     {
       "path": "Resources/Studio/index.html",
-      "sha256": "sha256:3f749a0abdae414db0b9841f064b885941cb270dfa0748e4148a4ee6c3b1af41"
+      "sha256": "sha256:c504bdf6f03585bf6620e1f6fce4d1a0745e58da4e3b7e15dc58eebe429d430f"
     },
     {
       "path": "Resources/Studio/styles.css",
-      "sha256": "sha256:b905fba51298ac582eb2103dea6a0163d493cccc1f12613c662716f679c831d7"
+      "sha256": "sha256:d902ad7a61a1f331ae461a4e1924238f5c6f789e8c81dbfcad0e42c442c7461b"
     },
     {
       "path": "Resources/Studio/app.js",
-      "sha256": "sha256:05a0b8c8a86d8c1f6d266b3b9120037f75e93910744e25fa4341816435a1a339"
+      "sha256": "sha256:a6b84c30bc94c8981dbbd882713400e474a1371762da3427726546b51b47afda"
     },
     {
       "path": "provenance/genoffice-docs-port.json",
-      "sha256": "sha256:4e7318636a746a2b2af4bd5e6e1b2e23113afa08c4b39760210843a06c4735f5"
+      "sha256": "sha256:3e7638bef7c1546611b340ee3dfc62421dbe8276584e5890b35f0bbc83136b7e"
     },
     {
       "path": "Resources/GenOffice/runtime-manifest.json",

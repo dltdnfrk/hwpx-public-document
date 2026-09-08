@@ -1,5 +1,5 @@
 import { Editor } from '@tiptap/core'
-import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
+import { DOMSerializer, type Node as ProseMirrorNode } from '@tiptap/pm/model'
 import { createElement } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { IconStop } from '@genoffice/ui'
@@ -38,14 +38,31 @@ function pmContent(elements: readonly InputElement[]) {
 }
 
 function richInline(html: string, fallback: string): PmInline[] {
-  const body = new DOMParser().parseFromString(html || fallback, 'text/html').body
+  const body = new DOMParser().parseFromString(html, 'text/html').body
+  if (!html) body.textContent = fallback
   const output: PmInline[] = []
+  const isBlock = (node: Node): boolean => node instanceof HTMLElement && node.matches('div,p,h1,h2,h3,h4,h5,h6,li,ul,ol,blockquote,pre,section,article')
+  const children = (node: Node, marks: readonly Readonly<{ type: string; attrs?: Readonly<Record<string, unknown>> }>[]): void => {
+    node.childNodes.forEach((child, index) => {
+      const previous = node.childNodes.item(index - 1)
+      if (previous && (isBlock(previous) || isBlock(child))) output.push({ type: 'hardBreak' })
+      walk(child, marks)
+    })
+  }
   const walk = (node: Node, marks: readonly Readonly<{ type: string; attrs?: Readonly<Record<string, unknown>> }>[]): void => {
     if (node.nodeType === Node.TEXT_NODE) {
-      if (node.textContent) output.push(marks.length ? { type: 'text', text: node.textContent, marks } : { type: 'text', text: node.textContent })
+      node.textContent?.split('\n').forEach((text, index) => {
+        if (index > 0) output.push({ type: 'hardBreak', marks })
+        if (text) output.push({ type: 'text', text, marks })
+      })
       return
     }
     if (!(node instanceof HTMLElement)) return
+    if (node.matches('br.ProseMirror-trailingBreak')) return
+    if (node.matches('br')) {
+      output.push({ type: 'hardBreak', marks })
+      return
+    }
     const next = [...marks]
     const inlineID = node.getAttribute('data-inline-id')
     if (inlineID) next.push({ type: 'publicDocumentInlineIdentity', attrs: { inlineID } })
@@ -56,9 +73,9 @@ function richInline(html: string, fallback: string): PmInline[] {
     const sizeText = node.style.fontSize
     const size = sizeText.endsWith('pt') ? Number.parseFloat(sizeText) * 2 : null
     if (font || size) next.push({ type: 'docTextStyle', attrs: { font: font || null, fontAscii: font || null, sizeHalfPoints: size } })
-    node.childNodes.forEach((child) => walk(child, next))
+    children(node, next)
   }
-  body.childNodes.forEach((child) => walk(child, []))
+  children(body, [])
   return output
 }
 
@@ -128,19 +145,21 @@ class PublicDocumentEditor extends HTMLElement {
   getElements(): OutputElement[] {
     if (!this.#editor) return []
     const output: OutputElement[] = []
-    this.#editor.state.doc.forEach((node, offset, index) => {
+    const serializer = DOMSerializer.fromSchema(this.#editor.schema)
+    this.#editor.state.doc.forEach((node, _offset, index) => {
       const rawID = node.attrs['projectElementID']
       const id = typeof rawID === 'string' && rawID ? rawID : `element-${this.#revision + 1}-${index + 1}`
       const rawKind = node.attrs['projectKind']
       const type = typeof rawKind === 'string' && rawKind ? rawKind : node.type.name === 'docHeading' ? 'heading' : node.type.name === 'docListItem' ? 'list-item' : node.type.name === 'publicDocumentProtected' ? 'protected' : 'paragraph'
       const rawHTML = node.attrs['projectContentHTML']
       const protectedHTML = typeof rawHTML === 'string' ? rawHTML : ''
-      const dom = this.#editor?.view.nodeDOM(offset)
+      // Serialize document content, not view-only caret/trailing-break decorations.
+      const dom = serializer.serializeNode(node)
       const contentHTML = node.type.name === 'publicDocumentProtected' ? protectedHTML : dom instanceof HTMLElement ? dom.innerHTML : protectedHTML
       const alignedHTML = typeof node.attrs['align'] === 'string' ? `<span data-public-document-align="${node.attrs['align']}">${contentHTML}</span>` : contentHTML
       const inlineIDs = serializedInlineIDs(alignedHTML)
       const level = node.type.name === 'docHeading' ? Number(node.attrs['level'] ?? 2) : undefined
-      const text = node.type.name === 'publicDocumentProtected' ? String(node.attrs['previewText'] ?? '') : node.textContent
+      const text = node.type.name === 'publicDocumentProtected' ? String(node.attrs['previewText'] ?? '') : node.textBetween(0, node.content.size, '\n', (leaf) => leaf.type.name === 'hardBreak' ? '\n' : '')
       output.push(level === undefined ? { id, type, text, contentHTML: alignedHTML, inlineIDs } : { id, type, text, contentHTML: alignedHTML, inlineIDs, level })
     })
     return output
@@ -153,15 +172,17 @@ class PublicDocumentEditor extends HTMLElement {
     if (!block) return false
     const selectedAttrs = block.node.attrs
     const metadata = { projectElementID: selectedAttrs['projectElementID'] ?? null, projectKind: selectedAttrs['projectKind'] ?? null, projectContentHTML: selectedAttrs['projectContentHTML'] ?? '' }
-    const from = block.position + 1
-    const to = from + block.node.content.size
+    const { selection } = editor.state
+    // Collapsed selections intentionally retain the whole-block formatting macros.
+    const from = selection.empty ? block.position + 1 : selection.from
+    const to = selection.empty ? from + block.node.content.size : selection.to
     if (name === 'bold' || name === 'italic' || name === 'underline') {
       const mark = editor.schema.marks[name]
       if (!mark || from === to) return false
       const transaction = editor.state.tr
       let hasText = false
       let allMarked = true
-      block.node.descendants((node) => { if (node.isText) { hasText = true; if (!mark.isInSet(node.marks)) allMarked = false } })
+      editor.state.doc.nodesBetween(from, to, (node) => { if (node.isText) { hasText = true; if (!mark.isInSet(node.marks)) allMarked = false } })
       if (hasText && allMarked) transaction.removeMark(from, to, mark)
       else transaction.addMark(from, to, mark.create())
       editor.view.dispatch(transaction)
@@ -174,10 +195,14 @@ class PublicDocumentEditor extends HTMLElement {
     if ((name === 'fontName' && typeof value === 'string' && value) || (name === 'fontSize' && typeof value === 'number' && value >= 3 && value <= 96)) {
       const mark = editor.schema.marks['docTextStyle']
       if (!mark || from === to) return false
-      let existing: Readonly<Record<string, unknown>> = {}
-      block.node.descendants((node) => { existing = node.marks.find((candidate) => candidate.type === mark)?.attrs ?? existing })
-      const attrs = name === 'fontName' ? { ...existing, font: value, fontAscii: value } : { ...existing, sizeHalfPoints: Number(value) * 2 }
-      editor.view.dispatch(editor.state.tr.addMark(from, to, mark.create(attrs)))
+      const transaction = editor.state.tr
+      editor.state.doc.nodesBetween(from, to, (node, position) => {
+        if (!node.isText) return
+        const existing = node.marks.find((candidate) => candidate.type === mark)?.attrs ?? {}
+        const attrs = name === 'fontName' ? { ...existing, font: value, fontAscii: value } : { ...existing, sizeHalfPoints: Number(value) * 2 }
+        transaction.addMark(Math.max(from, position), Math.min(to, position + node.nodeSize), mark.create(attrs))
+      })
+      editor.view.dispatch(transaction)
       return true
     }
     if (name === 'justifyLeft' || name === 'justifyCenter') {
@@ -187,7 +212,7 @@ class PublicDocumentEditor extends HTMLElement {
     }
     if (name === 'insertUnorderedList') return block.node.type.name === 'docListItem' ? this.#setBlockType('docParagraph', { ...metadata, projectKind: 'paragraph' }) : this.#setBlockType('docListItem', { ...metadata, projectKind: 'list-item', kind: 'bullet', numId: null, ilvl: 0 })
     if (name === 'insertText' && typeof value === 'string' && block.node.isTextblock) {
-      editor.view.dispatch(editor.state.tr.insertText(value, to, to))
+      editor.view.dispatch(editor.state.tr.insertText(value))
       return true
     }
     return false
@@ -222,10 +247,12 @@ class PublicDocumentEditor extends HTMLElement {
   }
 
   #focusedBlock(): Readonly<{ node: ProseMirrorNode; position: number }> | undefined {
-    if (!this.#editor || !this.#focusedElementID) return undefined
-    let result: Readonly<{ node: ProseMirrorNode; position: number }> | undefined
-    this.#editor.state.doc.forEach((node, position) => { if (node.attrs['projectElementID'] === this.#focusedElementID) result = { node, position } })
-    return result
+    if (!this.#editor) return undefined
+    const { $from } = this.#editor.state.selection
+    // The document selection is authoritative for pointer, keyboard, and API focus.
+    if ($from.depth > 0) return { node: $from.node(1), position: $from.before(1) }
+    const node = this.#editor.state.doc.nodeAt($from.pos)
+    return node ? { node, position: $from.pos } : undefined
   }
 
   #focusNavItem(event: Event): void {

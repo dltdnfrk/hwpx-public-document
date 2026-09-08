@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, lstatSync, readFileSync, realpathSync } from "node:fs";
+import { resolve, sep } from "node:path";
 
 const projectRoot = resolve(import.meta.dirname, "..");
 const approvedCommit = "d8305ff2dc152593a1ec5639d77e6860c6a512bd";
@@ -29,7 +29,29 @@ const approvedLocalPaths = new Set([
   "Resources/Studio/styles.css",
   "Resources/Studio/app.js",
   "Sources/PublicDocumentApp/ExportSerializers.swift",
+  "Sources/PublicDocumentApp/OfficialLayoutEngine.swift",
   "Sources/PublicDocumentApp/ExportValidation.swift",
+  "Resources/Studio/ai-settings.js",
+  "Resources/Studio/ai-workspace.js",
+  "Resources/Studio/bridge.js",
+  "Resources/Studio/easy-library.js",
+  "Resources/Studio/easy-tools.js",
+  "Resources/Studio/easy-tools-ui.js",
+  "Resources/Studio/editor-commands.js",
+  "Resources/Studio/export-dialogs.js",
+  "Resources/Studio/project-content.js",
+  "Resources/Studio/project-model.js",
+  "Resources/Studio/project-render.js",
+  "Resources/Studio/studio-events.js",
+  "Resources/Studio/studio-prefs.js",
+  "Resources/Studio/studio-state.js",
+  "Resources/Studio/template-panel.js",
+  "Resources/Studio/view-tab.js",
+  "Resources/Studio/draft-wizard.js",
+  "Resources/Studio/review-tab.js",
+  "Resources/Studio/title-lock.js",
+  "Resources/Studio/page-engine.js",
+  "Resources/Studio/official-layout-profile.js",
 ]);
 const approvedPortMarkers = new Set([
   "data-action=\"open-export\"",
@@ -43,11 +65,15 @@ const forbiddenRuntimeWords = new Set(["genspark", "aipanel", "electron-updater"
 const parseArguments = (arguments_) => {
   let manifest = defaultManifest;
   let upstreamRoot = null;
+  let localRoot = null;
   let hasManifestArgument = false;
   for (let index = 0; index < arguments_.length; index += 1) {
     const argument = arguments_[index];
     if (argument === "--upstream-root") {
       upstreamRoot = arguments_[index + 1] ?? null;
+      index += 1;
+    } else if (argument === "--local-root") {
+      localRoot = arguments_[index + 1] ?? null;
       index += 1;
     } else if (argument === "--manifest") {
       manifest = arguments_[index + 1] ?? "";
@@ -60,10 +86,14 @@ const parseArguments = (arguments_) => {
       throw new Error(`unsupported argument: ${argument}`);
     }
   }
-  if (!manifest || (arguments_.includes("--upstream-root") && !upstreamRoot)) {
-    throw new Error("manifest and --upstream-root values must not be empty");
+  if (
+    !manifest
+    || (arguments_.includes("--upstream-root") && !upstreamRoot)
+    || (arguments_.includes("--local-root") && !localRoot)
+  ) {
+    throw new Error("manifest, --upstream-root, and --local-root values must not be empty");
   }
-  return { manifest, upstreamRoot };
+  return { manifest, upstreamRoot, localRoot };
 };
 
 const digest = (path) =>
@@ -73,11 +103,16 @@ const isSafeRelativePath = (path) =>
 const setEquals = (left, right) =>
   left.size === right.size && [...left].every((value) => right.has(value));
 
-const { manifest: manifestArgument, upstreamRoot: upstreamArgument } = parseArguments(
+const {
+  manifest: manifestArgument,
+  upstreamRoot: upstreamArgument,
+  localRoot: localArgument,
+} = parseArguments(
   process.argv.slice(2),
 );
 const manifestPath = resolve(projectRoot, manifestArgument);
 const upstreamRoot = upstreamArgument ? resolve(upstreamArgument) : null;
+const localRoot = localArgument ? resolve(localArgument) : projectRoot;
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 const failures = [];
 
@@ -126,13 +161,24 @@ if (!setEquals(upstreamPaths, new Set(approvedSources.keys()))) {
 
 const localArtifacts = Array.isArray(manifest.localArtifacts) ? manifest.localArtifacts : [];
 const localPaths = new Set();
+if (lstatSync(localRoot).isSymbolicLink()) {
+  failures.push("symlinked local verification root");
+}
+const physicalLocalRoot = realpathSync(localRoot);
 for (const artifact of localArtifacts) {
   if (!isSafeRelativePath(artifact.path)) failures.push(`unsafe local port path: ${artifact.path}`);
   if (localPaths.has(artifact.path)) failures.push(`duplicate local port artifact: ${artifact.path}`);
   localPaths.add(artifact.path);
-  const path = resolve(projectRoot, artifact.path);
+  const path = resolve(localRoot, artifact.path);
   if (!existsSync(path)) {
     failures.push(`missing local port artifact: ${artifact.path}`);
+  } else if (lstatSync(path).isSymbolicLink()) {
+    failures.push(`symlinked local port artifact: ${artifact.path}`);
+  } else if (
+    realpathSync(path) !== physicalLocalRoot
+    && !realpathSync(path).startsWith(`${physicalLocalRoot}${sep}`)
+  ) {
+    failures.push(`local port artifact escapes verification root: ${artifact.path}`);
   } else if (digest(path) !== artifact.sha256) {
     failures.push(`local port hash drift: ${artifact.path}`);
   }
@@ -152,8 +198,8 @@ const declaredLocalPaths = new Set(manifest.portBoundary?.shippedLocalArtifacts 
 if (!setEquals(localPaths, declaredLocalPaths)) failures.push("shipped local artifact boundary mismatch");
 
 const runtimeText = localArtifacts
-  .filter((artifact) => artifact.runtimeSurface && existsSync(resolve(projectRoot, artifact.path)))
-  .map((artifact) => readFileSync(resolve(projectRoot, artifact.path), "utf8").toLowerCase())
+  .filter((artifact) => artifact.runtimeSurface && existsSync(resolve(localRoot, artifact.path)))
+  .map((artifact) => readFileSync(resolve(localRoot, artifact.path), "utf8").toLowerCase())
   .join("\n");
 const runtimeWords = new Set(runtimeText.match(/[a-z]+/g) ?? []);
 const declaredForbiddenWords = new Set(manifest.excludedRuntimeWords ?? []);

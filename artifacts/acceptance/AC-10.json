@@ -1,11 +1,9 @@
 {
   "schemaVersion": 1,
   "criterion": "AC-10",
-  "verdict": "blocked",
-  "summary": "Pristine unsigned archive and all nine predecessor checks passed. Required external observations remain blocked.",
-  "blockers": [
-    "AC-07 remains externally blocked."
-  ],
+  "verdict": "fail",
+  "summary": "2 criterion-specific check(s) failed.",
+  "blockers": [],
   "seed": {
     "path": ".ouroboros/seeds/seed_219732b73d5d.yaml",
     "sha256": "sha256:6193eb71e1183a57c6fcd3c1accff64bdbc815fda587bd433171f110ce8ab310"
@@ -13,7 +11,7 @@
   "sourceEvidence": [
     {
       "path": "docs/ac-10-functional-release-evidence.md",
-      "sha256": "sha256:858d05f5daac54ca30bbe62db686cf5d092ae3d33a6fe6d29af83b21b3dbd143"
+      "sha256": "sha256:919607c5c310aebcca335cd8eb87299a57b9d977979af43da0d8800e266d3190"
     },
     {
       "path": "provenance/seed-evidence-sources.json",
@@ -48,11 +46,9 @@
   ],
   "evaluation": {
     "criterion": "AC-10",
-    "verdict": "blocked",
-    "summary": "Pristine unsigned archive and all nine predecessor checks passed. Required external observations remain blocked.",
-    "blockers": [
-      "AC-07 remains externally blocked."
-    ],
+    "verdict": "fail",
+    "summary": "2 criterion-specific check(s) failed.",
+    "blockers": [],
     "checks": [
       {
         "id": "release.archive",
@@ -96,7 +92,7 @@
       },
       {
         "id": "release.studio",
-        "passed": true,
+        "passed": false,
         "detail": "packaged Studio hashes match the current verified source"
       },
       {
@@ -138,6 +134,11 @@
         "id": "evidence.identity",
         "passed": true,
         "detail": "7 evidence identities verified"
+      },
+      {
+        "id": "release.predecessors",
+        "passed": false,
+        "detail": "at least one predecessor failed"
       }
     ]
   }

@@ -21,13 +21,14 @@ const project = {
 async function verify(browserType, name, launchOptions = {}) {
   const browser = await browserType.launch({ headless: true, ...launchOptions })
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } })
+  try {
   const errors = []
   const requests = []
   page.on('pageerror', (error) => errors.push(error.message))
   page.on('request', (request) => { if (!request.url().startsWith('data:') && !request.url().startsWith('file:')) requests.push(request.url()) })
   await page.setContent('<style>:root{--studio-ink:#202726;--studio-panel:#f7f9f8;--studio-border-strong:#b7c1be;--studio-accent-strong:#005361;--studio-accent-soft:#e8f4f5;--studio-accent-border:#afd1d5;--studio-border:#d7dddb;--studio-muted:#66706d;--studio-surface:#fff;--studio-document-fill:#eef4f3;--studio-document-rule:#7f8986}</style><public-document-genoffice-editor></public-document-genoffice-editor>')
   await page.addScriptTag({ path: join(root, 'Resources/GenOffice/public-document-genoffice.js') })
-  await page.waitForFunction(() => customElements.get('public-document-genoffice-editor'))
+  await page.evaluate(() => customElements.whenDefined('public-document-genoffice-editor'))
   const initial = await page.locator('public-document-genoffice-editor').evaluate((editor, value) => {
     editor.setProject(value)
     return { elements: editor.getElements(), focused: editor.focusElement('body-1') }
@@ -50,20 +51,31 @@ async function verify(browserType, name, launchOptions = {}) {
     { id: 'inline-charlie', text: '기울임 문장', bold: false, italic: true },
   ])
   const selectionHost = page.locator('public-document-genoffice-editor')
+  const pressSelection = async (key) => {
+    await selectionHost.evaluate((editor) => {
+      window.__nextSelection = new Promise((resolve, reject) => {
+        const listener = () => { clearTimeout(timeout); resolve() }
+        const timeout = setTimeout(() => { editor.removeEventListener('public-document-genoffice-selection-change', listener); reject(new Error('Selection event timed out')) }, 5000)
+        editor.addEventListener('public-document-genoffice-selection-change', listener, { once: true })
+      })
+    })
+    await page.locator('public-document-genoffice-editor .ProseMirror').press(key)
+    await page.evaluate(() => window.__nextSelection)
+  }
   await selectionHost.evaluate((editor) => {
     window.__selectionStates = []
     editor.addEventListener('public-document-genoffice-selection-change', (event) => window.__selectionStates.push(event.detail))
     editor.focusElement('body-1')
   })
   assert.deepEqual(await selectionHost.evaluate((editor) => editor.getSelectionState()), { elementID: 'body-1', bold: false, italic: false, underline: false })
-  for (let index = 0; index < 7; index += 1) await page.locator('public-document-genoffice-editor .ProseMirror').press('Shift+ArrowRight')
+  for (let index = 0; index < 7; index += 1) await pressSelection('Shift+ArrowRight')
   assert.equal((await selectionHost.evaluate((editor) => editor.getSelectionState())).bold, false)
   assert.equal(await selectionHost.evaluate((editor) => editor.command('bold')), true)
   assert.equal((await selectionHost.evaluate((editor) => editor.getSelectionState())).bold, true)
   const boldSnapshot = await selectionHost.evaluate((editor) => editor.getElements())
   await selectionHost.evaluate((editor, elements) => editor.setProject({ elements: elements.map((item) => ({ elementID: item.id, kind: item.type, text: item.text, contentHTML: item.contentHTML })) }), boldSnapshot)
   await selectionHost.evaluate((editor) => editor.focusElement('body-1'))
-  for (let index = 0; index < 7; index += 1) await page.locator('public-document-genoffice-editor .ProseMirror').press('Shift+ArrowRight')
+  for (let index = 0; index < 7; index += 1) await pressSelection('Shift+ArrowRight')
   assert.equal((await selectionHost.evaluate((editor) => editor.getSelectionState())).bold, true)
   assert.equal(await selectionHost.evaluate((editor) => editor.command('bold')), true)
   assert.equal((await selectionHost.evaluate((editor) => editor.getSelectionState())).bold, false)
@@ -72,9 +84,21 @@ async function verify(browserType, name, launchOptions = {}) {
   await page.locator('public-document-genoffice-editor .nav-item').first().click()
   assert.equal(await page.locator('public-document-genoffice-editor').evaluate((editor) => editor.command('insertText', '[NAV]')), true)
   assert.match((await page.locator('public-document-genoffice-editor').evaluate((editor) => editor.getElements()))[0].text, /\[NAV\]/)
-  assert.equal(await page.locator('public-document-genoffice-editor').evaluate((editor) => editor.focusElement('body-1')), true)
-  await page.locator('public-document-genoffice-editor .ProseMirror').press('End')
+  assert.equal(await page.locator('public-document-genoffice-editor').evaluate((editor) => editor.focusElement('body-1', 'end')), true)
+  await selectionHost.evaluate((editor) => {
+    window.__typed = new Promise((resolve, reject) => {
+      const listener = (event) => {
+        if (!event.detail.elements.some((element) => element.id === 'body-1' && element.text.endsWith('편집'))) return
+        clearTimeout(timeout)
+        editor.removeEventListener('public-document-genoffice-change', listener)
+        resolve()
+      }
+      const timeout = setTimeout(() => { editor.removeEventListener('public-document-genoffice-change', listener); reject(new Error(`Typed content event timed out: ${JSON.stringify(editor.getElements())}`)) }, 5000)
+      editor.addEventListener('public-document-genoffice-change', listener)
+    })
+  })
   await page.keyboard.type(' 편집')
+  await page.evaluate(() => window.__typed)
   const commandResults = await page.locator('public-document-genoffice-editor').evaluate((editor) => [
     editor.command('fontName', 'Apple SD Gothic Neo'),
     editor.command('fontSize', 14),
@@ -120,8 +144,10 @@ async function verify(browserType, name, launchOptions = {}) {
   await page.screenshot({ path: join(evidence, `${name}-editor.png`), fullPage: true })
   await page.setViewportSize({ width: 920, height: 900 })
   await page.screenshot({ path: join(evidence, `${name}-editor-920.png`), fullPage: true })
-  await browser.close()
   return { name, ids: reopened.map((item) => item.id), inlineIDs: reopened[1].inlineIDs, inlineSegments, commandResults, errors, externalRequests: requests }
+  } finally {
+    await browser.close()
+  }
 }
 
 const results = [await verify(chromium, 'chrome', { channel: 'chrome' }), await verify(webkit, 'webkit')]

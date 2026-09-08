@@ -11,7 +11,7 @@
   "sourceEvidence": [
     {
       "path": "docs/ac-03-guided-template-evidence.md",
-      "sha256": "sha256:2bf28c61b239f5ed29f942c77fe013be2e68483077798d8daa720eb26044fb37"
+      "sha256": "sha256:e2f1f0fb34f669004a890e35d0e2ec49af76ac7b023acec878ca635061287917"
     },
     {
       "path": "provenance/seed-evidence-sources.json",
@@ -25,7 +25,7 @@
   "contracts": [
     {
       "path": "artifacts/templates/catalog-manifest.json",
-      "sha256": "sha256:a10140ffe6e71e5df77cbc58cd07bb72ece5f176f4d1ace23c6c22bd4937250c"
+      "sha256": "sha256:3b933190b748c96757f810ad9ff8a541b18aca81d6f4912535a4ee3cf229eae8"
     },
     {
       "path": "artifacts/templates/update-rollback-evidence.json",

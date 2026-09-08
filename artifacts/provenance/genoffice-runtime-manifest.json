@@ -8,7 +8,7 @@
   "inputs": [
     {
       "path": "adapter/GenOfficeFork/browser.tsx",
-      "sha256": "704e0cf23a79aa086b6d5fa5d996d618c60bd4c328ee99d279d518a81f1179c9"
+      "sha256": "f0390bc40916b68fd72990e15d818b5a6dd445835cd12dfe02013ee4783d6a17"
     },
     {
       "path": "adapter/GenOfficeFork/docx-normalize.mjs",
@@ -814,13 +814,13 @@
   "inputLock": {
     "sourcePath": "GenOfficeFork/runtime-input-lock.json",
     "packagedPath": "Provenance/genoffice-runtime-input-lock.json",
-    "sha256": "9ee393c6897d713afc1016cb49c6ca5d04297e2544785404b68bbebc2a946f91"
+    "sha256": "2ab330946518b7af8c57bf13f38e3a4b978a4b7ee5951063f87eadb9a7ad624a"
   },
   "outputs": [
     {
       "path": "GenOffice/public-document-genoffice.js",
-      "sha256": "fe576951798bc85eaba443f0ff3e30eccbcc8ead21b1f1932f540c4d0f3ddc7d",
-      "sizeBytes": 784694
+      "sha256": "8d14b85adbd55b80bff154871b1a2255937a2fbd547f8196a34634583a25d82b",
+      "sizeBytes": 785281
     },
     {
       "path": "GenOffice/genoffice-docx-normalize.cjs",

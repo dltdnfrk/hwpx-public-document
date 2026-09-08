@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "product": "Public Document Studio",
+  "product": "문서작성기",
   "platform": "macOS-arm64",
   "upstreams": [
     {
@@ -11,7 +11,7 @@
       "role": "Pinned source and package runtime for the owned Docs editor and DOCX normalization boundary",
       "integration_mode": "pinned-adapter-runtime-fork",
       "port_manifest": "provenance/genoffice-docs-port.json",
-      "port_manifest_sha256": "sha256:4e7318636a746a2b2af4bd5e6e1b2e23113afa08c4b39760210843a06c4735f5",
+      "port_manifest_sha256": "sha256:9392bab220dd37f1963e3747eb8dd87722ac0a1b6e93a63cb5538fa813c8f110",
       "direct_package_runtime_linkage": true,
       "upstream_runtime_files_bundled": true,
       "runtime_manifest": "Resources/GenOffice/runtime-manifest.json",
@@ -21,9 +21,9 @@
       "node_engine": "Resources/Engines/node",
       "local_patchset": {
         "build_script_sha256": "sha256:a47bf2967ca39a7413e36061e92059d46c3420e4c32b693ffe88164b069af04f",
-        "runtime_manifest_sha256": "sha256:887f312020752ad23bf92efaf9207e7c4e5af2eca449b9a747f53ca3087ac00a",
-        "runtime_input_lock_sha256": "sha256:9ee393c6897d713afc1016cb49c6ca5d04297e2544785404b68bbebc2a946f91",
-        "browser_bundle_sha256": "sha256:fe576951798bc85eaba443f0ff3e30eccbcc8ead21b1f1932f540c4d0f3ddc7d",
+        "runtime_manifest_sha256": "sha256:c05b7f9ddd92c9656dc8ea1711ff60135fb2341d151ae1e59e36deb77e7232c4",
+        "runtime_input_lock_sha256": "sha256:2ab330946518b7af8c57bf13f38e3a4b978a4b7ee5951063f87eadb9a7ad624a",
+        "browser_bundle_sha256": "sha256:8d14b85adbd55b80bff154871b1a2255937a2fbd547f8196a34634583a25d82b",
         "docx_cli_sha256": "sha256:43046343861265b0c89490f427cbf00118e42531d7144ff36173b543044170bc",
         "node_arm64_sha256": "sha256:5c8cd3ab2559b530fceca01776064c56687619475a7ffc339178524af6cdaa25",
         "javascript_package_count": 42
@@ -67,6 +67,9 @@
       "Resources/Studio/styles.css",
       "Resources/Studio/app.js",
       "Sources/PublicDocumentApp/ExportSerializers.swift",
+      "Sources/PublicDocumentApp/OfficialLayoutEngine.swift",
+      "Resources/Studio/official-layout-profile.js",
+      "Resources/Studio/easy-tools.js",
       "Sources/PublicDocumentApp/ExportValidation.swift"
     ],
     "direct_upstream_package_linkage": true,

@@ -19,7 +19,7 @@
     },
     {
       "path": "provenance/upstream-lock.json",
-      "sha256": "sha256:81f3936487e9b3e0c0f71a832d1b104e6f133db641428a1643da6b43aab4125e"
+      "sha256": "sha256:21c97fe6c2d6abdd97753886d336db5c116255969af19e62fd63bd5273625f6a"
     },
     {
       "path": "provenance/sbom.spdx.json",
@@ -27,7 +27,7 @@
     },
     {
       "path": "provenance/genoffice-docs-port.json",
-      "sha256": "sha256:4e7318636a746a2b2af4bd5e6e1b2e23113afa08c4b39760210843a06c4735f5"
+      "sha256": "sha256:3e7638bef7c1546611b340ee3dfc62421dbe8276584e5890b35f0bbc83136b7e"
     },
     {
       "path": "Resources/GenOffice/runtime-manifest.json",
@@ -53,7 +53,7 @@
   "contracts": [
     {
       "path": "artifacts/provenance/upstream-lock.json",
-      "sha256": "sha256:81f3936487e9b3e0c0f71a832d1b104e6f133db641428a1643da6b43aab4125e"
+      "sha256": "sha256:21c97fe6c2d6abdd97753886d336db5c116255969af19e62fd63bd5273625f6a"
     },
     {
       "path": "artifacts/provenance/sbom.spdx.json",
@@ -65,7 +65,7 @@
     },
     {
       "path": "artifacts/provenance/genoffice-docs-port.json",
-      "sha256": "sha256:4e7318636a746a2b2af4bd5e6e1b2e23113afa08c4b39760210843a06c4735f5"
+      "sha256": "sha256:3e7638bef7c1546611b340ee3dfc62421dbe8276584e5890b35f0bbc83136b7e"
     },
     {
       "path": "artifacts/provenance/genoffice-runtime-manifest.json",
@@ -77,7 +77,7 @@
     },
     {
       "path": "artifacts/provenance/foundation-runtime.json",
-      "sha256": "sha256:7731745ef0ab63b94506e3c730eb0e716000fd5656f5e7b6be759b280a152456"
+      "sha256": "sha256:e6b0a1eadeb4a9952cbbc9caf6840990fc9d047b70b4df1d25ef88eb74410094"
     }
   ],
   "evaluation": {
@@ -174,7 +174,7 @@
       {
         "id": "evidence.identity",
         "passed": true,
-        "detail": "14 evidence identities verified"
+        "detail": "36 evidence identities verified"
       }
     ]
   }

@@ -4,7 +4,7 @@
   "inputs": [
     {
       "path": "adapter/GenOfficeFork/browser.tsx",
-      "sha256": "704e0cf23a79aa086b6d5fa5d996d618c60bd4c328ee99d279d518a81f1179c9"
+      "sha256": "f0390bc40916b68fd72990e15d818b5a6dd445835cd12dfe02013ee4783d6a17"
     },
     {
       "path": "adapter/GenOfficeFork/docx-normalize.mjs",
