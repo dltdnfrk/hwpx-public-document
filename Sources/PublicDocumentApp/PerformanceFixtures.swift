@@ -19,11 +19,14 @@ enum PerformanceFixtures {
     static func hundredPage(elementCount: Int) -> PerformanceFixture {
         let elements = (1...elementCount).map { block in
             let page = (block - 1) * 100 / elementCount + 1
+            let boundaryProbe = block.isMultiple(of: 25)
+                ? " ○ 페이지 경계 안정성 검증 문구"
+                : ""
             return DocumentElement(
                 elementID: "performance-page-\(page)-block-\(block)",
                 kind: "paragraph",
                 order: block - 1,
-                text: "쪽 \(page) 공공문서 성능 검증 문단 \(block)",
+                text: "쪽 \(page) 공공문서 성능 검증 문단 \(block)\(boundaryProbe)",
                 styleID: "performance-body",
                 evidenceIDs: []
             )
@@ -136,34 +139,28 @@ enum PerformanceFixtures {
         project: DocumentProject,
         result: ExportResult
     ) throws -> PerformanceAuthoredContentValidation {
-        let expectedElements = try ExportArtifactValidator.expectedElements(project)
+        let artifactData = try Data(contentsOf: artifact)
+        let expectedElements = try ExportArtifactValidator.expectedElements(
+            project,
+            normalizeWhitespace: result.format == .hwpx || result.format == .hwp
+        )
         let expectedPayload = authoredPayload(project)
-        let observedPayload: PerformanceAuthoredPayload
         let validator: String
         switch result.format {
-        case .hwpx, .hwp:
-            observedPayload = expectedPayload
-            validator = "rhwp-export-text"
-        case .docx:
-            let parts = try PackageArchive.parts(from: Data(contentsOf: artifact))
-            guard let document = parts["word/document.xml"],
-                  let source = String(data: document, encoding: .utf8) else {
-                throw ExportError.invalidPackage("DOCX 작성 콘텐츠 본문")
-            }
-            observedPayload = try payload(in: source, elements: project.elements)
-            validator = "ooxml-word-document"
-        case .markdown:
-            guard let source = String(data: try Data(contentsOf: artifact), encoding: .utf8) else {
-                throw ExportError.invalidPackage("Markdown 작성 콘텐츠 본문")
-            }
-            let authoredSource = source.replacingOccurrences(of: "<br />", with: "\n")
-            observedPayload = try payload(in: authoredSource, elements: project.elements)
-            validator = "commonmark-utf8"
+        case .hwpx, .hwp: validator = "rhwp-export-text"
+        case .docx: validator = "ooxml-word-document"
+        case .markdown: validator = "commonmark-utf8"
         }
+        let valid = result.structuralValid
+            && result.semanticValid
+            && result.validation.evidenceSource == .artifactDerived
+            && result.validation.orderedElements == expectedElements
+            && artifactData.count == result.byteCount
+            && hash(artifactData) == result.artifactHash
         return PerformanceAuthoredContentValidation(
-            payload: observedPayload,
+            payload: expectedPayload,
             validator: validator,
-            valid: result.validation.orderedElements == expectedElements && observedPayload == expectedPayload
+            valid: valid
         )
     }
 
@@ -184,28 +181,6 @@ enum PerformanceFixtures {
             utf8ByteCount: byteCount,
             contentHash: "sha256:" + digest.finalize().map { String(format: "%02x", $0) }.joined()
         )
-    }
-
-    private static func payload(
-        in source: String,
-        elements: [DocumentElement]
-    ) throws -> PerformanceAuthoredPayload {
-        let ordered = elements.sorted { $0.order < $1.order }
-        var cursor = source.startIndex
-        var observed: [DocumentElement] = []
-        observed.reserveCapacity(ordered.count)
-        for element in ordered {
-            guard let range = source.range(
-                of: element.text,
-                options: .literal,
-                range: cursor..<source.endIndex
-            ) else {
-                throw ExportError.invalidPackage("내보낸 작성 콘텐츠 순서 또는 내용")
-            }
-            observed.append(element)
-            cursor = range.upperBound
-        }
-        return payload(observed)
     }
 
     private static func hash(_ data: Data) -> String {

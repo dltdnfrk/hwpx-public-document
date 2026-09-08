@@ -131,10 +131,17 @@ extension PerformanceInteractionSession {
         )
     }
 
+    func endObservationActivity() {
+        guard let observationActivity else { return }
+        ProcessInfo.processInfo.endActivity(observationActivity)
+        self.observationActivity = nil
+    }
+
     func finishApplicationLoop() {
         guard !finished else { return }
         finished = true
         heartbeatTimer?.invalidate()
+        endObservationActivity()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             guard let self else { return }
             self.application.stop(nil)

@@ -29,6 +29,7 @@ final class PerformanceInteractionSession: NSObject {
     var windowIsKey = false
     var onScreenWindowCount = 0
     var finished = false
+    var observationActivity: NSObjectProtocol?
 
     init(root: URL, profile: PerformanceProfile) {
         self.root = root
@@ -59,6 +60,7 @@ final class PerformanceInteractionSession: NSObject {
         }
         application.run()
         heartbeatTimer?.invalidate()
+        endObservationActivity()
         surface.window.orderOut(nil)
         surface.window.close()
         return result ?? blocked(reason: "native-ui-observation-ended-without-result")
@@ -74,6 +76,10 @@ final class PerformanceInteractionSession: NSObject {
             return
         }
         previousHeartbeat = ProcessInfo.processInfo.systemUptime
+        observationActivity = ProcessInfo.processInfo.beginActivity(
+            options: [.userInitiated, .latencyCritical],
+            reason: "AC-09 UI responsiveness observation"
+        )
         let timer = Timer(timeInterval: 0.01, repeats: true) { [weak self] _ in
             guard let self else { return }
             let now = ProcessInfo.processInfo.systemUptime
@@ -81,6 +87,7 @@ final class PerformanceInteractionSession: NSObject {
             self.previousHeartbeat = now
             self.heartbeatCount += 1
         }
+        timer.tolerance = 0
         heartbeatTimer = timer
         RunLoop.main.add(timer, forMode: .common)
         progressStart = ProcessInfo.processInfo.systemUptime

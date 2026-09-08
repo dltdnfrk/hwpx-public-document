@@ -22,14 +22,14 @@ def _release_binary() -> Path:
     app = package_root / "PublicDocument.app"
     environment = os.environ.copy()
     environment["PUBLIC_DOCUMENT_PACKAGE_PARENT"] = str(package_root)
-    subprocess.run(
+    package = subprocess.run(
         [str(ROOT / "scripts" / "package-macos-app.sh"), str(app)],
         cwd=ROOT,
-        check=True,
         capture_output=True,
         text=True,
         env=environment,
     )
+    assert package.returncode == 0, package.stdout + package.stderr
     binary = app / "Contents" / "MacOS" / "PublicDocumentApp"
     assert binary.is_file()
     return binary
@@ -94,7 +94,7 @@ def test_recorded_apple_silicon_benchmarks_pass_all_thresholds(tmp_path: Path) -
     assert execution["rhwpExecutableSHA256"].startswith("sha256:")
 
     ui = receipt["uiObservation"]
-    assert ui["status"] == "pass"
+    assert ui["status"] == "pass", ui
     assert ui["blockReason"] is None
     assert ui["observationSurface"] == "AppKit"
     assert ui["screenLocked"] is False
