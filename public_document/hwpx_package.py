@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import hashlib
 import os
 import tempfile
 import zipfile
 from pathlib import Path
+from threading import Lock
 
 from .document_models import (
     CurrentOfficialRule,
@@ -32,7 +34,31 @@ from .hwpx_xml import (
 )
 
 
-_EXPORTS: dict[str, tuple[Path, dict[str, bytes]]] = {}
+_EXPORTS: dict[str, tuple[Path, bytes]] = {}
+_EXPORT_LOCK = Lock()
+
+
+def _snapshot_digest(parts: dict[str, bytes]) -> bytes:
+    digest = hashlib.sha256()
+    for name, content in sorted(parts.items()):
+        encoded_name = name.encode("utf-8")
+        digest.update(len(encoded_name).to_bytes(4, "big"))
+        digest.update(encoded_name)
+        digest.update(len(content).to_bytes(8, "big"))
+        digest.update(content)
+    return digest.digest()
+
+
+def _check_existing_export(destination: Path, parts: dict[str, bytes]) -> None:
+    try:
+        with zipfile.ZipFile(destination) as existing:
+            members = existing.infolist()
+            if len(members) == len(parts) and {item.filename for item in members} == parts.keys():
+                if all(existing.read(item) == parts[item.filename] for item in members):
+                    return
+    except zipfile.BadZipFile as error:
+        raise DuplicateWriteError("destination is not a valid HWPX export") from error
+    raise DuplicateWriteError("destination already contains a different HWPX export")
 
 
 def export_hwpx(draft: Draft, destination: Path, *, operation_id: str) -> Path:
@@ -52,31 +78,34 @@ def export_hwpx(draft: Draft, destination: Path, *, operation_id: str) -> Path:
         "Contents/_rels/section0.xml.rels": _relationships_xml(),
     }
     destination = destination.resolve()
-    previous = _EXPORTS.get(operation_id)
-    if previous is not None and (previous[0] != destination or previous[1] != parts):
-        raise DuplicateWriteError("operation_id may write exactly one destination snapshot")
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    if destination.exists():
-        with zipfile.ZipFile(destination) as existing:
-            existing_parts = {name: existing.read(name) for name in existing.namelist()}
-        if existing_parts != parts:
-            raise DuplicateWriteError("destination already contains a different HWPX export")
-        _EXPORTS[operation_id] = (destination, parts)
+    snapshot = _snapshot_digest(parts)
+    # Keep the process-lifetime operation claim indivisible through publication.
+    with _EXPORT_LOCK:
+        previous = _EXPORTS.get(operation_id)
+        if previous is not None and previous != (destination, snapshot):
+            raise DuplicateWriteError("operation_id may write exactly one destination snapshot")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        if destination.exists():
+            _check_existing_export(destination, parts)
+            _EXPORTS[operation_id] = (destination, snapshot)
+            return destination
+        fd, temporary_name = tempfile.mkstemp(prefix=".hwpx-", dir=str(destination.parent))
+        os.close(fd)
+        temporary = Path(temporary_name)
+        try:
+            with zipfile.ZipFile(temporary, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as package:
+                for name, content in parts.items():
+                    info = zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0))
+                    info.compress_type = zipfile.ZIP_STORED if name == "mimetype" else zipfile.ZIP_DEFLATED
+                    package.writestr(info, content)
+            try:
+                os.link(temporary, destination)
+            except FileExistsError:
+                _check_existing_export(destination, parts)
+        finally:
+            temporary.unlink(missing_ok=True)
+        _EXPORTS[operation_id] = (destination, snapshot)
         return destination
-    fd, temporary_name = tempfile.mkstemp(prefix=".hwpx-", dir=str(destination.parent))
-    os.close(fd)
-    temporary = Path(temporary_name)
-    try:
-        with zipfile.ZipFile(temporary, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as package:
-            for name, content in parts.items():
-                info = zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0))
-                info.compress_type = zipfile.ZIP_STORED if name == "mimetype" else zipfile.ZIP_DEFLATED
-                package.writestr(info, content)
-        os.replace(temporary, destination)
-    finally:
-        temporary.unlink(missing_ok=True)
-    _EXPORTS[operation_id] = (destination, parts)
-    return destination
 
 
 def complete_manual_draft(

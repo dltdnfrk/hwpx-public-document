@@ -15,6 +15,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import public_document_web as webapp
+import public_document_web.bridge as bridge_module
 
 
 def _server(tmp_path: Path) -> tuple[webapp.StudioServer, str]:
@@ -139,7 +140,7 @@ def test_web_byok_forwards_to_swift_without_persisting_secret(
             }],
         }
 
-    monkeypatch.setattr(webapp, "run_ai_bridge", fake_bridge)
+    monkeypatch.setattr(bridge_module, "run_ai_bridge", fake_bridge)
     try:
         token = _bootstrap(server, origin)
         payload = {

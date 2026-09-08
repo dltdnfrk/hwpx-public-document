@@ -1,3 +1,4 @@
+import Foundation
 import WebKit
 
 extension StudioWindowController: WKScriptMessageHandler {
@@ -10,10 +11,20 @@ extension StudioWindowController: WKScriptMessageHandler {
             let body = message.body as? [String: Any],
             let action = body["action"] as? String
         else {
-            send(event: "error", payload: ["message": "잘못된 프로젝트 요청입니다."])
+            DispatchQueue.main.async { [weak self] in
+                self?.send(
+                    event: "error",
+                    payload: ["message": "잘못된 프로젝트 요청입니다."]
+                )
+            }
             return
         }
+        DispatchQueue.main.async { [weak self] in
+            self?.dispatchProjectStore(body: body, action: action)
+        }
+    }
 
+    private func dispatchProjectStore(body: [String: Any], action: String) {
         do {
             switch action {
             case "ready":
@@ -96,7 +107,18 @@ extension StudioWindowController: WKScriptMessageHandler {
                 send(event: "error", payload: ["message": "지원하지 않는 프로젝트 작업입니다."])
             }
         } catch {
-            send(event: "error", payload: ["message": error.localizedDescription])
+            send(event: "error", payload: ["message": userDiagnostic(for: error)])
         }
+    }
+
+    private func userDiagnostic(for error: Error) -> String {
+        if error is DecodingError {
+            return "프로젝트 파일 형식이 올바르지 않습니다. 원본은 변경하지 않았습니다. 올바른 프로젝트를 다시 열거나 복구를 선택하세요."
+        }
+        let diagnostic = error.localizedDescription
+        if diagnostic.range(of: #"[가-힣]"#, options: .regularExpression) != nil {
+            return diagnostic
+        }
+        return "프로젝트 작업을 완료하지 못했습니다. 원본은 변경하지 않았습니다. 프로젝트를 다시 열거나 복구를 선택하세요."
     }
 }

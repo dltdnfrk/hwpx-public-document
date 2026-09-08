@@ -46,55 +46,55 @@ def run_ai_bridge(message: dict[str, Any]) -> dict[str, Any]:
 
 def export_project(project: dict[str, Any], formats: list[str], consent: bool, downloads: Path) -> dict[str, Any]:
     operation = uuid.uuid4().hex
-    work = Path(tempfile.mkdtemp(prefix="public-document-web-export-"))
-    destination = work / "out"
-    destination.mkdir()
-    source = work / "project.json"
-    source.write_text(json.dumps(project, ensure_ascii=False, indent=2), encoding="utf-8")
-    command = [
-        str(resolve_app_binary()),
-        "--export-project",
-        str(source),
-        str(destination),
-        "--formats",
-        ",".join(formats),
-    ]
-    if consent:
-        command.append("--flattening-consent")
-    try:
-        result = subprocess.run(
-            command,
-            cwd=ROOT,
-            check=True,
-            capture_output=True,
-            text=True,
-            timeout=90,
-        )
-    except subprocess.TimeoutExpired as error:
-        raise RuntimeError("내보내기가 응답하지 않아 중단했습니다.") from error
-    except subprocess.CalledProcessError as error:
-        detail = (error.stderr or error.stdout or "export failed").strip()
-        raise RuntimeError(detail) from error
-    receipt = json.loads(result.stdout)
-    public = downloads / operation
-    public.mkdir(parents=True)
-    title = _safe_filename(str(project.get("title") or "공공문서"))
-    for item in receipt.get("results") or []:
-        name = item.get("fileName") or item.get("relativePath")
-        if not name:
-            continue
-        produced = destination / name
-        if not produced.is_file():
-            continue
-        suffix = Path(name).suffix
-        published_name = f"{title}{suffix}"
-        published = public / published_name
-        shutil.copy2(produced, published)
-        item["fileName"] = published_name
-        item["relativePath"] = published_name
-        item["downloadURL"] = f"/downloads/{operation}/{published_name}"
-    shutil.rmtree(work, ignore_errors=True)
-    return receipt
+    with tempfile.TemporaryDirectory(prefix="public-document-web-export-") as temporary:
+        work = Path(temporary)
+        destination = work / "out"
+        destination.mkdir()
+        source = work / "project.json"
+        source.write_text(json.dumps(project, ensure_ascii=False, indent=2), encoding="utf-8")
+        command = [
+            str(resolve_app_binary()),
+            "--export-project",
+            str(source),
+            str(destination),
+            "--formats",
+            ",".join(formats),
+        ]
+        if consent:
+            command.append("--flattening-consent")
+        try:
+            result = subprocess.run(
+                command,
+                cwd=ROOT,
+                check=True,
+                capture_output=True,
+                text=True,
+                timeout=90,
+            )
+        except subprocess.TimeoutExpired as error:
+            raise RuntimeError("내보내기가 응답하지 않아 중단했습니다.") from error
+        except subprocess.CalledProcessError as error:
+            detail = (error.stderr or error.stdout or "export failed").strip()
+            raise RuntimeError(detail) from error
+        receipt = json.loads(result.stdout)
+        public = downloads / operation
+        public.mkdir(parents=True)
+        title = _safe_filename(str(project.get("title") or "공공문서"))
+        for item in receipt.get("results") or []:
+            name = item.get("fileName") or item.get("relativePath")
+            if not name:
+                continue
+            produced = destination / name
+            if not produced.is_file():
+                continue
+            suffix = Path(name).suffix
+            published_name = f"{title}{suffix}"
+            published = public / published_name
+            shutil.copy2(produced, published)
+            item["fileName"] = published_name
+            item["relativePath"] = published_name
+            item["downloadURL"] = f"/downloads/{operation}/{published_name}"
+        return receipt
 
 
 def _safe_filename(value: str) -> str:

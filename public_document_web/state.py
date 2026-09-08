@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import json
+import os
+import tempfile
+import threading
 import uuid
 from pathlib import Path
 from typing import Any
@@ -19,6 +22,7 @@ class StudioState:
         self.downloads = data_dir / "downloads"
         self.prefs_file = data_dir / "studio-prefs.json"
         self.library_dir = data_dir / "library"
+        self._persistence_lock = threading.RLock()
         self.data_dir.mkdir(parents=True, exist_ok=True)
         self.downloads.mkdir(parents=True, exist_ok=True)
         self.library_dir.mkdir(parents=True, exist_ok=True)
@@ -80,12 +84,54 @@ class StudioState:
     def load_json(self, path: Path) -> dict[str, Any]:
         return json.loads(path.read_text(encoding="utf-8"))
 
+    def load_recoverable_project(self) -> tuple[str, dict[str, Any]] | None:
+        with self._persistence_lock:
+            if self.recovery_file.is_file():
+                try:
+                    recovered = self.load_json(self.recovery_file)
+                    if not isinstance(recovered, dict):
+                        raise TypeError("recovery project must be an object")
+                    return "recovered", recovered
+                except (json.JSONDecodeError, TypeError, ValueError):
+                    self._preserve_corrupt_recovery()
+            if self.project_file.is_file():
+                return "opened", self.load_json(self.project_file)
+            return None
+
+    def _preserve_corrupt_recovery(self) -> Path:
+        destination = self.recovery_file.with_name(f"{self.recovery_file.name}.corrupt")
+        index = 1
+        while destination.exists() or destination.is_symlink():
+            destination = self.recovery_file.with_name(
+                f"{self.recovery_file.name}.corrupt.{index}"
+            )
+            index += 1
+        self.recovery_file.rename(destination)
+        return destination
+
     def write_json(self, path: Path, payload: dict[str, Any]) -> None:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(
-            json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
+        encoded = json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        with self._persistence_lock:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            descriptor, temporary_name = tempfile.mkstemp(
+                prefix=f".{path.name}.",
+                suffix=".tmp",
+                dir=str(path.parent),
+            )
+            temporary = Path(temporary_name)
+            try:
+                with os.fdopen(descriptor, "w", encoding="utf-8") as stream:
+                    stream.write(encoded)
+                    stream.flush()
+                    os.fsync(stream.fileno())
+                os.replace(temporary, path)
+                directory = os.open(path.parent, os.O_RDONLY)
+                try:
+                    os.fsync(directory)
+                finally:
+                    os.close(directory)
+            finally:
+                temporary.unlink(missing_ok=True)
 
     def inspect(self, project: dict[str, Any]) -> dict[str, Any]:
         binding = project.get("templateBinding") or {}

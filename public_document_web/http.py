@@ -10,9 +10,9 @@ from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import unquote, urlparse
+from urllib.parse import quote, unquote, urlparse
 
-from .bridge import error_event
+from .bridge import error_event, handle_bridge
 from .paths import RESOURCES
 from .state import StudioState
 
@@ -32,6 +32,20 @@ MIME_TYPES = {
     ".hwp": "application/x-hwp",
     ".md": "text/markdown; charset=utf-8",
 }
+
+
+def content_disposition(filename: str) -> str:
+    try:
+        _ = filename.encode("ascii")
+    except UnicodeEncodeError:
+        suffix = Path(filename).suffix
+        fallback = f"download{suffix}" if suffix.isascii() else "download"
+        encoded = quote(filename, safe="", encoding="utf-8")
+        return (
+            f'attachment; filename="{fallback}"; '
+            f"filename*=UTF-8''{encoded}"
+        )
+    return f'attachment; filename="{filename}"'
 
 
 def safe_resource(path: str) -> Path | None:
@@ -61,6 +75,9 @@ class StudioHandler(BaseHTTPRequestHandler):
             self.end_headers()
             return
         if parsed.path.startswith("/downloads/"):
+            if not self._download_authorized():
+                self.send_error(403, "Forbidden")
+                return
             self._send_download(parsed.path)
             return
         resource = safe_resource(parsed.path)
@@ -78,8 +95,6 @@ class StudioHandler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
     def do_POST(self) -> None:
-        import public_document_web as package
-
         path = urlparse(self.path).path
         if path == "/api/bootstrap":
             self._bootstrap_bridge()
@@ -90,16 +105,25 @@ class StudioHandler(BaseHTTPRequestHandler):
         if not self._bridge_authorized():
             self._send_json(403, {"events": [error_event("로컬 Studio 세션을 확인할 수 없습니다.")]})
             return
-        length = int(self.headers.get("Content-Length") or 0)
+        try:
+            length = int(self.headers.get("Content-Length") or 0)
+        except (TypeError, ValueError):
+            self._send_json(400, {"events": [error_event("요청 본문 크기가 올바르지 않습니다.")]})
+            return
         if length <= 0 or length > 2_000_000:
             self._send_json(400, {"events": [error_event("요청 본문 크기가 올바르지 않습니다.")]})
             return
         try:
             body = json.loads(self.rfile.read(length).decode("utf-8"))
-            events = package.handle_bridge(self._studio_server.state, body)
+            events = handle_bridge(self._studio_server.state, body)
             self._send_json(200, {"events": events})
-        except Exception as error:  # noqa: BLE001 - local host returns the failure to Studio
-            message = str(error) if not isinstance(error, subprocess.SubprocessError) else "AI 제공자 작업을 완료하지 못했습니다."
+        except (ValueError, json.JSONDecodeError, UnicodeDecodeError) as error:
+            message = str(error)
+            self._send_json(400, {"events": [error_event(message)]})
+        except subprocess.SubprocessError:
+            self._send_json(400, {"events": [error_event("AI 제공자 작업을 완료하지 못했습니다.")]})
+        except Exception:  # noqa: BLE001 - never expose local paths or dependency details
+            message = "로컬 Studio 작업을 완료하지 못했습니다."
             self._send_json(400, {"events": [error_event(message)]})
 
     def do_OPTIONS(self) -> None:
@@ -120,7 +144,7 @@ class StudioHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", MIME_TYPES.get(candidate.suffix, "application/octet-stream"))
         self.send_header("Content-Length", str(len(data)))
-        self.send_header("Content-Disposition", f'attachment; filename="{candidate.name}"')
+        self.send_header("Content-Disposition", content_disposition(candidate.name))
         self.end_headers()
         self.wfile.write(data)
 
@@ -141,7 +165,11 @@ class StudioHandler(BaseHTTPRequestHandler):
         if self.headers.get("Origin") not in server.allowed_origins:
             self._send_json(403, {"error": "invalid bootstrap"})
             return
-        length = int(self.headers.get("Content-Length") or 0)
+        try:
+            length = int(self.headers.get("Content-Length") or 0)
+        except (TypeError, ValueError):
+            self._send_json(400, {"error": "invalid bootstrap"})
+            return
         if length <= 0 or length > 4096:
             self._send_json(400, {"error": "invalid bootstrap"})
             return
@@ -171,6 +199,20 @@ class StudioHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
+    def _session_cookie_authorized(self) -> bool:
+        session_token = self._studio_server.session_token
+        if session_token is None:
+            return False
+        cookie = SimpleCookie(self.headers.get("Cookie", ""))
+        morsel = cookie.get("PublicDocumentSession")
+        return morsel is not None and secrets.compare_digest(morsel.value, session_token)
+
+    def _download_authorized(self) -> bool:
+        return (
+            self.headers.get("Host") in self._studio_server.allowed_hosts
+            and self._session_cookie_authorized()
+        )
+
     def _bridge_authorized(self) -> bool:
         session_token = self._studio_server.session_token
         if session_token is None:
@@ -181,9 +223,7 @@ class StudioHandler(BaseHTTPRequestHandler):
             return False
         if self.headers.get("X-Public-Document-Session") != session_token:
             return False
-        cookie = SimpleCookie(self.headers.get("Cookie", ""))
-        morsel = cookie.get("PublicDocumentSession")
-        return morsel is not None and morsel.value == session_token
+        return self._session_cookie_authorized()
 
     @property
     def _studio_server(self) -> "StudioServer":

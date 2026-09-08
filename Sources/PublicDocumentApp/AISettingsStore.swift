@@ -53,12 +53,12 @@ final class AISettingsStore {
 
     func snapshot() throws -> AISettingsSnapshot {
         let settings = try load()
-        let providers = settings.providers.values.sorted { $0.provider < $1.provider }.map { setting in
+        let providers = try settings.providers.values.sorted { $0.provider < $1.provider }.map { setting in
             AIProviderSettingStatus(
                 provider: setting.provider,
                 endpointIdentity: setting.endpointIdentity,
                 model: setting.model,
-                hasSecret: (try? credentials.get(accountReference: setting.keychainAccountReference)) != nil,
+                hasSecret: try credentials.contains(accountReference: setting.keychainAccountReference),
                 hostDisclosure: URL(string: setting.endpointIdentity)?.host ?? ""
             )
         }

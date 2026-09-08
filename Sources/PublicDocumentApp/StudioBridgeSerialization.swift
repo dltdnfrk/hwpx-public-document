@@ -43,6 +43,70 @@ extension StudioWindowController {
         else {
             return
         }
-        webView.evaluateJavaScript("window.projectStoreReceive(\(json))")
+        let script = """
+        window.projectStoreReceive(\(json));
+        JSON.stringify({
+          documentTitle: document.title,
+          bodyText: String(document.body?.innerText || "").slice(0, 2000),
+          projectTitle: globalThis.PublicDocumentStudio?.state?.currentProject?.title || null,
+          editorPresent: Boolean(document.querySelector("public-document-genoffice-editor")),
+          exportControlPresent: Boolean(document.querySelector('[data-action="export"]')),
+          templateControlPresent: Boolean(document.querySelector('[data-template-id]'))
+        })
+        """
+        webView.evaluateJavaScript(script) { [weak self] result, error in
+            self?.emitQAReadyIfNeeded(
+                event: event,
+                payload: payload,
+                surfaceJSON: result as? String,
+                evaluationError: error
+            )
+        }
+    }
+
+    private func emitQAReadyIfNeeded(
+        event: String,
+        payload: [String: Any],
+        surfaceJSON: String?,
+        evaluationError: Error?
+    ) {
+        guard !qaReadyEmitted,
+              let scenario = ProcessInfo.processInfo.environment[
+                "PUBLIC_DOCUMENT_STUDIO_QA_SCENARIO"
+              ],
+              (scenario == "happy"
+                && ["opened", "recovered", "empty", "error"].contains(event))
+                || (scenario == "invalid-project" && event == "error")
+        else {
+            return
+        }
+        qaReadyEmitted = true
+        let surface = surfaceJSON
+            .flatMap { $0.data(using: .utf8) }
+            .flatMap { try? JSONSerialization.jsonObject(with: $0) } as? [String: Any]
+        var receipt: [String: Any] = [
+            "schemaVersion": 1,
+            "scenario": scenario,
+            "event": event,
+            "windowNumber": window?.windowNumber ?? 0,
+            "windowTitle": window?.title ?? "",
+            "windowVisible": window?.isVisible ?? false,
+            "surface": surface ?? [:],
+        ]
+        if let diagnostic = payload["message"] as? String {
+            receipt["diagnostic"] = diagnostic
+        }
+        if let evaluationError {
+            receipt["evaluationError"] = evaluationError.localizedDescription
+        }
+        guard let data = try? JSONSerialization.data(
+            withJSONObject: receipt,
+            options: [.sortedKeys]
+        ) else {
+            return
+        }
+        FileHandle.standardOutput.write(Data("PUBLIC_DOCUMENT_STUDIO_QA_READY ".utf8))
+        FileHandle.standardOutput.write(data)
+        FileHandle.standardOutput.write(Data("\n".utf8))
     }
 }

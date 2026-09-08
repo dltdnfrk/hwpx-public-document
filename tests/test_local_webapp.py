@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import shutil
+import socket
 import subprocess
 import sys
 from pathlib import Path
@@ -16,6 +17,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import public_document_web as webapp
+import public_document_web.bridge as bridge_module
+import public_document_web.http as http_module
 
 _SESSIONS: dict[str, str] = {}
 
@@ -106,6 +109,41 @@ def test_local_webapp_serves_studio_and_allows_same_origin_api(tmp_path: Path) -
         server.shutdown()
 
 
+@pytest.mark.parametrize("path", ["/api/bootstrap", "/api/bridge"])
+def test_local_webapp_rejects_malformed_content_length(
+    tmp_path: Path,
+    path: str,
+) -> None:
+    server, origin = _start(tmp_path)
+    host, port_text = origin[len("http://"):].split(":")
+    authorization = ""
+    if path == "/api/bridge":
+        token = _SESSIONS[origin]
+        authorization = (
+            f"Cookie: PublicDocumentSession={token}\r\n"
+            f"X-Public-Document-Session: {token}\r\n"
+        )
+    request = (
+        f"POST {path} HTTP/1.1\r\n"
+        f"Host: {host}:{port_text}\r\n"
+        f"Origin: {origin}\r\n"
+        f"{authorization}"
+        "Content-Length: nope\r\n"
+        "Connection: close\r\n"
+        "\r\n"
+    ).encode("ascii")
+    try:
+        with socket.create_connection((host, int(port_text)), timeout=5) as client:
+            client.sendall(request)
+            response = b""
+            while chunk := client.recv(4096):
+                response += chunk
+    finally:
+        server.shutdown()
+
+    assert response.startswith(b"HTTP/1.0 400")
+
+
 def test_local_webapp_ready_save_and_reopen_use_signed_catalog(tmp_path: Path) -> None:
     server, origin = _start(tmp_path)
     try:
@@ -178,7 +216,7 @@ def test_web_ai_project_events_enforce_official_rules_before_persistence(
             }],
         }
 
-    monkeypatch.setattr(webapp, "run_ai_bridge", fake_bridge)
+    monkeypatch.setattr(bridge_module, "run_ai_bridge", fake_bridge)
     events = webapp.handle_bridge(
         state,
         {
@@ -204,13 +242,60 @@ def test_ready_keeps_document_features_when_ai_settings_are_unavailable(
     def unavailable_bridge(message: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError("AI bridge unavailable")
 
-    monkeypatch.setattr(webapp, "run_ai_bridge", unavailable_bridge)
+    monkeypatch.setattr(bridge_module, "run_ai_bridge", unavailable_bridge)
     events = webapp.handle_bridge(state, {"action": "ready"})
     names = [entry["event"] for entry in events]
 
     assert "templateCatalog" in names
     assert "empty" in names
     assert "aiSettingsUnavailable" in names
+
+
+def test_catalog_signature_verifies_without_site_packages() -> None:
+    script = (
+        "from public_document_web.catalog import verify_catalog_envelope\n"
+        "from public_document_web.paths import ENVELOPE\n"
+        "catalog = verify_catalog_envelope(ENVELOPE.read_bytes())\n"
+        "assert len(catalog['entries']) == 6\n"
+    )
+    result = subprocess.run(
+        [sys.executable, "-S", "-c", script],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_bridge_hides_unexpected_internal_exception(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    server, origin = _start(tmp_path)
+
+    def unavailable_bridge(
+        _state: webapp.StudioState,
+        _body: dict[str, Any],
+    ) -> list[dict[str, Any]]:
+        raise ModuleNotFoundError("No module named 'cryptography'")
+
+    monkeypatch.setattr(http_module, "handle_bridge", unavailable_bridge)
+    request = Request(
+        f"{origin}/api/bridge",
+        data=json.dumps({"action": "ready"}).encode("utf-8"),
+        headers=_auth_headers(origin),
+        method="POST",
+    )
+    try:
+        with pytest.raises(HTTPError) as captured:
+            urlopen(request)
+        body = json.loads(captured.value.read().decode("utf-8"))
+        message = body["events"][0]["payload"]["message"]
+        assert message == "로컬 Studio 작업을 완료하지 못했습니다."
+        assert "cryptography" not in message
+    finally:
+        server.shutdown()
 
 
 def test_resolve_app_binary_uses_workspace_cli() -> None:
@@ -226,11 +311,12 @@ def test_local_web_main_supports_declared_python_38(tmp_path: Path) -> None:
     script = (
         "import sys, threading\n"
         "import public_document_web as web\n"
+        "import public_document_web.entry as entry\n"
         "class Server:\n"
         "    server_address = ('127.0.0.1', 8765)\n"
         "    bootstrap_token = 'python-38-bootstrap'\n"
         "    def shutdown(self): pass\n"
-        "web.serve = lambda *args, **kwargs: Server()\n"
+        "entry.serve = lambda *args, **kwargs: Server()\n"
         "threading.Event.wait = lambda self: (_ for _ in ()).throw(KeyboardInterrupt())\n"
         f"sys.argv = ['public_document_web.py', '--data-dir', {str(tmp_path)!r}, '--no-open']\n"
         "web.main()\n"

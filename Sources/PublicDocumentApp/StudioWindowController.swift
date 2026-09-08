@@ -9,6 +9,7 @@ final class StudioWindowController: NSWindowController, WKNavigationDelegate {
     let aiSettingsStore = AISettingsStore()
     let batchRecoveryRegistry = BatchExportRecoveryRegistry()
     var batchCancellation: BatchExportCancellation?
+    var qaReadyEmitted = false
 
     static func make() throws -> StudioWindowController {
         let applicationSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]

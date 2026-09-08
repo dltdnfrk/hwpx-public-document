@@ -4,7 +4,7 @@ import json
 import subprocess
 from typing import Any
 
-from .native import export_project
+from .native import export_project, run_ai_bridge
 from .official_rules import enforce_official_rules
 from .state import StudioState
 
@@ -46,8 +46,6 @@ UNSUPPORTED_ACTIONS = {
 
 
 def handle_bridge(state: StudioState, body: dict[str, Any]) -> list[dict[str, Any]]:
-    import public_document_web as package
-
     action = body.get("action")
     catalog = state.catalog_status()
     if action == "ready":
@@ -56,23 +54,21 @@ def handle_bridge(state: StudioState, body: dict[str, Any]) -> list[dict[str, An
             event("documentLibrary", {"entries": state.list_library()}),
             event("templateCatalog", catalog),
         ]
+        startup_project = state.load_recoverable_project()
         settings_request: dict[str, Any] = {"action": "loadAISettings"}
-        settings_source = state.recovery_file if state.recovery_file.is_file() else state.project_file
-        if settings_source.is_file():
-            settings_request["project"] = state.load_json(settings_source)
+        if startup_project is not None:
+            settings_request["project"] = startup_project[1]
         try:
-            events.extend(package.run_ai_bridge(settings_request)["events"])
+            events.extend(run_ai_bridge(settings_request)["events"])
         except (RuntimeError, OSError, subprocess.SubprocessError, json.JSONDecodeError):
             events.append({
                 "event": "aiSettingsUnavailable",
                 "payload": {"message": "AI 설정을 불러오지 못했지만 문서 기능은 계속 사용할 수 있습니다."},
             })
-        if state.recovery_file.is_file():
-            events.append(event("recovered", state.load_json(state.recovery_file)))
-        elif state.project_file.is_file():
-            events.append(event("opened", state.load_json(state.project_file)))
-        else:
+        if startup_project is None:
             events.append({"event": "empty", "payload": {}})
+        else:
+            events.append(event(*startup_project))
         return events
     if action == "saveStudioPrefs":
         return [event("studioPrefs", state.save_prefs(body.get("prefs") or {}))]
@@ -92,21 +88,21 @@ def handle_bridge(state: StudioState, body: dict[str, Any]) -> list[dict[str, An
             return [error_event("저장된 프로젝트가 없습니다.")]
         return [event("opened", state.load_json(state.project_file))]
     if action == "recover":
-        source = state.recovery_file if state.recovery_file.is_file() else state.project_file
-        if not source.is_file():
+        recovered = state.load_recoverable_project()
+        if recovered is None:
             return [error_event("복구할 프로젝트가 없습니다.")]
-        return [event("recovered", state.load_json(source))]
+        return [event("recovered", recovered[1])]
     if action == "inspect":
-        source = state.recovery_file if state.recovery_file.is_file() else state.project_file
-        if not source.is_file():
+        recovered = state.load_recoverable_project()
+        if recovered is None:
             return [error_event("검사할 프로젝트가 없습니다.")]
-        return [event("inspection", state.inspect(state.load_json(source)))]
+        return [event("inspection", state.inspect(recovered[1]))]
     if action == "export":
-        project, official = enforce_official_rules(require_project(body), catalog)
-        state.write_json(state.project_file, project)
         formats = [item for item in body.get("formats") or [] if item in {"hwpx", "hwp", "docx", "markdown"}]
         if not formats:
             return [error_event("내보낼 형식을 하나 이상 선택하세요.")]
+        project, official = enforce_official_rules(require_project(body), catalog)
+        state.write_json(state.project_file, project)
         receipt = export_project(project, formats, bool(body.get("flatteningConsent")), state.downloads)
         return [
             enforcement_event("officialRuleEnforced", project, official),
@@ -130,7 +126,7 @@ def handle_bridge(state: StudioState, body: dict[str, Any]) -> list[dict[str, An
                 project = state.load_json(state.project_file)
             if isinstance(project, dict):
                 ai_body["project"] = enforce_official_rules(project, catalog)[0]
-        response = package.run_ai_bridge(ai_body)
+        response = run_ai_bridge(ai_body)
         for entry in response["events"]:
             if entry.get("event") not in AI_PROJECT_EVENTS:
                 continue

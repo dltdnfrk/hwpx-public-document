@@ -11,7 +11,7 @@ from .document_models import (
     ClaimKind,
     CurrentOfficialRule,
     Draft,
-    DraftValidation,
+    DraftValidation as DraftValidation,
     Evidence,
     EvidenceProvenance,
     GuidedAnswers,
@@ -21,18 +21,8 @@ from .document_models import (
     TemplateConflictWarning,
     TemplateRegistry,
     _BETA_GROUP_LABELS,
-)
-
-
-_GROUPS: Final = (
-    ("identity", "문서 식별", ("title", "document_type", "issuing_organization", "audience")),
-    ("executive_context", "추진 배경 및 목적", ("background", "purpose")),
-    ("evidence", "근거 자료", ("evidence_summary",)),
-    ("current_state", "현황", ("current_state",)),
-    ("plan", "추진 계획", ("objectives", "actions", "owners", "schedule", "resources")),
-    ("risk_controls", "위험 요인 및 관리", ("risks", "controls")),
-    ("results", "기대 효과 및 후속 조치", ("outcomes", "follow_up")),
-    ("formal_finish", "결론 및 담당", ("conclusion", "contact", "date")),
+    _GROUPS,
+    validate_draft as validate_draft,
 )
 
 
@@ -214,43 +204,4 @@ def build_beta_draft(
         draft,
         beta_group=group,
         quality_notice=f"{label} 베타 문서이며 외부 마무리 전 1차 검토를 위한 초안입니다.",
-    )
-
-
-def validate_draft(draft: Draft) -> DraftValidation:
-    expected = {group[0]: len(group[2]) for group in _GROUPS}
-    actual = {section.section_id: len(section.paragraphs) for section in draft.sections}
-    structure_complete = actual == expected and all(
-        paragraph.text.strip()
-        for section in draft.sections
-        for paragraph in section.paragraphs
-    )
-    required_structure_percent = 100 if structure_complete else 0
-    completed_groups = sum(
-        section.section_id in expected
-        and len(section.paragraphs) == expected[section.section_id]
-        and all(paragraph.text.strip() for paragraph in section.paragraphs)
-        for section in draft.sections
-    )
-    checklist_score = round(completed_groups / len(_GROUPS) * 100)
-    unsupported = tuple(
-        claim.text
-        for claim in draft.claims
-        if claim.kind is ClaimKind.FACTUAL and not claim.evidence_ids
-    )
-    table_dimensions_valid = all(
-        len({cell.column for cell in table.cells}) <= len(table.columns)
-        and all(cell.table_id == table.table_id for cell in table.cells)
-        for table in draft.tables
-    )
-    status = "reviewable" if not draft.critical_omissions and not unsupported else "evidence_blocked"
-    return DraftValidation(
-        required_structure_percent,
-        checklist_score,
-        draft.critical_omissions,
-        unsupported,
-        status,
-        draft.warnings,
-        draft.page_count,
-        table_dimensions_valid,
     )

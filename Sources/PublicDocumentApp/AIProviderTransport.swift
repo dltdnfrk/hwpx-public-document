@@ -1,4 +1,5 @@
 import Foundation
+import LocalAuthentication
 import Security
 
 enum AIProviderTransportError: Error, LocalizedError {
@@ -20,12 +21,16 @@ enum AIProviderTransportError: Error, LocalizedError {
 }
 
 struct AIKeychainCredentialStore {
-    private let service: String
+    typealias CopyMatching = (CFDictionary, UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus
 
-    init(service: String? = nil) {
+    private let service: String
+    private let copyMatching: CopyMatching
+
+    init(service: String? = nil, copyMatching: @escaping CopyMatching = SecItemCopyMatching) {
         self.service = service
             ?? ProcessInfo.processInfo.environment["PUBLIC_DOCUMENT_STUDIO_AI_KEYCHAIN_SERVICE"]
             ?? "com.muni.public-document.ai-provider"
+        self.copyMatching = copyMatching
     }
 
     func set(secret: String, accountReference: String) throws {
@@ -54,6 +59,27 @@ struct AIKeychainCredentialStore {
         }
     }
 
+    func contains(accountReference: String) throws -> Bool {
+        // Status needs item existence, not password decryption. Legacy macOS
+        // keychains can block a data-return query even with authentication UI disabled.
+        let context = LAContext()
+        context.interactionNotAllowed = true
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: accountReference,
+            kSecReturnAttributes: true,
+            kSecReturnData: false,
+            kSecMatchLimit: kSecMatchLimitOne,
+            kSecUseAuthenticationContext: context,
+        ]
+        switch copyMatching(query as CFDictionary, nil) {
+        case errSecSuccess: return true
+        case errSecItemNotFound: return false
+        default: throw AIProviderTransportError.credentialUnavailable
+        }
+    }
+
     func get(accountReference: String) throws -> String {
         let query: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
@@ -61,9 +87,10 @@ struct AIKeychainCredentialStore {
             kSecAttrAccount: accountReference,
             kSecReturnData: true,
             kSecMatchLimit: kSecMatchLimitOne,
+            kSecUseAuthenticationUI: kSecUseAuthenticationUIFail,
         ]
         var result: CFTypeRef?
-        guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
+        guard copyMatching(query as CFDictionary, &result) == errSecSuccess,
               let data = result as? Data,
               let secret = String(data: data, encoding: .utf8)
         else { throw AIProviderTransportError.credentialUnavailable }

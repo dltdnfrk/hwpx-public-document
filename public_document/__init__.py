@@ -12,6 +12,7 @@ from .document_models import (
     Evidence,
     EvidenceProvenance,
     GuidedAnswers,
+    HWPXValidation as HWPXValidation,
     InstitutionTemplate,
     ManualDraftResult,
     Paragraph,
@@ -56,10 +57,10 @@ from .provider_contracts import (
 
 
 def __getattr__(name: str):
-    if name in {"HWPXValidation", "hwpx_content_hash", "validate_hwpx"}:
-        from hwpx import HWPXValidation, hwpx_content_hash, validate_hwpx
+    if name in {"hwpx_content_hash", "validate_hwpx"}:
+        from hwpx import hwpx_content_hash, validate_hwpx
 
-        return {"HWPXValidation": HWPXValidation, "hwpx_content_hash": hwpx_content_hash, "validate_hwpx": validate_hwpx}[name]
+        return {"hwpx_content_hash": hwpx_content_hash, "validate_hwpx": validate_hwpx}[name]
     if name in {
         "ConsentRequiredError",
         "CredentialStoreUnavailableError",

@@ -16,26 +16,31 @@ extension AIGovernanceEngine {
         let selected = commandIDs.map { ids in proposal.commands.filter { ids.contains($0.commandID) } } ?? proposal.commands
         guard !selected.isEmpty, Set(selected.map(\.commandID)).count == (commandIDs?.count ?? selected.count)
         else { throw AIGovernanceError.invalidProposal }
-        var replacements: [String: String] = [:]
+        var replacements: [String: DocumentElement] = [:]
         for command in selected {
-            guard let target = project.elements.first(where: { $0.elementID == command.targetElementID }),
+            guard let target = replacements[command.targetElementID]
+                    ?? project.elements.first(where: { $0.elementID == command.targetElementID }),
                   Self.valid(command, operation: AIOperation(rawValue: proposal.operation) ?? .freeForm, target: target)
             else { throw AIGovernanceError.invalidProposal }
-            replacements[command.targetElementID] = command.value
-        }
-        let elements = project.elements.map { element in
-            guard let value = replacements[element.elementID] else { return element }
-            if let command = selected.first(where: { $0.targetElementID == element.elementID }), command.name == "table-cell-update",
-               let path = Self.parseTablePath(command.targetPath, elementID: element.elementID),
-               let html = Self.replaceTableCell(in: element.contentHTML, row: path.0, cell: path.1, value: value) {
-                return DocumentElement(elementID: element.elementID, kind: element.kind, order: element.order, text: Self.plainText(html), contentHTML: html, inlineIDs: element.inlineIDs, styleID: element.styleID, evidenceIDs: element.evidenceIDs)
+            let text: String
+            let html: String
+            if command.name == "table-cell-update" {
+                guard let path = Self.parseTablePath(command.targetPath, elementID: target.elementID),
+                      let updated = Self.replaceTableCell(in: target.contentHTML, row: path.0, cell: path.1, value: command.value)
+                else { throw AIGovernanceError.invalidProposal }
+                html = updated
+                text = Self.plainText(updated)
+            } else {
+                text = command.value
+                html = command.value
             }
-            return DocumentElement(
-                elementID: element.elementID, kind: element.kind, order: element.order,
-                text: value, contentHTML: value, inlineIDs: element.inlineIDs,
-                styleID: element.styleID, evidenceIDs: element.evidenceIDs
+            replacements[target.elementID] = DocumentElement(
+                elementID: target.elementID, kind: target.kind, order: target.order,
+                text: text, contentHTML: html, inlineIDs: target.inlineIDs,
+                styleID: target.styleID, evidenceIDs: target.evidenceIDs
             )
         }
+        let elements = project.elements.map { replacements[$0.elementID] ?? $0 }
         let revisionID = "revision-\(UUID().uuidString)"
         let revision = DocumentRevision(
             revisionID: revisionID, parentRevisionID: project.currentRevisionID,

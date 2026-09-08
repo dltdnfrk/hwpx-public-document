@@ -2,32 +2,10 @@ from __future__ import annotations
 
 import hashlib
 import zipfile
-from dataclasses import dataclass
 from pathlib import Path
 from xml.etree import ElementTree
 
-from public_document import Draft
-
-
-@dataclass(frozen=True)
-class HWPXValidation:
-    package_valid: bool
-    schema_profile_valid: bool
-    internal_references_valid: bool
-    metadata_valid: bool
-    content_hash: str
-    errors: tuple[str, ...] = ()
-
-    @property
-    def is_valid(self) -> bool:
-        return all(
-            (
-                self.package_valid,
-                self.schema_profile_valid,
-                self.internal_references_valid,
-                self.metadata_valid,
-            )
-        )
+from public_document.document_models import Draft, HWPXValidation as HWPXValidation
 
 
 def hwpx_content_hash(path: Path) -> str:
@@ -57,7 +35,10 @@ def validate_hwpx(path: Path, draft: Draft) -> HWPXValidation:
     errors: list[str] = []
     try:
         with zipfile.ZipFile(path) as package:
-            names = set(package.namelist())
+            members = package.namelist()
+            names = set(members)
+            if len(members) != len(names):
+                return HWPXValidation(False, False, False, False, "", ("duplicate package member names",))
             package_valid = required <= names and package.read("mimetype") == b"application/hwp+zip"
             if not package_valid:
                 errors.append("required package parts or mimetype missing")

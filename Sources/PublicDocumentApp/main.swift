@@ -68,6 +68,42 @@ final class PublicDocumentStudioApp: NSObject, NSApplicationDelegate {
                 Darwin.exit(EXIT_FAILURE)
             }
         }
+        if arguments.count == 4, arguments[1] == "--rhwp-compile-self-test" {
+            do {
+                let project = try JSONDecoder().decode(
+                    DocumentProject.self,
+                    from: Data(contentsOf: URL(fileURLWithPath: arguments[2]))
+                )
+                let output = URL(fileURLWithPath: arguments[3])
+                let data = try RhwpExportAdapter().export(
+                    project: project,
+                    format: .hwpx,
+                    workingDirectory: output.deletingLastPathComponent()
+                )
+                try data.write(to: output, options: .withoutOverwriting)
+                return
+            } catch {
+                FileHandle.standardError.write(Data("\(error.localizedDescription)\n".utf8))
+                Darwin.exit(EXIT_FAILURE)
+            }
+        }
+        if arguments.count == 5, arguments[1] == "--official-layout-profile-self-test" {
+            do {
+                let receipt = try OfficialLayoutProfileSelfTest.run(
+                    toolkit: URL(fileURLWithPath: arguments[2]),
+                    tokens: URL(fileURLWithPath: arguments[3]),
+                    output: URL(fileURLWithPath: arguments[4])
+                )
+                FileHandle.standardOutput.write(
+                    try JSONSerialization.data(withJSONObject: receipt, options: [.sortedKeys])
+                )
+                FileHandle.standardOutput.write(Data("\n".utf8))
+                return
+            } catch {
+                FileHandle.standardError.write(Data("\(error.localizedDescription)\n".utf8))
+                Darwin.exit(EXIT_FAILURE)
+            }
+        }
         if arguments.count >= 4, arguments[1] == "--export-project" {
             do {
                 let project = try JSONDecoder().decode(
