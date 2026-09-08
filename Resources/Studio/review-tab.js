@@ -58,8 +58,9 @@
   }
 
   const previousRenderProject = studio.renderProject
-  studio.renderProject = (project, officialRuleState) => {
-    const result = previousRenderProject(project, officialRuleState)
+  studio.renderProject = (...args) => {
+    const result = previousRenderProject(...args)
+    const [project] = args
     renderDocumentStatuteWarnings(project || store.currentProject)
     return result
   }

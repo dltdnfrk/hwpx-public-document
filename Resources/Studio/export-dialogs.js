@@ -10,15 +10,23 @@
   const projectBridge = (...args) => studio.projectBridge(...args)
 
   const showExportResult = (receipt) => {
-    const published = receipt.publishedFormats.length
-    const blocked = receipt.blockedFormats.length
-    const runtimeFailures = receipt.runtimeFailures || receipt.failures || []
+    const selected = new Set(store.activeExportFormats)
+    const inRequest = (item) => selected.size === 0 || selected.has(item.format)
+    const publishedFormats = receipt.publishedFormats.filter((format) => selected.size === 0 || selected.has(format))
+    const blockedFormats = receipt.blockedFormats.filter((format) => selected.size === 0 || selected.has(format))
+    const results = receipt.results.filter(inRequest)
+    const lossReports = receipt.lossReports.filter(inRequest)
+    const runtimeFailures = (receipt.runtimeFailures || receipt.failures || []).filter(inRequest)
+    const failedFormats = (receipt.failedFormats || []).filter((format) => selected.size === 0 || selected.has(format))
+    store.activeExportFormats = []
+    const published = publishedFormats.length
+    const blocked = blockedFormats.length
     const failed = Array.isArray(receipt.failedFormats)
-      ? receipt.failedFormats.length
-      : runtimeFailures.length || receipt.results.filter((result) => result.runtimeFailure || result.failure).length
+      ? failedFormats.length
+      : runtimeFailures.length || results.filter((result) => result.runtimeFailure || result.failure).length
     const valueOrBlocked = (value, label) => value ? String(value) : `${label} 미제공(안전하게 확인 필요)`
     exportResult.querySelector('.export-summary').textContent = `게시 완료 ${published}개 · 차단 ${blocked}개 · 실패 ${failed}개 · 현재 저장본 기준`
-    exportResult.querySelector('.export-results').replaceChildren(...receipt.results.map((result) => {
+    exportResult.querySelector('.export-results').replaceChildren(...results.map((result) => {
       const item = document.createElement('li')
       const failure = result.runtimeFailure || result.failure
       item.textContent = failure
@@ -33,7 +41,7 @@
       }
       return item
     }))
-    const reports = [...receipt.lossReports, ...runtimeFailures.map((failure) => ({
+    const reports = [...lossReports, ...runtimeFailures.map((failure) => ({
       ...failure,
       classification: 'runtime-failure',
       fallback: failure.fallback || failure.message || failure.reason,
@@ -152,6 +160,7 @@
       }
       projectBridge('batchExport', store.currentProject, details)
     } else {
+      store.activeExportFormats = [...formats]
       projectBridge('export', store.currentProject, details)
     }
   })

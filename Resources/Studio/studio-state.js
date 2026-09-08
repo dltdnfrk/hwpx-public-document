@@ -40,10 +40,13 @@ window.PublicDocumentStudio = window.PublicDocumentStudio || {}
     libraryProjects: {},
     activeBatchOperationID: null,
     activeBatchRetryOperationID: null,
+    activeExportFormats: [],
     editorReady: false,
     focusedEditorElementID: null,
     selectedEditorElementID: null,
     selectionStartedByUser: false,
+    easyUndoStack: [],
+    easyRedoStack: [],
   }
 
   studio.isLocalWeb = () => !(window.webkit && window.webkit.messageHandlers.projectStore)

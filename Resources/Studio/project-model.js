@@ -7,13 +7,19 @@
   const projectElements = (...args) => studio.projectElements(...args)
   const isTitleElement = (...args) => studio.isTitleElement(...args)
 
+  const plainTextContentHTML = (value) => String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+
   const newRevision = (project, kind) => {
     const revisionID = `revision-${crypto.randomUUID()}`
     const createdAt = revisionTimestamp()
     const title = titleInput.value.trim() || '[확인 필요]'
-    const elements = (projectElements() || []).map((element) => (
-      isTitleElement(element) ? { ...element, text: title, contentHTML: title } : element
-    ))
+    const elements = (projectElements() || []).map((element) => {
+      if (!isTitleElement(element) || element.text === title) return element
+      return { ...element, text: title, contentHTML: plainTextContentHTML(title), inlineIDs: [] }
+    })
     if (!elements.length) return project
     return {
       ...project,
@@ -130,6 +136,7 @@
   }
 
   Object.assign(studio, {
+    plainTextContentHTML,
     newRevision,
     initialProject,
     officialProjectStyles,

@@ -7,6 +7,8 @@
   const compactLayout = studio.compactLayout
 
   const runEditorCommand = (command, value, control) => {
+    if (command === 'undo' && studio.undoEasyProjectChange?.()) return true
+    if (command === 'redo' && studio.redoEasyProjectChange?.()) return true
     if (!store.editorReady) {
       announce('GenOffice 편집기가 준비되지 않아 편집 명령을 실행하지 않았습니다.')
       return false

@@ -72,7 +72,8 @@
       const titleEl = elements.find((element) => element.elementID === 'element-title')
       if (titleEl) {
         titleEl.text = values.title
-        titleEl.contentHTML = values.title
+        titleEl.contentHTML = studio.plainTextContentHTML(values.title)
+        titleEl.inlineIDs = []
       }
       if (studio.dom.titleInput) studio.dom.titleInput.value = values.title
     }
@@ -83,7 +84,8 @@
       if (!body) return
       const text = draft ? `가. ${value}` : `○ ${value}`
       body.text = text
-      body.contentHTML = text
+      body.contentHTML = studio.plainTextContentHTML(text)
+      body.inlineIDs = []
     })
     const checklist = { ...((project.templateBinding && project.templateBinding.checklistResults) || {}) }
     Object.keys(checklist).forEach((item) => {

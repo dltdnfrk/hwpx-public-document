@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STUDIO = ROOT / "Resources" / "Studio"
 ENGINE = STUDIO / "page-engine.js"
+PROFILE = STUDIO / "official-layout-profile.js"
 TOKENS = ROOT / "Resources" / "Print" / "print-tokens-1.0.0.json"
 
 
@@ -17,6 +18,7 @@ def _eval(expression: str):
     const vm = require('vm');
     const sandbox = {{ console, PublicDocumentPageEngine: undefined }};
     sandbox.globalThis = sandbox;
+    vm.runInNewContext(fs.readFileSync({json.dumps(str(PROFILE))}, 'utf8'), sandbox);
     vm.runInNewContext(fs.readFileSync({json.dumps(str(ENGINE))}, 'utf8'), sandbox);
     const engine = sandbox.PublicDocumentPageEngine;
     const value = {expression};
@@ -186,3 +188,83 @@ def test_studio_hosts_toggleable_page_preview() -> None:
     assert "data-page-preview" in view_tab
     assert "localStorage" not in engine
     assert "law.go.kr" not in view_tab
+
+
+def test_page_engine_typesets_official_lines_and_table_cells() -> None:
+    markup = _eval(
+        "engine.previewMarkup(engine.paginateProject({"
+        "title:'조판',"
+        "elements:["
+        "{elementID:'t',kind:'heading',order:0,text:'조판',styleID:'style-title'},"
+        "{elementID:'p',kind:'paragraph',order:1,text:'○ 첫 항목. ○ 둘째 - 세부',styleID:'style-body'},"
+        "{elementID:'table',kind:'table',order:2,text:'기간 2026',contentHTML:'<table><tr><th>기간</th><td>2026</td></tr><tr><th>부서</th><td>기획</td></tr></table>',styleID:'style-table'}"
+        "]}))"
+    )
+    assert 'class="official-line hang"' in markup
+    assert 'class="official-line detail"' in markup
+    assert "<th>기간</th>" in markup
+    assert "<td>기획</td>" in markup
+    assert "<caption>" not in markup
+
+
+def test_table_preview_decodes_entities_and_preserves_cell_line_breaks() -> None:
+    content_html = (
+        "<table><tr><th>구분</th><th>내용</th></tr>"
+        "<tr><td>&lt;법령&gt;</td><td>첫째<br>둘째 &amp; 셋째</td></tr></table>"
+    )
+    markup = _eval(
+        "engine.previewMarkup(engine.paginateProject({"
+        "title:'표 미리보기',"
+        "elements:["
+        "{elementID:'t',kind:'heading',order:0,text:'표 미리보기',styleID:'style-title'},"
+        "{elementID:'table',kind:'table',order:1,text:'구분 내용',"
+        f"contentHTML:{json.dumps(content_html)},styleID:'style-table'}}"
+        "]}))"
+    )
+
+    assert "<td>&lt;법령&gt;</td>" in markup
+    assert "<td>첫째<br>둘째 &amp; 셋째</td>" in markup
+    assert "&amp;lt;법령&amp;gt;" not in markup
+
+
+def test_oversized_table_rows_render_once_across_preview_pages() -> None:
+    rows = "".join(f"<tr><td>row-{index}</td></tr>" for index in range(100))
+    expression = (
+        "engine.paginateProject({"
+        "title:'긴 표',"
+        "elements:[{"
+        "elementID:'table',kind:'table',order:0,text:'긴 표',"
+        f"contentHTML:{json.dumps(f'<table>{rows}</table>')},"
+        "rows:100,styleID:'style-table'"
+        "}]})"
+    )
+    layout = _eval(expression)
+    markup = _eval(f"engine.previewMarkup({json.dumps(layout)})")
+
+    assert layout["pageCount"] >= 2
+    assert markup.count("<tr>") == 100
+    assert markup.count("row-0") == 1
+    assert markup.count("row-99") == 1
+    block_ids = [
+        page["blocks"][0]["id"]
+        for page in layout["pages"]
+    ]
+    assert len(block_ids) == len(set(block_ids))
+
+
+def test_heading_stays_with_first_oversized_table_chunk() -> None:
+    rows = "".join(f"<tr><td>row-{index}</td></tr>" for index in range(100))
+    layout = _eval(
+        "engine.paginateBlocks(["
+        "{id:'h',kind:'heading',text:'2. 표 결과',styleID:'style-section-heading'},"
+        "{id:'table',kind:'table',text:'긴 표',"
+        f"contentHTML:{json.dumps(f'<table>{rows}</table>')},"
+        "rows:100,styleID:'style-table'}"
+        "])"
+    )
+
+    heading_page = next(
+        page for page in layout["pages"]
+        if any(block["id"] == "h" for block in page["blocks"])
+    )
+    assert [block["id"] for block in heading_page["blocks"]][:2] == ["h", "table"]

@@ -13,6 +13,9 @@
   const easyTools = (...args) => studio.easyTools(...args)
   const tablePlainText = (...args) => studio.tablePlainText(...args)
   const isLocalWeb = (...args) => studio.isLocalWeb(...args)
+  const plainTextContentHTML = (...args) => studio.plainTextContentHTML(...args)
+  const MAX_EASY_HISTORY_ENTRIES = 20
+  const MAX_EASY_HISTORY_BYTES = 8 * 1024 * 1024
 
   const liveElements = () => {
     const persisted = store.currentProject?.elements || fallbackProjectElements()
@@ -24,9 +27,48 @@
     return missingTables.length ? [...base, ...missingTables] : base
   }
 
+  const bindTableText = (element) => {
+    const tools = easyTools()
+    return tools && typeof tools.bindTableText === 'function' ? tools.bindTableText(element) : element
+  }
+
+  const historyEntry = (project) => {
+    let serialized
+    try {
+      serialized = JSON.stringify(project)
+    } catch {
+      return null
+    }
+    if (!serialized) return null
+    const bytes = new TextEncoder().encode(serialized).byteLength
+    if (bytes > MAX_EASY_HISTORY_BYTES) return null
+    return { project: JSON.parse(serialized), bytes }
+  }
+
+  const pushEasyHistory = (stack, project) => {
+    const entry = historyEntry(project)
+    if (!entry) return false
+    stack.push(entry)
+    let bytes = stack.reduce((sum, item) => sum + item.bytes, 0)
+    while (stack.length > MAX_EASY_HISTORY_ENTRIES || bytes > MAX_EASY_HISTORY_BYTES) {
+      bytes -= stack.shift().bytes
+    }
+    return true
+  }
+
+  const invalidateEasyHistory = () => {
+    store.easyUndoStack = []
+    store.easyRedoStack = []
+  }
+
   const commitProjectElements = (elements, summary, message, extra = {}) => {
     if (!store.currentProject) store.currentProject = initialProject()
-    const nextElements = elements.map((element, order) => ({ ...element, order }))
+    if (!pushEasyHistory(store.easyUndoStack, store.currentProject)) {
+      announce('문서가 너무 커서 되돌리기 상태를 안전하게 만들 수 없어 작업을 실행하지 않았습니다.')
+      return false
+    }
+    store.easyRedoStack = []
+    const nextElements = elements.map((element, order) => ({ ...bindTableText(element), order }))
     const revisionID = `revision-${crypto.randomUUID()}`
     const createdAt = revisionTimestamp()
     store.currentProject = {
@@ -49,10 +91,31 @@
         createdAt,
       }],
     }
-    renderProject(store.currentProject)
+    renderProject(store.currentProject, null, true)
     projectBridge('save', store.currentProject)
     announce(message)
+    return true
   }
+
+  const restoreEasyProjectChange = (source, destination) => {
+    if (!source.length || !store.currentProject) return false
+    if (!pushEasyHistory(destination, store.currentProject)) {
+      announce('문서가 너무 커서 반대 작업 상태를 안전하게 만들 수 없어 작업을 실행하지 않았습니다.')
+      return false
+    }
+    store.currentProject = source.pop().project
+    renderProject(store.currentProject, null, true)
+    projectBridge('save', store.currentProject)
+    return true
+  }
+
+  const undoEasyProjectChange = () => (
+    restoreEasyProjectChange(store.easyUndoStack, store.easyRedoStack)
+  )
+
+  const redoEasyProjectChange = () => (
+    restoreEasyProjectChange(store.easyRedoStack, store.easyUndoStack)
+  )
 
   const insertTargetIndex = (elements) => {
     const focused = elements.findIndex((element) => element.elementID === store.focusedEditorElementID)
@@ -74,19 +137,38 @@
     return elements.findIndex((element) => element.kind === 'paragraph' && !isTitleElement(element))
   }
 
+  const focusedTextTargetIndex = (elements) => {
+    const index = elements.findIndex((element) => element.elementID === store.focusedEditorElementID)
+    const target = index >= 0 ? elements[index] : null
+    if (!target || isTitleElement(target) || ['table', 'approval-grid'].includes(target.kind)) return -1
+    return index
+  }
+
+  const replacePlainTextElement = (element, text) => ({
+    ...element,
+    text,
+    contentHTML: plainTextContentHTML(text),
+    inlineIDs: [],
+  })
+
   const insertPlainText = (text, fallbackMessage) => {
     if (!text) return announce('넣을 값이 없습니다.')
     const elements = liveElements()
     const focused = elements.find((element) => element.elementID === store.focusedEditorElementID)
-    if (!isTitleElement(focused) && runEditorCommand('insertText', text)) {
+    const insertion = focused?.text
+      && !/\s$/.test(focused.text)
+      && !/^\s/.test(text)
+      ? ` ${text}`
+      : text
+    if (!isTitleElement(focused) && runEditorCommand('insertText', insertion)) {
       announce(fallbackMessage)
       return
     }
     const index = insertTargetIndex(elements)
     const target = elements[index]
     if (!target || isTitleElement(target)) return announce('본문 위치를 먼저 선택하세요.')
-    const next = `${target.text || ''}${text}`
-    elements[index] = { ...target, text: next, contentHTML: next }
+    const next = `${target.text || ''}${insertion}`
+    elements[index] = replacePlainTextElement(target, next)
     commitProjectElements(elements, 'easy-insert', fallbackMessage)
   }
 
@@ -147,9 +229,14 @@
 
   Object.assign(studio, {
     liveElements,
+    invalidateEasyHistory,
     commitProjectElements,
+    undoEasyProjectChange,
+    redoEasyProjectChange,
     insertTargetIndex,
     hangingIndentTargetIndex,
+    focusedTextTargetIndex,
+    replacePlainTextElement,
     insertPlainText,
     focusedTable,
     updateTableElement,

@@ -42,12 +42,17 @@
       return
     }
     if (event === 'empty') {
+      store.easyUndoStack = []
+      store.easyRedoStack = []
       store.currentProject = initialProject()
+      renderProject(store.currentProject)
       projectBridge('save', store.currentProject)
       return
     }
     if (['opened', 'recovered'].includes(event)) {
       store.pendingAIProposal = null
+      store.easyUndoStack = []
+      store.easyRedoStack = []
       aiProposalReview.hidden = true
       renderProject(payload.project, payload.officialRuleState)
       announce(officialRuleWarning(payload) || (event === 'recovered' ? '중단 전 자동저장 상태를 복구했습니다.' : '앱 프로젝트를 다시 열었습니다.'))

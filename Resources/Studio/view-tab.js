@@ -131,8 +131,8 @@
 
   const previousRender = studio.renderProject
   if (typeof previousRender === 'function') {
-    studio.renderProject = (project, officialRuleState) => {
-      const result = previousRender(project, officialRuleState)
+    studio.renderProject = (...args) => {
+      const result = previousRender(...args)
       window.requestAnimationFrame(updatePreviewSheets)
       return result
     }

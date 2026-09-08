@@ -12,6 +12,7 @@
   const projectBridge = (...args) => studio.projectBridge(...args)
   const openDialog = (...args) => studio.openDialog(...args)
   const syncFormatStates = (...args) => studio.syncFormatStates(...args)
+  const invalidateEasyHistory = (...args) => studio.invalidateEasyHistory?.(...args)
 
   const revisionAncestors = (project, revisionID = project?.currentRevisionID) => {
     const parents = Object.fromEntries((project?.revisions || []).map((revision) => [revision.revisionID, revision.parentRevisionID]))
@@ -42,7 +43,8 @@
     return true
   }
 
-  const renderProject = (project, officialRuleState = null) => {
+  const renderProject = (project, officialRuleState = null, preserveEasyHistory = false) => {
+    if (!preserveEasyHistory) invalidateEasyHistory()
     store.selectedEditorElementID = null
     store.currentProject = project
     titleInput.value = project.title
@@ -65,12 +67,23 @@
   const renderGuidance = (binding) => {
     const typeLabel = store.currentTemplateCatalog?.entries.find((entry) => entry.templateID === binding.templateID)?.documentType
     if (typeLabel) document.querySelector('.panel-heading h2').textContent = typeLabel
+    const elements = [...(store.currentProject?.elements || [])].sort((left, right) => left.order - right.order)
+    const headings = elements.filter((element) => (
+      element.kind === 'heading' && element.styleID !== 'style-title'
+    ))
     outlineList.replaceChildren(...binding.requiredSections.map((section, index) => {
       const item = document.createElement('li')
       const button = document.createElement('button')
+      const heading = headings[index]
+      const nextHeading = headings[index + 1]
+      const body = heading && elements.find((element) => (
+        element.order > heading.order
+        && (!nextHeading || element.order < nextHeading.order)
+        && element.kind === 'paragraph'
+      ))
       button.type = 'button'
       button.dataset.section = `section-${index + 1}`
-      button.dataset.elementId = `element-section-${index + 1}-body`
+      button.dataset.elementId = body?.elementID || heading?.elementID || `element-section-${index + 1}-body`
       button.setAttribute('aria-label', `${index + 1}. ${section}`)
       item.classList.toggle('active', index === 0)
       if (index === 0) button.setAttribute('aria-current', 'location')
@@ -136,6 +149,9 @@
       announce('GenOffice 편집기에서 선택한 문서 구조로 이동할 수 없습니다.')
       return false
     }
+    queueMicrotask(() => {
+      HTMLElement.prototype.focus.call(editor, { preventScroll: true })
+    })
     store.focusedEditorElementID = elementID
     syncFormatStates()
     return true
@@ -186,7 +202,10 @@
   })
 
   editor.addEventListener('public-document-genoffice-change', (event) => {
-    if (!store.suppressEditorAutosave && store.editorReady && Array.isArray(event.detail?.elements)) scheduleAutosave()
+    if (!store.suppressEditorAutosave && store.editorReady && Array.isArray(event.detail?.elements)) {
+      invalidateEasyHistory()
+      scheduleAutosave()
+    }
   })
   editor.addEventListener('pointerdown', () => {
     store.selectionStartedByUser = true
@@ -198,7 +217,10 @@
     }
     store.selectionStartedByUser = false
   })
-  titleInput.addEventListener('input', scheduleAutosave)
+  titleInput.addEventListener('input', () => {
+    invalidateEasyHistory()
+    scheduleAutosave()
+  })
 
   Object.assign(studio, {
     revisionAncestors,

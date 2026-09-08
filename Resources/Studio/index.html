@@ -92,6 +92,15 @@
           </div>
           <div class="tool-group">
             <button class="tool" type="button" data-easy-action="normalize-markers"><span class="tool-icon">□</span>목차 정리</button>
+            <button class="tool" type="button" data-easy-action="apply-official-block"><span class="tool-icon">블</span>블록 적용</button>
+            <button class="tool" type="button" data-easy-action="apply-marker" data-easy-marker="square" aria-label="네모 글머리 적용">□</button>
+            <button class="tool" type="button" data-easy-action="apply-marker" data-easy-marker="circle" aria-label="원 글머리 적용">○</button>
+            <button class="tool" type="button" data-easy-action="apply-marker" data-easy-marker="bar" aria-label="바 글머리 적용">-</button>
+            <button class="tool" type="button" data-easy-action="apply-marker" data-easy-marker="note" aria-label="참고 글머리 적용">※</button>
+            <button class="tool" type="button" data-easy-action="wrap-bracket" data-easy-bracket="corner" aria-label="낫표로 묶기">「」</button>
+            <button class="tool" type="button" data-easy-action="insert-attachment">붙임</button>
+            <button class="tool" type="button" data-easy-action="insert-end-mark">끝</button>
+            <button class="tool" type="button" data-easy-action="format-thousands">세자리</button>
             <span class="group-label">공문서 표기</span>
           </div>
           <div class="tool-group text-controls">
@@ -100,6 +109,11 @@
             <button class="tool" type="button" data-easy-action="save-my-form">양식 저장</button>
             <button class="tool" type="button" data-easy-action="merge-library">문서 취합</button>
             <span class="group-label">내 양식·취합</span>
+          </div>
+          <div class="tool-group">
+            <button class="tool" type="button" data-easy-action="insert-report-structure" data-easy-report="one-page">단문보고</button>
+            <button class="tool" type="button" data-easy-action="insert-report-structure" data-easy-report="long-report">장문보고</button>
+            <span class="group-label">보고서 골격</span>
           </div>
         </div>
         <div class="ribbon" id="table-tools" role="tabpanel" aria-label="표 도구" hidden>
@@ -117,6 +131,7 @@
         </div>
         <div class="ribbon" id="layout-tools" role="tabpanel" aria-label="레이아웃 도구" hidden>
           <div class="tool-group">
+            <button class="tool" type="button" data-easy-action="page-margins" data-easy-margin="official">공문서</button>
             <button class="tool" type="button" data-easy-action="page-margins" data-easy-margin="narrow">좁게</button>
             <button class="tool" type="button" data-easy-action="page-margins" data-easy-margin="normal">보통</button>
             <button class="tool" type="button" data-easy-action="page-margins" data-easy-margin="wide">넓게</button>
@@ -330,6 +345,7 @@
       <div class="export-actions"><button type="button" data-action="close-draft-wizard">건너뛰기</button><button type="button" data-action="apply-draft-wizard">절 채우기</button></div>
     </dialog>
     <script src="../GenOffice/public-document-genoffice.js"></script>
+    <script src="official-layout-profile.js"></script>
     <script src="easy-tools.js"></script>
     <script src="studio-state.js"></script>
     <script src="bridge.js"></script>

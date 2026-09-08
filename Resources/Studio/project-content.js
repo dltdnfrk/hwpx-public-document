@@ -116,11 +116,16 @@
       const previous = expectedElements[order]
       const contentHTML = preserveTableMarkup(element.contentHTML ?? previous.contentHTML ?? element.text, previous, element.text)
       const inlineIDs = inlineIDsFromContent(contentHTML)
-      if (Array.isArray(element.inlineIDs) && element.inlineIDs.join('\u0000') !== inlineIDs.join('\u0000')) {
+      const tableSnapshot = isEasyTableElement(previous)
+        || element.type === 'table'
+        || element.type === 'approval-grid'
+      if (!tableSnapshot
+        && Array.isArray(element.inlineIDs)
+        && element.inlineIDs.join('\u0000') !== inlineIDs.join('\u0000')) {
         if (!options.silent) announce('GenOffice 편집기 인라인 식별자가 프로젝트 원본과 달라 저장하거나 내보낼 수 없습니다.')
         return null
       }
-      return {
+      const snapshot = {
         ...previous,
         elementID: element.id,
         kind: element.type,
@@ -131,6 +136,8 @@
         styleID: previous?.styleID || (element.level === 1 ? 'style-title' : element.level ? 'style-section-heading' : 'style-body'),
         evidenceIDs: previous?.evidenceIDs || [],
       }
+      const tools = easyTools()
+      return tools && typeof tools.bindTableText === 'function' ? tools.bindTableText(snapshot) : snapshot
     })
     return elements.some((element) => element === null) ? null : elements
   }

@@ -17,6 +17,8 @@
   const updateTableElement = (...args) => studio.updateTableElement(...args)
   const tablePlainText = (...args) => studio.tablePlainText(...args)
   const hangingIndentTargetIndex = (...args) => studio.hangingIndentTargetIndex(...args)
+  const focusedTextTargetIndex = (...args) => studio.focusedTextTargetIndex(...args)
+  const replacePlainTextElement = (...args) => studio.replacePlainTextElement(...args)
 
   const openEasyTool = (title, fields, onConfirm, opener) => {
     easyToolDialog.querySelector('#easy-tool-title').textContent = title
@@ -78,11 +80,81 @@
       }, control)
     }
     if (action === 'normalize-markers') {
-      const elements = liveElements().map((element) => {
-        const text = tools.normalizeOfficialMarkers(element.text || '')
-        return { ...element, text, contentHTML: element.contentHTML ? tools.normalizeOfficialMarkers(element.contentHTML) : text }
-      })
+      const elements = liveElements()
+      const index = focusedTextTargetIndex(elements)
+      if (index < 0) return announce('정리할 문장을 먼저 선택하세요.')
+      const text = tools.normalizeOfficialMarkers(elements[index].text || '')
+      if (text === elements[index].text) return announce('선택한 문장에 변경할 표기가 없습니다.')
+      elements[index] = replacePlainTextElement(elements[index], text)
       return commitProjectElements(elements, 'easy-markers', 'ㅁ/ㅇ/ㆍ 표기를 □/○/- 로 정리했습니다.')
+    }
+    if (action === 'apply-official-block') {
+      const elements = liveElements()
+      const index = focusedTextTargetIndex(elements)
+      if (index < 0) return announce('블록을 적용할 문장을 먼저 선택하세요.')
+      const text = tools.applyOfficialBlock(elements[index].text || '')
+      if (text === elements[index].text) return announce('선택한 문장에 변경할 블록 명령이 없습니다.')
+      elements[index] = replacePlainTextElement(elements[index], text)
+      return commitProjectElements(elements, 'easy-block', '범피스 블록 표기를 적용했습니다.')
+    }
+    if (action === 'apply-marker') {
+      const marker = control && control.getAttribute('data-easy-marker')
+      const elements = liveElements()
+      const index = focusedTextTargetIndex(elements)
+      if (index < 0) return announce('적용할 문장을 먼저 선택하세요.')
+      const text = tools.applyOfficialMarker(elements[index].text || '', marker)
+      if (text === elements[index].text) return announce('선택한 문장에 적용할 글머리가 없습니다.')
+      elements[index] = replacePlainTextElement(elements[index], text)
+      return commitProjectElements(elements, 'easy-marker', '글머리를 적용했습니다.')
+    }
+    if (action === 'wrap-bracket') {
+      const kind = control && control.getAttribute('data-easy-bracket')
+      const elements = liveElements()
+      const index = focusedTextTargetIndex(elements)
+      if (index < 0) return announce('묶을 문장을 먼저 선택하세요.')
+      const text = tools.wrapOfficialBracket(elements[index].text || '', kind)
+      if (!text || text === elements[index].text) return announce('선택한 문장에 적용할 따옴표가 없습니다.')
+      elements[index] = replacePlainTextElement(elements[index], text)
+      return commitProjectElements(elements, 'easy-bracket', '따옴표를 적용했습니다.')
+    }
+    if (action === 'format-thousands') {
+      const elements = liveElements()
+      const index = focusedTextTargetIndex(elements)
+      if (index < 0) return announce('숫자를 포함한 문장을 먼저 선택하세요.')
+      const text = tools.formatThousandsInText(elements[index].text || '')
+      if (text === elements[index].text) return announce('선택한 문장에 변경할 숫자가 없습니다.')
+      elements[index] = replacePlainTextElement(elements[index], text)
+      return commitProjectElements(elements, 'easy-thousands', '세 자리 콤마를 넣었습니다.')
+    }
+    if (action === 'insert-end-mark') {
+      return insertPlainText(tools.endMark(), '끝 표시를 넣었습니다.')
+    }
+    if (action === 'insert-attachment') {
+      return openEasyTool('붙임 넣기', [
+        { name: 'title', label: '붙임 문서명', type: 'text', value: '자료' },
+        { name: 'copies', label: '부수', type: 'text', value: '1' },
+      ], (fields) => {
+        insertPlainText(tools.attachmentLine(fields.title, fields.copies), '붙임을 넣었습니다.')
+      }, control)
+    }
+    if (action === 'insert-report-structure') {
+      const items = tools.reportStructure(control && control.getAttribute('data-easy-report'))
+      if (!items.length) return announce('지원하는 보고서 골격을 선택하세요.')
+      const elements = liveElements()
+      const index = elements.findIndex((element) => element.elementID === store.focusedEditorElementID)
+      if (index < 0) return announce('보고서 골격을 넣을 위치를 먼저 선택하세요.')
+      const inserted = items.map((item) => ({
+        elementID: `element-report-${crypto.randomUUID()}`,
+        kind: item.kind,
+        order: 0,
+        text: item.text,
+        contentHTML: item.text,
+        inlineIDs: [],
+        styleID: item.styleID,
+        evidenceIDs: [],
+      }))
+      elements.splice(index + 1, 0, ...inserted)
+      return commitProjectElements(elements, 'easy-report-structure', '공문서 보고서 골격을 넣었습니다.')
     }
     if (action === 'insert-my-form') {
       const form = store.studioPrefs.myForms.find((item) => item.id === document.querySelector('[data-easy="my-form"]').value)
@@ -123,6 +195,7 @@
         { name: 'cols', label: '열', type: 'number', value: '3' },
       ], (fields) => {
         const html = tools.setTableBorders(tools.createTableHTML(fields.rows, fields.cols), 'all')
+        if (!html) return announce('표는 1~100행, 1~20열의 정수 범위로 입력하세요.')
         const elements = liveElements()
         const index = Math.max(elements.findIndex((element) => element.elementID === store.focusedEditorElementID), 0)
         elements.splice(index + 1, 0, {
@@ -160,7 +233,7 @@
       const index = hangingIndentTargetIndex(elements)
       if (index < 0) return announce('내어쓸 문장을 먼저 선택하세요.')
       const text = tools.hangingIndent(elements[index].text)
-      elements[index] = { ...elements[index], text, contentHTML: text }
+      elements[index] = replacePlainTextElement(elements[index], text)
       return commitProjectElements(elements, 'easy-indent', '둘째 줄부터 맞춰 내어썼습니다.')
     }
     if (action === 'confirm-easy-tool') {

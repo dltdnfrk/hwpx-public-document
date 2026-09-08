@@ -575,6 +575,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   font-size: 15px;
   line-height: 1.78;
   word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 .page-preview-sheet h1 {
   margin: 0 0 42px;
@@ -592,3 +593,9 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .page-preview-sheet p { margin: 0 0 16px; }
 .page-preview-sheet table { width: 100%; margin: 16px 0 30px; border-collapse: collapse; font-size: 13px; }
 .page-preview-sheet caption { caption-side: bottom; color: var(--studio-muted); font-size: 11px; }
+.page-preview-sheet th, .page-preview-sheet td { border: 1px solid var(--studio-document-rule); padding: 6px 8px; text-align: left; }
+.page-preview-sheet th { background: var(--studio-document-fill); font-weight: 700; }
+.page-preview-sheet .official-line { display: block; }
+.page-preview-sheet .official-line.hang { padding-left: 1.4em; text-indent: -1.4em; }
+.page-preview-sheet .official-line.level1 { padding-left: 2.4em; text-indent: -1.2em; }
+.page-preview-sheet .official-line.detail { padding-left: 2.4em; text-indent: -1.2em; }

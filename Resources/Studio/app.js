@@ -73,6 +73,17 @@
   }
 
   window.projectStoreReceive = studio.projectStoreReceive
+  document.querySelectorAll('details > summary').forEach((summary) => {
+    summary.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.code !== 'Space') return
+      event.preventDefault()
+      event.stopPropagation()
+      const open = !summary.parentElement.open
+      queueMicrotask(() => {
+        summary.parentElement.open = open
+      })
+    })
+  })
   syncOutlineForViewport()
   if (!(window.webkit && window.webkit.messageHandlers.projectStore)) {
     document.body.dataset.host = 'local-web'
