@@ -106,8 +106,12 @@ The strategy is mixed: tonal separation for chrome and outline, strict borders f
 
 Target WCAG 2.2 and KWCAG AA: 4.5:1 body contrast, 3:1 large text and control boundaries, keyboard reachability, visible focus, named landmarks, and status announcements. The minimum 920px width is intentional for this desktop-only macOS authoring application.
 
-No AC-08 accessibility debt remains accepted. Automated browser checks are
-paired with packaged WKWebView accessibility-tree inspection and a recorded
-VoiceOver cursor journey because browser automation alone cannot model the
-native assistive-technology surface. The bound evidence is recorded in
-`docs/ac-08-accessibility-evidence.md`.
+No known product accessibility defect remains accepted. Automated browser
+checks are paired with packaged CGWindow/native startup evidence and a direct
+AX traversal attempt because browser automation alone cannot model the native
+assistive-technology surface. The current exact package exposes its visible
+window to CGWindow but exposes only application/menu roles—not AXWindow or
+WKWebView descendants—even while VoiceOver is active. The seven VoiceOver
+cursor journeys therefore remain explicitly `NOT_RUN` under the external
+`exact-package-ax-tree-empty` evidence limitation. The hash-bound blocker and
+rerun condition are recorded in `docs/ac-08-accessibility-evidence.md`.

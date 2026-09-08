@@ -27,15 +27,15 @@ def test_release_archive_reopens_as_clean_verified_app(tmp_path: Path) -> None:
     app = package_parent / "PublicDocument.app"
     package_environment = os.environ.copy()
     package_environment["PUBLIC_DOCUMENT_PACKAGE_PARENT"] = str(package_parent)
-    subprocess.run(
+    package = subprocess.run(
         [str(ROOT / "scripts/package-macos-app.sh"), str(app)],
         cwd=ROOT,
-        check=True,
         capture_output=True,
         text=True,
         timeout=300,
         env=package_environment,
     )
+    assert package.returncode == 0, package.stdout + package.stderr
     ac10_archive_fixture.write_archive_evidence(package_parent)
     finder_info = "00" * 19 + "01" + "00" * 12
     subprocess.run(

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ctypes
 import os
 import platform
 import shutil
@@ -49,6 +50,18 @@ class UpdateInstallResult:
     message: str
 
 
+def _swap_bundles(candidate: Path, installed: Path) -> None:
+    """Exchange bundle directory entries without an absent installed path."""
+    if sys.platform != "darwin":
+        raise DistributionUnavailableError("atomic bundle replacement requires macOS")
+    rename_swap = ctypes.CDLL(None, use_errno=True).renamex_np
+    rename_swap.argtypes = (ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint)
+    rename_swap.restype = ctypes.c_int
+    if rename_swap(os.fsencode(candidate), os.fsencode(installed), 0x00000002) != 0:  # RENAME_SWAP
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error), str(installed))
+
+
 class SignedUpdateManager:
     def __init__(self, verifier: UpdateVerifier) -> None:
         self._verifier = verifier
@@ -60,7 +73,16 @@ class SignedUpdateManager:
                 "candidate signature or notarization verification failed",
             )
         installed.parent.mkdir(parents=True, exist_ok=True)
-        os.replace(candidate, installed)
+        if candidate.is_dir() and installed.is_dir() and not candidate.samefile(installed):
+            with tempfile.TemporaryDirectory(prefix=".update-", dir=installed.parent) as temporary:
+                _swap_bundles(candidate, installed)
+                try:
+                    os.replace(candidate, Path(temporary) / "previous.app")
+                except OSError:
+                    _swap_bundles(candidate, installed)
+                    raise
+        else:
+            os.replace(candidate, installed)
         return UpdateInstallResult(True, "update installed")
 
 

@@ -70,7 +70,7 @@ def _require_product_packaging_script() -> None:
 
 def _ditto_publish(source: Path, destination: Path) -> None:
     """Publish one path by calling the product ditto packaging command."""
-    if destination.exists():
+    if destination.exists() or destination.is_symlink():
         raise DuplicateWriteError(f"package destination already exists: {destination}")
     destination.parent.mkdir(parents=True, exist_ok=True)
     env = os.environ.copy()
@@ -83,16 +83,12 @@ def _ditto_publish(source: Path, destination: Path) -> None:
         env=env,
     )
     if completed.returncode != 0:
-        if destination.exists():
-            raise DuplicateWriteError(
-                f"package destination already exists: {destination}"
-            )
         raise OSError(completed.stderr.strip() or completed.stdout.strip() or "ditto failed")
 
 
 def _publish_manifest(manifest_bytes: bytes, destination: Path) -> None:
     """Publish one manifest sidecar through the product ditto packaging path."""
-    if destination.exists():
+    if destination.exists() or destination.is_symlink():
         raise DuplicateWriteError(f"package destination already exists: {destination}")
     destination.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(
@@ -100,7 +96,16 @@ def _publish_manifest(manifest_bytes: bytes, destination: Path) -> None:
     ) as staging:
         staged_manifest = Path(staging) / destination.name
         staged_manifest.write_bytes(manifest_bytes)
-        _ditto_publish(staged_manifest, destination)
+        copied_manifest = Path(staging) / "copied-manifest.json"
+        _ditto_publish(staged_manifest, copied_manifest)
+        # The final sidecar marks this copy complete. Expose it only after ditto
+        # succeeds; link() is atomic and refuses even a concurrently created path.
+        try:
+            os.link(copied_manifest, destination)
+        except FileExistsError as error:
+            raise DuplicateWriteError(
+                f"package destination already exists: {destination}"
+            ) from error
 
 
 def assemble_package_copies(
@@ -117,6 +122,9 @@ def assemble_package_copies(
         assembly_root / MANIFEST_PATHS[0],
         assembly_root / MANIFEST_PATHS[1],
     )
+    for destination in (*copy_roots, *manifest_paths):
+        if destination.exists() or destination.is_symlink():
+            raise DuplicateWriteError(f"package destination already exists: {destination}")
     for copy_root, manifest_path in zip(copy_roots, manifest_paths):
         _ditto_publish(package_source, copy_root)
         _publish_manifest(manifest_bytes, manifest_path)

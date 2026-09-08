@@ -1,18 +1,22 @@
 # AC-08 accessibility and interface-fidelity evidence
 
-Recorded on macOS 26.5.2 (`25F84`), arm64. The canonical browser evidence is
-`output/playwright/ac08-final-bound.UhLbrs`; the exact-package native blocker is
-`output/ac-08/final-bound.R5vshb`.
+Recorded on macOS 26.5.2 (`25F84`), arm64. The current browser evidence is
+`.omo/evidence/visual-r3/ac08`; the current packaged native evidence is
+`.omo/evidence/native-ax-r12`; and the exact-package blocker receipt is
+`.omo/evidence/visual-r3/ac08/native-voiceover-receipt.json`.
 
 ## Verdict and evidence boundary
 
 The final GenOffice Studio browser, keyboard, automated WCAG/KWCAG, supported
 desktop viewport, package-binding, and dual visual-review gates **PASS**.
 
-Full native VoiceOver remains **BLOCKED** because the active macOS console was
-locked. All seven required native journeys are explicitly `NOT_RUN`; no native
-focus, label, state, announcement, or transition is claimed. AC-08 therefore
-remains `BLOCKED` overall and is not promoted to a complete criterion PASS.
+Full native VoiceOver remains **BLOCKED** by
+`exact-package-ax-tree-empty`. The console was unlocked and VoiceOver was
+started from an initial off state, but the exact current package continued to
+expose only application/menu AX roles and no AXWindow or WKWebView descendants.
+All seven required native journeys are explicitly `NOT_RUN`; no native cursor
+transition is claimed. VoiceOver and the owned app process were restored to
+their initial off/terminated states.
 
 The browser run targets `Resources/Studio` and is bound to the same files in an
 exact freshly packaged application:
@@ -140,46 +144,23 @@ native blocker boundary.
 Their reports are `visual-pass-a.md` and `visual-pass-b.md` in the canonical
 browser evidence root.
 
-## Exact package binding
+## Current package and source binding
 
-| Artifact | SHA-256 |
-| --- | --- |
-| application executable | `ec5ed6931fbb5f3a8560515fba5506cb694a817ef45e6f34b9d3f70a660a988b` |
-| package binding | `19dd0c93711586fca00a6595c9f5153121c2d2d49b2f8018dece069e5c48eb3c` |
-| 34-file package manifest | `3ffdc842262b65830233deaa8a3112ca8ac4764d070c007a219b0d0e278bc576` |
-| browser receipt | `1f9557d7938c15f7aab96884da946298bbafef9dc635deb624ef74cbaf780580` |
-| run summary | `eabdd2a2ae29bb44d29e6a9732ea7799a29ac01fc4087c1d322241b4be0ea50c` |
-| capture verification | `3c58eb578e6f0004bd679e6af23607d11c2255a6878e26c2a4f2d7648af72939` |
-| verification receipt | `a0e46870666745a202b39a9d80d5b8f24da268132d2c16618efe4ae51e5db7d8` |
-| axe results | `cdcd9055e78bfdbcd675adc73c43b4362acbb53f3a3497d08ec8b3ac152ee33f` |
-| Pass A | `2c7ceb58fd36ff259c790ef836fa2f028da9602d0af2a8e0ab1640f9bcf9513f` |
-| Pass B | `2344634a70f0e92916d16d64ad4f962177fed723021c35859d7e0b30a1517ec9` |
-| VoiceOver blocker | `6689a46d06493ba058e35fdd01ceea5edae202f4ffb17402fc36f9fceac5b83b` |
-
-## Bound source, runtime, and provenance
-
-| Artifact | SHA-256 |
-| --- | --- |
-| `Resources/Studio/index.html` | `2c3de4829b1f617bb20d38997f6ae849b38d7965024613c28094c7878f632fcc` |
-| `Resources/Studio/styles.css` | `b905fba51298ac582eb2103dea6a0163d493cccc1f12613c662716f679c831d7` |
-| `Resources/Studio/app.js` | `baf94d4df0b25cef654fc1f7eadbaf8a27b880794deb44d3ecfc0bff1c735e42` |
-| GenOffice browser bundle | `0e171084942762e85ac30f134a82d3b6aa94904456656f156b7a07170765d33a` |
-| `GenOfficeFork/browser.tsx` | `d02b63666c6064e524a788609db8521469e1754bfc87eed74256a93d7d327673` |
-| inline-identity extension | `8049a3e3c80590ffa7f954ab393301187614826cf86d69a02c262694ae28de68` |
-| AC-08 browser test | `916ebe4eadfea780c6cae1b3eeaa4fd4e6fb6e911cf534f4647026f31c85ac51` |
-| focused Python test | `b8d15174d541a9e602da1ba17cba6d46c2989cf0a131b9747f50a26ab1ec273b` |
-| `DESIGN.md` | `59752824f6d27ac8bf045d07c9de8ca1da96b6051c2266a89efb56ceef295ceb` |
-| runtime input lock | `3f1db99bedabfc47e1990f9229ce73fef6ff20f5a4642a18372416a920b3af79` |
-| runtime manifest | `4b691934c27230ecb6a4c5defcc11b625f1f3f20a82ff21e6867e04641d19616` |
-| GenOffice port provenance | `7e0d4bd4b3124944aa67bea50c206286fa5b7fc9d51ee20432ebfd9f707fc4dd` |
-| upstream lock | `6023b284651e8f7938f9153622f411922d4657210b8080cd86ad342135adf3bb` |
+The machine-readable browser receipt records current source and packaged hashes
+for `index.html`, `styles.css`, and `app.js`; all
+`packagedStudioMatchesTestedSource` values are `true`. The native happy action
+log binds the visible package window, screenshot, executable, four real export
+formats, signatures, artifact hashes, process cleanup, and the attempted AX
+snapshot. Hash values are intentionally read from those current receipts rather
+than duplicated in this prose.
 
 ## Native VoiceOver — blocked
 
-At evidence generation time, `ioreg` reported
-`CGSSessionScreenIsLocked=Yes`. VoiceOver was not running before or after the
-observation, and no VoiceOver toggle, key, cursor, or application action was
-sent because it would have targeted the lock/login surface.
+At evidence generation time the console was unlocked. The exact package emitted
+an `opened` readiness receipt and a visible CGWindow screenshot. The native AX
+walker and System Events nevertheless exposed no AXWindow or WKWebView
+descendants. Starting VoiceOver did not change the exposed roles. VoiceOver was
+then returned to off and the owned app process was terminated.
 
 The exact-package blocker receipt records these seven journeys as `NOT_RUN`:
 
@@ -191,8 +172,9 @@ The exact-package blocker receipt records these seven journeys as `NOT_RUN`:
 6. `single-export`
 7. `batch-export`
 
-Completion requires an unlocked interactive console and end-to-end VoiceOver
-recording of all seven journeys against the exact final package.
+Completion of these seven external journeys requires macOS to expose AXWindow
+and WKWebView descendants for the exact final package; the blocker receipt
+contains this rerun condition.
 
 ## Verification commands
 
@@ -207,7 +189,8 @@ recording of all seven journeys against the exact final package.
 | PNG signature/dimension validation | 0 | 12/12 valid |
 | four image diffs | 0 | all dimensions/alpha pass, similarity 100 |
 | two independent visual reviews | 0 | PASS / PASS |
-| console and VoiceOver observation | 0 | locked; VoiceOver absent; no action sent |
+| native happy/invalid package QA | 0 | visible CGWindow, atomic invalid rejection, real exports |
+| AX/VoiceOver observation | blocked | exact package exposes application/menu roles only; VoiceOver restored off |
 
 The complete command strings, exit codes, hashes, freshness checks, and evidence
 leaves are in `verification-receipt.json` and `SHA256SUMS`.

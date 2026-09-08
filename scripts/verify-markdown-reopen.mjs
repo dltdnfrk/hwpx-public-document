@@ -113,12 +113,14 @@ function playwrightBrowserExecutable(chromium) {
 }
 
 async function renderPage(htmlPath, screenshotPath) {
-  const harnessRoot = join(projectRoot, ".omo", "ac08-browser");
+  const harnessRoot = process.env.GENOFFICE_DEPENDENCY_ROOT
+    ? resolve(projectRoot, process.env.GENOFFICE_DEPENDENCY_ROOT)
+    : join(projectRoot, ".omo", "ac08-browser");
   const harnessPackage = join(harnessRoot, "package.json");
   if (!existsSync(harnessPackage)) fail("installed Playwright harness is unavailable");
   const requireFromHarness = createRequire(harnessPackage);
-  const { chromium } = requireFromHarness("playwright");
-  const playwrightVersion = JSON.parse(readFileSync(join(harnessRoot, "node_modules", "playwright", "package.json"), "utf8")).version;
+  const { chromium } = requireFromHarness("playwright-core");
+  const playwrightVersion = requireFromHarness("playwright-core/package.json").version;
   const browserExecutable = playwrightBrowserExecutable(chromium);
   const browser = await chromium.launch({
     executablePath: browserExecutable,

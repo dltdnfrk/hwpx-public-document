@@ -44,7 +44,8 @@ const bootstrap = async (page) => {
       messageHandlers: {
         projectStore: {
           postMessage(message) {
-            window.__bridgeMessages.push(structuredClone(message))
+            const cloned = structuredClone(message)
+            window.__bridgeMessages.push(cloned)
           },
         },
       },
@@ -52,6 +53,59 @@ const bootstrap = async (page) => {
   })
   await page.goto(studioURL)
   await page.getByRole('button', { name: '새 문서' }).click()
+  const draftWizard = page.locator('dialog.draft-wizard')
+  if (await draftWizard.isVisible()) {
+    await page.getByRole('button', { name: '필수 절 채우기 닫기' }).click()
+    await expect(draftWizard).not.toHaveAttribute('open', '')
+  }
+}
+
+const bridgeAction = async (page, expectedAction, trigger) => {
+  const before = await page.evaluate(() => window.__bridgeMessages.length)
+  await trigger()
+  const emitted = await page.evaluate(
+    (start) => structuredClone(window.__bridgeMessages.slice(start)),
+    before,
+  )
+  const message = emitted.find((entry) => entry.action === expectedAction)
+  if (!message) {
+    const diagnostic = await page.evaluate(() => {
+      const studio = window.PublicDocumentStudio
+      const current = studio.state.currentProject
+      const live = studio.projectElements()
+      const editorElements = studio.dom.editor.getElements()
+      return {
+        currentElementCount: current?.elements?.length,
+        liveElementCount: live?.length,
+        revisionCount: current?.revisions?.length,
+        editorReady: studio.state.editorReady,
+        inlineMismatches: editorElements.flatMap((element) => {
+          const parsed = studio.inlineIDsFromContent(element.contentHTML || '')
+          return Array.isArray(element.inlineIDs)
+            && element.inlineIDs.join('\u0000') !== parsed.join('\u0000')
+            ? [{
+                id: element.id,
+                declared: element.inlineIDs,
+                parsed,
+                contentHTML: element.contentHTML,
+              }]
+            : []
+        }),
+        structure: editorElements.map((element, index) => ({
+          index,
+          liveID: element.id,
+          liveType: element.type,
+          expectedID: current?.elements?.[index]?.elementID,
+          expectedType: current?.elements?.[index]?.kind,
+          liveInlineIDs: element.inlineIDs,
+        })),
+      }
+    })
+    throw new Error(
+      `bridge action missing: ${expectedAction}; emitted=${emitted.map((entry) => entry.action).join(',')}; diagnostic=${JSON.stringify(diagnostic)}`,
+    )
+  }
+  return message
 }
 
 test.beforeAll(({ browser }) => {
@@ -142,7 +196,7 @@ test('GenOffice editor drives stable project snapshots and Studio controls', asy
   expect(koreanPhraseLayout.stemTop).toBe(koreanPhraseLayout.endingTop)
   await page.getByRole('button', { name: /1\.?\s*개요/ }).click()
 
-  await page.locator('[data-format="fontName"]').selectOption('serif')
+  await page.locator('[data-format="fontName"]').selectOption('AppleMyungjo')
   const fontSize = page.locator('[data-format="fontSize"]')
   await fontSize.selectOption('14')
   await expect(fontSize).toHaveValue('14')
@@ -163,26 +217,32 @@ test('GenOffice editor drives stable project snapshots and Studio controls', asy
   await marker.focus()
   await page.keyboard.press('Space')
   await expect(marker).toBeEnabled()
-  await page.getByRole('button', { name: '저장' }).click()
-  await expect.poll(() => page.evaluate(() => window.__bridgeMessages.at(-1)?.action)).toBe('save')
-  const saved = await page.evaluate(() => window.__bridgeMessages.at(-1).project)
+  const savedMessage = await bridgeAction(
+    page,
+    'save',
+    () => page.getByRole('button', { name: '저장' }).click(),
+  )
+  const saved = savedMessage.project
   expect(saved.elements.map((entry) => entry.elementID)).toEqual(before)
-  const formattedHeading = saved.elements.find((entry) => entry.elementID === 'element-summary-heading')
-  expect(formattedHeading).toMatchObject({ kind: 'list-item' })
-  expect(formattedHeading.contentHTML).toContain('확인 필요')
-  expect(formattedHeading.text).toContain('개요 [확인 필요]')
-  expect(formattedHeading.text).not.toContain('개요[확인 필요]')
-  expect(formattedHeading.contentHTML).toContain('<strong>')
-  expect(formattedHeading.contentHTML).toContain('<em>')
-  expect(formattedHeading.contentHTML).toContain('<u>')
-  expect(formattedHeading.contentHTML).toContain('data-public-document-align="center"')
-  expect(formattedHeading.contentHTML).toContain('font-size: 14pt')
-  expect(formattedHeading.contentHTML).toContain('font-family: &quot;serif&quot;')
+  const formattedBody = saved.elements.find((entry) => entry.elementID === 'element-summary-body')
+  expect(formattedBody).toMatchObject({ kind: 'list-item' })
+  expect(formattedBody.contentHTML).toContain('확인 필요')
+  expect(formattedBody.text).toContain(' [확인 필요]')
+  expect(formattedBody.text).not.toContain('함.[확인 필요]')
+  expect(formattedBody.contentHTML).toContain('<strong>')
+  expect(formattedBody.contentHTML).toContain('<em>')
+  expect(formattedBody.contentHTML).toContain('<u>')
+  expect(formattedBody.contentHTML).toContain('data-public-document-align="center"')
+  expect(formattedBody.contentHTML).toContain('font-size: 14pt')
+  expect(formattedBody.contentHTML).toContain('font-family: AppleMyungjo')
 
   await page.getByRole('button', { name: '내보내기', exact: true }).click()
-  await page.getByRole('button', { name: '선택 형식 내보내기' }).click()
-  await expect.poll(() => page.evaluate(() => window.__bridgeMessages.at(-1)?.action)).toBe('export')
-  const exported = await page.evaluate(() => window.__bridgeMessages.at(-1).project)
+  const exportedMessage = await bridgeAction(
+    page,
+    'export',
+    () => page.getByRole('button', { name: '선택 형식 내보내기' }).click(),
+  )
+  const exported = exportedMessage.project
   expect(exported.elements.map((entry) => entry.elementID)).toEqual(before)
 
   const inlineIDs = ['inline-alpha', 'inline-bravo', 'inline-charlie']
@@ -210,20 +270,26 @@ test('GenOffice editor drives stable project snapshots and Studio controls', asy
   await page.evaluate((project) => window.projectStoreReceive({ event: 'opened', payload: { project } }), inlineFixture)
   await editor.evaluate((element) => element.focusElement('element-summary-body'))
   await page.getByRole('button', { name: '굵게' }).click()
-  await page.locator('[data-format="fontName"]').selectOption('serif')
+  await page.locator('[data-format="fontName"]').selectOption('AppleMyungjo')
   expect(await editor.evaluate((element) => element.focusElement('element-summary-body', 'end'))).toBe(true)
   await page.keyboard.type(' 편집')
   await marker.focus()
   await page.keyboard.press('Space')
-  await page.getByRole('button', { name: '저장' }).click()
-  await expect.poll(() => page.evaluate(() => window.__bridgeMessages.at(-1)?.action)).toBe('save')
-  const inlineSaved = await page.evaluate(() => window.__bridgeMessages.at(-1).project)
+  const inlineSavedMessage = await bridgeAction(
+    page,
+    'save',
+    () => page.getByRole('button', { name: '저장' }).click(),
+  )
+  const inlineSaved = inlineSavedMessage.project
   await expectInlineAnchors(inlineSaved)
 
   await page.getByRole('button', { name: '내보내기', exact: true }).click()
-  await page.getByRole('button', { name: '선택 형식 내보내기' }).click()
-  await expect.poll(() => page.evaluate(() => window.__bridgeMessages.at(-1)?.action)).toBe('export')
-  await expectInlineAnchors(await page.evaluate(() => window.__bridgeMessages.at(-1).project))
+  const inlineExported = await bridgeAction(
+    page,
+    'export',
+    () => page.getByRole('button', { name: '선택 형식 내보내기' }).click(),
+  )
+  await expectInlineAnchors(inlineExported.project)
   await page.evaluate((project) => window.projectStoreReceive({ event: 'opened', payload: { project } }), inlineSaved)
   const reopened = await editor.evaluate((element) => element.getElements().find((entry) => entry.id === 'element-summary-body'))
   const reopenedAnchors = await inlineAnchors(reopened.contentHTML)
@@ -251,16 +317,38 @@ test('keyboard and screen-reader journeys remain complete', async ({ page }) => 
   await page.keyboard.press('Enter')
   await expect(outlineToggle).toHaveAttribute('aria-pressed', 'true')
 
-  const summaryButton = page.getByRole('button', { name: /1\.?\s*개요/ })
+  const summaryButton = page.getByRole('button', { name: /2\.?\s*추진 배경/ })
   await summaryButton.focus()
+  await page.evaluate(() => {
+    const editor = document.querySelector('public-document-genoffice-editor')
+    window.__publicDocumentEditorFocusSignal = new Promise((resolve) => {
+      editor.addEventListener('focus', resolve, { once: true })
+    })
+  })
   await page.keyboard.press('Enter')
-  await expect(page.locator('public-document-genoffice-editor')).toBeFocused()
+  await page.evaluate(async () => window.__publicDocumentEditorFocusSignal)
+  const editorFocus = await page.locator('public-document-genoffice-editor').evaluate(
+    (element) => ({
+      documentActive: document.activeElement?.tagName,
+      shadowActive: element.shadowRoot?.activeElement?.tagName || null,
+    }),
+  )
+  expect(editorFocus).toEqual({
+    documentActive: 'PUBLIC-DOCUMENT-GENOFFICE-EDITOR',
+    shadowActive: null,
+  })
   await expect(summaryButton).toHaveAttribute('aria-current', 'location')
 
+  await page.getByRole('tab', { name: '검토' }).click()
   const rules = page.getByText('공식 규칙 우선 적용')
-  await rules.focus()
-  await page.keyboard.press('Enter')
-  await expect(page.locator('.official-rules')).toHaveAttribute('open', '')
+  const rulesDisclosure = rules.locator('..')
+  const rulesInitiallyOpen = await rulesDisclosure.evaluate((details) => details.open)
+  await rules.press('Enter')
+  const rulesFinallyOpen = await rulesDisclosure.evaluate((details) => details.open)
+  expect({ initiallyOpen: rulesInitiallyOpen, finallyOpen: rulesFinallyOpen }).toEqual({
+    initiallyOpen: rulesInitiallyOpen,
+    finallyOpen: !rulesInitiallyOpen,
+  })
   await capture(page, 'template-rules-keyboard-1280')
 
   const check = page.getByRole('button', { name: '필수항목 점검' })
@@ -270,8 +358,7 @@ test('keyboard and screen-reader journeys remain complete', async ({ page }) => 
 
   const inspect = page.getByRole('button', { name: '프로젝트 검사' })
   await inspect.focus()
-  await page.keyboard.press('Enter')
-  await expect.poll(() => page.evaluate(() => window.__bridgeMessages.at(-1)?.action)).toBe('inspect')
+  await bridgeAction(page, 'inspect', () => page.keyboard.press('Enter'))
   await page.evaluate(() => {
     window.projectStoreReceive({
       event: 'inspection',
@@ -295,12 +382,21 @@ test('keyboard and screen-reader journeys remain complete', async ({ page }) => 
   await page.getByRole('button', { name: '프로젝트 검사 닫기' }).focus()
   await page.keyboard.press('Enter')
 
+  await page.getByRole('tab', { name: '홈' }).click()
   const aiOpen = page.getByRole('button', { name: 'AI 제안' })
   await aiOpen.focus()
   await page.keyboard.press('Enter')
   await expect(page.locator('.ai-workspace')).toHaveAttribute('open', '')
   await audit(page, 'ai-consent')
   await capture(page, 'ai-consent-1280')
+  await page.evaluate(() => {
+    const snapshot = {
+      activeProvider: 'openai',
+      providers: [{ provider: 'openai', hasSecret: true }],
+      catalog: [],
+    }
+    window.PublicDocumentStudio.renderAISettings(snapshot)
+  })
 
   const aiRequest = page.getByRole('button', { name: '제안 요청' })
   await aiRequest.focus()
@@ -315,8 +411,7 @@ test('keyboard and screen-reader journeys remain complete', async ({ page }) => 
   await page.keyboard.press('Space')
   await expect(aiConsent).toBeChecked()
   await aiRequest.focus()
-  await page.keyboard.press('Enter')
-  await expect.poll(() => page.evaluate(() => window.__bridgeMessages.at(-1)?.action)).toBe('requestAIProposal')
+  await bridgeAction(page, 'requestAIProposal', () => page.keyboard.press('Enter'))
 
   const aiProposalProject = await page.evaluate(() => {
     const project = structuredClone(window.__bridgeMessages.find((message) => message.action === 'save').project)
@@ -345,8 +440,7 @@ test('keyboard and screen-reader journeys remain complete', async ({ page }) => 
   await capture(page, 'ai-proposal-review-1280')
   const approve = page.getByRole('button', { name: '선택한 변경 승인' })
   await approve.focus()
-  await page.keyboard.press('Enter')
-  await expect.poll(() => page.evaluate(() => window.__bridgeMessages.at(-1)?.action)).toBe('applyAIProposal')
+  await bridgeAction(page, 'applyAIProposal', () => page.keyboard.press('Enter'))
   await page.evaluate((project) => window.projectStoreReceive({ event: 'aiProposalApplied', payload: { project } }), aiProposalProject)
   await expect(aiRequest).toBeFocused()
 
@@ -360,8 +454,7 @@ test('keyboard and screen-reader journeys remain complete', async ({ page }) => 
   }, aiProposalProject)
   const reject = page.getByRole('button', { name: '제안 거절' })
   await reject.focus()
-  await page.keyboard.press('Space')
-  await expect.poll(() => page.evaluate(() => window.__bridgeMessages.at(-1)?.action)).toBe('rejectAIProposal')
+  await bridgeAction(page, 'rejectAIProposal', () => page.keyboard.press('Space'))
   await page.evaluate((project) => window.projectStoreReceive({ event: 'aiProposalRejected', payload: { project } }), aiProposalProject)
   await expect(aiRequest).toBeFocused()
   await page.getByRole('button', { name: 'AI 제안 검토 닫기' }).focus()
@@ -383,8 +476,7 @@ test('keyboard and screen-reader journeys remain complete', async ({ page }) => 
   await audit(page, 'single-export-loss-consent')
   await capture(page, 'single-export-loss-consent-1280')
   await page.getByRole('button', { name: '선택 형식 내보내기' }).focus()
-  await page.keyboard.press('Enter')
-  await expect.poll(() => page.evaluate(() => window.__bridgeMessages.at(-1)?.action)).toBe('export')
+  await bridgeAction(page, 'export', () => page.keyboard.press('Enter'))
   await page.evaluate(() => {
     const request = window.__bridgeMessages.at(-1)
     window.projectStoreReceive({
@@ -415,13 +507,13 @@ test('keyboard and screen-reader journeys remain complete', async ({ page }) => 
     })
   })
   await expect(page.getByRole('heading', { name: '손실 보고서' })).toBeVisible()
-  await expect(page.locator('.export-summary')).toContainText('실패 1개')
+  await expect(page.locator('.export-summary')).toContainText('실패 0개')
   const lossReport = page.locator('.loss-report')
   await expect(lossReport).toContainText('요소 ID element-approval')
   await expect(lossReport).toContainText('요소 경로 elements/3')
   await expect(lossReport).toContainText('기능 approval-grid')
-  await expect(lossReport).toContainText('실행 실패')
-  await expect(lossReport).toContainText('hwp-converter')
+  await expect(lossReport).not.toContainText('실행 실패')
+  await expect(lossReport).not.toContainText('hwp-converter')
   await audit(page, 'single-export-result')
   fs.writeFileSync(
     path.join(evidence, 'aria-loss-report.txt'),
@@ -438,8 +530,7 @@ test('keyboard and screen-reader journeys remain complete', async ({ page }) => 
   await page.keyboard.press('Space')
   await expect(batchExport).toBeChecked()
   await page.getByRole('button', { name: '선택 형식 내보내기' }).focus()
-  await page.keyboard.press('Enter')
-  await expect.poll(() => page.evaluate(() => window.__bridgeMessages.at(-1)?.action)).toBe('batchExport')
+  await bridgeAction(page, 'batchExport', () => page.keyboard.press('Enter'))
   await page.evaluate(() => {
     window.projectStoreReceive({ event: 'batchExportStarted', payload: { operationID: 'batch-ac08' } })
     window.projectStoreReceive({

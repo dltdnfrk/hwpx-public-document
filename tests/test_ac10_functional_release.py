@@ -133,15 +133,15 @@ def test_ac10_bundle_is_offline_unsigned_and_truthfully_bound(tmp_path: Path) ->
     source_map = _write_source_map(tmp_path / "seed-evidence-sources.json")
 
     # When: the AC-10 functional release is assembled without credentials or network.
-    subprocess.run(
+    release = subprocess.run(
         [str(BUILD_SCRIPT), str(destination), str(source_map)],
         cwd=ROOT,
-        check=True,
         capture_output=True,
         text=True,
         timeout=300,
         env={"PATH": "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"},
     )
+    assert release.returncode == 0, release.stdout + release.stderr
 
     # Then: the local app and evidence bundle bind the exact functional-release scope.
     app = destination / "PublicDocument.app"
