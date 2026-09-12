@@ -29,8 +29,6 @@
 저장소 루트에서 실행한다.
 
 ```sh
-cd /Users/hyunjun/Documents/MUNI/hwpx-public-document
-
 trial_id="$(date +%Y%m%d-%H%M%S)"
 trial_root="$PWD/.omo/evidence/manual-user/$trial_id"
 mkdir -p "$trial_root"
