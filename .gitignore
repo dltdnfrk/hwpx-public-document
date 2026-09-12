@@ -16,3 +16,11 @@ dist/
 output/
 test-results/
 graphify-out/
+.gjc/
+artifacts/architecture/
+
+# File Provider duplicate artifacts (untracked " N" copies)
+.omo 2/
+dist 2/
+output 2/
+Resources/Engines/node 3
